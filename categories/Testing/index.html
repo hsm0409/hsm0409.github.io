@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -117,7 +117,7 @@
 <meta property="og:url" content="https://hsm0409.github.io/categories/Testing/index.html">
 <meta property="og:site_name" content="梦在广工">
 <meta property="og:description" content="可能我还不够优秀">
-<meta property="article:author" content="Huangsongming">
+<meta property="article:author" content="Ming">
 <meta name="twitter:card" content="summary">
 
 
@@ -126,7 +126,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
@@ -220,29 +220,19 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%E9%A6%96%E9%A1%B5" rel="section">
+          <a href="/%E9%A6%96%E9%A1%B5%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/%E5%85%B3%E4%BA%8E%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -250,9 +240,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/%E5%88%86%E7%B1%BB%20%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -260,9 +250,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/%E6%A0%87%E7%AD%BE%20%20%20%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -270,9 +260,9 @@
       
         
         <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
+          <a href="/%E5%85%AC%E7%9B%8A%20%20%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
             公益404
           </a>
@@ -414,9 +404,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar.png"
-                alt="Huangsongming" />
+                alt="Ming" />
             
-              <p class="site-author-name" itemprop="name">Huangsongming</p>
+              <p class="site-author-name" itemprop="name">Ming</p>
               <p class="site-description motion-element" itemprop="description">可能我还不够优秀</p>
           </div>
 
@@ -427,7 +417,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -474,6 +464,18 @@
                         <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   </span>
                 
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/69169bf82e91" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://aganr.com/about" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-fab fa-weixin"></i>微信</a>
+                  </span>
+                
             </div>
           
 
@@ -498,7 +500,9 @@
           
         </div>
       
-
+	  
+	  
+		
     </div>
   </aside>
 
@@ -513,7 +517,7 @@
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Huangsongming</span>
+  <span class="author" itemprop="copyrightHolder">Ming</span>
 
   
 </div>
@@ -573,6 +577,8 @@
 
 
 
+  
+
 
 
   
@@ -608,6 +614,11 @@
   
   
     <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   
 
 
@@ -1032,9 +1043,12 @@
 
   
 
+   <!-- 页面点击小红心 -->
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+  
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 
- <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/clicklove.js">
-
-</script>
