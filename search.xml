@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>PCB的基本常识</title>
+    <url>/Circut-Lover/B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
+<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
+<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circut Lover</category>
+      </categories>
+      <tags>
+        <tag>PCB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
+    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
+<p>2.颜色RGB</p>
+<p>255  0  0  红色</p>
+<p>248  255  247  白色</p>
+<p>0     0    0  黑色</p>
+<p>银白色  红(192) 绿(192) 蓝(192)。</p>
+<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
+<p>例如：总装配体&gt;子装配体&gt;零件</p>
+<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
+<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
+<p>钣金加工工艺（综合冷加工工艺）</p>
+<p>下料 、成型、压铆，攻牙、焊接等</p>
+<p>表面处理：喷粉，电镀等；</p>
+<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Solidworks与PCB的结合</title>
+    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
+    <content><![CDATA[<p>2019-8-25偶然的一次发现QAQ</p>
+<p>PCB电路板与solidworks的完美结合</p>
+<p><img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
+<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/uncategorized/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -33,59 +86,6 @@
       </categories>
       <tags>
         <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Solidworks与PCB的结合</title>
-    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
-    <content><![CDATA[<p>2019-8-25偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<p><img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
-]]></content>
-      <categories>
-        <category>Mechanic Lover</category>
-      </categories>
-      <tags>
-        <tag>3D建模</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
-    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
-<p>2.颜色RGB</p>
-<p>255  0  0  红色</p>
-<p>248  255  247  白色</p>
-<p>0     0    0  黑色</p>
-<p>银白色  红(192) 绿(192) 蓝(192)。</p>
-<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
-<p>例如：总装配体&gt;子装配体&gt;零件</p>
-<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
-<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
-<p>钣金加工工艺（综合冷加工工艺）</p>
-<p>下料 、成型、压铆，攻牙、焊接等</p>
-<p>表面处理：喷粉，电镀等；</p>
-<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
-]]></content>
-      <categories>
-        <category>Mechanic Lover</category>
-      </categories>
-      <tags>
-        <tag>3D建模</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PCB的基本常识</title>
-    <url>/Circut-Lover/B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
-    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
-<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
-<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Circut Lover</category>
-      </categories>
-      <tags>
-        <tag>PCB</tag>
       </tags>
   </entry>
 </search>
