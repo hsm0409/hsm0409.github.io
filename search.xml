@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>PCB的基本常识</title>
-    <url>/Circut-Lover/B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <url>/Circut-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
     <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
 <h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
 <h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
@@ -70,6 +70,39 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>超声波传感器</title>
+    <url>/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Transducer Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自振荡产生正弦波、方波、三角波</title>
+    <url>/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/</url>
+    <content><![CDATA[<h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><p>1、振荡条件<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" alt="t11"><br>2、起振、稳幅<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" alt="t21"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(1)无输入源，起振信号源来自哪里？</span><br><span class="line">答：电器内部噪声以及电源接通扰动。</span><br><span class="line">(2)稳幅作用？</span><br><span class="line">答：信号输出幅度达到一定程度时，会失真。必须通过调幅限制，使得振幅平衡回到AF = 1。</span><br></pre></td></tr></table></figure>
+<p>3、基本组成部分</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽放大电路</span><br><span class="line">▽反馈电路</span><br><span class="line">▽选频网络</span><br><span class="line">▽稳幅环节</span><br></pre></td></tr></table></figure>
+<p>移相式正弦振荡电路<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" alt="t41"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">扩展知识点：</span><br><span class="line">1. 电阻上的电压电流同相位</span><br><span class="line">2. 电感上的电流落后电压90°相位</span><br><span class="line">3. 电容上的电流超前电压90°相位</span><br></pre></td></tr></table></figure>
+<p>RC振荡电路<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" alt="t31"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">注：Rf为热敏电阻。</span><br></pre></td></tr></table></figure>
+<h4 id="课设设计：100Hz与5000Hz"><a href="#课设设计：100Hz与5000Hz" class="headerlink" title="课设设计：100Hz与5000Hz"></a>课设设计：100Hz与5000Hz</h4><h5 id="原理设计"><a href="#原理设计" class="headerlink" title="原理设计"></a>原理设计</h5><p>正弦波发生<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" alt="t61"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">f0=1/(2π√R1R2C1C2)  </span><br><span class="line">①可以修改 R1 R2 C1 C2 来产生100Hz 和 5000Hz</span><br><span class="line">通过调节R1，R2，C1，C2的值，使得f0=100Hz。先取C1=100nF，C2=100nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=16K,R2=16K。</span><br><span class="line">为了方便调试，16k采用20k滑动变阻器。</span><br><span class="line">②通过调节R1，R2，C1，C2的值，使得f0=5000Hz。先取C1=1nF，C2=1nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=1K,R2≈640Ω。</span><br><span class="line">为了方便调试， 640Ω采用1k滑动变阻器</span><br></pre></td></tr></table></figure>
+<p>正弦波转方波、三角波<br><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" alt="t71"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">正弦波转方波：过零比较器</span><br><span class="line">方波转三角波: 积分放大器</span><br></pre></td></tr></table></figure>
+<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><p><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" alt="t81"></p>
+<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><p><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" alt="t91"></p>
+<h5 id="课设总结"><a href="#课设总结" class="headerlink" title="课设总结"></a>课设总结</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">我在这次课程设计中遇到，一直都调不出理想的波形，检查了很多东西，像接线问题、电路问题、电源问题、示波器问题地线问题等等，所以我总结出，对于要求精度很高的电路，一旦出现实际问题时，应该具备以下三个点：</span><br><span class="line">1.重新审查电路原理图，计算相关数据，运行仿真结果。</span><br><span class="line">2.元件器件的损坏或性能的影响，因为在这个放大电路中稍有偏差，结果就会相差很大，此次个人觉得时间较为紧迫，选择附近的元件卖家，结果性能远远达不到所需的要求。</span><br><span class="line">3.要有足够的耐心和冷静的思考，当图形出现差异时，冷静的思考是必不可少的。</span><br><span class="line">通过这次课程设计,我懂得了要完成一个电路的设计,理论基础是根基,实践操作是完成实物的重要部分,而创新能力则决定了一个电路的价值,因为设计一个电路,决不是简单地按课本的电路图进行焊接成型,我们要进行电路各个元件参数的计算,这个涉及我们所掌握的理论知识,元件的计算是设计中较为重要的一部分,计算准了,则设计出来的电路误差不大,否则,设计出来的电路性能指标跟要求相差甚远。</span><br><span class="line">最困难的是当电路出现错误是,如何检测出错误之处,如何排除错误,它考验了我们如何运用理论知识和实际的调试的能力, 这也是我大三这一年最需要注重和提高的地方。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
   </entry>
   <entry>
     <title>Linux系统分类</title>
