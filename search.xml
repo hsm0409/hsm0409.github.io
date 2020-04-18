@@ -2,12 +2,12 @@
 <search>
   <entry>
     <title>PCB的基本常识</title>
-    <url>/Circut-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
     <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
 <h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
 <h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Circut Lover</category>
+        <category>Circuit Lover</category>
       </categories>
       <tags>
         <tag>PCB</tag>
@@ -120,5 +120,27 @@
       <tags>
         <tag>Linux系统</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>模电概念</title>
+    <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
+    <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
+<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
+<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><p><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" alt="41"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><p><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" alt="31"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
+
+<h4 id="模拟开关"><a href="#模拟开关" class="headerlink" title="模拟开关"></a>模拟开关</h4><h4 id="多路复用器"><a href="#多路复用器" class="headerlink" title="多路复用器"></a>多路复用器</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多路复用器即数据选择器（multiplexer或mux）能从多个模拟或数字输入信号中选择某个信号并将其转发，将不同的被选信号输出到同一个输出线路中，市场以CMOS为主。</span><br></pre></td></tr></table></figure>
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
+<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
+<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
   </entry>
 </search>
