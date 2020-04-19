@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>数据结构框架</title>
+    <url>/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
+<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
+<p>遍历框架</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PCB的基本常识</title>
     <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
     <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
@@ -11,6 +25,120 @@
       </categories>
       <tags>
         <tag>PCB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/uncategorized/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>联发科面试</title>
+    <url>/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>超声波传感器</title>
+    <url>/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
+<h5 id="超声波传感器"><a href="#超声波传感器" class="headerlink" title="超声波传感器"></a>超声波传感器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">超声物位传感器：单换能器、双换能器</span><br><span class="line">只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </span><br><span class="line"></span><br><span class="line">超声侧厚传感器</span><br><span class="line">双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</span><br><span class="line"></span><br><span class="line">超声波流量传感器</span><br><span class="line">目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</span><br></pre></td></tr></table></figure>
+<h5 id="超声波传感器的应用"><a href="#超声波传感器的应用" class="headerlink" title="超声波传感器的应用"></a>超声波传感器的应用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">超声波流量计</span><br><span class="line">超声波侧厚</span><br><span class="line">超声波探伤</span><br><span class="line">超声波焊接(主要三要素：时间、压力、振幅)</span><br><span class="line">超声波报警器</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Transducer Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务</title>
+    <url>/MySql-Lover/%E5%8A%A1/</url>
+    <content><![CDATA[<h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+<p>扩展知识点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>华为面试</title>
+    <url>/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自振荡产生正弦波、方波、三角波</title>
+    <url>/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/</url>
+    <content><![CDATA[<h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><p>1、振荡条件<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" alt="t11"><br>2、起振、稳幅<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" alt="t21"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(1)无输入源，起振信号源来自哪里？</span><br><span class="line">答：电器内部噪声以及电源接通扰动。</span><br><span class="line">(2)稳幅作用？</span><br><span class="line">答：信号输出幅度达到一定程度时，会失真。必须通过调幅限制，使得振幅平衡回到AF = 1。</span><br></pre></td></tr></table></figure>
+<p>3、基本组成部分</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽放大电路</span><br><span class="line">▽反馈电路</span><br><span class="line">▽选频网络</span><br><span class="line">▽稳幅环节</span><br></pre></td></tr></table></figure>
+<p>移相式正弦振荡电路<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" alt="t41"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">扩展知识点：</span><br><span class="line">1. 电阻上的电压电流同相位</span><br><span class="line">2. 电感上的电流落后电压90°相位</span><br><span class="line">3. 电容上的电流超前电压90°相位</span><br></pre></td></tr></table></figure>
+<p>RC振荡电路<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" alt="t31"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">注：Rf为热敏电阻。</span><br></pre></td></tr></table></figure>
+<h4 id="课设设计：100Hz与5000Hz"><a href="#课设设计：100Hz与5000Hz" class="headerlink" title="课设设计：100Hz与5000Hz"></a>课设设计：100Hz与5000Hz</h4><h5 id="原理设计"><a href="#原理设计" class="headerlink" title="原理设计"></a>原理设计</h5><p>正弦波发生<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" alt="t61"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">f0=1/(2π√R1R2C1C2)  </span><br><span class="line">①可以修改 R1 R2 C1 C2 来产生100Hz 和 5000Hz</span><br><span class="line">通过调节R1，R2，C1，C2的值，使得f0=100Hz。先取C1=100nF，C2=100nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=16K,R2=16K。</span><br><span class="line">为了方便调试，16k采用20k滑动变阻器。</span><br><span class="line">②通过调节R1，R2，C1，C2的值，使得f0=5000Hz。先取C1=1nF，C2=1nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=1K,R2≈640Ω。</span><br><span class="line">为了方便调试， 640Ω采用1k滑动变阻器</span><br></pre></td></tr></table></figure>
+<p>正弦波转方波、三角波<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" alt="t71"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">正弦波转方波：过零比较器</span><br><span class="line">方波转三角波: 积分放大器</span><br></pre></td></tr></table></figure>
+<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><p><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" alt="t81"></p>
+<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><p><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" alt="t91"></p>
+<h5 id="课设总结"><a href="#课设总结" class="headerlink" title="课设总结"></a>课设总结</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">我在这次课程设计中遇到，一直都调不出理想的波形，检查了很多东西，像接线问题、电路问题、电源问题、示波器问题地线问题等等，所以我总结出，对于要求精度很高的电路，一旦出现实际问题时，应该具备以下三个点：</span><br><span class="line">1.重新审查电路原理图，计算相关数据，运行仿真结果。</span><br><span class="line">2.元件器件的损坏或性能的影响，因为在这个放大电路中稍有偏差，结果就会相差很大，此次个人觉得时间较为紧迫，选择附近的元件卖家，结果性能远远达不到所需的要求。</span><br><span class="line">3.要有足够的耐心和冷静的思考，当图形出现差异时，冷静的思考是必不可少的。</span><br><span class="line">通过这次课程设计,我懂得了要完成一个电路的设计,理论基础是根基,实践操作是完成实物的重要部分,而创新能力则决定了一个电路的价值,因为设计一个电路,决不是简单地按课本的电路图进行焊接成型,我们要进行电路各个元件参数的计算,这个涉及我们所掌握的理论知识,元件的计算是设计中较为重要的一部分,计算准了,则设计出来的电路误差不大,否则,设计出来的电路性能指标跟要求相差甚远。</span><br><span class="line">最困难的是当电路出现错误是,如何检测出错误之处,如何排除错误,它考验了我们如何运用理论知识和实际的调试的能力, 这也是我大三这一年最需要注重和提高的地方。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>cvte面试</title>
+    <url>/My-interview-Lover/te%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Solidworks与PCB的结合</title>
+    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
+    <content><![CDATA[<p>偶然的一次发现QAQ</p>
+<p>PCB电路板与solidworks的完美结合</p>
+<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
+<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
       </tags>
   </entry>
   <entry>
@@ -37,74 +165,6 @@
       <tags>
         <tag>3D建模</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Solidworks与PCB的结合</title>
-    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
-    <content><![CDATA[<p>2019-8-25偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
-]]></content>
-      <categories>
-        <category>Mechanic Lover</category>
-      </categories>
-      <tags>
-        <tag>3D建模</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/uncategorized/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>超声波传感器</title>
-    <url>/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
-    <content><![CDATA[<h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器"><a href="#超声波传感器" class="headerlink" title="超声波传感器"></a>超声波传感器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">超声物位传感器：单换能器、双换能器</span><br><span class="line">只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </span><br><span class="line"></span><br><span class="line">超声侧厚传感器</span><br><span class="line">双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</span><br><span class="line"></span><br><span class="line">超声波流量传感器</span><br><span class="line">目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器的应用"><a href="#超声波传感器的应用" class="headerlink" title="超声波传感器的应用"></a>超声波传感器的应用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">超声波流量计</span><br><span class="line">超声波侧厚</span><br><span class="line">超声波探伤</span><br><span class="line">超声波焊接(主要三要素：时间、压力、振幅)</span><br><span class="line">超声波报警器</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Transducer Lover</category>
-      </categories>
-      <tags>
-        <tag>传感器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自振荡产生正弦波、方波、三角波</title>
-    <url>/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/</url>
-    <content><![CDATA[<h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><p>1、振荡条件<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" alt="t11"><br>2、起振、稳幅<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" alt="t21"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(1)无输入源，起振信号源来自哪里？</span><br><span class="line">答：电器内部噪声以及电源接通扰动。</span><br><span class="line">(2)稳幅作用？</span><br><span class="line">答：信号输出幅度达到一定程度时，会失真。必须通过调幅限制，使得振幅平衡回到AF = 1。</span><br></pre></td></tr></table></figure>
-<p>3、基本组成部分</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽放大电路</span><br><span class="line">▽反馈电路</span><br><span class="line">▽选频网络</span><br><span class="line">▽稳幅环节</span><br></pre></td></tr></table></figure>
-<p>移相式正弦振荡电路<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" alt="t41"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">扩展知识点：</span><br><span class="line">1. 电阻上的电压电流同相位</span><br><span class="line">2. 电感上的电流落后电压90°相位</span><br><span class="line">3. 电容上的电流超前电压90°相位</span><br></pre></td></tr></table></figure>
-<p>RC振荡电路<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" alt="t31"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">注：Rf为热敏电阻。</span><br></pre></td></tr></table></figure>
-<h4 id="课设设计：100Hz与5000Hz"><a href="#课设设计：100Hz与5000Hz" class="headerlink" title="课设设计：100Hz与5000Hz"></a>课设设计：100Hz与5000Hz</h4><h5 id="原理设计"><a href="#原理设计" class="headerlink" title="原理设计"></a>原理设计</h5><p>正弦波发生<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" alt="t61"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">f0=1/(2π√R1R2C1C2)  </span><br><span class="line">①可以修改 R1 R2 C1 C2 来产生100Hz 和 5000Hz</span><br><span class="line">通过调节R1，R2，C1，C2的值，使得f0=100Hz。先取C1=100nF，C2=100nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=16K,R2=16K。</span><br><span class="line">为了方便调试，16k采用20k滑动变阻器。</span><br><span class="line">②通过调节R1，R2，C1，C2的值，使得f0=5000Hz。先取C1=1nF，C2=1nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=1K,R2≈640Ω。</span><br><span class="line">为了方便调试， 640Ω采用1k滑动变阻器</span><br></pre></td></tr></table></figure>
-<p>正弦波转方波、三角波<br><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" alt="t71"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">正弦波转方波：过零比较器</span><br><span class="line">方波转三角波: 积分放大器</span><br></pre></td></tr></table></figure>
-<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><p><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" alt="t81"></p>
-<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><p><img src="/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" alt="t91"></p>
-<h5 id="课设总结"><a href="#课设总结" class="headerlink" title="课设总结"></a>课设总结</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">我在这次课程设计中遇到，一直都调不出理想的波形，检查了很多东西，像接线问题、电路问题、电源问题、示波器问题地线问题等等，所以我总结出，对于要求精度很高的电路，一旦出现实际问题时，应该具备以下三个点：</span><br><span class="line">1.重新审查电路原理图，计算相关数据，运行仿真结果。</span><br><span class="line">2.元件器件的损坏或性能的影响，因为在这个放大电路中稍有偏差，结果就会相差很大，此次个人觉得时间较为紧迫，选择附近的元件卖家，结果性能远远达不到所需的要求。</span><br><span class="line">3.要有足够的耐心和冷静的思考，当图形出现差异时，冷静的思考是必不可少的。</span><br><span class="line">通过这次课程设计,我懂得了要完成一个电路的设计,理论基础是根基,实践操作是完成实物的重要部分,而创新能力则决定了一个电路的价值,因为设计一个电路,决不是简单地按课本的电路图进行焊接成型,我们要进行电路各个元件参数的计算,这个涉及我们所掌握的理论知识,元件的计算是设计中较为重要的一部分,计算准了,则设计出来的电路误差不大,否则,设计出来的电路性能指标跟要求相差甚远。</span><br><span class="line">最困难的是当电路出现错误是,如何检测出错误之处,如何排除错误,它考验了我们如何运用理论知识和实际的调试的能力, 这也是我大三这一年最需要注重和提高的地方。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Circuit Lover</category>
-      </categories>
   </entry>
   <entry>
     <title>Linux系统分类</title>

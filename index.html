@@ -336,6 +336,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/" itemprop="url">数据结构框架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T00:20:00+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structure-and-Algorithms-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure and Algorithms Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
+<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
+<p>遍历框架</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,364 +634,6 @@
             <h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
 <h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
 <h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/" itemprop="url">继SolidWorks之后另一款3D软件的preo简单的学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-17T15:06:00+08:00">
-                2020-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mechanic-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Mechanic Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
-<p>2.颜色RGB</p>
-<p>255  0  0  红色</p>
-<p>248  255  247  白色</p>
-<p>0     0    0  黑色</p>
-<p>银白色  红(192) 绿(192) 蓝(192)。</p>
-<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
-<p>例如：总装配体&gt;子装配体&gt;零件</p>
-<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
-<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
-<p>钣金加工工艺（综合冷加工工艺）</p>
-<p>下料 、成型、压铆，攻牙、焊接等</p>
-<p>表面处理：喷粉，电镀等；</p>
-<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="url">Solidworks与PCB的结合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-17T14:29:00+08:00">
-                2020-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mechanic-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Mechanic Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2019-8-25偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
-
           
         
       
@@ -1027,6 +842,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/" itemprop="url">联发科面试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T17:46:00+08:00">
+                2020-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">My interview Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1152,6 +1137,348 @@
             <h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
 <h5 id="超声波传感器"><a href="#超声波传感器" class="headerlink" title="超声波传感器"></a>超声波传感器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">超声物位传感器：单换能器、双换能器</span><br><span class="line">只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </span><br><span class="line"></span><br><span class="line">超声侧厚传感器</span><br><span class="line">双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</span><br><span class="line"></span><br><span class="line">超声波流量传感器</span><br><span class="line">目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</span><br></pre></td></tr></table></figure>
 <h5 id="超声波传感器的应用"><a href="#超声波传感器的应用" class="headerlink" title="超声波传感器的应用"></a>超声波传感器的应用</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超声波流量计</span><br><span class="line">超声波侧厚</span><br><span class="line">超声波探伤</span><br><span class="line">超声波焊接(主要三要素：时间、压力、振幅)</span><br><span class="line">超声波报警器</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MySql-Lover/%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MySql-Lover/%E5%8A%A1/" itemprop="url">事务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T17:51:00+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySql-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MySql Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySql-Lover/%E5%8A%A1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySql-Lover/%E5%8A%A1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+<p>扩展知识点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/" itemprop="url">华为面试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T17:44:00+08:00">
+                2020-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">My interview Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
           
         
       
@@ -1383,7 +1710,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/te%E9%9D%A2%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -1402,7 +1729,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/" itemprop="url">Linux系统分类</a></h1>
+                <a class="post-title-link" href="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/" itemprop="url">cvte面试</a></h1>
         
 
         <div class="post-meta">
@@ -1414,8 +1741,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-17T10:07:00+08:00">
-                2019-04-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T17:25:00+08:00">
+                2020-03-20
               </time>
             
 
@@ -1437,8 +1764,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LinuxLover/" itemprop="url" rel="index">
-                    <span itemprop="name">LinuxLover</span>
+                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">My interview Lover</span>
                   </a>
                 </span>
 
@@ -1455,8 +1782,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/" itemprop="commentCount"></span>
+                <a href="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1505,13 +1832,7 @@
       
         
           
-            <h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
-
-<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><p><img src="/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" alt="linux"></p>
-
+            
           
         
       
@@ -1559,7 +1880,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -1578,7 +1899,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/" itemprop="url">模电概念</a></h1>
+                <a class="post-title-link" href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="url">Solidworks与PCB的结合</a></h1>
         
 
         <div class="post-meta">
@@ -1590,8 +1911,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T20:39:00+08:00">
-                2018-04-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-25T14:29:00+08:00">
+                2019-08-25
               </time>
             
 
@@ -1613,8 +1934,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
+                  <a href="/categories/Mechanic-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Mechanic Lover</span>
                   </a>
                 </span>
 
@@ -1631,8 +1952,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/" itemprop="commentCount"></span>
+                <a href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1681,16 +2002,11 @@
       
         
           
-            <h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
-<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
-<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><p><img src="/%E6%A8%A1%E7%94%B5%E6%A6%82%E5%BF%B5/4.jpg" alt="41"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
-<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><p><img src="/%E6%A8%A1%E7%94%B5%E6%A6%82%E5%BF%B5/3.jpg" alt="31"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
-<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
-<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
-<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>
+            <p>偶然的一次发现QAQ</p>
+<p>PCB电路板与solidworks的完美结合</p>
+<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
+<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
+
           
         
       
@@ -1728,6 +2044,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+  </nav>
+
 
 
           </div>
@@ -1775,7 +2095,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1786,7 +2106,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1797,7 +2117,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1859,7 +2179,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>
