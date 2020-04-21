@@ -111,14 +111,14 @@
 
 
 
-<meta name="description" content="二叉树最大路径和 12  二叉树镜像 123456789101112131415161718192021222324判断树是否为镜像bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)&amp;#123;    if(root1 &#x3D;&#x3D; NULL &amp;&amp; root2 &#x3D;&#x3D; NULL)    &amp;#123;        return">
+<meta name="description" content="LeetCode 总结二叉树最大路径和123456789101112131415161718192021222324struct TreeNode &amp;#123;	int data;    TreeNode *left;    TreeNode *right;&amp;#125;;int OneSideMax(TreeNode *root) &amp;#123;    if (rootroot-&gt;left &amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树">
-<meta property="og:url" content="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/%E6%A0%91/index.html">
+<meta property="og:url" content="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/d/index.html">
 <meta property="og:site_name" content="梦在广工">
-<meta property="og:description" content="二叉树最大路径和 12  二叉树镜像 123456789101112131415161718192021222324判断树是否为镜像bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)&amp;#123;    if(root1 &#x3D;&#x3D; NULL &amp;&amp; root2 &#x3D;&#x3D; NULL)    &amp;#123;        return">
+<meta property="og:description" content="LeetCode 总结二叉树最大路径和123456789101112131415161718192021222324struct TreeNode &amp;#123;	int data;    TreeNode *left;    TreeNode *right;&amp;#125;;int OneSideMax(TreeNode *root) &amp;#123;    if (rootroot-&gt;left &amp;">
 <meta property="article:published_time" content="2020-04-19T02:25:00.000Z">
-<meta property="article:modified_time" content="2020-04-19T05:11:20.693Z">
+<meta property="article:modified_time" content="2020-04-19T11:38:51.502Z">
 <meta property="article:author" content="Ming">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
 
 
 
-  <link rel="canonical" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/树/"/>
+  <link rel="canonical" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/d/"/>
 
 
 
@@ -338,7 +338,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/%E6%A0%91/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/d/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -408,8 +408,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/Data-Structure-and-Algorithms-Lover/%E6%A0%91/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Data-Structure-and-Algorithms-Lover/%E6%A0%91/" itemprop="commentCount"></span>
+                <a href="/Data-Structure-and-Algorithms-Lover/d/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Data-Structure-and-Algorithms-Lover/d/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -456,11 +456,10 @@
       
 
       
-        <p>二叉树最大路径和</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>二叉树镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">判断树是否为镜像</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
+<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -499,6 +498,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/" rel="prev" title="进程创建、等待、结束">
+                进程创建、等待、结束 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -553,8 +556,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -573,7 +585,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -584,7 +596,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -595,7 +607,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -647,6 +659,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#LeetCode-总结"><span class="nav-number">1.</span> <span class="nav-text">LeetCode 总结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树最大路径和"><span class="nav-number">2.</span> <span class="nav-text">二叉树最大路径和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树镜像"><span class="nav-number">3.</span> <span class="nav-text">二叉树镜像</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树还原"><span class="nav-number">4.</span> <span class="nav-text">二叉树还原</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#N树"><span class="nav-number">5.</span> <span class="nav-text">N树</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 	  
@@ -657,7 +685,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -1218,8 +1246,8 @@
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
   
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 
