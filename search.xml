@@ -207,22 +207,73 @@
       </tags>
   </entry>
   <entry>
-    <title>进程相关概念</title>
-    <url>/Linux-Lover/%E7%A8%8B/</url>
-    <content><![CDATA[]]></content>
+    <title>555定时器</title>
+    <url>/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/</url>
+    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5>
+
+<h5 id="三类电路"><a href="#三类电路" class="headerlink" title="三类电路"></a>三类电路</h5><h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
+<h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
+<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
+
+<h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">引脚</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1脚</td>
+<td align="left">外接电源负端VSS或接地，一般情况下接地。</td>
+</tr>
+<tr>
+<td align="center">2脚</td>
+<td align="left">低触发端TL，该脚电压小于1/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">3脚</td>
+<td align="left">输出端OUT。</td>
+</tr>
+<tr>
+<td align="center">4脚</td>
+<td align="left">直接清零端RST。当此端接低电平时，则时基电路不工作</td>
+</tr>
+<tr>
+<td align="center">5脚</td>
+<td align="left">CO为控制电压端。若此脚外接电压，则可改变内部两个比较器的基准电压，当该脚不用时，应将该脚串入一只0.01μF（103）瓷片电容接地，以防引入高频干扰。</td>
+</tr>
+<tr>
+<td align="center">6脚</td>
+<td align="left">高触发端TH，该脚电压大于2/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">7脚</td>
+<td align="left">放电端。该端与放电管T的集电极相连</td>
+</tr>
+<tr>
+<td align="center">8脚</td>
+<td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+]]></content>
       <categories>
-        <category>Linux Lover</category>
+        <category>Circuit Lover</category>
       </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
   </entry>
   <entry>
     <title>Solidworks与PCB的结合</title>
     <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
     <content><![CDATA[<p>偶然的一次发现QAQ</p>
 <p>PCB电路板与solidworks的完美结合</p>
-<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
+<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
+
+
 <p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
 ]]></content>
       <categories>
@@ -265,7 +316,7 @@
 <h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
 
 <h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><p><img src="/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" alt="linux"></p>
+<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
 ]]></content>
       <categories>
         <category>LinuxLover</category>

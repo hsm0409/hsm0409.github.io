@@ -1041,7 +1041,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -1060,7 +1060,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/Linux-Lover/%E7%A8%8B/" itemprop="url">进程相关概念</a></h1>
+                <a class="post-title-link" href="/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/" itemprop="url">555定时器</a></h1>
         
 
         <div class="post-meta">
@@ -1072,8 +1072,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-19T22:35:00+08:00">
-                2020-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-06T09:34:00+08:00">
+                2019-09-06
               </time>
             
 
@@ -1095,8 +1095,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
                   </a>
                 </span>
 
@@ -1113,8 +1113,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/Linux-Lover/%E7%A8%8B/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E7%A8%8B/" itemprop="commentCount"></span>
+                <a href="/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1163,7 +1163,59 @@
       
         
           
-            
+            <h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5>
+
+<h5 id="三类电路"><a href="#三类电路" class="headerlink" title="三类电路"></a>三类电路</h5><h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
+<h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
+<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
+
+<h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">引脚</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1脚</td>
+<td align="left">外接电源负端VSS或接地，一般情况下接地。</td>
+</tr>
+<tr>
+<td align="center">2脚</td>
+<td align="left">低触发端TL，该脚电压小于1/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">3脚</td>
+<td align="left">输出端OUT。</td>
+</tr>
+<tr>
+<td align="center">4脚</td>
+<td align="left">直接清零端RST。当此端接低电平时，则时基电路不工作</td>
+</tr>
+<tr>
+<td align="center">5脚</td>
+<td align="left">CO为控制电压端。若此脚外接电压，则可改变内部两个比较器的基准电压，当该脚不用时，应将该脚串入一只0.01μF（103）瓷片电容接地，以防引入高频干扰。</td>
+</tr>
+<tr>
+<td align="center">6脚</td>
+<td align="left">高触发端TH，该脚电压大于2/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">7脚</td>
+<td align="left">放电端。该端与放电管T的集电极相连</td>
+</tr>
+<tr>
+<td align="center">8脚</td>
+<td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+
           
         
       
@@ -1335,7 +1387,9 @@
           
             <p>偶然的一次发现QAQ</p>
 <p>PCB电路板与solidworks的完美结合</p>
-<p><img src="/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" alt="up"></p>
+<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
+
+
 <p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
 
           
@@ -1696,7 +1750,7 @@
 <h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
 
 <h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><p><img src="/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" alt="linux"></p>
+<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
 
           
         
@@ -2049,7 +2103,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -2626,8 +2680,8 @@
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
   
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 
