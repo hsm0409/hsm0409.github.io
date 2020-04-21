@@ -336,6 +336,357 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/" itemprop="url">了解守护进程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-21T22:50:00+08:00">
+                2020-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">守护进程是在后台运行不受控端控制的进程，通常情况下守护进程在系统启动时自动运行。守护进程的名称通常以d结尾，比如sshd、xinetd、crond等</span><br></pre></td></tr></table></figure>
+
+<h5 id="了解会话期"><a href="#了解会话期" class="headerlink" title="了解会话期"></a>了解会话期</h5> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">telnet 远程登录服务器，登录成功之后，linux服务器和终端之间建立一个会话期，会话期默认启动shell程序。</span><br><span class="line">注：shell是进程组， ps -ef | grep xx 也是进程组。。。都在终端中，如果想脱离终端，必须建立子进程代替父进程，该子进程为未来守护进程，调用setsid创建新的会话期</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/" itemprop="url">进程概念</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-21T18:02:00+08:00">
+                2020-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="进程基本概念"><a href="#进程基本概念" class="headerlink" title="进程基本概念"></a>进程基本概念</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">进程是操作系统分配的内存、CPU时间片等资源的基本单位,是资源分配的最小单位(线程是CPU执行单位)。</span><br><span class="line">进程是操作系统对资源的一种抽象，一个进程由三部分组成:</span><br><span class="line">1）进程控制块PCB：用于描述进程情况及控制进程运行所需的全部信息。</span><br><span class="line">2）代码段：是进程中能被进程调度程序在CPU上执行的程序代码段。</span><br><span class="line">3）数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行后产生的中间或最终数据</span><br><span class="line">分式操作系统 </span><br><span class="line">基于时间片轮转，每一个进程有自己的地址空间和执行状态。</span><br></pre></td></tr></table></figure>
+<h5 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">操作系统经典三态:就绪	等待、（阻塞）、运行等</span><br><span class="line">还有其他挂起、僵尸进程等。。。</span><br><span class="line">Linux内核中的进程状态：</span><br><span class="line">▽	运行状态</span><br><span class="line">▽	可中断睡眠状态7</span><br><span class="line">▽	不可中断睡眠状态</span><br><span class="line">▽	暂停状态</span><br><span class="line">▽	僵死状态</span><br></pre></td></tr></table></figure>
+<h5 id="进程调度及调度算法"><a href="#进程调度及调度算法" class="headerlink" title="进程调度及调度算法"></a>进程调度及调度算法</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">先来先服务调度算法</span><br><span class="line">短进程优先调度算法</span><br><span class="line">高优先级优先调度算法</span><br><span class="line">时间片轮转法（公平）</span><br></pre></td></tr></table></figure>
+
+<h5 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">进程描述信息（进程标识符）</span><br><span class="line">进程控制信息（进程当前状态等）</span><br><span class="line">资源信息（I/O设备号、缓冲、内存等）</span><br><span class="line">现场保护信息（寄存器、PC、PSW、栈指针）</span><br></pre></td></tr></table></figure>
+<h5 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、分配一个内部标识，在内核中建立进程结构.</span><br><span class="line">复制父进程的环境。</span><br><span class="line">2、为进程分配资源，包括所有元素（程序、数据、用户栈等，复制父进程地址空间的内容到该进程地址空间中。</span><br><span class="line">3、置该进程的状态为就绪，插入就绪队列。</span><br></pre></td></tr></table></figure>
+<h5 id="进程撤销"><a href="#进程撤销" class="headerlink" title="进程撤销"></a>进程撤销</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">关闭软中断:因为进程即将终止而不再处理任何软中断信号；</span><br><span class="line">回收资源：释放进程分配的所有资源，如关闭所有已打开文件，释放进程相应的数据结构等；</span><br><span class="line">写记帐信息：将进程在运行过程中所产生的记帐数据（其中包括进程运行时的各种统计信息）记录到一个全局记帐文件中；</span><br><span class="line">置该进程为僵死状态:向父进程发送子进程死的软中断信号，将终止信息status送到指定的存储单元中；</span><br><span class="line">转进程调度:因为此时CPU已经被释放，需要由进程调度进行CPU再分配。</span><br></pre></td></tr></table></figure>
+<h5 id="避免僵尸进程"><a href="#避免僵尸进程" class="headerlink" title="避免僵尸进程"></a>避免僵尸进程</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">避免僵尸进程</span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line">signal(SIGCHLD, SIG_IGN);//子进程信号，忽略</span><br></pre></td></tr></table></figure>
+
+<h5 id="1：n-的机制"><a href="#1：n-的机制" class="headerlink" title="1：n 的机制"></a>1：n 的机制</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、从子进程获得父进程id容易。</span><br><span class="line">2、把子进程id返回给父进程，以便控制</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E6%A0%87%E8%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -848,6 +1199,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E4%BB%B6/" itemprop="url">文件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T14:52:00+08:00">
+                2020-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E4%BB%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E4%BB%B6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
+<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -974,14 +1501,13 @@
 <h5 id="fork-c"><a href="#fork-c" class="headerlink" title="fork.c"></a>fork.c</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"fork error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">    //子进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the child process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">    //父进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the parent process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="vfork-与fork区别"><a href="#vfork-与fork区别" class="headerlink" title="vfork 与fork区别"></a>vfork 与fork区别</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vfork函数vfork函数与fork函数相同,都是系统调用函数,两者的区别是在创建子进程时, fork函数会复制所有的父送源,包括进程环境、内荐资源等。而vfork函数在创建子进程时,不会复制父进程的所有资源,父子进程共享空间，可以修改父进程内存空间中的值。</span><br><span class="line">注意：在使用vfork函数时,父进程会被阻塞,需要学进程调用_exit函数退出子进程,不能使用<span class="built_in">exit</span>退出.</span><br></pre></td></tr></table></figure>
 <h5 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int gvar=2;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	int var=5;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"process id:%ld\n"</span>,(long)getpid());//getpid 获取当前进程id</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"gvar=%d var=%d\n"</span>,gvar,var);</span><br><span class="line">	<span class="keyword">if</span>((pid=vfork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"error!"</span>);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		gvar--;</span><br><span class="line">		var++;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		_exit(0);//退出子程序</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the parent process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">运行简要结果 ： //当前</span><br><span class="line">	process id:2825</span><br><span class="line">	gvar=2 var=5</span><br><span class="line">	the child process id:2826</span><br><span class="line">	gvar=1 var=6//子进程  共享变量的修改</span><br><span class="line">	the parent process id:2825//父进程</span><br><span class="line">	gvar=1 var=6</span><br></pre></td></tr></table></figure>
-<h5 id="exec调用函数"><a href="#exec调用函数" class="headerlink" title="exec调用函数"></a>exec调用函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">       <span class="comment">#include &lt;unistd.h&gt; </span></span><br><span class="line">       extern char **environ;</span><br><span class="line">       int execl(const char *path, const char *arg, ...); </span><br><span class="line">       int execlp(const char *file, const char *arg, ...); </span><br><span class="line">       int execle(const char *path, const char *arg,</span><br><span class="line">                  ..., char * const envp[]);    </span><br><span class="line">       int execv(const char *path, char *const argv[]);</span><br><span class="line">       int execvp(const char *file, char *const argv[]);</span><br><span class="line">参数说明：</span><br><span class="line">	path参数表示你要启动程序的名称包括路径名</span><br><span class="line">	arg参数表示启动程序所带的参数</span><br><span class="line">	返回值:成功返回0,失败返回-1</span><br><span class="line">函数名说明： </span><br><span class="line">    l代表可变参数列表，p代表在path环境变量中搜索file文件。envp代表环境变量。</span><br><span class="line">例子1：</span><br><span class="line">----------------execve.c-----------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">/*	execve(<span class="string">"new"</span>,argv,environ);</span><br><span class="line">	puts(<span class="string">"正常情况下无法输出此信息"</span>);</span><br><span class="line">*/</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create child process failed!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	       execve(<span class="string">"new"</span>,argv,environ);//文件名字+当前路径+环境变量</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		puts(<span class="string">"正常情况下输出此信息"</span>); //不想舍去放在父进程</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">---------------new2.c----------------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	puts(<span class="string">"welcome to mrsoft"</span>);</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------</span><br><span class="line">例子2：用execlp调用vi,打开了new2.c</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;2)</span><br><span class="line">	&#123;</span><br><span class="line">	 	 <span class="built_in">printf</span>(<span class="string">"vi的等效用法： %s filename\n"</span>,argv[0]);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line"> 	 &#125;</span><br><span class="line">	  execlp(<span class="string">"/bin/vi"</span>,<span class="string">"vi"</span>,argv[1],(char*)NULL);//文件路径+操作变量名+操作的文件+NULL</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">运行时输入命令：./execlp ./new2.c</span><br></pre></td></tr></table></figure>
+<h5 id="exec调用函数"><a href="#exec调用函数" class="headerlink" title="exec调用函数"></a>exec调用函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">       <span class="comment">#include &lt;unistd.h&gt; </span></span><br><span class="line">       extern char **environ;</span><br><span class="line">       int execl(const char *path, const char *arg, ...); </span><br><span class="line">       int execlp(const char *file, const char *arg, ...); </span><br><span class="line">       int execle(const char *path, const char *arg,</span><br><span class="line">                  ..., char * const envp[]);    </span><br><span class="line">       int execv(const char *path, char *const argv[]);</span><br><span class="line">       int execvp(const char *file, char *const argv[]);</span><br><span class="line">参数说明：</span><br><span class="line">	path参数表示你要启动程序的名称包括路径名</span><br><span class="line">	arg参数表示启动程序所带的参数</span><br><span class="line">	返回值:成功返回0,失败返回-1</span><br><span class="line">函数名说明： </span><br><span class="line">    l代表可变参数列表，p代表在path环境变量中搜索file文件。envp代表环境变量。</span><br><span class="line">例子1：</span><br><span class="line">----------------execve.c-----------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">/*	execve(<span class="string">"new"</span>,argv,environ);</span><br><span class="line">	puts(<span class="string">"正常情况下无法输出此信息"</span>);</span><br><span class="line">*/</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create child process failed!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	       execve(<span class="string">"new"</span>,argv,environ);//文件名字+当前路径+环境变量</span><br><span class="line">           // execve(<span class="string">"./new"</span>,NULL,NULL);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		puts(<span class="string">"正常情况下输出此信息"</span>); //不想舍去放在父进程</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">---------------new2.c----------------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	puts(<span class="string">"welcome to mrsoft"</span>);</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------</span><br><span class="line">例子2：用execlp调用vi,打开了new2.c</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;2)</span><br><span class="line">	&#123;</span><br><span class="line">	 	 <span class="built_in">printf</span>(<span class="string">"vi的等效用法： %s filename\n"</span>,argv[0]);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line"> 	 &#125;</span><br><span class="line">	  execlp(<span class="string">"/bin/vi"</span>,<span class="string">"vi"</span>,argv[1],(char*)NULL);//文件路径+操作变量名+操作的文件+NULL</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">运行时输入命令：./execlp ./new2.c</span><br></pre></td></tr></table></figure>
 
-<h5 id="wait等待函数"><a href="#wait等待函数" class="headerlink" title="wait等待函数"></a>wait等待函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">	父进程没有调用等待函数，子进程会变成僵尸进程。</span><br><span class="line">	僵尸进程：如果子进程先退出，父进程还没退出，那么子进程必须等到父进程捕获到了子进程的退出状态才真正结束，否则这个时候子进程就成为僵进程。</span><br><span class="line">	孤儿进程：如果父亲进程先结束，子进程会托孤给1号进程</span><br><span class="line">-------------------</span><br><span class="line">	如果存在子进程,进程时的结束状态有(status)如下两种可能: </span><br><span class="line">	进程正常结束：status和PID，status存在子进程退出码（子进程main返回参数或者exti返回参数）当中。</span><br><span class="line">	</span><br><span class="line">   信号引起子进程结束：若发送的信号被进程捕获,就不会起到终止进程作用;若信号没有被进程捕误,则会使进程非正常结束。此时参数status返回的状态值为接收到的信号 ,存在最后一个字节中。</span><br><span class="line">例子：</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line">void exit_s(int status)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(WIFEXITED(status)) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"normal exit,status=%d\n"</span>,WEXITSTATUS(status));</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(WIFSIGNALED(status))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"signal exit!status=%d\n"</span>,WTERMSIG(status));</span><br><span class="line">&#125;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid,pid1;</span><br><span class="line">	int status;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		pid1=getpid();</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,9);//结束   信号退出</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,17);//进入父进程  <span class="built_in">wait</span> erro</span><br><span class="line">		<span class="built_in">kill</span>(pid1,19);//终止   直接退出</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">扩展：</span><br><span class="line">宏定义</span><br><span class="line">WIFEXITED(status)   正常退出</span><br><span class="line">WIFSIGNALED(status)   捕获信号终止</span><br><span class="line">waitip()用于等待特定进程。</span><br></pre></td></tr></table></figure>
-<h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：使用_exit()终止进程。<span class="built_in">exit</span>()会刷新内存清除缓存，会丢失临时文件，建议不用。（前面例子，不做说明）</span><br></pre></td></tr></table></figure>
-
-
+<h5 id="wait等待函数"><a href="#wait等待函数" class="headerlink" title="wait等待函数"></a>wait等待函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">	父进程没有调用等待函数，子进程会变成僵尸进程。</span><br><span class="line">	僵尸进程：如果子进程先退出，父进程还没退出，那么子进程必须等到父进程捕获到了子进程的退出状态才真正结束，否则这个时候子进程就成为僵进程。</span><br><span class="line">	孤儿进程：如果父亲进程先结束，子进程会托孤给1号进程</span><br><span class="line">-------------------</span><br><span class="line">    子进程结束，内核会向父进程发送SIGCHLD信号，子进程的退出是个异步事件（子进程可以在父进程运行的任何时刻终止）</span><br><span class="line">    如果存在子进程,进程时的结束状态有(status)如下两种可能: </span><br><span class="line">	进程正常结束：status和PID，status存在子进程退出码（子进程main返回参数或者exti返回参数）当中。</span><br><span class="line"></span><br><span class="line">   信号引起子进程结束：若发送的信号被进程捕获,就不会起到终止进程作用;若信号没有被进程捕误,则会使进程非正常结束。此时参数status返回的状态值为接收到的信号 ,存在最后一个字节中。</span><br><span class="line">例子：</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line">void exit_s(int status)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(WIFEXITED(status)) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"normal exit,status=%d\n"</span>,WEXITSTATUS(status));</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(WIFSIGNALED(status))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"signal exit!status=%d\n"</span>,WTERMSIG(status));</span><br><span class="line">&#125;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid,pid1;</span><br><span class="line">	int status;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		pid1=getpid();</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,9);//结束   信号退出</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,17);//进入父进程  <span class="built_in">wait</span> erro</span><br><span class="line">		<span class="built_in">kill</span>(pid1,19);//终止   直接退出</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">扩展：</span><br><span class="line">宏定义</span><br><span class="line">WIFEXITED(status)	如果子进程正常结束，返回一个非零值</span><br><span class="line">WEXITSTATUS(status)	如果WIFEXITED非零，返回子进程退出码</span><br><span class="line">WIFSIGNALED(status)	子进程因为捕获信号而终止，返回非零值</span><br><span class="line">WTERMSIG(status)	如果WIFSIGNALED非零，返回信号代码</span><br><span class="line">WIFSTOPPED(status)	如果子进程被暂停，返回一个非零值</span><br><span class="line">WSTOPSIG(status)	如果WIFSTOPPED非零，返回一个信号代码</span><br><span class="line">waitip()也用于等待特定进程。调用<span class="built_in">wait</span>或者waitpid函数查询子进程退出状态，此方法父进程会被挂起。</span><br><span class="line">如果不想让父进程挂起，可以在父进程中加入一条语句：</span><br><span class="line">signal(SIGCHLD,SIG_IGN);表示父进程忽略SIGCHLD信号，该信号是子进程退出的时候向父进程发送的。</span><br></pre></td></tr></table></figure>
+<h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：</span><br><span class="line">1）_exit是一个系统调用，<span class="built_in">exit</span>是一个c库函数</span><br><span class="line">2）<span class="built_in">exit</span>会执行清除I/O缓存，可能会丢失临时文件，建议不用。（前面例子，不做说明）</span><br><span class="line">3）<span class="built_in">exit</span>会执行调用终止处理程序</span><br><span class="line"></span><br><span class="line">扩展：atexit（）</span><br><span class="line">代码:</span><br><span class="line">void func1()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello1...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">void func2()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello2...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">atexit(func1);//输出func1</span><br><span class="line">atexit(func2);//输出func2</span><br><span class="line">puts(<span class="string">"hello...\n"</span>);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">运行：</span><br><span class="line">hello...</span><br><span class="line">hello2...</span><br><span class="line">hello1...</span><br></pre></td></tr></table></figure>
 
 
+<h5 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">进程终止的5种方式</span><br><span class="line">正常退出</span><br><span class="line">1)从main函数返回</span><br><span class="line">2)调用<span class="built_in">exit</span></span><br><span class="line">3)调用_exit</span><br><span class="line">异常退出</span><br><span class="line">4)调用abort   产生SIGABOUT信号</span><br><span class="line">5)由信号终止  ctrl+c SIGINT</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1534,514 +2060,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/uncategorized/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/uncategorized/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T00:28:00+08:00">
-                2020-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/uncategorized/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/" itemprop="url">联发科面试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T17:46:00+08:00">
-                2020-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">My interview Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">超声波传感器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:02:00+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Transducer-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Transducer Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器"><a href="#超声波传感器" class="headerlink" title="超声波传感器"></a>超声波传感器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">超声物位传感器：单换能器、双换能器</span><br><span class="line">只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </span><br><span class="line"></span><br><span class="line">超声侧厚传感器</span><br><span class="line">双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</span><br><span class="line"></span><br><span class="line">超声波流量传感器</span><br><span class="line">目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器的应用"><a href="#超声波传感器的应用" class="headerlink" title="超声波传感器的应用"></a>超声波传感器的应用</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超声波流量计</span><br><span class="line">超声波侧厚</span><br><span class="line">超声波探伤</span><br><span class="line">超声波焊接(主要三要素：时间、压力、振幅)</span><br><span class="line">超声波报警器</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2091,7 +2114,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2175,7 +2198,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -2752,8 +2775,25 @@
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
 
   
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
 </html> 

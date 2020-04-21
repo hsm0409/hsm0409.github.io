@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux系统分类</title>
+    <url>/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
+
+<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
+
+<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
+<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
+]]></content>
+      <categories>
+        <category>LinuxLover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Solidworks与PCB的结合</title>
+    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
+    <content><![CDATA[<p>偶然的一次发现QAQ</p>
+<p>PCB电路板与solidworks的完美结合</p>
+<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
+
+
+<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树</title>
+    <url>/Data-Structure-and-Algorithms-Lover/d/</url>
+    <content><![CDATA[<h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
+<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PCB的基本常识</title>
+    <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
+<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
+<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>PCB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cvte面试</title>
+    <url>/My-interview-Lover/te%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>华为面试</title>
+    <url>/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/uncategorized/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>模电概念</title>
+    <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
+    <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
+<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
+<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class="">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
+<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class="">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
+<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
+<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
+<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>联发科面试</title>
+    <url>/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务</title>
+    <url>/MySql-Lover/%E5%8A%A1/</url>
+    <content><![CDATA[<h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+<p>扩展知识点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>进程获取标识</title>
     <url>/Linux-Lover/%E6%A0%87%E8%AF%86/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程ID</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"UID=%ld\n"</span>,(long)getuid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"EUID=%ld\n"</span>,(long)geteuid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">用户ID  创建者信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">int flag1,flag2;</span><br><span class="line">flag1=setuid(0);</span><br><span class="line">flag2=setgid(500);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"flag1=%d\n,flag2=%d\n"</span>,flag1,flag2);</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">用户组ID  用户组信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"group ID=%d\n"</span>,(long)getgid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"effective group ID=%d\n"</span>,(long)getegid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
@@ -36,98 +178,6 @@
       </tags>
   </entry>
   <entry>
-    <title>进程创建、等待、结束</title>
-    <url>/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<h5 id="fork-系统调用"><a href="#fork-系统调用" class="headerlink" title="fork 系统调用"></a>fork 系统调用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一次调用，二次返回？</span><br><span class="line">答：如果成功创建一个子进程，对于父进程来说返回子进程ID</span><br><span class="line">如果成功创建一个子进程，对于子进程来说返回值为0</span><br><span class="line">问题的本质是：两次返回，是在各自的进程空间中返回的。</span><br><span class="line">子进程和父进程各有自己的内存空间 （fork：代码段、数据段、堆栈段、PCB进程控制块的copy）。</span><br><span class="line">fork返回值大于零的是父进程，为什么这样设计:？</span><br><span class="line">答：因为父进程求子进程的pid比较困难，子进程求父进程的id比较容易</span><br></pre></td></tr></table></figure>
-<h5 id="fork-c"><a href="#fork-c" class="headerlink" title="fork.c"></a>fork.c</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"fork error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">    //子进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the child process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">    //父进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the parent process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="vfork-与fork区别"><a href="#vfork-与fork区别" class="headerlink" title="vfork 与fork区别"></a>vfork 与fork区别</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vfork函数vfork函数与fork函数相同,都是系统调用函数,两者的区别是在创建子进程时, fork函数会复制所有的父送源,包括进程环境、内荐资源等。而vfork函数在创建子进程时,不会复制父进程的所有资源,父子进程共享空间，可以修改父进程内存空间中的值。</span><br><span class="line">注意：在使用vfork函数时,父进程会被阻塞,需要学进程调用_exit函数退出子进程,不能使用<span class="built_in">exit</span>退出.</span><br></pre></td></tr></table></figure>
-<h5 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int gvar=2;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	int var=5;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"process id:%ld\n"</span>,(long)getpid());//getpid 获取当前进程id</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"gvar=%d var=%d\n"</span>,gvar,var);</span><br><span class="line">	<span class="keyword">if</span>((pid=vfork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"error!"</span>);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		gvar--;</span><br><span class="line">		var++;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		_exit(0);//退出子程序</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the parent process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">运行简要结果 ： //当前</span><br><span class="line">	process id:2825</span><br><span class="line">	gvar=2 var=5</span><br><span class="line">	the child process id:2826</span><br><span class="line">	gvar=1 var=6//子进程  共享变量的修改</span><br><span class="line">	the parent process id:2825//父进程</span><br><span class="line">	gvar=1 var=6</span><br></pre></td></tr></table></figure>
-<h5 id="exec调用函数"><a href="#exec调用函数" class="headerlink" title="exec调用函数"></a>exec调用函数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">       <span class="comment">#include &lt;unistd.h&gt; </span></span><br><span class="line">       extern char **environ;</span><br><span class="line">       int execl(const char *path, const char *arg, ...); </span><br><span class="line">       int execlp(const char *file, const char *arg, ...); </span><br><span class="line">       int execle(const char *path, const char *arg,</span><br><span class="line">                  ..., char * const envp[]);    </span><br><span class="line">       int execv(const char *path, char *const argv[]);</span><br><span class="line">       int execvp(const char *file, char *const argv[]);</span><br><span class="line">参数说明：</span><br><span class="line">	path参数表示你要启动程序的名称包括路径名</span><br><span class="line">	arg参数表示启动程序所带的参数</span><br><span class="line">	返回值:成功返回0,失败返回-1</span><br><span class="line">函数名说明： </span><br><span class="line">    l代表可变参数列表，p代表在path环境变量中搜索file文件。envp代表环境变量。</span><br><span class="line">例子1：</span><br><span class="line">----------------execve.c-----------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">/*	execve(<span class="string">"new"</span>,argv,environ);</span><br><span class="line">	puts(<span class="string">"正常情况下无法输出此信息"</span>);</span><br><span class="line">*/</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create child process failed!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	       execve(<span class="string">"new"</span>,argv,environ);//文件名字+当前路径+环境变量</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		puts(<span class="string">"正常情况下输出此信息"</span>); //不想舍去放在父进程</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">---------------new2.c----------------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	puts(<span class="string">"welcome to mrsoft"</span>);</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------</span><br><span class="line">例子2：用execlp调用vi,打开了new2.c</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;2)</span><br><span class="line">	&#123;</span><br><span class="line">	 	 <span class="built_in">printf</span>(<span class="string">"vi的等效用法： %s filename\n"</span>,argv[0]);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line"> 	 &#125;</span><br><span class="line">	  execlp(<span class="string">"/bin/vi"</span>,<span class="string">"vi"</span>,argv[1],(char*)NULL);//文件路径+操作变量名+操作的文件+NULL</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">运行时输入命令：./execlp ./new2.c</span><br></pre></td></tr></table></figure>
-
-<h5 id="wait等待函数"><a href="#wait等待函数" class="headerlink" title="wait等待函数"></a>wait等待函数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">	父进程没有调用等待函数，子进程会变成僵尸进程。</span><br><span class="line">	僵尸进程：如果子进程先退出，父进程还没退出，那么子进程必须等到父进程捕获到了子进程的退出状态才真正结束，否则这个时候子进程就成为僵进程。</span><br><span class="line">	孤儿进程：如果父亲进程先结束，子进程会托孤给1号进程</span><br><span class="line">-------------------</span><br><span class="line">	如果存在子进程,进程时的结束状态有(status)如下两种可能: </span><br><span class="line">	进程正常结束：status和PID，status存在子进程退出码（子进程main返回参数或者exti返回参数）当中。</span><br><span class="line">	</span><br><span class="line">   信号引起子进程结束：若发送的信号被进程捕获,就不会起到终止进程作用;若信号没有被进程捕误,则会使进程非正常结束。此时参数status返回的状态值为接收到的信号 ,存在最后一个字节中。</span><br><span class="line">例子：</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line">void exit_s(int status)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(WIFEXITED(status)) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"normal exit,status=%d\n"</span>,WEXITSTATUS(status));</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(WIFSIGNALED(status))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"signal exit!status=%d\n"</span>,WTERMSIG(status));</span><br><span class="line">&#125;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid,pid1;</span><br><span class="line">	int status;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		pid1=getpid();</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,9);//结束   信号退出</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,17);//进入父进程  <span class="built_in">wait</span> erro</span><br><span class="line">		<span class="built_in">kill</span>(pid1,19);//终止   直接退出</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">扩展：</span><br><span class="line">宏定义</span><br><span class="line">WIFEXITED(status)   正常退出</span><br><span class="line">WIFSIGNALED(status)   捕获信号终止</span><br><span class="line">waitip()用于等待特定进程。</span><br></pre></td></tr></table></figure>
-<h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：使用_exit()终止进程。<span class="built_in">exit</span>()会刷新内存清除缓存，会丢失临时文件，建议不用。（前面例子，不做说明）</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>树</title>
-    <url>/Data-Structure-and-Algorithms-Lover/d/</url>
-    <content><![CDATA[<h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
-<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Data Structure and Algorithms Lover</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据结构框架</title>
-    <url>/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[<p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
-<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
-<p>遍历框架</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Data Structure and Algorithms Lover</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PCB的基本常识</title>
-    <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
-    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
-<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
-<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Circuit Lover</category>
-      </categories>
-      <tags>
-        <tag>PCB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/uncategorized/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>联发科面试</title>
-    <url>/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>My interview Lover</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>超声波传感器</title>
     <url>/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
     <content><![CDATA[<h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
@@ -141,27 +191,24 @@
       </tags>
   </entry>
   <entry>
-    <title>事务</title>
-    <url>/MySql-Lover/%E5%8A%A1/</url>
-    <content><![CDATA[<h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
-<p>扩展知识点</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>]]></content>
+    <title>进程创建、等待、结束</title>
+    <url>/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<h5 id="fork-系统调用"><a href="#fork-系统调用" class="headerlink" title="fork 系统调用"></a>fork 系统调用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一次调用，二次返回？</span><br><span class="line">答：如果成功创建一个子进程，对于父进程来说返回子进程ID</span><br><span class="line">如果成功创建一个子进程，对于子进程来说返回值为0</span><br><span class="line">问题的本质是：两次返回，是在各自的进程空间中返回的。</span><br><span class="line">子进程和父进程各有自己的内存空间 （fork：代码段、数据段、堆栈段、PCB进程控制块的copy）。</span><br><span class="line">fork返回值大于零的是父进程，为什么这样设计:？</span><br><span class="line">答：因为父进程求子进程的pid比较困难，子进程求父进程的id比较容易</span><br></pre></td></tr></table></figure>
+<h5 id="fork-c"><a href="#fork-c" class="headerlink" title="fork.c"></a>fork.c</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"fork error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">    //子进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the child process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">    //父进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the parent process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="vfork-与fork区别"><a href="#vfork-与fork区别" class="headerlink" title="vfork 与fork区别"></a>vfork 与fork区别</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vfork函数vfork函数与fork函数相同,都是系统调用函数,两者的区别是在创建子进程时, fork函数会复制所有的父送源,包括进程环境、内荐资源等。而vfork函数在创建子进程时,不会复制父进程的所有资源,父子进程共享空间，可以修改父进程内存空间中的值。</span><br><span class="line">注意：在使用vfork函数时,父进程会被阻塞,需要学进程调用_exit函数退出子进程,不能使用<span class="built_in">exit</span>退出.</span><br></pre></td></tr></table></figure>
+<h5 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int gvar=2;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	int var=5;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"process id:%ld\n"</span>,(long)getpid());//getpid 获取当前进程id</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"gvar=%d var=%d\n"</span>,gvar,var);</span><br><span class="line">	<span class="keyword">if</span>((pid=vfork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"error!"</span>);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		gvar--;</span><br><span class="line">		var++;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		_exit(0);//退出子程序</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the parent process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">运行简要结果 ： //当前</span><br><span class="line">	process id:2825</span><br><span class="line">	gvar=2 var=5</span><br><span class="line">	the child process id:2826</span><br><span class="line">	gvar=1 var=6//子进程  共享变量的修改</span><br><span class="line">	the parent process id:2825//父进程</span><br><span class="line">	gvar=1 var=6</span><br></pre></td></tr></table></figure>
+<h5 id="exec调用函数"><a href="#exec调用函数" class="headerlink" title="exec调用函数"></a>exec调用函数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">       <span class="comment">#include &lt;unistd.h&gt; </span></span><br><span class="line">       extern char **environ;</span><br><span class="line">       int execl(const char *path, const char *arg, ...); </span><br><span class="line">       int execlp(const char *file, const char *arg, ...); </span><br><span class="line">       int execle(const char *path, const char *arg,</span><br><span class="line">                  ..., char * const envp[]);    </span><br><span class="line">       int execv(const char *path, char *const argv[]);</span><br><span class="line">       int execvp(const char *file, char *const argv[]);</span><br><span class="line">参数说明：</span><br><span class="line">	path参数表示你要启动程序的名称包括路径名</span><br><span class="line">	arg参数表示启动程序所带的参数</span><br><span class="line">	返回值:成功返回0,失败返回-1</span><br><span class="line">函数名说明： </span><br><span class="line">    l代表可变参数列表，p代表在path环境变量中搜索file文件。envp代表环境变量。</span><br><span class="line">例子1：</span><br><span class="line">----------------execve.c-----------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">/*	execve(<span class="string">"new"</span>,argv,environ);</span><br><span class="line">	puts(<span class="string">"正常情况下无法输出此信息"</span>);</span><br><span class="line">*/</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create child process failed!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	       execve(<span class="string">"new"</span>,argv,environ);//文件名字+当前路径+环境变量</span><br><span class="line">           // execve(<span class="string">"./new"</span>,NULL,NULL);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		puts(<span class="string">"正常情况下输出此信息"</span>); //不想舍去放在父进程</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">---------------new2.c----------------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	puts(<span class="string">"welcome to mrsoft"</span>);</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------</span><br><span class="line">例子2：用execlp调用vi,打开了new2.c</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;2)</span><br><span class="line">	&#123;</span><br><span class="line">	 	 <span class="built_in">printf</span>(<span class="string">"vi的等效用法： %s filename\n"</span>,argv[0]);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line"> 	 &#125;</span><br><span class="line">	  execlp(<span class="string">"/bin/vi"</span>,<span class="string">"vi"</span>,argv[1],(char*)NULL);//文件路径+操作变量名+操作的文件+NULL</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">运行时输入命令：./execlp ./new2.c</span><br></pre></td></tr></table></figure>
+
+<h5 id="wait等待函数"><a href="#wait等待函数" class="headerlink" title="wait等待函数"></a>wait等待函数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">	父进程没有调用等待函数，子进程会变成僵尸进程。</span><br><span class="line">	僵尸进程：如果子进程先退出，父进程还没退出，那么子进程必须等到父进程捕获到了子进程的退出状态才真正结束，否则这个时候子进程就成为僵进程。</span><br><span class="line">	孤儿进程：如果父亲进程先结束，子进程会托孤给1号进程</span><br><span class="line">-------------------</span><br><span class="line">    子进程结束，内核会向父进程发送SIGCHLD信号，子进程的退出是个异步事件（子进程可以在父进程运行的任何时刻终止）</span><br><span class="line">    如果存在子进程,进程时的结束状态有(status)如下两种可能: </span><br><span class="line">	进程正常结束：status和PID，status存在子进程退出码（子进程main返回参数或者exti返回参数）当中。</span><br><span class="line"></span><br><span class="line">   信号引起子进程结束：若发送的信号被进程捕获,就不会起到终止进程作用;若信号没有被进程捕误,则会使进程非正常结束。此时参数status返回的状态值为接收到的信号 ,存在最后一个字节中。</span><br><span class="line">例子：</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line">void exit_s(int status)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(WIFEXITED(status)) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"normal exit,status=%d\n"</span>,WEXITSTATUS(status));</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(WIFSIGNALED(status))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"signal exit!status=%d\n"</span>,WTERMSIG(status));</span><br><span class="line">&#125;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid,pid1;</span><br><span class="line">	int status;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		pid1=getpid();</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,9);//结束   信号退出</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,17);//进入父进程  <span class="built_in">wait</span> erro</span><br><span class="line">		<span class="built_in">kill</span>(pid1,19);//终止   直接退出</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">扩展：</span><br><span class="line">宏定义</span><br><span class="line">WIFEXITED(status)	如果子进程正常结束，返回一个非零值</span><br><span class="line">WEXITSTATUS(status)	如果WIFEXITED非零，返回子进程退出码</span><br><span class="line">WIFSIGNALED(status)	子进程因为捕获信号而终止，返回非零值</span><br><span class="line">WTERMSIG(status)	如果WIFSIGNALED非零，返回信号代码</span><br><span class="line">WIFSTOPPED(status)	如果子进程被暂停，返回一个非零值</span><br><span class="line">WSTOPSIG(status)	如果WIFSTOPPED非零，返回一个信号代码</span><br><span class="line">waitip()也用于等待特定进程。调用<span class="built_in">wait</span>或者waitpid函数查询子进程退出状态，此方法父进程会被挂起。</span><br><span class="line">如果不想让父进程挂起，可以在父进程中加入一条语句：</span><br><span class="line">signal(SIGCHLD,SIG_IGN);表示父进程忽略SIGCHLD信号，该信号是子进程退出的时候向父进程发送的。</span><br></pre></td></tr></table></figure>
+<h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：</span><br><span class="line">1）_exit是一个系统调用，<span class="built_in">exit</span>是一个c库函数</span><br><span class="line">2）<span class="built_in">exit</span>会执行清除I/O缓存，可能会丢失临时文件，建议不用。（前面例子，不做说明）</span><br><span class="line">3）<span class="built_in">exit</span>会执行调用终止处理程序</span><br><span class="line"></span><br><span class="line">扩展：atexit（）</span><br><span class="line">代码:</span><br><span class="line">void func1()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello1...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">void func2()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello2...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">atexit(func1);//输出func1</span><br><span class="line">atexit(func2);//输出func2</span><br><span class="line">puts(<span class="string">"hello...\n"</span>);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">运行：</span><br><span class="line">hello...</span><br><span class="line">hello2...</span><br><span class="line">hello1...</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程终止的5种方式</span><br><span class="line">正常退出</span><br><span class="line">1)从main函数返回</span><br><span class="line">2)调用<span class="built_in">exit</span></span><br><span class="line">3)调用_exit</span><br><span class="line">异常退出</span><br><span class="line">4)调用abort   产生SIGABOUT信号</span><br><span class="line">5)由信号终止  ctrl+c SIGINT</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>MySql Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>MySql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>华为面试</title>
-    <url>/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>My interview Lover</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
+        <tag>Linux应用编程</tag>
       </tags>
   </entry>
   <entry>
@@ -196,26 +243,57 @@
       </categories>
   </entry>
   <entry>
-    <title>cvte面试</title>
-    <url>/My-interview-Lover/te%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
+    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
+    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
+<p>2.颜色RGB</p>
+<p>255  0  0  红色</p>
+<p>248  255  247  白色</p>
+<p>0     0    0  黑色</p>
+<p>银白色  红(192) 绿(192) 蓝(192)。</p>
+<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
+<p>例如：总装配体&gt;子装配体&gt;零件</p>
+<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
+<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
+<p>钣金加工工艺（综合冷加工工艺）</p>
+<p>下料 、成型、压铆，攻牙、焊接等</p>
+<p>表面处理：喷粉，电镀等；</p>
+<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
+]]></content>
       <categories>
-        <category>My interview Lover</category>
+        <category>Mechanic Lover</category>
       </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>3D建模</tag>
       </tags>
   </entry>
   <entry>
-    <title>555定时器</title>
-    <url>/Circuit-Lover/5%E5%AE%9A%E6%97%B6%E5%99%A8/</url>
-    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5>
-
-<h5 id="三类电路"><a href="#三类电路" class="headerlink" title="三类电路"></a>三类电路</h5><h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
+    <title>数据结构框架</title>
+    <url>/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
+<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
+<p>遍历框架</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>555概念及使用</title>
+    <url>/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class="">
+<h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class="" title="波形变换">
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class="" title="定时">
 <h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
-<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
 
+<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class="">
 <h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class="">
 
 <table>
 <thead>
@@ -256,10 +334,6 @@
 <td align="center">8脚</td>
 <td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
 </tr>
-<tr>
-<td align="center"></td>
-<td align="left"></td>
-</tr>
 </tbody></table>
 ]]></content>
       <categories>
@@ -267,79 +341,63 @@
       </categories>
   </entry>
   <entry>
-    <title>Solidworks与PCB的结合</title>
-    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
-    <content><![CDATA[<p>偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
+    <title>文件</title>
+    <url>/Linux-Lover/%E4%BB%B6/</url>
+    <content><![CDATA[<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
+<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 
 
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
 ]]></content>
       <categories>
-        <category>Mechanic Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>3D建模</tag>
+        <tag>Linux应用编程</tag>
       </tags>
   </entry>
   <entry>
-    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
-    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
-<p>2.颜色RGB</p>
-<p>255  0  0  红色</p>
-<p>248  255  247  白色</p>
-<p>0     0    0  黑色</p>
-<p>银白色  红(192) 绿(192) 蓝(192)。</p>
-<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
-<p>例如：总装配体&gt;子装配体&gt;零件</p>
-<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
-<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
-<p>钣金加工工艺（综合冷加工工艺）</p>
-<p>下料 、成型、压铆，攻牙、焊接等</p>
-<p>表面处理：喷粉，电镀等；</p>
-<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
-]]></content>
-      <categories>
-        <category>Mechanic Lover</category>
-      </categories>
-      <tags>
-        <tag>3D建模</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux系统分类</title>
-    <url>/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/</url>
-    <content><![CDATA[<h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
+    <title>数电概念</title>
+    <url>/Circuit-Lover/%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
 
-<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/LinuxLover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
 ]]></content>
-      <categories>
-        <category>LinuxLover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>模电概念</title>
-    <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
-    <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
-<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
-<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><p><img src="/%E6%A8%A1%E7%94%B5%E6%A6%82%E5%BF%B5/4.jpg" alt="41"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
-<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><p><img src="/%E6%A8%A1%E7%94%B5%E6%A6%82%E5%BF%B5/3.jpg" alt="31"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
-<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
-<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
-<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Circuit Lover</category>
       </categories>
+  </entry>
+  <entry>
+    <title>进程概念</title>
+    <url>/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h5 id="进程基本概念"><a href="#进程基本概念" class="headerlink" title="进程基本概念"></a>进程基本概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程是操作系统分配的内存、CPU时间片等资源的基本单位,是资源分配的最小单位(线程是CPU执行单位)。</span><br><span class="line">进程是操作系统对资源的一种抽象，一个进程由三部分组成:</span><br><span class="line">1）进程控制块PCB：用于描述进程情况及控制进程运行所需的全部信息。</span><br><span class="line">2）代码段：是进程中能被进程调度程序在CPU上执行的程序代码段。</span><br><span class="line">3）数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行后产生的中间或最终数据</span><br><span class="line">分式操作系统 </span><br><span class="line">基于时间片轮转，每一个进程有自己的地址空间和执行状态。</span><br></pre></td></tr></table></figure>
+<h5 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">操作系统经典三态:就绪	等待、（阻塞）、运行等</span><br><span class="line">还有其他挂起、僵尸进程等。。。</span><br><span class="line">Linux内核中的进程状态：</span><br><span class="line">▽	运行状态</span><br><span class="line">▽	可中断睡眠状态7</span><br><span class="line">▽	不可中断睡眠状态</span><br><span class="line">▽	暂停状态</span><br><span class="line">▽	僵死状态</span><br></pre></td></tr></table></figure>
+<h5 id="进程调度及调度算法"><a href="#进程调度及调度算法" class="headerlink" title="进程调度及调度算法"></a>进程调度及调度算法</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">先来先服务调度算法</span><br><span class="line">短进程优先调度算法</span><br><span class="line">高优先级优先调度算法</span><br><span class="line">时间片轮转法（公平）</span><br></pre></td></tr></table></figure>
+
+<h5 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程描述信息（进程标识符）</span><br><span class="line">进程控制信息（进程当前状态等）</span><br><span class="line">资源信息（I/O设备号、缓冲、内存等）</span><br><span class="line">现场保护信息（寄存器、PC、PSW、栈指针）</span><br></pre></td></tr></table></figure>
+<h5 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、分配一个内部标识，在内核中建立进程结构.</span><br><span class="line">复制父进程的环境。</span><br><span class="line">2、为进程分配资源，包括所有元素（程序、数据、用户栈等，复制父进程地址空间的内容到该进程地址空间中。</span><br><span class="line">3、置该进程的状态为就绪，插入就绪队列。</span><br></pre></td></tr></table></figure>
+<h5 id="进程撤销"><a href="#进程撤销" class="headerlink" title="进程撤销"></a>进程撤销</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">关闭软中断:因为进程即将终止而不再处理任何软中断信号；</span><br><span class="line">回收资源：释放进程分配的所有资源，如关闭所有已打开文件，释放进程相应的数据结构等；</span><br><span class="line">写记帐信息：将进程在运行过程中所产生的记帐数据（其中包括进程运行时的各种统计信息）记录到一个全局记帐文件中；</span><br><span class="line">置该进程为僵死状态:向父进程发送子进程死的软中断信号，将终止信息status送到指定的存储单元中；</span><br><span class="line">转进程调度:因为此时CPU已经被释放，需要由进程调度进行CPU再分配。</span><br></pre></td></tr></table></figure>
+<h5 id="避免僵尸进程"><a href="#避免僵尸进程" class="headerlink" title="避免僵尸进程"></a>避免僵尸进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">避免僵尸进程</span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line">signal(SIGCHLD, SIG_IGN);//子进程信号，忽略</span><br></pre></td></tr></table></figure>
+
+<h5 id="1：n-的机制"><a href="#1：n-的机制" class="headerlink" title="1：n 的机制"></a>1：n 的机制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、从子进程获得父进程id容易。</span><br><span class="line">2、把子进程id返回给父进程，以便控制</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>了解守护进程</title>
+    <url>/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/</url>
+    <content><![CDATA[<h5 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">守护进程是在后台运行不受控端控制的进程，通常情况下守护进程在系统启动时自动运行。守护进程的名称通常以d结尾，比如sshd、xinetd、crond等</span><br></pre></td></tr></table></figure>
+
+<h5 id="了解会话期"><a href="#了解会话期" class="headerlink" title="了解会话期"></a>了解会话期</h5> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 远程登录服务器，登录成功之后，linux服务器和终端之间建立一个会话期，会话期默认启动shell程序。</span><br><span class="line">注：shell是进程组， ps -ef | grep xx 也是进程组。。。都在终端中，如果想脱离终端，必须建立子进程代替父进程，该子进程为未来守护进程，调用setsid创建新的会话期</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
   </entry>
 </search>
