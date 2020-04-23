@@ -111,14 +111,14 @@
 
 
 
-<meta name="description" content="事务：12345678定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事物的 ACID 特性：原子性、一致性、隔离性、持续性。事务是并发控制的基本单位。并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。不可重复读：在一个事务内两次读数据之">
+<meta name="description" content="事务：12345678定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事务的 ACID 特性：原子性、一致性、隔离性、持续性。事务是并发控制的基本单位。并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。不可重复读：在一个事务内两次读数据之">
 <meta property="og:type" content="article">
 <meta property="og:title" content="事务">
 <meta property="og:url" content="https://hsm0409.github.io/MySql-Lover/%E5%8A%A1/index.html">
 <meta property="og:site_name" content="梦在广工">
-<meta property="og:description" content="事务：12345678定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事物的 ACID 特性：原子性、一致性、隔离性、持续性。事务是并发控制的基本单位。并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。不可重复读：在一个事务内两次读数据之">
+<meta property="og:description" content="事务：12345678定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事务的 ACID 特性：原子性、一致性、隔离性、持续性。事务是并发控制的基本单位。并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。不可重复读：在一个事务内两次读数据之">
 <meta property="article:published_time" content="2020-04-03T09:51:00.000Z">
-<meta property="article:modified_time" content="2020-04-18T10:01:39.865Z">
+<meta property="article:modified_time" content="2020-04-23T01:17:29.159Z">
 <meta property="article:author" content="Ming">
 <meta property="article:tag" content="MySql">
 <meta name="twitter:card" content="summary">
@@ -456,7 +456,7 @@
       
 
       
-        <h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+        <h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事务的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
 <p>扩展知识点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>
       
@@ -498,8 +498,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="prev" title="超声波传感器">
-                超声波传感器 <i class="fa fa-chevron-right"></i>
+              <a href="/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/" rel="prev" title="联发科面试">
+                联发科面试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,7 +584,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -595,7 +595,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -684,7 +684,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>

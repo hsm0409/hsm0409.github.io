@@ -336,6 +336,1411 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E4%BB%B6/" itemprop="url">文件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T14:52:00+08:00">
+                2020-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E4%BB%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E4%BB%B6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
+<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/" itemprop="url">数据库安全性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T09:17:00+08:00">
+                2020-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySql-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MySql Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="数据库安全概述"><a href="#数据库安全概述" class="headerlink" title="数据库安全概述"></a>数据库安全概述</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。</span><br><span class="line">数据库不安全因素:</span><br><span class="line">(1)非授权用户对数据库进行破坏</span><br><span class="line">(2)数据库重要或者敏感数据泄露</span><br><span class="line">(3)安全环境的脆弱性</span><br></pre></td></tr></table></figure>
+<h5 id="安全标准"><a href="#安全标准" class="headerlink" title="安全标准"></a>安全标准</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)</span><br></pre></td></tr></table></figure>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg" class="" title="TCSEC标准">
+
+
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class="" title="CC标准">
+
+<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class="" title="视图例子">
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/" itemprop="url">进程创建、等待、结束</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T23:13:00+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="fork-系统调用"><a href="#fork-系统调用" class="headerlink" title="fork 系统调用"></a>fork 系统调用</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">一次调用，二次返回？</span><br><span class="line">答：如果成功创建一个子进程，对于父进程来说返回子进程ID</span><br><span class="line">如果成功创建一个子进程，对于子进程来说返回值为0</span><br><span class="line">问题的本质是：两次返回，是在各自的进程空间中返回的。</span><br><span class="line">子进程和父进程各有自己的内存空间 （fork：代码段、数据段、堆栈段、PCB进程控制块的copy）。</span><br><span class="line">fork返回值大于零的是父进程，为什么这样设计:？</span><br><span class="line">答：因为父进程求子进程的pid比较困难，子进程求父进程的id比较容易</span><br></pre></td></tr></table></figure>
+<h5 id="fork-c"><a href="#fork-c" class="headerlink" title="fork.c"></a>fork.c</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"fork error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">    //子进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the child process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">    //父进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the parent process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="vfork-与fork区别"><a href="#vfork-与fork区别" class="headerlink" title="vfork 与fork区别"></a>vfork 与fork区别</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vfork函数vfork函数与fork函数相同,都是系统调用函数,两者的区别是在创建子进程时, fork函数会复制所有的父送源,包括进程环境、内荐资源等。而vfork函数在创建子进程时,不会复制父进程的所有资源,父子进程共享空间，可以修改父进程内存空间中的值。</span><br><span class="line">注意：在使用vfork函数时,父进程会被阻塞,需要学进程调用_exit函数退出子进程,不能使用<span class="built_in">exit</span>退出.</span><br></pre></td></tr></table></figure>
+<h5 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int gvar=2;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	int var=5;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"process id:%ld\n"</span>,(long)getpid());//getpid 获取当前进程id</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"gvar=%d var=%d\n"</span>,gvar,var);</span><br><span class="line">	<span class="keyword">if</span>((pid=vfork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"error!"</span>);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		gvar--;</span><br><span class="line">		var++;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		_exit(0);//退出子程序</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the parent process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">运行简要结果 ： //当前</span><br><span class="line">	process id:2825</span><br><span class="line">	gvar=2 var=5</span><br><span class="line">	the child process id:2826</span><br><span class="line">	gvar=1 var=6//子进程  共享变量的修改</span><br><span class="line">	the parent process id:2825//父进程</span><br><span class="line">	gvar=1 var=6</span><br></pre></td></tr></table></figure>
+<h5 id="exec调用函数"><a href="#exec调用函数" class="headerlink" title="exec调用函数"></a>exec调用函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">       <span class="comment">#include &lt;unistd.h&gt; </span></span><br><span class="line">       extern char **environ;</span><br><span class="line">       int execl(const char *path, const char *arg, ...); </span><br><span class="line">       int execlp(const char *file, const char *arg, ...); </span><br><span class="line">       int execle(const char *path, const char *arg,</span><br><span class="line">                  ..., char * const envp[]);    </span><br><span class="line">       int execv(const char *path, char *const argv[]);</span><br><span class="line">       int execvp(const char *file, char *const argv[]);</span><br><span class="line">参数说明：</span><br><span class="line">	path参数表示你要启动程序的名称包括路径名</span><br><span class="line">	arg参数表示启动程序所带的参数</span><br><span class="line">	返回值:成功返回0,失败返回-1</span><br><span class="line">函数名说明： </span><br><span class="line">    l代表可变参数列表，p代表在path环境变量中搜索file文件。envp代表环境变量。</span><br><span class="line">例子1：</span><br><span class="line">----------------execve.c-----------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">/*	execve(<span class="string">"new"</span>,argv,environ);</span><br><span class="line">	puts(<span class="string">"正常情况下无法输出此信息"</span>);</span><br><span class="line">*/</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create child process failed!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	       execve(<span class="string">"new"</span>,argv,environ);//文件名字+当前路径+环境变量</span><br><span class="line">           // execve(<span class="string">"./new"</span>,NULL,NULL);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		puts(<span class="string">"正常情况下输出此信息"</span>); //不想舍去放在父进程</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">---------------new2.c----------------</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">extern char **environ;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	puts(<span class="string">"welcome to mrsoft"</span>);</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------</span><br><span class="line">例子2：用execlp调用vi,打开了new2.c</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line">int main(int argc,char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;2)</span><br><span class="line">	&#123;</span><br><span class="line">	 	 <span class="built_in">printf</span>(<span class="string">"vi的等效用法： %s filename\n"</span>,argv[0]);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line"> 	 &#125;</span><br><span class="line">	  execlp(<span class="string">"/bin/vi"</span>,<span class="string">"vi"</span>,argv[1],(char*)NULL);//文件路径+操作变量名+操作的文件+NULL</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">运行时输入命令：./execlp ./new2.c</span><br></pre></td></tr></table></figure>
+
+<h5 id="wait等待函数"><a href="#wait等待函数" class="headerlink" title="wait等待函数"></a>wait等待函数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">	父进程没有调用等待函数，子进程会变成僵尸进程。</span><br><span class="line">	僵尸进程：如果子进程先退出，父进程还没退出，那么子进程必须等到父进程捕获到了子进程的退出状态才真正结束，否则这个时候子进程就成为僵进程。</span><br><span class="line">	孤儿进程：如果父亲进程先结束，子进程会托孤给1号进程</span><br><span class="line">-------------------</span><br><span class="line">    子进程结束，内核会向父进程发送SIGCHLD信号，子进程的退出是个异步事件（子进程可以在父进程运行的任何时刻终止）</span><br><span class="line">    如果存在子进程,进程时的结束状态有(status)如下两种可能: </span><br><span class="line">	进程正常结束：status和PID，status存在子进程退出码（子进程main返回参数或者exti返回参数）当中。</span><br><span class="line"></span><br><span class="line">   信号引起子进程结束：若发送的信号被进程捕获,就不会起到终止进程作用;若信号没有被进程捕误,则会使进程非正常结束。此时参数status返回的状态值为接收到的信号 ,存在最后一个字节中。</span><br><span class="line">例子：</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line">void exit_s(int status)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(WIFEXITED(status)) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"normal exit,status=%d\n"</span>,WEXITSTATUS(status));</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(WIFSIGNALED(status))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"signal exit!status=%d\n"</span>,WTERMSIG(status));</span><br><span class="line">&#125;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid,pid1;</span><br><span class="line">	int status;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"child process error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process!\n"</span>);</span><br><span class="line">		pid1=getpid();</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,9);//结束   信号退出</span><br><span class="line">	//	<span class="built_in">kill</span>(pid1,17);//进入父进程  <span class="built_in">wait</span> erro</span><br><span class="line">		<span class="built_in">kill</span>(pid1,19);//终止   直接退出</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">wait</span>(&amp;status)!=pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"this is a parent process!\nwait error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	exit_s(status);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">扩展：</span><br><span class="line">宏定义</span><br><span class="line">WIFEXITED(status)	如果子进程正常结束，返回一个非零值</span><br><span class="line">WEXITSTATUS(status)	如果WIFEXITED非零，返回子进程退出码</span><br><span class="line">WIFSIGNALED(status)	子进程因为捕获信号而终止，返回非零值</span><br><span class="line">WTERMSIG(status)	如果WIFSIGNALED非零，返回信号代码</span><br><span class="line">WIFSTOPPED(status)	如果子进程被暂停，返回一个非零值</span><br><span class="line">WSTOPSIG(status)	如果WIFSTOPPED非零，返回一个信号代码</span><br><span class="line">waitip()也用于等待特定进程。调用<span class="built_in">wait</span>或者waitpid函数查询子进程退出状态，此方法父进程会被挂起。</span><br><span class="line">如果不想让父进程挂起，可以在父进程中加入一条语句：</span><br><span class="line">signal(SIGCHLD,SIG_IGN);表示父进程忽略SIGCHLD信号，该信号是子进程退出的时候向父进程发送的。</span><br></pre></td></tr></table></figure>
+<h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：</span><br><span class="line">1）_exit是一个系统调用，<span class="built_in">exit</span>是一个c库函数</span><br><span class="line">2）<span class="built_in">exit</span>会执行清除I/O缓存，可能会丢失临时文件，建议不用。（前面例子，不做说明）</span><br><span class="line">3）<span class="built_in">exit</span>会执行调用终止处理程序</span><br><span class="line"></span><br><span class="line">扩展：atexit（）</span><br><span class="line">代码:</span><br><span class="line">void func1()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello1...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">void func2()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello2...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">atexit(func1);//输出func1</span><br><span class="line">atexit(func2);//输出func2</span><br><span class="line">puts(<span class="string">"hello...\n"</span>);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">运行：</span><br><span class="line">hello...</span><br><span class="line">hello2...</span><br><span class="line">hello1...</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">进程终止的5种方式</span><br><span class="line">正常退出</span><br><span class="line">1)从main函数返回</span><br><span class="line">2)调用<span class="built_in">exit</span></span><br><span class="line">3)调用_exit</span><br><span class="line">异常退出</span><br><span class="line">4)调用abort   产生SIGABOUT信号</span><br><span class="line">5)由信号终止  ctrl+c SIGINT</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Data-Structure-and-Algorithms-Lover/d/" itemprop="url">树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T10:25:00+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structure-and-Algorithms-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure and Algorithms Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Data-Structure-and-Algorithms-Lover/d/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Data-Structure-and-Algorithms-Lover/d/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
+<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/" itemprop="url">数据结构框架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T00:20:00+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structure-and-Algorithms-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure and Algorithms Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
+<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
+<p>遍历框架</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/" itemprop="url">PCB的基本常识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-17T15:41:00+08:00">
+                2020-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
+<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
+<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">超声波传感器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T13:57:00+08:00">
+                2020-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>超声波分类</strong><br>振动在弹性介质内的传播称为波动，简称波。<br>低于16 Hz的机械波，称为次声波；<br>在16<del>2×10^4 Hz之间，称为声波；<br>高于2×10^4 Hz的机械波，称为超声波,<br>在3×10^8</del>3×10^11Hz之间的波，称为微波。<br>超声波传感器<br>超声物位传感器：单换能器、双换能器<br>只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </p>
+<p><strong>超声侧厚传感器</strong><br>双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</p>
+<p><strong>超声波流量传感器</strong><br>目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</p>
+<p><strong>超声波传感器的应用</strong><br>超声波流量计<br>超声波侧厚<br>超声波探伤<br>超声波焊接(主要三要素：时间、压力、振幅)<br>超声波报警器</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/" itemprop="url">Linux编程常识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T22:25:00+08:00">
+                2020-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="计算机常识QAQ"><a href="#计算机常识QAQ" class="headerlink" title="计算机常识QAQ"></a>计算机常识QAQ</h5><img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/1.jpg" class="" title="计算机系统硬件组成（linux王保明）">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">▽贯穿整个系统的一组电子管道称为总线</span><br><span class="line">片内总线</span><br><span class="line">系统总线：数据总线DB、地址总线CB、控制总线CB</span><br><span class="line">外部总线</span><br><span class="line"></span><br><span class="line">CPU：运算寄存器ALU、控制器、寄存器（状态寄存器、通用寄存器）</span><br><span class="line">取指、译码、执行、写回、跳转。pc指针多32位。</span><br><span class="line"></span><br><span class="line">什么是操作系统</span><br><span class="line">操作系统：有效地管理计算机系统中的资源，合理地管理计算机系统的工作流程，方便用户使用的程序的集合。</span><br><span class="line"></span><br><span class="line">操作系统五大任务</span><br><span class="line">(1)文件管理</span><br><span class="line">(2)处理器管理</span><br><span class="line">(3)内存管理</span><br><span class="line">(4)设备管理</span><br><span class="line">(5)作业管理</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/2.jpg" class="">
+
+<h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">体系结构:linux内核被划分为多个子系统。基本服务都集成到内核中,例如通信、I/O、内存和进程管理，更具体的服务都是插入到微内核层中的。（收包和发包产生大量中断，放在内核最有效率）。</span><br><span class="line">主要子系统：</span><br><span class="line">（1）系统调用接口</span><br><span class="line">（2）进程管理</span><br><span class="line">（3）内存管理：其中，为每个子程序提供了一个2^32虚拟内存。</span><br><span class="line">为n个进程提供访问的物理空间、段式管理和页式管理就行了。linux进程并发模型.</span><br><span class="line">（4）虚拟文件系统（VFS）：虚拟文件系统 在 系统调用层接口（SCI ）和内核所支持的文件系统之间提供了一个交换层。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">扩展： Linux 可以在一个具有内存管理单元（MMU）的处理器上运行，也可以在那些不提供MMU的处理器上运行。Linux 内核的uClinux移植提供了对非 MMU 的支持</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/3.jpg" class="">
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -506,178 +1911,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">超声波传感器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:02:00+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Transducer-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Transducer Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Transducer-Lover/%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="一、超声波分类"><a href="#一、超声波分类" class="headerlink" title="一、超声波分类"></a>一、超声波分类</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器"><a href="#超声波传感器" class="headerlink" title="超声波传感器"></a>超声波传感器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">超声物位传感器：单换能器、双换能器</span><br><span class="line">只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </span><br><span class="line"></span><br><span class="line">超声侧厚传感器</span><br><span class="line">双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</span><br><span class="line"></span><br><span class="line">超声波流量传感器</span><br><span class="line">目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</span><br></pre></td></tr></table></figure>
-<h5 id="超声波传感器的应用"><a href="#超声波传感器的应用" class="headerlink" title="超声波传感器的应用"></a>超声波传感器的应用</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超声波流量计</span><br><span class="line">超声波侧厚</span><br><span class="line">超声波探伤</span><br><span class="line">超声波焊接(主要三要素：时间、压力、振幅)</span><br><span class="line">超声波报警器</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MySql-Lover/%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -800,1272 +2033,9 @@
       
         
           
-            <h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事物的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+            <h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事务的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
 <p>扩展知识点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/" itemprop="url">华为面试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T17:44:00+08:00">
-                2020-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">My interview Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/" itemprop="url">自振荡产生正弦波、方波、三角波</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T17:05:00+08:00">
-                2020-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><h5 id="1、振荡条件"><a href="#1、振荡条件" class="headerlink" title="1、振荡条件"></a>1、振荡条件</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" class="">
-<h5 id="2、起振、稳幅"><a href="#2、起振、稳幅" class="headerlink" title="2、起振、稳幅"></a>2、起振、稳幅</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" class="">
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(1)无输入源，起振信号源来自哪里？</span><br><span class="line">答：电器内部噪声以及电源接通扰动。</span><br><span class="line">(2)稳幅作用？</span><br><span class="line">答：信号输出幅度达到一定程度时，会失真。必须通过调幅限制，使得振幅平衡回到AF = 1。</span><br></pre></td></tr></table></figure>
-<p>3、基本组成部分</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">▽放大电路</span><br><span class="line">▽反馈电路</span><br><span class="line">▽选频网络</span><br><span class="line">▽稳幅环节</span><br></pre></td></tr></table></figure>
-<p>移相式正弦振荡电路</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" class="">
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">扩展知识点：</span><br><span class="line">1. 电阻上的电压电流同相位</span><br><span class="line">2. 电感上的电流落后电压90°相位</span><br><span class="line">3. 电容上的电流超前电压90°相位</span><br></pre></td></tr></table></figure>
-<p>RC振荡电路</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" class="">
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：Rf为热敏电阻。</span><br></pre></td></tr></table></figure>
-<h4 id="课设设计：100Hz与5000Hz"><a href="#课设设计：100Hz与5000Hz" class="headerlink" title="课设设计：100Hz与5000Hz"></a>课设设计：100Hz与5000Hz</h4><h5 id="原理设计"><a href="#原理设计" class="headerlink" title="原理设计"></a>原理设计</h5><p>正弦波发生</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" class="">
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f0=1/(2π√R1R2C1C2)  </span><br><span class="line">①可以修改 R1 R2 C1 C2 来产生100Hz 和 5000Hz</span><br><span class="line">通过调节R1，R2，C1，C2的值，使得f0=100Hz。先取C1=100nF，C2=100nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=16K,R2=16K。</span><br><span class="line">为了方便调试，16k采用20k滑动变阻器。</span><br><span class="line">②通过调节R1，R2，C1，C2的值，使得f0=5000Hz。先取C1=1nF，C2=1nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=1K,R2≈640Ω。</span><br><span class="line">为了方便调试， 640Ω采用1k滑动变阻器</span><br></pre></td></tr></table></figure>
-<p>正弦波转方波、三角波</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" class="">
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">正弦波转方波：过零比较器</span><br><span class="line">方波转三角波: 积分放大器</span><br></pre></td></tr></table></figure>
-<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" class="">
-
-<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" class="">
-
-<h5 id="课设总结"><a href="#课设总结" class="headerlink" title="课设总结"></a>课设总结</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我在这次课程设计中遇到，一直都调不出理想的波形，检查了很多东西，像接线问题、电路问题、电源问题、示波器问题地线问题等等，所以我总结出，对于要求精度很高的电路，一旦出现实际问题时，应该具备以下三个点：</span><br><span class="line">1.重新审查电路原理图，计算相关数据，运行仿真结果。</span><br><span class="line">2.元件器件的损坏或性能的影响，因为在这个放大电路中稍有偏差，结果就会相差很大，此次个人觉得时间较为紧迫，选择附近的元件卖家，结果性能远远达不到所需的要求。</span><br><span class="line">3.要有足够的耐心和冷静的思考，当图形出现差异时，冷静的思考是必不可少的。</span><br><span class="line">通过这次课程设计,我懂得了要完成一个电路的设计,理论基础是根基,实践操作是完成实物的重要部分,而创新能力则决定了一个电路的价值,因为设计一个电路,决不是简单地按课本的电路图进行焊接成型,我们要进行电路各个元件参数的计算,这个涉及我们所掌握的理论知识,元件的计算是设计中较为重要的一部分,计算准了,则设计出来的电路误差不大,否则,设计出来的电路性能指标跟要求相差甚远。</span><br><span class="line">最困难的是当电路出现错误是,如何检测出错误之处,如何排除错误,它考验了我们如何运用理论知识和实际的调试的能力, 这也是我大三这一年最需要注重和提高的地方。</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/My-interview-Lover/te%E9%9D%A2%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/" itemprop="url">cvte面试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T17:25:00+08:00">
-                2020-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/My-interview-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">My interview Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/My-interview-Lover/te%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/uncategorized/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/uncategorized/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-16T00:28:00+08:00">
-                2019-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/uncategorized/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/" itemprop="url">555概念及使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-21T14:12:00+08:00">
-                2019-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class="">
-<h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class="" title="波形变换">
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class="" title="定时">
-<h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
-
-<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class="">
-<h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class="">
-
-<table>
-<thead>
-<tr>
-<th align="center">引脚</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1脚</td>
-<td align="left">外接电源负端VSS或接地，一般情况下接地。</td>
-</tr>
-<tr>
-<td align="center">2脚</td>
-<td align="left">低触发端TL，该脚电压小于1/3 VCC时有效。</td>
-</tr>
-<tr>
-<td align="center">3脚</td>
-<td align="left">输出端OUT。</td>
-</tr>
-<tr>
-<td align="center">4脚</td>
-<td align="left">直接清零端RST。当此端接低电平时，则时基电路不工作</td>
-</tr>
-<tr>
-<td align="center">5脚</td>
-<td align="left">CO为控制电压端。若此脚外接电压，则可改变内部两个比较器的基准电压，当该脚不用时，应将该脚串入一只0.01μF（103）瓷片电容接地，以防引入高频干扰。</td>
-</tr>
-<tr>
-<td align="center">6脚</td>
-<td align="left">高触发端TH，该脚电压大于2/3 VCC时有效。</td>
-</tr>
-<tr>
-<td align="center">7脚</td>
-<td align="left">放电端。该端与放电管T的集电极相连</td>
-</tr>
-<tr>
-<td align="center">8脚</td>
-<td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="url">Solidworks与PCB的结合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-25T14:29:00+08:00">
-                2019-08-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mechanic-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Mechanic Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
-
-
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E6%A6%82%E5%BF%B5/" itemprop="url">数电概念</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-24T21:04:00+08:00">
-                2019-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
-
-
           
         
       
@@ -2104,7 +2074,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2154,7 +2124,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2165,7 +2135,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2238,7 +2208,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">3</span></li></ul>
 				</canvas>
 			</div>
 		</div>
