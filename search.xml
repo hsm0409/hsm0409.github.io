@@ -40,16 +40,112 @@
   <entry>
     <title>Socket编程了解</title>
     <url>/Linux-Lover/Socket%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3/</url>
-    <content><![CDATA[<h5 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1)socket可以看成是用户进程与内核网络协议栈的编程接口。</span><br><span class="line">1)socket不仅可以用于本机的进程间通信，还可以用于网络上不同主机的进程间通信。</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h5 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h5><p>1)socket可以看成是用户进程与内核网络协议栈的编程接口。<br>1)socket不仅可以用于本机的进程间通信，还可以用于网络上不同主机的进程间通信。</p>
 <img src="/Linux-Lover/Socket%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3/1.jpg" class="">
 
-<h5 id="大端、小端"><a href="#大端、小端" class="headerlink" title="大端、小端"></a>大端、小端</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0x 12 34 56 78 </span><br><span class="line">低字节78放高位地址，大端；</span><br><span class="line">低字节78放低位地址，小端。</span><br><span class="line"></span><br><span class="line">大端：0x12345678</span><br><span class="line">小端：0x87654321 </span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">int i =0x12345678 ;</span><br><span class="line"><span class="keyword">if</span> (*(char*)&amp;i == 0x12) //地址转化再访问</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; <span class="string">"大端"</span> &lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; <span class="string">"小端"</span> &lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="Socket-API基本用法"><a href="#Socket-API基本用法" class="headerlink" title="Socket API基本用法"></a>Socket API基本用法</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nt socket(int domain, int <span class="built_in">type</span>, int protocol);创建一个套接字用于通信</span><br><span class="line"></span><br><span class="line">	int <span class="built_in">bind</span>(int sockfd, const struct sockaddr *addr, socklen_t addrlen);绑定一个本地地址到套接字</span><br><span class="line">listen函数</span><br><span class="line">	对于给定的监听套接口，内核要维护两个队列：</span><br><span class="line">	1、已由客户发出并到达服务器，服务器正在等待完成相应的TCP三路握手过程</span><br><span class="line">	2、已完成连接的队列</span><br><span class="line">	int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);</span><br><span class="line">accept函数  从已完成连接队列返回第一个连接，如果已完成连接队列为空，则阻塞。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
+<h5 id="大端、小端"><a href="#大端、小端" class="headerlink" title="大端、小端"></a>大端、小端</h5><p>0x 12 34 56 78<br>低字节78放高位地址，大端；高字节12放低位位地址<br>低字节78放低位地址，小端；高字节12放高位地址</p>
+<p>大端：0x12345678<br>小端：0x87654321<br>#include <iostream><br>using namespace std;<br>int main ()<br>{<br>int i =0x12345678 ;<br>if (<em>(char</em>)&amp;i == 0x12) //地址转化再访问<br>{<br>cout &lt;&lt; “大端” &lt;&lt;endl;<br>}<br>else<br>{<br>cout &lt;&lt; “小端” &lt;&lt;endl;<br>}<br>}</p>
+<h5 id="Socket-API基本用法"><a href="#Socket-API基本用法" class="headerlink" title="Socket API基本用法"></a>Socket API基本用法</h5><p>#include &lt;sys/socket.h&gt;</p>
+<p><strong>socket函数</strong></p>
+<p>int socket(int domain, int type, int protocol);<br>创建一个套接字用于通信</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>domain</td>
+<td>指定通信协议族（protocol family）</td>
+<td>AF_INET</td>
+</tr>
+<tr>
+<td>type</td>
+<td>指定socket类型</td>
+<td>流式套接字SOCK_STREAM，数据报套接字SOCK_DGRAM，原始套接字SOCK_RAW</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>协议类型</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>bind函数</strong></p>
+<p>int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);<br>绑定一个本地地址到套接字</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sockfd</td>
+<td>socket函数返回的套接字</td>
+</tr>
+<tr>
+<td>addr</td>
+<td>要绑定的地址</td>
+</tr>
+<tr>
+<td>len</td>
+<td>地址长度</td>
+</tr>
+</tbody></table>
+<p><strong>listen函数</strong></p>
+<p>一般来说，listen函数应该在调用socket和bind函数之后，调用函数accept之前调用。<br>int listen(int sockfd, int backlog);<br>参数sockfd 是socket()函数返回的套接字描述符；<br>参数backlog指定在请求队列中允许的最大请求数，</p>
+<p>对于给定的监听套接口，内核要维护两个队列：<br>1、已由客户发出并到达服务器，服务器正在等待完成相应的TCP三路握手过程<br>2、已完成连接的队列</p>
+<p><strong>accept函数</strong></p>
+<p>int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);<br>从已完成连接队列返回第一个连接，如果已完成连接队列为空，则阻塞。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sockfd</td>
+<td>socket函数返回的套接字</td>
+</tr>
+<tr>
+<td>addr</td>
+<td>将返回对等方的套接字地址</td>
+</tr>
+<tr>
+<td>addrlen</td>
+<td>返回对等方的套接字地址长度</td>
+</tr>
+</tbody></table>
+<p><strong>connect函数</strong></p>
+<p>int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);<br>建立一个连接至addr所指定的套接字</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sockfd</td>
+<td>未连接套接字</td>
+</tr>
+<tr>
+<td>addr</td>
+<td>要连接的套接字地址</td>
+</tr>
+<tr>
+<td>addrlen</td>
+<td>地址长度</td>
+</tr>
+</tbody></table>
+<h5 id="Socket-API地址复用"><a href="#Socket-API地址复用" class="headerlink" title="Socket API地址复用"></a>Socket API地址复用</h5><p>SO_REUSEADDR：服务器端尽可能使用SO_REUSEADDR，在绑定之前尽可能调用setsockopt来设置SO_REUSEADDR套接字选项。</p>
+<p>作用：使用SO_REUSEADDR选项可以使得不必等待TIME_WAIT状态消失就可以重启服务器</p>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int optval = 1;</span><br><span class="line">	<span class="keyword">if</span> (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &amp;optval, sizeof(optval)) &lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"setsockopt bind\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Socket多客户端连接"><a href="#Socket多客户端连接" class="headerlink" title="Socket多客户端连接"></a>Socket多客户端连接</h5>]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -595,22 +691,6 @@
       </tags>
   </entry>
   <entry>
-    <title>51单片机</title>
-    <url>/uncategorized/1%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>51</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>STM32单片机</title>
-    <url>/uncategorized/TM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>STM32</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>cron /crontab 计划任务</title>
     <url>/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</url>
     <content><![CDATA[<p>分 时 日  月  星期</p>
@@ -813,17 +893,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C字符串常用函数</title>
-    <url>/C-C-Lover/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>微波传感器</title>
     <url>/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
     <content><![CDATA[<h5 id="微波"><a href="#微波" class="headerlink" title="微波"></a>微波</h5><p>微波是0.1m-1m的电磁波，波长相对较长的电磁波。对应的波段频率范围为300 MHz～3000 GHz。 </p>
@@ -877,6 +946,191 @@
       </categories>
       <tags>
         <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32单片机</title>
+    <url>/uncategorized/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C字符串常用函数</title>
+    <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51单片机</title>
+    <url>/uncategorized/%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>51</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传感器的特点</title>
+    <url>/Circuit-Lover/%E5%99%A8%E7%9A%84%E7%89%B9%E7%82%B9/</url>
+    <content><![CDATA[<p>1.什么叫传感器? </p>
+<p>能够感受规定的被测量并按照一定规律转化成可用输出信号的器件或装置。</p>
+<p>2、传感器共性是什么？<br>传感器的共性就是利用物理规律或物质的物理、生物、化学特性，将非电量信号（位移、速度、力等）输入转换成电量（电压、电流、电容等）输出。</p>
+<p>3、传感器由哪些部分组成？<br>传感器一般是由敏感元件、转化元件和变换电路三部分组成。</p>
+<p>4、改善传感器？<br>（1）差动技术<br>（2）平均技术<br>（3）补偿与修正<br>（4）干扰抑制<br>（5）稳定性处理</p>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>少用全局变量</title>
+    <url>/C-C-Lover/%E5%B0%91%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全局变量</td>
+<td>在整个工程文件内都有效；“在函数外定义的变量”，即从定义变量的位置到本源文件结束都有效。由于同一文件中的所有函数都能引用全局变量的值，因此如果在一个函数中改变了全局变量的值， 就能影响到其他函数中全局变量的值。</td>
+</tr>
+<tr>
+<td>静态全局变量</td>
+<td>只在定义它的文件内有效，效果和全局变量一样，不过就在本文件内部；</td>
+</tr>
+<tr>
+<td>静态局部变量</td>
+<td>只在定义它的函数内有效，只是程序仅分配一次内存，函数返回后，该变量不会消失；静态局部变量的生存期虽然为整个工程，但是其作用仍与局部变量相同，即只能在定义该变量的函数内使用该变量。退出该函数后， 尽管该变量还继续存在，但不能使用它。</td>
+</tr>
+<tr>
+<td>局部变量</td>
+<td>在定义它的函数内有效，但是函数返回后失效。“在函数内定义的变量”，即在一个函数内部定义的变量，只在本函数范围内有效。</td>
+</tr>
+</tbody></table>
+<p>__注意</p>
+<p>全局变量和静态变量如果没有手工初始化，则由编译器初始化为0。局部变量的值不可知。静态局部变量与全局变量最明显的区别就在于：全局变量在其定义后所有函数都能用，但是静态局部变量只能在一个函数里面用。<br>滥用全局变量会造成不必要的常量频繁使用，特别当这个常量没有用宏定义“正名”时，代码阅读起来将万分吃力。</p>
+<p>__有什么对策？</p>
+<ol>
+<li>能不用全局变量尽量不用。</li>
+<li>如果不可避免需要用到，那能藏多深就藏多深。<br>1)如果只有某.c文件用，就static到该文件中，顺便把结构体定义也收进来；<br>2)如果只有一个函数用，那就static到函数里面去；<br>3)如果非要开放出去让人读取，那就用函数return出去，这样就是只读属性了；<br>4)如果非要遭人蹂躏赋值，好吧，我开放函数接口让你传参赋值<br>5)实在非要extern我，我还可以严格控制包含我.h档的对象，而不是放到公共的includes.h中被人围观，丢人现眼。<br>6）当一个模块里面的全局变量超过3个(含)时，就用结构体包起来吧。要归0便一起归0，省得丢三落四的。</li>
+</ol>
+<p>公众号：C/C++技术文章<br>参考资料：<br>【1】佚名. 全局变量、局部变量、静态全局变量、静态局部变量的区别<br>【2】佚名. 嵌入式C编程经验之全局变量猛于虎<br>【3】《C11标准文档》</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>美的</title>
+    <url>/uncategorized/%E7%9A%84/</url>
+    <content><![CDATA[<p>四大业务：数字化业务、消费者家电、空调业务、机器人自动化</p>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP</title>
+    <url>/Linux-Lover/TCP/</url>
+    <content><![CDATA[<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
+
+<p>serv.c文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client.c文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>结果</strong></p>
+<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网络</title>
+    <url>/Linux-Lover/%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<p>1.计算机网络定义<br>所谓的计算机网络，就是一些互相连接的、自治的计算机的集合。计算机网络有很多种类别。<br>（1）根据不同的作用范围可以将计算机网络理解为广域网（WAN）、城域网（MAN）、局域网（LAN）、个人区域网（PAN）。<br>（2）根据不同的使用者，可以将计算机网络分为公用网和专用网。</p>
+<p>2.计算机网络的通信模式<br>计算机网络的通信模式有两种，一种是线路交换，另一种是包交换。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>线路交换</td>
+<td>就是我们家家最开始用的电话的网络连接技术，是通过在发送端和接受端之间建立一条特定的线路，进行数据的传输。</td>
+</tr>
+<tr>
+<td>包交换</td>
+<td>就是我们现在常用到的计算机的网络通信模式，是通过将所有的计算机放到一个共同的网络连接中，数据的发送端将要传输的数据分割成几份，然后将每一份数据封装成一个包，包中含有接收端的属性信息等，且每个包都是单独传输的。</td>
+</tr>
+</tbody></table>
+<p>TCP/IP通信协议采用了4层的层级结构，这4层分别为：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>在此层中提供了节点间的数据传送服务，如传输控制协议（TCP）、用户数据包协议（UDP）等，TCP和UDP给数据包加入传输数据并把它传输到下一层中。这一层负责传送数据，并且确定数据已被送达并接收。</td>
+</tr>
+<tr>
+<td>互联网络层</td>
+<td>负责提供基本的数据封包传送功能，让每一块数据包都能够到达目的主机（但不检查是否被正确接收），如网际协（IP）。</td>
+</tr>
+<tr>
+<td>网络接口层</td>
+<td>对实际的网络媒体的管理，定义如何使用实际网络（如Ethernet、Serial Line等）来传送数据。</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>视觉传感器</title>
+    <url>/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<p><strong>定义</strong><br>光学图像转化为数字信号的传感器。//非接触检测方法</p>
+<p><strong>了解器件</strong><br>CCD -电荷耦合器(Charge-Coupled Device)-新型固体器件<br>CCD结构组成：MOS光敏阵列(金属-氧化物-半导体)+读出移位寄存器=一个MOS光敏元或一个像素</p>
+<p><strong>整个过程信号</strong> ：物理-光学-电气-视频<br><strong>CCD</strong> 作用信号转化 :光学-电气</p>
+<p><strong>电荷耦合器工作原理</strong><br>CCD产生（内光电效应）<br>CCD存储（存储在势井）<br>CCD传输（电荷的定向移动（势井的移动））<br>CDD检测或输出（电流输出、电压输出—浮置栅放大器、浮置扩散放大器）</p>
+<p>常见：面型图像传感器组成：感光区+存储+视频输出（串行输出）<br>外形结构和驱动时序不同，原理基本相同，向厂家拿资料。<br>常用：几何量（外加光源工件尺寸或缺陷）、文字、图像识别。</p>
+<p>扩展：mark点又叫光学定位点和反光点，如果没有 mark点，对位就不会不准。</p>
+<p>CMOS - 下节课</p>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
       </tags>
   </entry>
 </search>
