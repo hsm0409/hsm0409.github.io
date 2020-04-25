@@ -1,32 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>模电概念</title>
-    <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
-    <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
-<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
-<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class="">
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
-<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class="">
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
-<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
-<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
-<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>]]></content>
+    <title>MySql常见报错</title>
+    <url>/MySql-Lover/MySql%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<p>外键约束报错？</p>
+<p>SET foreign_key_checks = 0;<br>······<br>SET foreign_key_checks = 1;</p>
+<p>update 修改报错？<br>这是因为MySql运行在safe-updates模式下，该模式会导致非主键条件下无法执行update或者delete命令，执行命令SET SQL_SAFE_UPDATES = 0;</p>
+]]></content>
       <categories>
-        <category>Circuit Lover</category>
+        <category>MySql Lover</category>
       </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
   </entry>
   <entry>
-    <title>Linux编程常识</title>
-    <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/</url>
-    <content><![CDATA[<h5 id="计算机常识QAQ"><a href="#计算机常识QAQ" class="headerlink" title="计算机常识QAQ"></a>计算机常识QAQ</h5><img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/1.jpg" class="" title="计算机系统硬件组成（linux王保明）">
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽贯穿整个系统的一组电子管道称为总线</span><br><span class="line">片内总线</span><br><span class="line">系统总线：数据总线DB、地址总线CB、控制总线CB</span><br><span class="line">外部总线</span><br><span class="line"></span><br><span class="line">CPU：运算寄存器ALU、控制器、寄存器（状态寄存器、通用寄存器）</span><br><span class="line">取指、译码、执行、写回、跳转。pc指针多32位。</span><br><span class="line"></span><br><span class="line">什么是操作系统</span><br><span class="line">操作系统：有效地管理计算机系统中的资源，合理地管理计算机系统的工作流程，方便用户使用的程序的集合。</span><br><span class="line"></span><br><span class="line">操作系统五大任务</span><br><span class="line">(1)文件管理</span><br><span class="line">(2)处理器管理</span><br><span class="line">(3)内存管理</span><br><span class="line">(4)设备管理</span><br><span class="line">(5)作业管理</span><br></pre></td></tr></table></figure>
+    <title>mysql+qt基本命令</title>
+    <url>/MySql-Lover/mysql-qt%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>– 创建一个名称为info的数据库。</p>
+<p>create database info;</p>
+<p>– 删除数据库info</p>
+<p>– drop database info;</p>
+<p>– 使用数据库 info</p>
+<p>use info;</p>
+<p>– 创建表</p>
+<p>– create table student(id int primary key auto_increment, name varchar(255), age int, score int);</p>
+<p>create table student(id int primary key, name varchar(255), age int, score int);</p>
+<p>– 删除student表</p>
+<p>– drop table student;</p>
+<p>– 插入数据</p>
+<p>insert into student(id, name, age) values(1, ‘mike’, 18);</p>
+<p>insert into student(id, name, age, score) values(2, ‘lucy’, 22, 90);</p>
+<p>insert into student(id, name, age, score) values(3, ‘Tom’, 20, 78);</p>
+<p>– 更新数据</p>
+<p>update student set score = 90 where id = 3;</p>
+<p>– 查找数据</p>
+<p>select * from student;</p>
+<p>select score from student where name = ‘mike’;</p>
+<p>– 删除数据库</p>
+<p>delete from student where name = ‘mike’;</p>
+]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原始套接字</title>
+    <url>/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/</url>
+    <content><![CDATA[<p>对于一个自定义的IP包，或者一个ICMP协议包，又是如何实现传送的呢？<br>原始套接字就允许对这些较底层次的协议（IP、ICMP、IGMP）进行直接访问。</p>
+<p><strong>原始套接字定义</strong></p>
+<p>原始套接字编程是一种非面向连接的、C/S传输方式的网络编程，使用原始套接字编程进行服务器端与客户端的通信前，首先要创建各自的套接字，然后对相应的套接字进行数据传输，在数据传输过程中，需要使用sendto()函数和recvfrom()函数进行发送与接收，在发送与接收函数中设置相应的IP地址。</p>
+<p>扩展：原始套接字往往应用于高级网络编程，如比较流行的网络嗅探器（sniffer）、拒绝服务攻击（DOS）、IP欺骗等等都可以实现，并且还可以通过原始套接字来模拟IP的一些实用工具，如Ping命令。</p>
+<p>1.创建函数<br>，如TCP套接字编程选择的是SOCK_STREAM类型的套接字，UDP套接字编程选择的是SOCK_DGRAM类型的套接字，而原始套接字编程则需要选择SOCK_RAW类型的套接字。<br>上述代码创建了一个AF_INET协议族中的原始套接字，协议类型为protocol。<br>协议类型protocol通常设置0，可以取值还包括如下四种：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol</td>
+<td>IPPROTO_IP、IPPROTO_ICMP、IPPROTO_TCP、IPPROTO_UDP</td>
+</tr>
+</tbody></table>
+<p>说明：创建完原始套接字后，可以通过向网络中定义自己的IP数据包，但是在Linux系统中，为了保护网络系统的安全，规定只有超级用户才有创建原始套接口的权限。</p>
+<p>2.设置套接字选项<br>函数setsockopt()主要用于实现对套接字相关的选项设置当前值。</p>
+<p>int setsockopt(int s, int  level,  int  optname,  const  void  *optval, socklen_t optlen);</p>
+<p>|参数解释<br>|-|-|<br>|参数s表示套接字描述符；<br>|参数level代表的是选项定义的层次，如IPPROTO_IP；<br>|参数optname代表套接字选项的名称，例如IP_HDRINCL表示要构造IP头部；<br>|参数optval表示指向存放选项数据的缓冲区的指针；<br>|参数optlen表示optval参数指向的缓冲区的长度。</p>
+<p>当使用套接字选项IP_HDRINCL设置套接字后，接收和发送数据的时候，接收到的数据包含IP数据的，包含IP的头部。用户之后需要对IP层相关的数据段进行处理，例如IP头部数据的设置和分析，校验和的计算等。设置方法如下：<br>int set = 1;<br>if(setsockopt(rawsock, IPPROTO_IP, IP_HDRINCL, &amp;set, sizeof(set))&lt;0)<br>{<br>/<em>错误信息提示</em>/<br>}</p>
+<p><strong>了解报文</strong></p>
+<img src="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="报文结构">
 
-<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/2.jpg" class="">
 
-<h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">体系结构:linux内核被划分为多个子系统。基本服务都集成到内核中,例如通信、I/O、内存和进程管理，更具体的服务都是插入到微内核层中的。（收包和发包产生大量中断，放在内核最有效率）。</span><br><span class="line">主要子系统：</span><br><span class="line">（1）系统调用接口</span><br><span class="line">（2）进程管理</span><br><span class="line">（3）内存管理：其中，为每个子程序提供了一个2^32虚拟内存。</span><br><span class="line">为n个进程提供访问的物理空间、段式管理和页式管理就行了。linux进程并发模型.</span><br><span class="line">（4）虚拟文件系统（VFS）：虚拟文件系统 在 系统调用层接口（SCI ）和内核所支持的文件系统之间提供了一个交换层。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">扩展： Linux 可以在一个具有内存管理单元（MMU）的处理器上运行，也可以在那些不提供MMU的处理器上运行。Linux 内核的uClinux移植提供了对非 MMU 的支持</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/3.jpg" class="">
+
+
+
+
 
 
 ]]></content>
@@ -35,6 +88,406 @@
       </categories>
       <tags>
         <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>死锁</title>
+    <url>/Linux-Lover/%E9%94%81/</url>
+    <content><![CDATA[<p>产生死锁的必要条件是什么？解决死锁有几种方法？</p>
+<p>安全状态与不安全状态：安全状态指系统能按某种进程顺序来为每个进程分配其所需资源，直 至最大需求，使每个进程都可顺利完成。若系统不存在这样一个， 则称系统处于不安全状态。</p>
+<p>死锁：指多个进程因竞争共享资源而造成的一种僵局，若无外力作用，这些进程都将永远不能再 向前推进。<br>产生死锁的原因：（1）竞争系统资源 （2）进程的推进顺序不当<br>满足四个条件：</p>
+<ol>
+<li>互斥（Mutual exclusion）：存在这样一种资源，它在某个时刻只能被分配给一个执行绪（也称为线程）使用；</li>
+<li>占有（Hold and wait）：当请求的资源已被占用从而导致执行绪阻塞时，资源占用者不但无需释放该资源，而且还可以继续请求更多资源；</li>
+<li>不可剥夺（No preemption）：执行绪获得到的互斥资源不可被强行剥夺，换句话说，只有资源占用者自己才能释放资源；</li>
+<li>循环形等待（Circular wait）：若干执行绪以不同的次序获取互斥资源，从而形成环形等待的局面，想象在由多个执行绪组成的环形链中，每个执行绪都在等待下一个执行绪释放它持有的资源。</li>
+</ol>
+<p>解决死锁的基本方法：</p>
+<p>预防死锁：<br>（1）资源一次性分配：（破坏请求和保持条件）<br>（2）可剥夺资源：即当某进程新的资源未满足时，释放已占有的资源（破坏不可剥夺条件）<br>（3）资源有序分配法：系统给每类资源赋予一个编号，每一个进程按编号递增的顺序请求资源，释放则相反（破坏环路等待条件）</p>
+<p>避免死锁:最具有代表性的避免死锁算法是银行家算法。</p>
+<p>解除死锁:<br>剥夺资源：从其它进程剥夺足够数量的资源给死锁进程，以解除死锁状态；<br>撤消进程：可以直接撤消死锁进程或撤消代价最小的进程，直至有足够的资源可用，死锁状态.消除为止；所谓代价是指优先级、运行代价、进程的重要性和价值等。</p>
+<p>检测死锁<br>有两个容器，一个用于保存线程正在请求的锁，一个用于保存线程已经持有的锁。每次加锁之前都会做如下检测:<br>1)检测当前正在请求的锁是否已经被其它线程持有,如果有，则把那些线程找出来<br>2)遍历第一步中返回的线程，检查自己持有的锁是否正被其中任何一个线程请求<br> 如果第二步返回真,表示出现了死锁</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UDP</title>
+    <url>/Linux-Lover/UDP/</url>
+    <content><![CDATA[<p><strong>基于UDP的网络编程</strong></p>
+<p>主要用到的函数有socket()、bind()、sendto()、recvfrom()和close()。<br>UDP是面向无连接的网络通信，并不需要像TCP套接字编程那样需要通过connect()与服务器建立连接，然后调用listen()函数使服务器处于监听状态，在通过accept()函数接收客户端的连接请求。</p>
+<p>UDP套接字编程，只需要创建用于通信的套接字，然后在服务器端绑定端口，然后就可以实现数据的传输。<br>在绑定了地址信息之后，进行数据传输时，服务器会阻塞recvfrom()函数，等待客户端调用sendto()函数发送数据，同时客户端的recvfrom()被阻塞，然后，服务器会调用recvfrom()函数接收数据，接着向客户端作出应答，同时，服务端的recvfrom()被阻塞，接着，客户端调用recvfrom()接收数据。</p>
+<p>1.发送数据、函数sendto()<br>ssize_t  sendto(int  s,  const  void *buf, size_t len, int flags, const struct sockaddr *to, socklen_t tolen);</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>s</td>
+<td>参数s代表套接字描述符</td>
+</tr>
+<tr>
+<td>buf</td>
+<td>参数buf用于指向发送信息的缓冲区的指针</td>
+</tr>
+<tr>
+<td>len</td>
+<td>参数len是发送的信息的长度</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>参数flags通常会设置为0，代表的是相关控制参数，主要用于控制是否接收数据以及是否预览报文</td>
+</tr>
+<tr>
+<td>to</td>
+<td>参数to为存放接收处的信息的指针</td>
+</tr>
+<tr>
+<td>tolen</td>
+<td>参数tolen是接收方地址的大小</td>
+</tr>
+</tbody></table>
+<p>说明：如果sendto()函数用于面向连接的网络通信时，套接字类型为SOCK_STREAM或SOCK_SEQPACKET。此时参数to指向NULL，参数tolen为0，若不为此值，就会出现错误信息提示。</p>
+<p>2.接收数据、函数recvfrom()</p>
+<p>ssize_t recvfrom(int s, void *buf, size_t len, int flags, struct sockaddr *from, socklen_t *fromlen);</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>s</td>
+<td>参数s代表套接字描述符</td>
+</tr>
+<tr>
+<td>buf</td>
+<td>参数buf指向接收信息的指针</td>
+</tr>
+<tr>
+<td>len</td>
+<td>参数len代表缓冲区的最大长度</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>参数flags通常会设置为0，代表的是相关控制参数，主要用于控制是否接收数据以及是否预览报文</td>
+</tr>
+<tr>
+<td>from</td>
+<td>参数from表示发送此信息处的地址指针</td>
+</tr>
+<tr>
+<td>fromlen</td>
+<td>参数fromlen指向发送处地址大小的指针。</td>
+</tr>
+</tbody></table>
+<p>字节序转换函数 </p>
+<p>    uint32_t htonl(uint32_t hostlong);<br>    uint16_t htons(uint16_t hostshort);<br>    uint32_t ntohl(uint32_t netlong);<br>    uint16_t ntohs(uint16_t netshort);<br>    说明：在上述的函数中，h代表host；<br>    n代表network s代表short；l代表long</p>
+<p>地址转换函数 </p>
+<p>    #include &lt;netinet/in.h&gt;<br>    #include &lt;arpa/inet.h&gt;<br>    int inet_aton(const char *cp, struct in_addr *inp);<br>    in_addr_t inet_addr(const char *cp);<br>    char *inet_ntoa(struct in_addr in);</p>
+<p>serv.c</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">*服务器端*/</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 8886</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	struct sockaddr_in s_addr;	//服务器地址结构</span><br><span class="line">	struct sockaddr_in c_addr;	//客户端地址结构</span><br><span class="line">	int sock;			//套接字描述符</span><br><span class="line">	socklen_t addr_len;		//地址结构长度</span><br><span class="line">	int len;			//接收到的消息字节数</span><br><span class="line">	char buff[128];			//存放接收消息的缓冲区</span><br><span class="line">/* 创建数据报模式的套接字 */</span><br><span class="line">	<span class="keyword">if</span> ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"socket"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create socket successful.\n\r"</span>);</span><br><span class="line">/*清空地址结构*/</span><br><span class="line">	memset(&amp;s_addr, 0, sizeof(struct sockaddr_in));</span><br><span class="line">/* 设置地址和端口信息 */</span><br><span class="line">	s_addr.sin_family = AF_INET;</span><br><span class="line">	s_addr.sin_port = htons(PORT);</span><br><span class="line">	s_addr.sin_addr.s_addr = INADDR_ANY;</span><br><span class="line"></span><br><span class="line">/* 绑定地址和端口信息 */</span><br><span class="line">	<span class="keyword">if</span> ((<span class="built_in">bind</span>(sock, (struct sockaddr *) &amp;s_addr, sizeof(s_addr))) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"bind error"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"bind address to socket successfuly.\n\r"</span>);</span><br><span class="line">/* 循环接收数据 */</span><br><span class="line">	addr_len = sizeof(c_addr);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (1) &#123;</span><br><span class="line">		len = recvfrom(sock, buff, sizeof(buff) - 1, 0,(struct sockaddr *) &amp;c_addr, &amp;addr_len);</span><br><span class="line">		<span class="keyword">if</span> (len &lt; 0) &#123;//接收失败</span><br><span class="line">			perror(<span class="string">"recvfrom error"</span>);</span><br><span class="line">			<span class="built_in">exit</span>(errno);</span><br><span class="line">		&#125;</span><br><span class="line">		buff[len] = <span class="string">'\0'</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"收到来自远端计算机%s，端口号为%d的消息:\n%s\n\r"</span>,inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port), buff);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client.c</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*客户端*/</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 8886</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;//定义变量</span><br><span class="line">	struct sockaddr_in s_addr;	//套接字地址结构</span><br><span class="line">	int sock;			//套接字描述符</span><br><span class="line">	int addr_len;			//地址结构长度</span><br><span class="line">	int len;			//发送字节长度</span><br><span class="line">	char buff[]=<span class="string">"Hello everyone,Merry Christmas!"</span>;	//发送的消息</span><br><span class="line">/* 创建数据报模式的套接字 */</span><br><span class="line">	<span class="keyword">if</span> ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"socket error"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create socket successful.\n\r"</span>);</span><br><span class="line">/* 设置对方地址和端口信息 */</span><br><span class="line">	s_addr.sin_family = AF_INET; 	//地址族</span><br><span class="line"></span><br><span class="line">		s_addr.sin_port = htons(PORT);</span><br><span class="line">	<span class="keyword">if</span> (argv[1])</span><br><span class="line">		s_addr.sin_addr.s_addr = inet_addr(argv[1]);</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"没有输入消息的接受者！\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	addr_len = sizeof(s_addr);	//地址结构长度</span><br><span class="line">/*从客户端的buff缓冲区中发送消息到地址结构为s_addr的远端机器*/</span><br><span class="line">	len = sendto(sock, buff, sizeof(buff), 0,(struct sockaddr *) &amp;s_addr, addr_len);</span><br><span class="line">	<span class="keyword">if</span> (len &lt; 0) &#123;			//如果发送失败</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\rsend error.\n\r"</span>);</span><br><span class="line">		<span class="built_in">return</span> 3;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"send success.\n\r"</span>);	//发送成功</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<img src="/Linux-Lover/UDP/%E7%BB%93%E6%9E%9C.jpg" class="" title="结果">
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP</title>
+    <url>/Linux-Lover/TCP/</url>
+    <content><![CDATA[<p>__TCP三次握手，包头中的标志变化</p>
+<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class="" title="TCP3次握手">
+
+
+<p>第一次握手：建立连接时，客户端发送 syn 包(tcp协议中syn位置1，序号为X)到服务器，并进入 SYN_SEND 状态，等待服务器确认； </p>
+<p>第二次握手：服务器收到 syn 包，必须确认客户的 SYN，同时自己也发送一个 SYN 包，即 SYN+ACK包（tcp协议中syn位置1，ack位置1，序号K，确定序号为X+1），此时服务器进入 SYN_RECV 状态；</p>
+<p>第三次握手：客户端收到服务器的 SYN＋ACK 包，向服务器发送确认包 ACK(tcp协议中ack位置1，确认序号Y+1), 此包发送完毕，客户端和服务器进入 ESTABLISHED 状态，完成三次握手</p>
+<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class="" title="TCP3次握手">
+
+<p>seq是数据包本身的序列号；ack是期望对方继续发送的那个数据包的序列号。 </p>
+<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
+
+<p>serv.c文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client.c文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>结果</strong></p>
+<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>美的面试</title>
+    <url>/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[<p>四大业务：数字化业务、消费者家电、空调业务、机器人自动化</p>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网络</title>
+    <url>/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<p>1.计算机网络定义<br>所谓的计算机网络，就是一些互相连接的、自治的计算机的集合。计算机网络有很多种类别。<br>（1）根据不同的作用范围可以将计算机网络理解为广域网（WAN）、城域网（MAN）、局域网（LAN）、个人区域网（PAN）。<br>（2）根据不同的使用者，可以将计算机网络分为公用网和专用网。</p>
+<p>2.计算机网络的通信模式<br>计算机网络的通信模式有两种，一种是线路交换，另一种是包交换。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>线路交换</td>
+<td>就是我们家家最开始用的电话的网络连接技术，是通过在发送端和接受端之间建立一条特定的线路，进行数据的传输。</td>
+</tr>
+<tr>
+<td>包交换</td>
+<td>就是我们现在常用到的计算机的网络通信模式，是通过将所有的计算机放到一个共同的网络连接中，数据的发送端将要传输的数据分割成几份，然后将每一份数据封装成一个包，包中含有接收端的属性信息等，且每个包都是单独传输的。</td>
+</tr>
+</tbody></table>
+<p>OSI 7层协议模型 和各个层次的 关系 </p>
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理层</td>
+</tr>
+<tr>
+<td>数据链路层</td>
+</tr>
+<tr>
+<td>网络层</td>
+</tr>
+<tr>
+<td>传输层</td>
+</tr>
+<tr>
+<td>应用层</td>
+</tr>
+</tbody></table>
+<p>TCP/IP通信协议采用了4层的层级结构，这4层分别为：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>在此层中提供了节点间的数据传送服务，如传输控制协议（TCP）、用户数据包协议（UDP）等，TCP和UDP给数据包加入传输数据并把它传输到下一层中。这一层负责传送数据，并且确定数据已被送达并接收。</td>
+</tr>
+<tr>
+<td>互联网络层</td>
+<td>负责提供基本的数据封包传送功能，让每一块数据包都能够到达目的主机（但不检查是否被正确接收），如网际协（IP）。</td>
+</tr>
+<tr>
+<td>网络接口层</td>
+<td>对实际的网络媒体的管理，定义如何使用实际网络（如Ethernet、Serial Line等）来传送数据。</td>
+</tr>
+</tbody></table>
+<p><strong>拥塞控制、流量控制</strong></p>
+<p>拥塞控制：拥塞控制是作用于网络的，它是防止过多的数据注入到网络中，避免出现网络负载过大的情况；常用的方法就是：（ 1 ）慢开始、拥塞避免（ 2 ）快重传、快恢复。<br>流量控制：流量控制是作用于接收者的，它是控制发送者的发送速度从而使接收者来得及接收，防止分组丢失的。窗口控制机制</p>
+<p>TCP和UDP协议的区别，谈谈增强UDP传输安全性的策略<br>共同点：都是传输层的协议<br>不同点：TCP面向连接（通信前要建立通信的通路），可靠性高<br>      UDP无连接，不可靠（可增加校验机制增加可靠性）</p>
+<p>（*）组播的优点： </p>
+<ol>
+<li>需要相同数据流的客户端加入相同的组共享一条数据流，节省了服务器的负载。具备广播所具备的优点。 </li>
+<li>由于组播协议是根据接受者的需要，对数据流进行复制转发，所以服务端的服务总带宽不受客户接入端带宽的限制。IP协议允许有2亿6千多万个（268435456）组播，所以其提供的服务可以非常丰富。 </li>
+<li>此协议和单播协议一样允许在Internet宽带网上传输。</li>
+</ol>
+<p>对于一个没有设置任何套接口选项的阻塞套接口，调用recv接收对方的数据，对方发送数据前突然断电，recv永远不会返回。</p>
+<p><strong>TCP/IP层IP协议的服务是无连接数据报</strong></p>
+<p>一台主机从一个网络移到另一个网络.IP地址需要改变，MAC地址不需要改变</p>
+<p>经典题目：某公司申请到一个C类的IP地址，但要连接6个子公司，最大的一个子公司有26台计算机，每个子公司在一个网段中，则子网掩码应该为多少？<br>因为有六个子公司，所以必须有三位1，有26台，必须有五个0，所以二进制位11100000，转换为十进制是224</p>
+<p>DNS是域名服务器，用来解析域名的（域名与IP之间的解析），如果没有这东西，你必须输入网站的IP地址，有了DNS，你就可以直接输入网址。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>视觉传感器</title>
+    <url>/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<p><strong>定义</strong><br>光学图像转化为数字信号的传感器。//非接触检测方法</p>
+<p><strong>了解器件</strong><br>CCD -电荷耦合器(Charge-Coupled Device)-新型固体器件<br>CCD结构组成：MOS光敏阵列(金属-氧化物-半导体)+读出移位寄存器=一个MOS光敏元或一个像素</p>
+<p><strong>整个过程信号</strong> ：物理-光学-电气-视频<br><strong>CCD</strong> 作用信号转化 :光学-电气</p>
+<p><strong>电荷耦合器工作原理</strong><br>CCD产生（内光电效应）<br>CCD存储（存储在势井）<br>CCD传输（电荷的定向移动（势井的移动））<br>CDD检测或输出（电流输出、电压输出—浮置栅放大器、浮置扩散放大器）</p>
+<p>常见：面型图像传感器组成：感光区+存储+视频输出（串行输出）<br>外形结构和驱动时序不同，原理基本相同，向厂家拿资料。<br>常用：几何量（外加光源工件尺寸或缺陷）、文字、图像识别。</p>
+<p>扩展：mark点又叫光学定位点和反光点，如果没有 mark点，对位就不会不准。</p>
+<p>CMOS - 下节课</p>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>电阻式传感器</title>
+    <url>/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<p>应变式 （丝式、箔式和薄膜式三种）</p>
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%85%AC%E5%BC%8F.jpg" class="" title="应变式">
+
+<p>要把电阻的变化转换为电压或电流的变化，需要转换电路来实现。转换电路常采用直流电桥或交流电桥。</p>
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
+
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BA%A4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
+
+<p><strong>压阻式传感器是基于半导体材料的压阻效应来工作的传感器</strong></p>
+<p>__分为半导体应变式压阻传感器 、扩散型压阻传感器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">与金属电阻应变片相比，半导体应变式具有：体积小、横向效应小、灵敏度高等特点。</span><br><span class="line">将P型杂质扩散到N型硅底层上，形成一层极薄的导电P型层，装上引线接点后，即形成扩散型半导体应变片。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>电阻式传感器应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>（1）应变式测力与荷重传感器</td>
+</tr>
+<tr>
+<td>（2）应变式压力传感器</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32单片机</title>
+    <url>/uncategorized/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51单片机</title>
+    <url>/uncategorized/%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>51</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell学习</title>
+    <url>/uncategorized/shell%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p><strong>bash</strong><br>大多数Linux系统默认使用的shell，bash shell 是shell 的一个免费版本，它是最早的 Unix shell，bash还有一个特点，可以通过help命令来查看帮助。包含的功能几乎可以涵盖shell所具有的功能，所以一般的shell脚本都会指定它为执行路径。</p>
+<p>注意：windows 下 powershell QAQ</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">编写：test.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'hello world '</span></span><br><span class="line">运行 ./test.sh</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>数据库SQL语言</title>
+    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/</url>
+    <content><![CDATA[<p>很棒的一个链接：<a href="https://cloudlandboy.github.io/myNote/#/backend/mysql/dbandsql" target="_blank" rel="noopener">https://cloudlandboy.github.io/myNote/#/backend/mysql/dbandsql</a><br>不会就打开看看QvQ</p>
+]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库系统概述</title>
+    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<p>1、<strong>数据库由几个部分组成，这个结构有什么好处。</strong><br>答:①数据库、数据库管理系统（及其开发工具）、数据库管理员、应用系统。<br>三级模式:模式、外模式、内模式<br>两层映像结构:外模式模式映像,模式内模式映像<br>好处：保证了数据与程序的逻辑独立性和物理独立性</p>
+<p>2、<strong>数据模型</strong></p>
+<p>概念模型：实体、属性、码、实体型、实体集、联系</p>
+<p>数据模型由数据结构、数据操纵、数据约束规则三个部分组成。</p>
+<p>3、<strong>常见模型</strong><br>层次模型：<br>网状模型：<br>（重点）关系模型：<br>面向对象模型：<br>对象关系模型：<br>半结构化模型：</p>
+<p>重点：<br>关系模型数据结构:二维表（关系、元组（行）、属性（列）码、域、分组、关系模式）<br>关系模型数据操纵:插入、删除、更新、查询。<br>关系模型数据完整性约束规则:实体完整性、参照完整性、用户自定义完整性。</p>
+<p>4、<strong>关系模型</strong></p>
+<p>（1）关系：域、笛卡尔积、关系..<br>扩展：<br>候选码(Candidate Key)：一个或者多个属性的集合，可以唯一确定实体的一个实例；<br>主码(Primary Key):从候选码中，选中用来作为唯一标识的属性或者属性组被称为主码；<br>可选码(Alternative Key):候选码中没有选中的其他码，称为可选码；</p>
+<p>（2）关系操作：查询分一类，插入、删除、修改一类</p>
+<p>关系数据库语言：关系代数与关系演算(SQL 两者的结合)<br>（3）关系代数</p>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0.jpg" class="" title="关系代数">
+
+<p>专门关系运算：选择、投射、连接、除运算。</p>
+
+
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%A4%96%E8%BF%9E%E6%8E%A5.jpg" class="" title="外连接是自然连接">
+
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E9%99%A4%E6%B3%95.jpg" class="" title="除运算">
+
+<p>（4）关系演算（*）</p>
+]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微波传感器</title>
+    <url>/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<h5 id="微波"><a href="#微波" class="headerlink" title="微波"></a>微波</h5><p>微波是0.1m-1m的电磁波，波长相对较长的电磁波。对应的波段频率范围为300 MHz～3000 GHz。 </p>
+<h5 id="微波特点"><a href="#微波特点" class="headerlink" title="微波特点"></a>微波特点</h5><p>(1)似光性和似声性<br>(2)分析方法的独特性<br>低频电路不适用<br>(3)共度性<br>电子在真空管内的渡越时间（10-9秒左右）与微波的振荡周期（ 10-9 ～10-15秒）相当的这一特性称共度性，利用该特性可以做成各种微波电真空器件，得到微波振荡源。<br>(4)穿透性<br>(5)信息性<br>(6)非电离性</p>
+<h5 id="微波传感器"><a href="#微波传感器" class="headerlink" title="微波传感器"></a>微波传感器</h5><p><strong>原理</strong><br>微波传感器是利用微波特性来检测某些物理量的器件或装置。由发射天线发出微波，此波遇到被测物体时将被吸收或反射，使微波功率发生变化。若利用接收天线，接收到通过被测物体或由被测物体反射回来的微波，并将它转换为电信号，再经过信号调理电路，即可以显示出被测量，实现了微波检测。<br><strong>分类</strong><br>根据微波传感器的原理，微波传感器可以分为反射式和遮断式两类。<br><strong>组成</strong><br>微波传感器通常由微波发射器（即微波振荡器）、 微波天线及微波检测器三部分组成。<br><strong>微波振荡器</strong> 的器件有调速管、磁控管或某些固态器件，小型微波振荡器也可以采用体效应管<br><strong>微波天线</strong> 为了使发射的微波具有尖锐的方向性，天线要具有特殊的结构。</p>
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E5%A4%A9%E7%BA%BF.jpg" class="" title="微波天线">
+<p><strong>微波检测器</strong><br>一种是将微波变化为电流的视频变化方式<br>一种是与本机振荡器并用而变化为频率比微波低的外差法。（差分方式）</p>
+<h5 id="微波传感器应用"><a href="#微波传感器应用" class="headerlink" title="微波传感器应用"></a>微波传感器应用</h5><p><strong>微波液位计</strong></p>
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E4%BE%A7%E4%BD%8D%E8%AE%A1.jpg" class="" title="微波侧位计">
+
+<p><strong>微波湿度传感器</strong></p>
+<p>扩展：<br>一般干燥的物体，如木材、皮革、谷物、 纸张、 塑料等，其ε′在1～5范围内， 而水的ε′则高达64， 因此如果材料中含有少量水分子时，其复合ε′将显著上升， ε″也有类似性质。 使用微波传感器，测量干燥物体与含一定水分的潮湿物体所引起的微波信号的相移与衰减量， 就可以换算出物体的含水量。</p>
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B9%BF%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="微波湿度传感器">
+
+<p><strong>微波测厚仪</strong><br>利用微波在传播过程中遇到被测物体金属表面被反射，且反射波的波长与速度都不变的特性进行测厚的。<br>基本原理：<br>（1）在被测金属物体上下两表面各安装一个终端器。微波信号源发出的微波，经过环行器A、 上传输波导管传输到上终端器，由上终端器发射到被测物体上表面上，微波在被测物体上表面全反射后又回到上终端器，再经过传输导管、环行器A、下传输波导管传输到下终端器。</p>
+<p>（2）由下终端器发射到被测物体下表面的微波，经全反射后又回到下终端<br>器，再经过传输导管回到环行器A。因此被测物体的厚度与微波传输过<br>程中的行程长度有密切关系，当被测物体厚度增加时，微波传输的行程<br>长度便减小。 </p>
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B5%8B%E5%8E%9A%E4%BB%AA.jpg" class="" title="微波测厚仪">
+
+
+<p><strong>微波辐射计（温度传感器）</strong>(*)</p>
+<p><strong>微波测定移动物体的速度和距离</strong>(*)</p>
+<p><strong>微波无损检测</strong>(*)</p>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
       </tags>
   </entry>
   <entry>
@@ -154,368 +607,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Solidworks与PCB的结合</title>
-    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
-    <content><![CDATA[<p>偶然的一次发现QAQ</p>
-<p>PCB电路板与solidworks的完美结合</p>
-<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
-
-
-<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
-]]></content>
-      <categories>
-        <category>Mechanic Lover</category>
-      </categories>
-      <tags>
-        <tag>3D建模</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>man手册</title>
-    <url>/Linux-Lover/an%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<h5 id="man"><a href="#man" class="headerlink" title="man"></a>man</h5><table>
-<thead>
-<tr>
-<th align="center">代号</th>
-<th align="center">内容</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">Standard commands (标准命令)</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">System calls (系统调用)</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">Libary functions （库函数）</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="center">Special device (设备说明)</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td align="center">File formats (文件格式)</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td align="center">Game and toys (游戏娱乐)</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td align="center">Miscellaneous (杂项)</td>
-</tr>
-<tr>
-<td align="center">8</td>
-<td align="center">Administrative commands(管理员命令)</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="center">other  (存放内核文档)</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>树</title>
-    <url>/Data-Structure-and-Algorithms-Lover/d/</url>
-    <content><![CDATA[<h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
-<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Data Structure and Algorithms Lover</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>555概念及使用</title>
-    <url>/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class="">
-<h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class="" title="波形变换">
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class="" title="定时">
-<h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
-
-<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class="">
-<h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class="">
-
-<table>
-<thead>
-<tr>
-<th align="center">引脚</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1脚</td>
-<td align="left">外接电源负端VSS或接地，一般情况下接地。</td>
-</tr>
-<tr>
-<td align="center">2脚</td>
-<td align="left">低触发端TL，该脚电压小于1/3 VCC时有效。</td>
-</tr>
-<tr>
-<td align="center">3脚</td>
-<td align="left">输出端OUT。</td>
-</tr>
-<tr>
-<td align="center">4脚</td>
-<td align="left">直接清零端RST。当此端接低电平时，则时基电路不工作</td>
-</tr>
-<tr>
-<td align="center">5脚</td>
-<td align="left">CO为控制电压端。若此脚外接电压，则可改变内部两个比较器的基准电压，当该脚不用时，应将该脚串入一只0.01μF（103）瓷片电容接地，以防引入高频干扰。</td>
-</tr>
-<tr>
-<td align="center">6脚</td>
-<td align="left">高触发端TH，该脚电压大于2/3 VCC时有效。</td>
-</tr>
-<tr>
-<td align="center">7脚</td>
-<td align="left">放电端。该端与放电管T的集电极相连</td>
-</tr>
-<tr>
-<td align="center">8脚</td>
-<td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Circuit Lover</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>cvte面试</title>
-    <url>/My-interview-Lover/te%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>My interview Lover</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/uncategorized/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>文件</title>
-    <url>/Linux-Lover/%E4%BB%B6/</url>
-    <content><![CDATA[<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
-<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务</title>
-    <url>/MySql-Lover/%E5%8A%A1/</url>
-    <content><![CDATA[<h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事务的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
-<p>扩展知识点</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>MySql Lover</category>
-      </categories>
-      <tags>
-        <tag>MySql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>华为面试</title>
-    <url>/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>My interview Lover</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>联发科面试</title>
-    <url>/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>My interview Lover</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PCB的基本常识</title>
-    <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
-    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
-<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
-<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Circuit Lover</category>
-      </categories>
-      <tags>
-        <tag>PCB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库安全性</title>
-    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/</url>
-    <content><![CDATA[<h5 id="数据库安全概述"><a href="#数据库安全概述" class="headerlink" title="数据库安全概述"></a>数据库安全概述</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。</span><br><span class="line">数据库不安全因素:</span><br><span class="line">(1)非授权用户对数据库进行破坏</span><br><span class="line">(2)数据库重要或者敏感数据泄露</span><br><span class="line">(3)安全环境的脆弱性</span><br></pre></td></tr></table></figure>
-<h5 id="安全标准"><a href="#安全标准" class="headerlink" title="安全标准"></a>安全标准</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)</span><br></pre></td></tr></table></figure>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg" class="" title="TCSEC标准">
-
-
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class="" title="CC标准">
-
-<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class="" title="视图例子">]]></content>
-      <categories>
-        <category>MySql Lover</category>
-      </categories>
-      <tags>
-        <tag>MySql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据结构框架</title>
-    <url>/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[<p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
-<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
-<p>遍历框架</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Data Structure and Algorithms Lover</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库系统概述</title>
-    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<p>1、<strong>数据库由几个部分组成，这个结构有什么好处。</strong><br>答:①数据库、数据库管理系统（及其开发工具）、数据库管理员、应用系统。<br>三级模式:模式、外模式、内模式<br>两层映像结构:外模式模式映像,模式内模式映像<br>好处：保证了数据与程序的逻辑独立性和物理独立性</p>
-<p>2、<strong>数据模型</strong></p>
-<p>概念模型：实体、属性、码、实体型、实体集、联系</p>
-<p>数据模型由数据结构、数据操纵、数据约束规则三个部分组成。</p>
-<p>3、<strong>常见模型</strong><br>层次模型：<br>网状模型：<br>（重点）关系模型：<br>面向对象模型：<br>对象关系模型：<br>半结构化模型：</p>
-<p>重点：<br>关系模型数据结构:二维表（关系、元组（行）、属性（列）码、域、分组、关系模式）<br>关系模型数据操纵:插入、删除、更新、查询。<br>关系模型数据完整性约束规则:实体完整性、参照完整性、用户自定义完整性。</p>
-<p>4、<strong>关系模型</strong></p>
-<p>（1）关系：域、笛卡尔积、关系..<br>扩展：<br>候选码(Candidate Key)：一个或者多个属性的集合，可以唯一确定实体的一个实例；<br>主码(Primary Key):从候选码中，选中用来作为唯一标识的属性或者属性组被称为主码；<br>可选码(Alternative Key):候选码中没有选中的其他码，称为可选码；</p>
-<p>（2）关系操作：查询分一类，插入、删除、修改一类</p>
-<p>关系数据库语言：关系代数与关系演算(SQL 两者的结合)<br>（3）关系代数</p>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0.jpg" class="" title="关系代数">
-
-<p>专门关系运算：选择、投射、连接、除运算。</p>
-
-
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%A4%96%E8%BF%9E%E6%8E%A5.jpg" class="" title="外连接是自然连接">
-
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E9%99%A4%E6%B3%95.jpg" class="" title="除运算">
-
-<p>（4）关系演算（*）</p>
-]]></content>
-      <categories>
-        <category>MySql Lover</category>
-      </categories>
-      <tags>
-        <tag>MySql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线程</title>
-    <url>/Linux-Lover/%E7%A8%8B/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进程获取标识</title>
-    <url>/Linux-Lover/%E6%A0%87%E8%AF%86/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程ID</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"UID=%ld\n"</span>,(long)getuid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"EUID=%ld\n"</span>,(long)geteuid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">用户ID  创建者信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">int flag1,flag2;</span><br><span class="line">flag1=setuid(0);</span><br><span class="line">flag2=setgid(500);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"flag1=%d\n,flag2=%d\n"</span>,flag1,flag2);</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">用户组ID  用户组信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"group ID=%d\n"</span>,(long)getgid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"effective group ID=%d\n"</span>,(long)getegid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进程概念</title>
-    <url>/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h5 id="进程基本概念"><a href="#进程基本概念" class="headerlink" title="进程基本概念"></a>进程基本概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程是操作系统分配的内存、CPU时间片等资源的基本单位,是资源分配的最小单位(线程是CPU执行单位)。</span><br><span class="line">进程是操作系统对资源的一种抽象，一个进程由三部分组成:</span><br><span class="line">1）进程控制块PCB：用于描述进程情况及控制进程运行所需的全部信息。</span><br><span class="line">2）代码段：是进程中能被进程调度程序在CPU上执行的程序代码段。</span><br><span class="line">3）数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行后产生的中间或最终数据</span><br><span class="line">分式操作系统 </span><br><span class="line">基于时间片轮转，每一个进程有自己的地址空间和执行状态。</span><br></pre></td></tr></table></figure>
-<h5 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">操作系统经典三态:就绪	等待、（阻塞）、运行等</span><br><span class="line">还有其他挂起、僵尸进程等。。。</span><br><span class="line">Linux内核中的进程状态：</span><br><span class="line">▽	运行状态</span><br><span class="line">▽	可中断睡眠状态7</span><br><span class="line">▽	不可中断睡眠状态</span><br><span class="line">▽	暂停状态</span><br><span class="line">▽	僵死状态</span><br></pre></td></tr></table></figure>
-<h5 id="进程调度及调度算法"><a href="#进程调度及调度算法" class="headerlink" title="进程调度及调度算法"></a>进程调度及调度算法</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">先来先服务调度算法</span><br><span class="line">短进程优先调度算法</span><br><span class="line">高优先级优先调度算法</span><br><span class="line">时间片轮转法（公平）</span><br></pre></td></tr></table></figure>
-
-<h5 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程描述信息（进程标识符）</span><br><span class="line">进程控制信息（进程当前状态等）</span><br><span class="line">资源信息（I/O设备号、缓冲、内存等）</span><br><span class="line">现场保护信息（寄存器、PC、PSW、栈指针）</span><br></pre></td></tr></table></figure>
-<h5 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、分配一个内部标识，在内核中建立进程结构.</span><br><span class="line">复制父进程的环境。</span><br><span class="line">2、为进程分配资源，包括所有元素（程序、数据、用户栈等，复制父进程地址空间的内容到该进程地址空间中。</span><br><span class="line">3、置该进程的状态为就绪，插入就绪队列。</span><br></pre></td></tr></table></figure>
-<h5 id="进程撤销"><a href="#进程撤销" class="headerlink" title="进程撤销"></a>进程撤销</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">关闭软中断:因为进程即将终止而不再处理任何软中断信号；</span><br><span class="line">回收资源：释放进程分配的所有资源，如关闭所有已打开文件，释放进程相应的数据结构等；</span><br><span class="line">写记帐信息：将进程在运行过程中所产生的记帐数据（其中包括进程运行时的各种统计信息）记录到一个全局记帐文件中；</span><br><span class="line">置该进程为僵死状态:向父进程发送子进程死的软中断信号，将终止信息status送到指定的存储单元中；</span><br><span class="line">转进程调度:因为此时CPU已经被释放，需要由进程调度进行CPU再分配。</span><br></pre></td></tr></table></figure>
-<h5 id="避免僵尸进程"><a href="#避免僵尸进程" class="headerlink" title="避免僵尸进程"></a>避免僵尸进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">避免僵尸进程</span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line">signal(SIGCHLD, SIG_IGN);//子进程信号，忽略</span><br></pre></td></tr></table></figure>
-
-<h5 id="1：n-的机制"><a href="#1：n-的机制" class="headerlink" title="1：n 的机制"></a>1：n 的机制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、从子进程获得父进程id容易。</span><br><span class="line">2、把子进程id返回给父进程，以便控制</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux系统分类</title>
-    <url>/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/</url>
-    <content><![CDATA[<h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
-
-<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>信号</title>
     <url>/Linux-Lover/%E4%BF%A1%E5%8F%B7/</url>
     <content><![CDATA[<h5 id="中断概念"><a href="#中断概念" class="headerlink" title="中断概念"></a>中断概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">中断分类</span><br><span class="line">	硬件中断（外部中断）</span><br><span class="line">	外部中断是指由外部设备通过硬件请求的方式产生的中断，也称为硬件中断</span><br><span class="line">	软件中断（内部中断）</span><br><span class="line">	内部中断是由CPU运行程序错误或执行内部程序调用引起的一种中断，也称为软件中断。</span><br></pre></td></tr></table></figure>
@@ -552,28 +643,101 @@
       </tags>
   </entry>
   <entry>
-    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
-    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
-<p>2.颜色RGB</p>
-<p>255  0  0  红色</p>
-<p>248  255  247  白色</p>
-<p>0     0    0  黑色</p>
-<p>银白色  红(192) 绿(192) 蓝(192)。</p>
-<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
-<p>例如：总装配体&gt;子装配体&gt;零件</p>
-<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
-<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
-<p>钣金加工工艺（综合冷加工工艺）</p>
-<p>下料 、成型、压铆，攻牙、焊接等</p>
-<p>表面处理：喷粉，电镀等；</p>
-<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
+    <title>了解守护进程</title>
+    <url>/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/</url>
+    <content><![CDATA[<h5 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">守护进程是在后台运行不受控端控制的进程，通常情况下守护进程在系统启动时自动运行。</span><br><span class="line">守护进程的名称通常以d结尾，比如sshd、xinetd、crond等</span><br></pre></td></tr></table></figure>
+<h5 id="了解会话期"><a href="#了解会话期" class="headerlink" title="了解会话期"></a>了解会话期</h5> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 远程登录服务器，登录成功之后，linux服务器和终端之间建立一个会话期，会话期默认启动shell程序。</span><br><span class="line">注：</span><br><span class="line">shell是进程组， ps -ef | grep xx 也是进程组。。。都在终端中，如果想脱离终端，必须建立子进程代替父进程，该子进程为未来守护进程，调用setsid创建新的会话期。</span><br></pre></td></tr></table></figure>
+<h5 id="手动创建守护进程步骤"><a href="#手动创建守护进程步骤" class="headerlink" title="手动创建守护进程步骤"></a>手动创建守护进程步骤</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1)调用fork(),创建新进程，它会是将来的守护进程</span><br><span class="line">2)在父进程中调用<span class="built_in">exit</span>，保证子进程不是进程组组长</span><br><span class="line">3)调用setsid创建新的会话期</span><br><span class="line">4)将当前目录改为根目录 （如果把当前目录作为守护进程的目录，当前目录不能被卸载，它作为守护进程的工作目录了。</span><br><span class="line">5）将标准输入、标准输出、标准错误重定向到/dev/null</span><br></pre></td></tr></table></figure>
+<h5 id="调用api创建守护进程"><a href="#调用api创建守护进程" class="headerlink" title="调用api创建守护进程"></a>调用api创建守护进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int daemon(int nochdir, int noclose);</span><br><span class="line">nochdir：=0将当前目录更改至“/”</span><br><span class="line">noclose：=0将标准输入、标准输出、标准错误重定向至“/dev/null”</span><br><span class="line">例子:</span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"></span><br><span class="line">int setup_daemon(int nochdir, int noclose);</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    mydaemon(1, 1);</span><br><span class="line">    //man daemon 可以看到</span><br><span class="line">    //0表示改变重定向   1表示不改变</span><br><span class="line">    //daemon(1, 1);  //调用函数</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"test ...\n"</span>);</span><br><span class="line">    <span class="keyword">for</span> (;;) ;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">int mydaemon(int nochdir, int noclose) //自建函数</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span> (pid == -1)</span><br><span class="line">        ERR_EXIT(<span class="string">"fork error"</span>);</span><br><span class="line">    <span class="keyword">if</span> (pid &gt; 0)</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_SUCCESS);</span><br><span class="line">    setsid();</span><br><span class="line">    <span class="keyword">if</span> (nochdir == 0)</span><br><span class="line">        <span class="built_in">chdir</span>(<span class="string">"/"</span>);//系统调用函数改变当前路径 </span><br><span class="line">		<span class="keyword">if</span> (noclose == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        int i;</span><br><span class="line">        <span class="keyword">for</span> (i=0; i&lt;3; ++i)</span><br><span class="line">            close(i);</span><br><span class="line">        open(<span class="string">"/dev/null"</span>, O_RDWR);  </span><br><span class="line">        dup(0); //标准输出 也指向/dev/null  //    dup2(0, 1);</span><br><span class="line">        dup(0); //标准错误输出，也指向/dev/null //    dup2(0, 2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>来源：Linux应用编程王保明</p>
 ]]></content>
       <categories>
-        <category>Mechanic Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>3D建模</tag>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进程概念</title>
+    <url>/Linux-Lover/%E7%A8%8B%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h5 id="进程基本概念"><a href="#进程基本概念" class="headerlink" title="进程基本概念"></a>进程基本概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程是操作系统分配的内存、CPU时间片等资源的基本单位,是资源分配的最小单位(线程是CPU执行单位)。</span><br><span class="line">进程是操作系统对资源的一种抽象，一个进程由三部分组成:</span><br><span class="line">1）进程控制块PCB：用于描述进程情况及控制进程运行所需的全部信息。</span><br><span class="line">2）代码段：是进程中能被进程调度程序在CPU上执行的程序代码段。</span><br><span class="line">3）数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行后产生的中间或最终数据</span><br><span class="line">分式操作系统 </span><br><span class="line">基于时间片轮转，每一个进程有自己的地址空间和执行状态。</span><br></pre></td></tr></table></figure>
+<h5 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">操作系统经典三态:就绪	等待、（阻塞）、运行等</span><br><span class="line">还有其他挂起、僵尸进程等。。。</span><br><span class="line">Linux内核中的进程状态：</span><br><span class="line">▽	运行状态</span><br><span class="line">▽	可中断睡眠状态7</span><br><span class="line">▽	不可中断睡眠状态</span><br><span class="line">▽	暂停状态</span><br><span class="line">▽	僵死状态</span><br></pre></td></tr></table></figure>
+<h5 id="进程调度及调度算法"><a href="#进程调度及调度算法" class="headerlink" title="进程调度及调度算法"></a>进程调度及调度算法</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">先来先服务调度算法</span><br><span class="line">短进程优先调度算法</span><br><span class="line">高优先级优先调度算法</span><br><span class="line">时间片轮转法（公平）</span><br></pre></td></tr></table></figure>
+
+<h5 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程描述信息（进程标识符）</span><br><span class="line">进程控制信息（进程当前状态等）</span><br><span class="line">资源信息（I/O设备号、缓冲、内存等）</span><br><span class="line">现场保护信息（寄存器、PC、PSW、栈指针）</span><br></pre></td></tr></table></figure>
+<h5 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、分配一个内部标识，在内核中建立进程结构.</span><br><span class="line">复制父进程的环境。</span><br><span class="line">2、为进程分配资源，包括所有元素（程序、数据、用户栈等，复制父进程地址空间的内容到该进程地址空间中。</span><br><span class="line">3、置该进程的状态为就绪，插入就绪队列。</span><br></pre></td></tr></table></figure>
+<h5 id="进程撤销"><a href="#进程撤销" class="headerlink" title="进程撤销"></a>进程撤销</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">关闭软中断:因为进程即将终止而不再处理任何软中断信号；</span><br><span class="line">回收资源：释放进程分配的所有资源，如关闭所有已打开文件，释放进程相应的数据结构等；</span><br><span class="line">写记帐信息：将进程在运行过程中所产生的记帐数据（其中包括进程运行时的各种统计信息）记录到一个全局记帐文件中；</span><br><span class="line">置该进程为僵死状态:向父进程发送子进程死的软中断信号，将终止信息status送到指定的存储单元中；</span><br><span class="line">转进程调度:因为此时CPU已经被释放，需要由进程调度进行CPU再分配。</span><br></pre></td></tr></table></figure>
+<h5 id="避免僵尸进程"><a href="#避免僵尸进程" class="headerlink" title="避免僵尸进程"></a>避免僵尸进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">避免僵尸进程</span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line">signal(SIGCHLD, SIG_IGN);//子进程信号，忽略</span><br></pre></td></tr></table></figure>
+
+<h5 id="1：n-的机制"><a href="#1：n-的机制" class="headerlink" title="1：n 的机制"></a>1：n 的机制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、从子进程获得父进程id容易。</span><br><span class="line">2、把子进程id返回给父进程，以便控制</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进程获取标识</title>
+    <url>/Linux-Lover/%E6%A0%87%E8%AF%86/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">进程ID</span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"UID=%ld\n"</span>,(long)getuid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"EUID=%ld\n"</span>,(long)geteuid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">用户ID  创建者信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">int flag1,flag2;</span><br><span class="line">flag1=setuid(0);</span><br><span class="line">flag2=setgid(500);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"flag1=%d\n,flag2=%d\n"</span>,flag1,flag2);</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">用户组ID  用户组信息</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"group ID=%d\n"</span>,(long)getgid());</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"effective group ID=%d\n"</span>,(long)getegid());</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程</title>
+    <url>/Linux-Lover/%E7%A8%8B/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件</title>
+    <url>/Linux-Lover/%E4%BB%B6/</url>
+    <content><![CDATA[<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
+<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库安全性</title>
+    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/</url>
+    <content><![CDATA[<h5 id="数据库安全概述"><a href="#数据库安全概述" class="headerlink" title="数据库安全概述"></a>数据库安全概述</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。</span><br><span class="line">数据库不安全因素:</span><br><span class="line">(1)非授权用户对数据库进行破坏</span><br><span class="line">(2)数据库重要或者敏感数据泄露</span><br><span class="line">(3)安全环境的脆弱性</span><br></pre></td></tr></table></figure>
+<h5 id="安全标准"><a href="#安全标准" class="headerlink" title="安全标准"></a>安全标准</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)</span><br></pre></td></tr></table></figure>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg" class="" title="TCSEC标准">
+
+
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class="" title="CC标准">
+
+<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class="" title="视图例子">]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
       </tags>
   </entry>
   <entry>
@@ -598,23 +762,167 @@
       </tags>
   </entry>
   <entry>
-    <title>了解守护进程</title>
-    <url>/Linux-Lover/%E8%A7%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/</url>
-    <content><![CDATA[<h5 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">守护进程是在后台运行不受控端控制的进程，通常情况下守护进程在系统启动时自动运行。</span><br><span class="line">守护进程的名称通常以d结尾，比如sshd、xinetd、crond等</span><br></pre></td></tr></table></figure>
-<h5 id="了解会话期"><a href="#了解会话期" class="headerlink" title="了解会话期"></a>了解会话期</h5> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 远程登录服务器，登录成功之后，linux服务器和终端之间建立一个会话期，会话期默认启动shell程序。</span><br><span class="line">注：</span><br><span class="line">shell是进程组， ps -ef | grep xx 也是进程组。。。都在终端中，如果想脱离终端，必须建立子进程代替父进程，该子进程为未来守护进程，调用setsid创建新的会话期。</span><br></pre></td></tr></table></figure>
-<h5 id="手动创建守护进程步骤"><a href="#手动创建守护进程步骤" class="headerlink" title="手动创建守护进程步骤"></a>手动创建守护进程步骤</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1)调用fork(),创建新进程，它会是将来的守护进程</span><br><span class="line">2)在父进程中调用<span class="built_in">exit</span>，保证子进程不是进程组组长</span><br><span class="line">3)调用setsid创建新的会话期</span><br><span class="line">4)将当前目录改为根目录 （如果把当前目录作为守护进程的目录，当前目录不能被卸载，它作为守护进程的工作目录了。</span><br><span class="line">5）将标准输入、标准输出、标准错误重定向到/dev/null</span><br></pre></td></tr></table></figure>
-<h5 id="调用api创建守护进程"><a href="#调用api创建守护进程" class="headerlink" title="调用api创建守护进程"></a>调用api创建守护进程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int daemon(int nochdir, int noclose);</span><br><span class="line">nochdir：=0将当前目录更改至“/”</span><br><span class="line">noclose：=0将标准输入、标准输出、标准错误重定向至“/dev/null”</span><br><span class="line">例子:</span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"></span><br><span class="line">int setup_daemon(int nochdir, int noclose);</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    mydaemon(1, 1);</span><br><span class="line">    //man daemon 可以看到</span><br><span class="line">    //0表示改变重定向   1表示不改变</span><br><span class="line">    //daemon(1, 1);  //调用函数</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"test ...\n"</span>);</span><br><span class="line">    <span class="keyword">for</span> (;;) ;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">int mydaemon(int nochdir, int noclose) //自建函数</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span> (pid == -1)</span><br><span class="line">        ERR_EXIT(<span class="string">"fork error"</span>);</span><br><span class="line">    <span class="keyword">if</span> (pid &gt; 0)</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_SUCCESS);</span><br><span class="line">    setsid();</span><br><span class="line">    <span class="keyword">if</span> (nochdir == 0)</span><br><span class="line">        <span class="built_in">chdir</span>(<span class="string">"/"</span>);//系统调用函数改变当前路径 </span><br><span class="line">		<span class="keyword">if</span> (noclose == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        int i;</span><br><span class="line">        <span class="keyword">for</span> (i=0; i&lt;3; ++i)</span><br><span class="line">            close(i);</span><br><span class="line">        open(<span class="string">"/dev/null"</span>, O_RDWR);  </span><br><span class="line">        dup(0); //标准输出 也指向/dev/null  //    dup2(0, 1);</span><br><span class="line">        dup(0); //标准错误输出，也指向/dev/null //    dup2(0, 2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>树</title>
+    <url>/Data-Structure-and-Algorithms-Lover/d/</url>
+    <content><![CDATA[<h5 id="LeetCode-总结"><a href="#LeetCode-总结" class="headerlink" title="LeetCode 总结"></a>LeetCode 总结</h5><h5 id="二叉树最大路径和"><a href="#二叉树最大路径和" class="headerlink" title="二叉树最大路径和"></a>二叉树最大路径和</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">&#125;;</span><br><span class="line">int OneSideMax(TreeNode *root) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rootroot-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value + OneSideMax(root-&gt;right);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;left &amp;&amp; root-&gt;right) &#123;</span><br><span class="line">        int a = OneSideMax(root-&gt;left);</span><br><span class="line">        int b = OneSideMax(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b) &#123;     </span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">return</span> root-&gt;value + b;</span><br><span class="line">        &#125;</span><br><span class="line">  		  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">return</span> root-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*判断树是否为镜像,判断优先考虑递归QAQ*/</span><br><span class="line">bool isSym(struct TreeNode *root1 ,struct TreeNode *root2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(root1 == NULL &amp;&amp; root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1 ==NULL || root2 == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root1-&gt;val != root2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root1-&gt;left,root2-&gt;right)&amp;&amp;isSym(root1-&gt;right,root2-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetric(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> isSym(root-&gt;left,root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">输出镜像树</span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">struct TreeNode* Swap(struct TreeNode* root)</span><br><span class="line">&#123;   </span><br><span class="line">     <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    Swap(root-&gt;left);</span><br><span class="line">    Swap(root-&gt;right);</span><br><span class="line">    struct TreeNode *tmp = root-&gt;left;</span><br><span class="line">    root-&gt;left  =  root-&gt;right ;</span><br><span class="line">    root-&gt;right = tmp;</span><br><span class="line">    <span class="built_in">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TreeNode* mirrorTree(struct TreeNode* root)&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in">return</span>  Swap(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树还原"><a href="#二叉树还原" class="headerlink" title="二叉树还原"></a>二叉树还原</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*前序遍历和中序遍历的结果还原一棵二叉树*/</span><br></pre></td></tr></table></figure>
+<h5 id="N树"><a href="#N树" class="headerlink" title="N树"></a>N树</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构框架</title>
+    <url>/Data-Structure-and-Algorithms-Lover/%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>记言：被华为的笔试题弄晕了，才发现自己的数据结构和算法是多么的苍白无力，但我会变强的QAQ。<br>2019-4-15 ming</p>
+<p>资料学习：在Github上有份资料值得推荐。<br><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a> 向dalao递茶.jpg</p>
+<p>遍历框架</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*数组遍历*/</span><br><span class="line">void traverse（int [] arr）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (int i ; i &lt;arr.length ; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		//迭代 arr[i]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*链表遍历*/</span><br><span class="line">class ListNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    ListNode next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	<span class="keyword">for</span> (ListNode p = head ; p != null ; p = p.next)&#123;</span><br><span class="line">    	</span><br><span class="line">        //迭代访问p.data</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void traverse(ListNode head)&#123;</span><br><span class="line">	//递归head.data;</span><br><span class="line">	traverse(head.next);</span><br><span class="line">&#125;</span><br><span class="line">/*二叉树遍历*/</span><br><span class="line">class TreeNode&#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode left ,right;</span><br><span class="line">&#125;</span><br><span class="line">void traverse (TreeNode root)&#123;</span><br><span class="line">	//递归root.data  先序</span><br><span class="line">    //cout &lt;&lt; root.data &lt;&lt; endl;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">    traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*N叉树遍历*/</span><br><span class="line">class TreeNode &#123;</span><br><span class="line">	int data;</span><br><span class="line">    TreeNode [] children;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void traverse(TreeNode root)&#123;</span><br><span class="line">	//c++ 11 标准</span><br><span class="line">	<span class="keyword">for</span>(TreeNode clid : root.children)&#123;</span><br><span class="line">    	//cout &lt;&lt; child.data &lt;&lt; endl;</span><br><span class="line">    	traverse(child);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PCB的基本常识</title>
+    <url>/Circuit-Lover/PCB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <content><![CDATA[<h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">频率：10M-100M </span><br><span class="line">线框：10mile（0.254mm=10mil）</span><br><span class="line">电源：20-30v //电源线加粗抗干扰</span><br><span class="line">价钱：80-100元</span><br><span class="line">DIP 双直插式</span><br><span class="line">QFP 方扁封装</span><br><span class="line">孔的类型</span><br><span class="line">孔有三大类别：过孔（Vai）、 插件孔（Pad孔） 、无铜安装孔（Npth）</span><br><span class="line">过孔（via）：只是起电气导通作用不用插器件焊接，其表面可以做开窗（焊盘裸露）、盖油或者塞油。</span><br><span class="line">插件孔（Pad孔）：需要插器件焊接的引脚孔，焊盘表面必须裸露出来</span><br><span class="line">无铜安装孔（Npth）:螺丝孔或器件塑料固定脚，没有电气性能，起定位固定作用。</span><br></pre></td></tr></table></figure>
+<h4 id="AD软件操作"><a href="#AD软件操作" class="headerlink" title="AD软件操作"></a>AD软件操作</h4><h6 id="常用快捷键："><a href="#常用快捷键：" class="headerlink" title="常用快捷键："></a>常用快捷键：</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Q  精度转化mile---mm</span><br><span class="line">1 电路规划（板子大小）</span><br><span class="line">快捷键TVT打安装孔（双击属性：Board cutout 板剪切块）copper镀铜  polygon cutout多边形剪切</span><br><span class="line">2 二维s</span><br><span class="line">3 三维</span><br><span class="line">shitf+右键旋转</span><br><span class="line">ctrl+中键  放大</span><br><span class="line">N +  S  +  A  显示预拉线</span><br><span class="line">N +  H +  A      隐藏预拉线（N键）</span><br><span class="line">shitf +F查找类似</span><br><span class="line">先按3切换到三维界面，然后按住SHIFT不放，按鼠标右键调整视图角度</span><br></pre></td></tr></table></figure>
+<h5 id="一块PCB的生成基本过程"><a href="#一块PCB的生成基本过程" class="headerlink" title="一块PCB的生成基本过程"></a>一块PCB的生成基本过程</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.原理图 （满足输入左边，输出右边）</span><br><span class="line">2.一键生成PCB</span><br><span class="line">3.自动布线</span><br><span class="line">4.手工布线</span><br><span class="line">5.规则检查</span><br><span class="line">6.泪滴</span><br><span class="line">7.敷铜（放置多边形敷铜（G键））</span><br><span class="line">8.规则检查</span><br><span class="line">9.信号检查</span><br><span class="line">10.生成物料清单</span><br><span class="line">11.联系淘宝卖家 （嘉立创）</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>PCB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>超声波传感器</title>
+    <url>/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
+    <content><![CDATA[<p><strong>超声波分类</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br><span class="line">波类型和传递介质</span><br><span class="line">① 纵波：质点振动方向与波的传播方向一致的波，它能在固体、液体和气体介质中传播；</span><br><span class="line">② 横波：质点振动方向垂直于传播方向的波，它只能在固体介质中传播； </span><br><span class="line">③ 表面波：质点的振动介于横波与纵波之间，沿着介质表面传播，其振幅随深度增加而迅速衰减的波，表面波只在固体的表面传播。</span><br></pre></td></tr></table></figure>
+<p><strong>超声波应用</strong><br>(1)超声波用于高效清洗<br>当弱的声波信号作用于液体中时，会对液体产生一定的负压，即液体体积增加，液体中分子空隙加大，形成许多微小的气泡；而当强的声波信号作用于液体时，则会对液体产生一定的正压，即液体体积被压缩减小，液体中形成的微小气泡被压碎。经研究证明：超声波作用于液体中时，液体中每个气泡的破裂会产生能量极大的冲击波，相当于瞬间产生几百度的高温和高达上千个大气压的压力，这种现象被称之为“空化作用”，超声波清洗正是利用液体中气泡破裂所产生的冲击波来达到清洗和冲刷工件内外表面的作用。超声清洗多用于半导体、机械、玻璃、医疗仪器等行业。<br>(2)超声波焊接(主要三要素：时间、压力、振幅)<br>压电陶瓷或磁致伸缩材料在高电压窄脉冲作用下，可得到较大功率的超声波，可以被聚焦，能用于集成电路及塑料的焊接。<br>注：金属也行。<br>(3)超声波在医学检查中的应用<br>胎儿的B超影像…</p>
+<p><strong>超声波传感器</strong><br>超声物位传感器：单换能器、双换能器<br>只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </p>
+<p><strong>超声侧厚传感器</strong><br>双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</p>
+<p><strong>超声波流量传感器</strong><br>目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</p>
+<img src="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="超声波传感器">
 
 
+<p><strong>超声波传感器的应用</strong><br>超声波流量计<br>超声波侧厚<br>超声波探伤<br>超声波报警器</p>
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+      <tags>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux编程常识</title>
+    <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/</url>
+    <content><![CDATA[<h5 id="计算机常识QAQ"><a href="#计算机常识QAQ" class="headerlink" title="计算机常识QAQ"></a>计算机常识QAQ</h5><img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/1.jpg" class="" title="计算机系统硬件组成（linux王保明）">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽贯穿整个系统的一组电子管道称为总线</span><br><span class="line">片内总线</span><br><span class="line">系统总线：数据总线DB、地址总线CB、控制总线CB</span><br><span class="line">外部总线</span><br><span class="line"></span><br><span class="line">CPU：运算寄存器ALU、控制器、寄存器（状态寄存器、通用寄存器）</span><br><span class="line">取指、译码、执行、写回、跳转。pc指针多32位。</span><br><span class="line"></span><br><span class="line">什么是操作系统</span><br><span class="line">操作系统：有效地管理计算机系统中的资源，合理地管理计算机系统的工作流程，方便用户使用的程序的集合。</span><br><span class="line"></span><br><span class="line">操作系统五大任务</span><br><span class="line">(1)文件管理</span><br><span class="line">(2)处理器管理</span><br><span class="line">(3)内存管理</span><br><span class="line">(4)设备管理</span><br><span class="line">(5)作业管理</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/2.jpg" class="">
+
+<h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">体系结构:linux内核被划分为多个子系统。基本服务都集成到内核中,例如通信、I/O、内存和进程管理，更具体的服务都是插入到微内核层中的。（收包和发包产生大量中断，放在内核最有效率）。</span><br><span class="line">主要子系统：</span><br><span class="line">（1）系统调用接口</span><br><span class="line">（2）进程管理</span><br><span class="line">（3）内存管理：其中，为每个子程序提供了一个2^32虚拟内存。</span><br><span class="line">为n个进程提供访问的物理空间、段式管理和页式管理就行了。linux进程并发模型.</span><br><span class="line">（4）虚拟文件系统（VFS）：虚拟文件系统 在 系统调用层接口（SCI ）和内核所支持的文件系统之间提供了一个交换层。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">扩展： Linux 可以在一个具有内存管理单元（MMU）的处理器上运行，也可以在那些不提供MMU的处理器上运行。Linux 内核的uClinux移植提供了对非 MMU 的支持</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/3.jpg" class="">
 
 
-<p>来源：Linux应用编程王保明</p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
       <tags>
         <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联发科面试</title>
+    <url>/My-interview-Lover/%E5%8F%91%E7%A7%91%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务</title>
+    <url>/MySql-Lover/%E5%8A%A1/</url>
+    <content><![CDATA[<h5 id="事务："><a href="#事务：" class="headerlink" title="事务："></a>事务：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">定义：是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。</span><br><span class="line">事务的 ACID 特性：原子性、一致性、隔离性、持续性。</span><br><span class="line">事务是并发控制的基本单位。</span><br><span class="line">并发操作带来的数据不一致性包括：丢失修改、不可重复读、读 “脏” 数据。</span><br><span class="line">脏读：就是指当一个事务对数据进行了修改但还没有提交到数据库时，另一个事务访问并使用了这个数据。</span><br><span class="line">不可重复读：在一个事务内两次读数据之间，第二个事务访问该数据并进行了修改。</span><br><span class="line">丢失修改：两个事务读入同一数据并修改，T2提交的结果破坏了T1提交的结果。例如T1读A修改为A-1，T2也读A修改为A-1（实际上应该是读A-1，修改 为A-2）</span><br><span class="line">&lt;部分来源牛客网&gt;</span><br></pre></td></tr></table></figure>
+
+<p>SHOW ENGINES;#开启事务<br>SET autocommit=0;<br>START TRANSACTION；<br>#处理<br>UPDATA account set  balance =100 where usename = ‘ming’;<br>ROLLBACK ;</p>
+<p>__savepoint保存回滚</p>
+<p>SET autocommit=0;<br>START TRANSACTION;<br>DELETE FROM account WHERE id=25;<br>SAVEPOINT a;#设置保存点<br>DELETE FROM account WHERE id=28;<br>ROLLBACK TO a;#回滚到保存点S<br>ELECT * FROM account;</p>
+<p>扩展知识点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">恢复的实现技术:建立冗余数据,利用冗余数据实施数据库恢复。</span><br><span class="line">建立冗余数据常用技术：数据转储（动态海量转储、动态增量转储、静态海量转储、静态增量转储）、登记日志文件。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>少用全局变量</title>
+    <url>/C-C-Lover/%E5%B0%91%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全局变量</td>
+<td>在整个工程文件内都有效；“在函数外定义的变量”，即从定义变量的位置到本源文件结束都有效。由于同一文件中的所有函数都能引用全局变量的值，因此如果在一个函数中改变了全局变量的值， 就能影响到其他函数中全局变量的值。</td>
+</tr>
+<tr>
+<td>静态全局变量</td>
+<td>只在定义它的文件内有效，效果和全局变量一样，不过就在本文件内部；</td>
+</tr>
+<tr>
+<td>静态局部变量</td>
+<td>只在定义它的函数内有效，只是程序仅分配一次内存，函数返回后，该变量不会消失；静态局部变量的生存期虽然为整个工程，但是其作用仍与局部变量相同，即只能在定义该变量的函数内使用该变量。退出该函数后， 尽管该变量还继续存在，但不能使用它。</td>
+</tr>
+<tr>
+<td>局部变量</td>
+<td>在定义它的函数内有效，但是函数返回后失效。“在函数内定义的变量”，即在一个函数内部定义的变量，只在本函数范围内有效。</td>
+</tr>
+</tbody></table>
+<p>__注意</p>
+<p>全局变量和静态变量如果没有手工初始化，则由编译器初始化为0。局部变量的值不可知。静态局部变量与全局变量最明显的区别就在于：全局变量在其定义后所有函数都能用，但是静态局部变量只能在一个函数里面用。<br>滥用全局变量会造成不必要的常量频繁使用，特别当这个常量没有用宏定义“正名”时，代码阅读起来将万分吃力。</p>
+<p>__有什么对策？</p>
+<ol>
+<li>能不用全局变量尽量不用。</li>
+<li>如果不可避免需要用到，那能藏多深就藏多深。<br>1)如果只有某.c文件用，就static到该文件中，顺便把结构体定义也收进来；<br>2)如果只有一个函数用，那就static到函数里面去；<br>3)如果非要开放出去让人读取，那就用函数return出去，这样就是只读属性了；<br>4)如果非要遭人蹂躏赋值，好吧，我开放函数接口让你传参赋值<br>5)实在非要extern我，我还可以严格控制包含我.h档的对象，而不是放到公共的includes.h中被人围观，丢人现眼。<br>6）当一个模块里面的全局变量超过3个(含)时，就用结构体包起来吧。要归0便一起归0，省得丢三落四的。</li>
+</ol>
+<p>公众号：C/C++技术文章<br>参考资料：<br>【1】佚名. 全局变量、局部变量、静态全局变量、静态局部变量的区别<br>【2】佚名. 嵌入式C编程经验之全局变量猛于虎<br>【3】《C11标准文档》</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>华为面试</title>
+    <url>/My-interview-Lover/%E5%8D%8E%E4%B8%BA%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -649,39 +957,13 @@
       </categories>
   </entry>
   <entry>
-    <title>数电概念</title>
-    <url>/Circuit-Lover/%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Circuit Lover</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>数据库SQL语言</title>
-    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>MySql Lover</category>
-      </categories>
-      <tags>
-        <tag>MySql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>超声波传感器</title>
-    <url>/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
-    <content><![CDATA[<p><strong>超声波分类</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">振动在弹性介质内的传播称为波动，简称波。</span><br><span class="line">低于16 Hz的机械波，称为次声波；</span><br><span class="line">在16~2×10^4 Hz之间，称为声波；</span><br><span class="line">高于2×10^4 Hz的机械波，称为超声波,</span><br><span class="line">在3×10^8~3×10^11Hz之间的波，称为微波。</span><br><span class="line">波类型和传递介质</span><br><span class="line">① 纵波：质点振动方向与波的传播方向一致的波，它能在固体、液体和气体介质中传播；</span><br><span class="line">② 横波：质点振动方向垂直于传播方向的波，它只能在固体介质中传播； </span><br><span class="line">③ 表面波：质点的振动介于横波与纵波之间，沿着介质表面传播，其振幅随深度增加而迅速衰减的波，表面波只在固体的表面传播。</span><br></pre></td></tr></table></figure>
-<p><strong>超声波应用</strong><br>(1)超声波用于高效清洗<br>当弱的声波信号作用于液体中时，会对液体产生一定的负压，即液体体积增加，液体中分子空隙加大，形成许多微小的气泡；而当强的声波信号作用于液体时，则会对液体产生一定的正压，即液体体积被压缩减小，液体中形成的微小气泡被压碎。经研究证明：超声波作用于液体中时，液体中每个气泡的破裂会产生能量极大的冲击波，相当于瞬间产生几百度的高温和高达上千个大气压的压力，这种现象被称之为“空化作用”，超声波清洗正是利用液体中气泡破裂所产生的冲击波来达到清洗和冲刷工件内外表面的作用。超声清洗多用于半导体、机械、玻璃、医疗仪器等行业。<br>(2)超声波焊接(主要三要素：时间、压力、振幅)<br>压电陶瓷或磁致伸缩材料在高电压窄脉冲作用下，可得到较大功率的超声波，可以被聚焦，能用于集成电路及塑料的焊接。<br>注：金属也行。<br>(3)超声波在医学检查中的应用<br>胎儿的B超影像…</p>
-<p><strong>超声波传感器</strong><br>超声物位传感器：单换能器、双换能器<br>只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </p>
-<p><strong>超声侧厚传感器</strong><br>双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</p>
-<p><strong>超声波流量传感器</strong><br>目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</p>
-<img src="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="超声波传感器">
-
-
-<p><strong>超声波传感器的应用</strong><br>超声波流量计<br>超声波侧厚<br>超声波探伤<br>超声波报警器</p>
+    <title>传感器的特点</title>
+    <url>/Circuit-Lover/%E5%99%A8%E7%9A%84%E7%89%B9%E7%82%B9/</url>
+    <content><![CDATA[<p>1.什么叫传感器? </p>
+<p>能够感受规定的被测量并按照一定规律转化成可用输出信号的器件或装置。</p>
+<p>2、传感器共性是什么？<br>传感器的共性就是利用物理规律或物质的物理、生物、化学特性，将非电量信号（位移、速度、力等）输入转换成电量（电压、电流、电容等）输出。</p>
+<p>3、传感器由哪些部分组成？<br>传感器一般是由敏感元件、转化元件和变换电路三部分组成。</p>
+<p>4、改善传感器？<br>（1）差动技术<br>（2）平均技术<br>（3）补偿与修正<br>（4）干扰抑制<br>（5）稳定性处理</p>
 ]]></content>
       <categories>
         <category>Circuit Lover</category>
@@ -691,104 +973,14 @@
       </tags>
   </entry>
   <entry>
-    <title>cron /crontab 计划任务</title>
-    <url>/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</url>
-    <content><![CDATA[<p>分 时 日  月  星期</p>
-<p>四个符号：</p>
-<p>*：表示取值范围中的每一个数字</p>
-<p>-：做连续区间表达式的，要想表示1~7，则可以写成：1-7</p>
-<p>/：表示每多少个，例如：想每10分钟一次，则可以在分的位置写：*/10</p>
-<p>,：表示多个取值，比如想在1点，2点6点执行，则可以在时的位置写：1,2,6</p>
-<p>问题1：每月1、10、22日的4:45重启network服务</p>
-<p>45 4  1,10,22  * *  service network restart</p>
-<p>问题2：每周六、周日的1:10重启network服务</p>
-<p>10 1  *  * 6,0   service network restart</p>
-<p>问题3：每天18:00至23:00之间每隔30分钟重启network服务</p>
-<p>*/30 18-23  *  * *   service network restart</p>
-<p>问题4：每隔两天的上午8点到11点的第3和第15分钟执行一次重启</p>
-<p>3,15 8-11  */2  * *   reboot</p>
-]]></content>
+    <title>cvte面试</title>
+    <url>/My-interview-Lover/te%E9%9D%A2%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
       <categories>
-        <category>Linux Lover</category>
+        <category>My interview Lover</category>
       </categories>
       <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell学习</title>
-    <url>/uncategorized/shell%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p><strong>bash</strong><br>大多数Linux系统默认使用的shell，bash shell 是shell 的一个免费版本，它是最早的 Unix shell，bash还有一个特点，可以通过help命令来查看帮助。包含的功能几乎可以涵盖shell所具有的功能，所以一般的shell脚本都会指定它为执行路径。</p>
-<p>注意：windows 下 powershell QAQ</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">编写：test.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'hello world '</span></span><br><span class="line">运行 ./test.sh</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>vim 操作随记</title>
-    <url>/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">命令模式</span><br><span class="line"></span><br><span class="line">移动：首行gg 末行G</span><br><span class="line"></span><br><span class="line">复制：yy  粘贴p</span><br><span class="line"></span><br><span class="line">剪切：dd      留空剪切：D</span><br><span class="line"></span><br><span class="line">撤销：u   恢复：crtl +  r</span><br><span class="line"></span><br><span class="line">编辑模式（输入模式）</span><br><span class="line"></span><br><span class="line">i a     esc</span><br><span class="line"></span><br><span class="line">末行模式（尾行模式）。</span><br><span class="line"></span><br><span class="line">:w</span><br><span class="line"></span><br><span class="line">:q</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line"></span><br><span class="line">:q！</span><br><span class="line"></span><br><span class="line">：x   保存退出！！！！</span><br><span class="line"></span><br><span class="line">/ 查找</span><br><span class="line"></span><br><span class="line">：s/     g</span><br><span class="line"></span><br><span class="line">:%s/    g</span><br><span class="line"></span><br><span class="line">查看当前已经打开的文件名称：“:files”</span><br><span class="line">： esc    进入 退出</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/vim.jpg" class="">]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>磁盘文件、内存命令</title>
-    <url>/Linux-Lover/%E5%86%85%E5%AD%98%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>ls /dev/sd*</p>
-<p>df：列出文件系统的整体磁盘使用量。主要查看个文件系统的使用量，<br>du:评估文件系统的磁盘使用量，主要查看单个文件的大小。<br>eg:du -h –max-depth=1  显示一层</p>
-<p>磁盘的挂载和卸载mount和umount命令</p>
-<p>sudo umount media/ming/MING    </p>
-<p>mkdir udisk</p>
-<p>sudo mount /dev/sdb1  /media/ming/udisk</p>
-<p>sudo mount -o iocharset=utf8  /dev/sdb1 /media/ming/udisk //中文显示</p>
-<p>分区挂载不能进行分区操作<br>sudo fdisk /dev/sdb</p>
-<p>磁盘格式化<br>mkfs -t vfat /dev/sdx</p>
-<p>3、磁盘格式化</p>
-<p>   磁盘分区创建好以后就可以格式化磁盘，使用命令mkfs。如：<br>sudo mkfs -t vfat/dev/sdx<br>   把U盘拔了重插上去，防止报错</p>
-<p>4、free  -h 查看内存 </p>
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>随记命令</title>
-    <url>/Linux-Lover/%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ctrl +C    终止 <span class="built_in">cd</span> `</span><br><span class="line"></span><br><span class="line">df  -h      磁盘大小</span><br><span class="line"></span><br><span class="line">free -m     内存大小</span><br><span class="line"></span><br><span class="line">head -n  **.txt  文件头几行   默认10</span><br><span class="line"></span><br><span class="line">tail - n <span class="comment">##  ** .txt 文件末尾两行</span></span><br><span class="line"></span><br><span class="line">less 查看文件     ：q退出</span><br><span class="line"></span><br><span class="line"><span class="comment">#wc -lwc 统计文件内容信息（包含行数、单词数、字节数）</span></span><br><span class="line"></span><br><span class="line">         -l：表示lines，行数</span><br><span class="line"></span><br><span class="line">         -w：表示words，单词数  依照空格来判断单词数量</span><br><span class="line"></span><br><span class="line">         -c：表示bytes，字节数</span><br><span class="line"></span><br><span class="line">date 输出的形式：2018年3月24日星期六15:54:28</span><br><span class="line"></span><br><span class="line">date +%F 输出形式：2018-03-24</span><br><span class="line"></span><br><span class="line">date <span class="string">"+%F %T"</span>  ==输出的形式：2018-03-24 16:01:00</span><br><span class="line"></span><br><span class="line">==<span class="comment">#date “+%Y-%m-%d %H:%M:%S”</span></span><br><span class="line"></span><br><span class="line">date -d   <span class="string">"-1 day"</span>  <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"></span><br><span class="line">前天 -  后天 +</span><br><span class="line"></span><br><span class="line">cal  作用：用来操作日历的</span><br><span class="line"></span><br><span class="line">cal -1 本月</span><br><span class="line"></span><br><span class="line">cal -3 上 中 下</span><br><span class="line"></span><br><span class="line">cal   -y  2019 年份月历</span><br><span class="line"></span><br><span class="line">clear     / ctrl +L  清除终端</span><br><span class="line"></span><br><span class="line">ls   /  | wc<span class="_">-l</span>   管道的过滤使用</span><br><span class="line"></span><br><span class="line"><span class="comment">#ls / |grep y</span></span><br><span class="line"></span><br><span class="line">hostname -f </span><br><span class="line"></span><br><span class="line">id  （包含用户id，用户组id，附加组id…）</span><br><span class="line"></span><br><span class="line">whoami   查看当前用户</span><br><span class="line"></span><br><span class="line">ps -ef 服务器进程   ps -ef  |grep http</span><br><span class="line"></span><br><span class="line">top 处理机资源占用情况</span><br><span class="line"></span><br><span class="line">du -sh 目录 查看目录大小</span><br><span class="line"></span><br><span class="line">service 服务名称  start stop  restart</span><br><span class="line"></span><br><span class="line">find  / -name      http    查找</span><br><span class="line"></span><br><span class="line">find  / -name      *.cof </span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> 2986   killall 名称   杀死进程</span><br><span class="line"></span><br><span class="line">ifconfig      inet addr就是网卡的ip地址。</span><br><span class="line"></span><br><span class="line">reboot  启动</span><br><span class="line"></span><br><span class="line">shutdown   重启</span><br><span class="line"></span><br><span class="line">uptime 计算开机到现在的额时间</span><br><span class="line"></span><br><span class="line">uname  操作系统名称</span><br><span class="line"></span><br><span class="line">netstat -tnlp</span><br><span class="line"></span><br><span class="line">       -t：表示只列出tcp协议的连接；</span><br><span class="line"></span><br><span class="line">       -n：表示将地址从字母组合转化成ip地址，将协议转化成端口号来显示；</span><br><span class="line"></span><br><span class="line">       -l：表示过滤出“state（状态）”列中其值为LISTEN（监听）的连接；</span><br><span class="line"></span><br><span class="line">       -p：表示显示发起连接的进程pid和进程名称；</span><br><span class="line"></span><br><span class="line">man   cp 查看帮助文档</span><br><span class="line"></span><br><span class="line">软链接 （符号链接） ln -s   <span class="built_in">source</span>  target  </span><br><span class="line"></span><br><span class="line">硬链接 （实体链接）ln       <span class="built_in">source</span>  target</span><br><span class="line"></span><br><span class="line">Ctrl+s  阻止输入</span><br><span class="line"></span><br><span class="line">Ctrl+q  允许输入</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设备地址</title>
-    <url>/Linux-Lover/%E5%A4%87%E5%9C%B0%E5%9D%80/</url>
-    <content><![CDATA[<p>电脑与板子连接路由（电脑连接Wifi）</p>
-<p>192.168.0.128</p>
-<p>192.168.0.255</p>
-<p>255.255.255.0</p>
-<p>00:0c:29:e3:61:25</p>
-<p>板子</p>
-<p>setenv ipaddr 192.168.0.50</p>
-<p>setenv ethaddr 00:04:9f:04:d2:35</p>
-<p>setenv gatewayip 192.168.0.1</p>
-<p>setenv netmask 255.255.255.0</p>
-<p>setenv serverip 192.168.0.128</p>
-<p>saveenv</p>
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux驱动开发</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -893,34 +1085,85 @@
       </tags>
   </entry>
   <entry>
-    <title>微波传感器</title>
-    <url>/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
-    <content><![CDATA[<h5 id="微波"><a href="#微波" class="headerlink" title="微波"></a>微波</h5><p>微波是0.1m-1m的电磁波，波长相对较长的电磁波。对应的波段频率范围为300 MHz～3000 GHz。 </p>
-<h5 id="微波特点"><a href="#微波特点" class="headerlink" title="微波特点"></a>微波特点</h5><p>(1)似光性和似声性<br>(2)分析方法的独特性<br>低频电路不适用<br>(3)共度性<br>电子在真空管内的渡越时间（10-9秒左右）与微波的振荡周期（ 10-9 ～10-15秒）相当的这一特性称共度性，利用该特性可以做成各种微波电真空器件，得到微波振荡源。<br>(4)穿透性<br>(5)信息性<br>(6)非电离性</p>
-<h5 id="微波传感器"><a href="#微波传感器" class="headerlink" title="微波传感器"></a>微波传感器</h5><p><strong>原理</strong><br>微波传感器是利用微波特性来检测某些物理量的器件或装置。由发射天线发出微波，此波遇到被测物体时将被吸收或反射，使微波功率发生变化。若利用接收天线，接收到通过被测物体或由被测物体反射回来的微波，并将它转换为电信号，再经过信号调理电路，即可以显示出被测量，实现了微波检测。<br><strong>分类</strong><br>根据微波传感器的原理，微波传感器可以分为反射式和遮断式两类。<br><strong>组成</strong><br>微波传感器通常由微波发射器（即微波振荡器）、 微波天线及微波检测器三部分组成。<br><strong>微波振荡器</strong> 的器件有调速管、磁控管或某些固态器件，小型微波振荡器也可以采用体效应管<br><strong>微波天线</strong> 为了使发射的微波具有尖锐的方向性，天线要具有特殊的结构。</p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E5%A4%A9%E7%BA%BF.jpg" class="" title="微波天线">
-<p><strong>微波检测器</strong><br>一种是将微波变化为电流的视频变化方式<br>一种是与本机振荡器并用而变化为频率比微波低的外差法。（差分方式）</p>
-<h5 id="微波传感器应用"><a href="#微波传感器应用" class="headerlink" title="微波传感器应用"></a>微波传感器应用</h5><p><strong>微波液位计</strong></p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E4%BE%A7%E4%BD%8D%E8%AE%A1.jpg" class="" title="微波侧位计">
-
-<p><strong>微波湿度传感器</strong></p>
-<p>扩展：<br>一般干燥的物体，如木材、皮革、谷物、 纸张、 塑料等，其ε′在1～5范围内， 而水的ε′则高达64， 因此如果材料中含有少量水分子时，其复合ε′将显著上升， ε″也有类似性质。 使用微波传感器，测量干燥物体与含一定水分的潮湿物体所引起的微波信号的相移与衰减量， 就可以换算出物体的含水量。</p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B9%BF%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="微波湿度传感器">
-
-<p><strong>微波测厚仪</strong><br>利用微波在传播过程中遇到被测物体金属表面被反射，且反射波的波长与速度都不变的特性进行测厚的。<br>基本原理：<br>（1）在被测金属物体上下两表面各安装一个终端器。微波信号源发出的微波，经过环行器A、 上传输波导管传输到上终端器，由上终端器发射到被测物体上表面上，微波在被测物体上表面全反射后又回到上终端器，再经过传输导管、环行器A、下传输波导管传输到下终端器。</p>
-<p>（2）由下终端器发射到被测物体下表面的微波，经全反射后又回到下终端<br>器，再经过传输导管回到环行器A。因此被测物体的厚度与微波传输过<br>程中的行程长度有密切关系，当被测物体厚度增加时，微波传输的行程<br>长度便减小。 </p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B5%8B%E5%8E%9A%E4%BB%AA.jpg" class="" title="微波测厚仪">
-
-
-<p><strong>微波辐射计（温度传感器）</strong>(*)</p>
-<p><strong>微波测定移动物体的速度和距离</strong>(*)</p>
-<p><strong>微波无损检测</strong>(*)</p>
+    <title>磁盘文件、内存命令</title>
+    <url>/Linux-Lover/%E5%86%85%E5%AD%98%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>ls /dev/sd*</p>
+<p>df：列出文件系统的整体磁盘使用量。主要查看个文件系统的使用量，<br>du:评估文件系统的磁盘使用量，主要查看单个文件的大小。<br>eg:du -h –max-depth=1  显示一层</p>
+<p>磁盘的挂载和卸载mount和umount命令</p>
+<p>sudo umount media/ming/MING    </p>
+<p>mkdir udisk</p>
+<p>sudo mount /dev/sdb1  /media/ming/udisk</p>
+<p>sudo mount -o iocharset=utf8  /dev/sdb1 /media/ming/udisk //中文显示</p>
+<p>分区挂载不能进行分区操作<br>sudo fdisk /dev/sdb</p>
+<p>磁盘格式化<br>mkfs -t vfat /dev/sdx</p>
+<p>3、磁盘格式化</p>
+<p>   磁盘分区创建好以后就可以格式化磁盘，使用命令mkfs。如：<br>sudo mkfs -t vfat/dev/sdx<br>   把U盘拔了重插上去，防止报错</p>
+<p>4、free  -h 查看内存 </p>
 ]]></content>
       <categories>
-        <category>Circuit Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>传感器</tag>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C字符串常用函数</title>
+    <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vim 操作随记</title>
+    <url>/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">命令模式</span><br><span class="line"></span><br><span class="line">移动：首行gg 末行G</span><br><span class="line"></span><br><span class="line">复制：yy  粘贴p</span><br><span class="line"></span><br><span class="line">剪切：dd      留空剪切：D</span><br><span class="line"></span><br><span class="line">撤销：u   恢复：crtl +  r</span><br><span class="line"></span><br><span class="line">编辑模式（输入模式）</span><br><span class="line"></span><br><span class="line">i a     esc</span><br><span class="line"></span><br><span class="line">末行模式（尾行模式）。</span><br><span class="line"></span><br><span class="line">:w</span><br><span class="line"></span><br><span class="line">:q</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line"></span><br><span class="line">:q！</span><br><span class="line"></span><br><span class="line">：x   保存退出！！！！</span><br><span class="line"></span><br><span class="line">/ 查找</span><br><span class="line"></span><br><span class="line">：s/     g</span><br><span class="line"></span><br><span class="line">:%s/    g</span><br><span class="line"></span><br><span class="line">查看当前已经打开的文件名称：“:files”</span><br><span class="line">： esc    进入 退出</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/vim.jpg" class="">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>随记命令</title>
+    <url>/Linux-Lover/%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ctrl +C    终止 <span class="built_in">cd</span> `</span><br><span class="line"></span><br><span class="line">df  -h      磁盘大小</span><br><span class="line"></span><br><span class="line">free -m     内存大小</span><br><span class="line"></span><br><span class="line">head -n  **.txt  文件头几行   默认10</span><br><span class="line"></span><br><span class="line">tail - n <span class="comment">##  ** .txt 文件末尾两行</span></span><br><span class="line"></span><br><span class="line">less 查看文件     ：q退出</span><br><span class="line"></span><br><span class="line"><span class="comment">#wc -lwc 统计文件内容信息（包含行数、单词数、字节数）</span></span><br><span class="line"></span><br><span class="line">         -l：表示lines，行数</span><br><span class="line"></span><br><span class="line">         -w：表示words，单词数  依照空格来判断单词数量</span><br><span class="line"></span><br><span class="line">         -c：表示bytes，字节数</span><br><span class="line"></span><br><span class="line">date 输出的形式：2018年3月24日星期六15:54:28</span><br><span class="line"></span><br><span class="line">date +%F 输出形式：2018-03-24</span><br><span class="line"></span><br><span class="line">date <span class="string">"+%F %T"</span>  ==输出的形式：2018-03-24 16:01:00</span><br><span class="line"></span><br><span class="line">==<span class="comment">#date “+%Y-%m-%d %H:%M:%S”</span></span><br><span class="line"></span><br><span class="line">date -d   <span class="string">"-1 day"</span>  <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"></span><br><span class="line">前天 -  后天 +</span><br><span class="line"></span><br><span class="line">cal  作用：用来操作日历的</span><br><span class="line"></span><br><span class="line">cal -1 本月</span><br><span class="line"></span><br><span class="line">cal -3 上 中 下</span><br><span class="line"></span><br><span class="line">cal   -y  2019 年份月历</span><br><span class="line"></span><br><span class="line">clear     / ctrl +L  清除终端</span><br><span class="line"></span><br><span class="line">ls   /  | wc<span class="_">-l</span>   管道的过滤使用</span><br><span class="line"></span><br><span class="line"><span class="comment">#ls / |grep y</span></span><br><span class="line"></span><br><span class="line">hostname -f </span><br><span class="line"></span><br><span class="line">id  （包含用户id，用户组id，附加组id…）</span><br><span class="line"></span><br><span class="line">whoami   查看当前用户</span><br><span class="line"></span><br><span class="line">ps -ef 服务器进程   ps -ef  |grep http</span><br><span class="line"></span><br><span class="line">top 处理机资源占用情况</span><br><span class="line"></span><br><span class="line">du -sh 目录 查看目录大小</span><br><span class="line"></span><br><span class="line">service 服务名称  start stop  restart</span><br><span class="line"></span><br><span class="line">find  / -name      http    查找</span><br><span class="line"></span><br><span class="line">find  / -name      *.cof </span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> 2986   killall 名称   杀死进程</span><br><span class="line"></span><br><span class="line">ifconfig      inet addr就是网卡的ip地址。</span><br><span class="line"></span><br><span class="line">reboot  启动</span><br><span class="line"></span><br><span class="line">shutdown   重启</span><br><span class="line"></span><br><span class="line">uptime 计算开机到现在的额时间</span><br><span class="line"></span><br><span class="line">uname  操作系统名称</span><br><span class="line"></span><br><span class="line">netstat -tnlp</span><br><span class="line"></span><br><span class="line">       -t：表示只列出tcp协议的连接；</span><br><span class="line"></span><br><span class="line">       -n：表示将地址从字母组合转化成ip地址，将协议转化成端口号来显示；</span><br><span class="line"></span><br><span class="line">       -l：表示过滤出“state（状态）”列中其值为LISTEN（监听）的连接；</span><br><span class="line"></span><br><span class="line">       -p：表示显示发起连接的进程pid和进程名称；</span><br><span class="line"></span><br><span class="line">man   cp 查看帮助文档</span><br><span class="line"></span><br><span class="line">软链接 （符号链接） ln -s   <span class="built_in">source</span>  target  </span><br><span class="line"></span><br><span class="line">硬链接 （实体链接）ln       <span class="built_in">source</span>  target</span><br><span class="line"></span><br><span class="line">Ctrl+s  阻止输入</span><br><span class="line"></span><br><span class="line">Ctrl+q  允许输入</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cron /crontab 计划任务</title>
+    <url>/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<p>分 时 日  月  星期</p>
+<p>四个符号：</p>
+<p>*：表示取值范围中的每一个数字</p>
+<p>-：做连续区间表达式的，要想表示1~7，则可以写成：1-7</p>
+<p>/：表示每多少个，例如：想每10分钟一次，则可以在分的位置写：*/10</p>
+<p>,：表示多个取值，比如想在1点，2点6点执行，则可以在时的位置写：1,2,6</p>
+<p>问题1：每月1、10、22日的4:45重启network服务</p>
+<p>45 4  1,10,22  * *  service network restart</p>
+<p>问题2：每周六、周日的1:10重启network服务</p>
+<p>10 1  *  * 6,0   service network restart</p>
+<p>问题3：每天18:00至23:00之间每隔30分钟重启network服务</p>
+<p>*/30 18-23  *  * *   service network restart</p>
+<p>问题4：每隔两天的上午8点到11点的第3和第15分钟执行一次重启</p>
+<p>3,15 8-11  */2  * *   reboot</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
       </tags>
   </entry>
   <entry>
@@ -949,188 +1192,244 @@
       </tags>
   </entry>
   <entry>
-    <title>STM32单片机</title>
-    <url>/uncategorized/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>STM32</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C字符串常用函数</title>
-    <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>51单片机</title>
-    <url>/uncategorized/%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>51</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>传感器的特点</title>
-    <url>/Circuit-Lover/%E5%99%A8%E7%9A%84%E7%89%B9%E7%82%B9/</url>
-    <content><![CDATA[<p>1.什么叫传感器? </p>
-<p>能够感受规定的被测量并按照一定规律转化成可用输出信号的器件或装置。</p>
-<p>2、传感器共性是什么？<br>传感器的共性就是利用物理规律或物质的物理、生物、化学特性，将非电量信号（位移、速度、力等）输入转换成电量（电压、电流、电容等）输出。</p>
-<p>3、传感器由哪些部分组成？<br>传感器一般是由敏感元件、转化元件和变换电路三部分组成。</p>
-<p>4、改善传感器？<br>（1）差动技术<br>（2）平均技术<br>（3）补偿与修正<br>（4）干扰抑制<br>（5）稳定性处理</p>
+    <title>设备地址</title>
+    <url>/Linux-Lover/%E5%A4%87%E5%9C%B0%E5%9D%80/</url>
+    <content><![CDATA[<p>电脑与板子连接路由（电脑连接Wifi）</p>
+<p>192.168.0.128</p>
+<p>192.168.0.255</p>
+<p>255.255.255.0</p>
+<p>00:0c:29:e3:61:25</p>
+<p>板子</p>
+<p>setenv ipaddr 192.168.0.50</p>
+<p>setenv ethaddr 00:04:9f:04:d2:35</p>
+<p>setenv gatewayip 192.168.0.1</p>
+<p>setenv netmask 255.255.255.0</p>
+<p>setenv serverip 192.168.0.128</p>
+<p>saveenv</p>
 ]]></content>
       <categories>
-        <category>Circuit Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>传感器</tag>
+        <tag>Linux驱动开发</tag>
       </tags>
   </entry>
   <entry>
-    <title>少用全局变量</title>
-    <url>/C-C-Lover/%E5%B0%91%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<table>
+    <title>man手册</title>
+    <url>/Linux-Lover/an%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h5 id="man"><a href="#man" class="headerlink" title="man"></a>man</h5><table>
 <thead>
 <tr>
-<th></th>
-<th></th>
+<th align="center">代号</th>
+<th align="center">内容</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>全局变量</td>
-<td>在整个工程文件内都有效；“在函数外定义的变量”，即从定义变量的位置到本源文件结束都有效。由于同一文件中的所有函数都能引用全局变量的值，因此如果在一个函数中改变了全局变量的值， 就能影响到其他函数中全局变量的值。</td>
+<td align="center">1</td>
+<td align="center">Standard commands (标准命令)</td>
 </tr>
 <tr>
-<td>静态全局变量</td>
-<td>只在定义它的文件内有效，效果和全局变量一样，不过就在本文件内部；</td>
+<td align="center">2</td>
+<td align="center">System calls (系统调用)</td>
 </tr>
 <tr>
-<td>静态局部变量</td>
-<td>只在定义它的函数内有效，只是程序仅分配一次内存，函数返回后，该变量不会消失；静态局部变量的生存期虽然为整个工程，但是其作用仍与局部变量相同，即只能在定义该变量的函数内使用该变量。退出该函数后， 尽管该变量还继续存在，但不能使用它。</td>
+<td align="center">3</td>
+<td align="center">Libary functions （库函数）</td>
 </tr>
 <tr>
-<td>局部变量</td>
-<td>在定义它的函数内有效，但是函数返回后失效。“在函数内定义的变量”，即在一个函数内部定义的变量，只在本函数范围内有效。</td>
+<td align="center">4</td>
+<td align="center">Special device (设备说明)</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">File formats (文件格式)</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">Game and toys (游戏娱乐)</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">Miscellaneous (杂项)</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">Administrative commands(管理员命令)</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">other  (存放内核文档)</td>
 </tr>
 </tbody></table>
-<p>__注意</p>
-<p>全局变量和静态变量如果没有手工初始化，则由编译器初始化为0。局部变量的值不可知。静态局部变量与全局变量最明显的区别就在于：全局变量在其定义后所有函数都能用，但是静态局部变量只能在一个函数里面用。<br>滥用全局变量会造成不必要的常量频繁使用，特别当这个常量没有用宏定义“正名”时，代码阅读起来将万分吃力。</p>
-<p>__有什么对策？</p>
-<ol>
-<li>能不用全局变量尽量不用。</li>
-<li>如果不可避免需要用到，那能藏多深就藏多深。<br>1)如果只有某.c文件用，就static到该文件中，顺便把结构体定义也收进来；<br>2)如果只有一个函数用，那就static到函数里面去；<br>3)如果非要开放出去让人读取，那就用函数return出去，这样就是只读属性了；<br>4)如果非要遭人蹂躏赋值，好吧，我开放函数接口让你传参赋值<br>5)实在非要extern我，我还可以严格控制包含我.h档的对象，而不是放到公共的includes.h中被人围观，丢人现眼。<br>6）当一个模块里面的全局变量超过3个(含)时，就用结构体包起来吧。要归0便一起归0，省得丢三落四的。</li>
-</ol>
-<p>公众号：C/C++技术文章<br>参考资料：<br>【1】佚名. 全局变量、局部变量、静态全局变量、静态局部变量的区别<br>【2】佚名. 嵌入式C编程经验之全局变量猛于虎<br>【3】《C11标准文档》</p>
 ]]></content>
       <categories>
-        <category>C/C++ Lover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
+        <tag>Linux系统</tag>
       </tags>
   </entry>
   <entry>
-    <title>美的</title>
-    <url>/uncategorized/%E7%9A%84/</url>
-    <content><![CDATA[<p>四大业务：数字化业务、消费者家电、空调业务、机器人自动化</p>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TCP</title>
-    <url>/Linux-Lover/TCP/</url>
-    <content><![CDATA[<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
+    <title>Hello World</title>
+    <url>/uncategorized/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
-<p>serv.c文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>client.c文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>结果</strong></p>
-<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络</title>
-    <url>/Linux-Lover/%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<p>1.计算机网络定义<br>所谓的计算机网络，就是一些互相连接的、自治的计算机的集合。计算机网络有很多种类别。<br>（1）根据不同的作用范围可以将计算机网络理解为广域网（WAN）、城域网（MAN）、局域网（LAN）、个人区域网（PAN）。<br>（2）根据不同的使用者，可以将计算机网络分为公用网和专用网。</p>
-<p>2.计算机网络的通信模式<br>计算机网络的通信模式有两种，一种是线路交换，另一种是包交换。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>线路交换</td>
-<td>就是我们家家最开始用的电话的网络连接技术，是通过在发送端和接受端之间建立一条特定的线路，进行数据的传输。</td>
-</tr>
-<tr>
-<td>包交换</td>
-<td>就是我们现在常用到的计算机的网络通信模式，是通过将所有的计算机放到一个共同的网络连接中，数据的发送端将要传输的数据分割成几份，然后将每一份数据封装成一个包，包中含有接收端的属性信息等，且每个包都是单独传输的。</td>
-</tr>
-</tbody></table>
-<p>TCP/IP通信协议采用了4层的层级结构，这4层分别为：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>应用层</td>
-<td>应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>在此层中提供了节点间的数据传送服务，如传输控制协议（TCP）、用户数据包协议（UDP）等，TCP和UDP给数据包加入传输数据并把它传输到下一层中。这一层负责传送数据，并且确定数据已被送达并接收。</td>
-</tr>
-<tr>
-<td>互联网络层</td>
-<td>负责提供基本的数据封包传送功能，让每一块数据包都能够到达目的主机（但不检查是否被正确接收），如网际协（IP）。</td>
-</tr>
-<tr>
-<td>网络接口层</td>
-<td>对实际的网络媒体的管理，定义如何使用实际网络（如Ethernet、Serial Line等）来传送数据。</td>
-</tr>
-</tbody></table>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
-      </tags>
   </entry>
   <entry>
-    <title>视觉传感器</title>
-    <url>/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
-    <content><![CDATA[<p><strong>定义</strong><br>光学图像转化为数字信号的传感器。//非接触检测方法</p>
-<p><strong>了解器件</strong><br>CCD -电荷耦合器(Charge-Coupled Device)-新型固体器件<br>CCD结构组成：MOS光敏阵列(金属-氧化物-半导体)+读出移位寄存器=一个MOS光敏元或一个像素</p>
-<p><strong>整个过程信号</strong> ：物理-光学-电气-视频<br><strong>CCD</strong> 作用信号转化 :光学-电气</p>
-<p><strong>电荷耦合器工作原理</strong><br>CCD产生（内光电效应）<br>CCD存储（存储在势井）<br>CCD传输（电荷的定向移动（势井的移动））<br>CDD检测或输出（电流输出、电压输出—浮置栅放大器、浮置扩散放大器）</p>
-<p>常见：面型图像传感器组成：感光区+存储+视频输出（串行输出）<br>外形结构和驱动时序不同，原理基本相同，向厂家拿资料。<br>常用：几何量（外加光源工件尺寸或缺陷）、文字、图像识别。</p>
-<p>扩展：mark点又叫光学定位点和反光点，如果没有 mark点，对位就不会不准。</p>
-<p>CMOS - 下节课</p>
+    <title>555概念及使用</title>
+    <url>/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class="">
+<h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class="" title="波形变换">
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class="" title="定时">
+<h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
+
+<h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class="">
+<h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class="">
+
+<table>
+<thead>
+<tr>
+<th align="center">引脚</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1脚</td>
+<td align="left">外接电源负端VSS或接地，一般情况下接地。</td>
+</tr>
+<tr>
+<td align="center">2脚</td>
+<td align="left">低触发端TL，该脚电压小于1/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">3脚</td>
+<td align="left">输出端OUT。</td>
+</tr>
+<tr>
+<td align="center">4脚</td>
+<td align="left">直接清零端RST。当此端接低电平时，则时基电路不工作</td>
+</tr>
+<tr>
+<td align="center">5脚</td>
+<td align="left">CO为控制电压端。若此脚外接电压，则可改变内部两个比较器的基准电压，当该脚不用时，应将该脚串入一只0.01μF（103）瓷片电容接地，以防引入高频干扰。</td>
+</tr>
+<tr>
+<td align="center">6脚</td>
+<td align="left">高触发端TH，该脚电压大于2/3 VCC时有效。</td>
+</tr>
+<tr>
+<td align="center">7脚</td>
+<td align="left">放电端。该端与放电管T的集电极相连</td>
+</tr>
+<tr>
+<td align="center">8脚</td>
+<td align="left">双极型时基电路VCC的范围是4.5 -16V，CMOS型时基电路VCC的范围为3-18V，一般用5V。</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>Circuit Lover</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Solidworks与PCB的结合</title>
+    <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
+    <content><![CDATA[<p>偶然的一次发现QAQ</p>
+<p>PCB电路板与solidworks的完美结合</p>
+<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
+
+
+<p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
       <tags>
-        <tag>传感器</tag>
+        <tag>3D建模</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>数电概念</title>
+    <url>/Circuit-Lover/%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>继SolidWorks之后另一款3D软件的preo简单的学习</title>
+    <url>/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
+<p>2.颜色RGB</p>
+<p>255  0  0  红色</p>
+<p>248  255  247  白色</p>
+<p>0     0    0  黑色</p>
+<p>银白色  红(192) 绿(192) 蓝(192)。</p>
+<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
+<p>例如：总装配体&gt;子装配体&gt;零件</p>
+<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
+<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
+<p>钣金加工工艺（综合冷加工工艺）</p>
+<p>下料 、成型、压铆，攻牙、焊接等</p>
+<p>表面处理：喷粉，电镀等；</p>
+<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
+]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux系统分类</title>
+    <url>/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
+
+<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
+
+<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
+<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模电概念</title>
+    <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
+    <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
+<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
+<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class="">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
+<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class="">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
+<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
+<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
+<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Circuit Lover</category>
+      </categories>
   </entry>
 </search>
