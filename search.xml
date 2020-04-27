@@ -1,6 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux系统移植问题</title>
+    <url>/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>工具区别</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Bootmgr  RAM空间  选择  windows下</span><br><span class="line">Grub  引导不同的内核启动 RAM空间  选择  支持多操作系统</span><br><span class="line">BIOS  初始化硬件不能引导OS内核   ROM芯片上的程序 开启时运行的第一个程序</span><br><span class="line">Bootloader 引导内核程序运行 RAM空间 内核运行前的程序 Bootloader =BIOS+Grub/Bootmgr </span><br><span class="line">U-boot  通用Bootloader</span><br><span class="line">U-Boot，全称为Universal Boot Loader，即通用Bootloader</span><br></pre></td></tr></table></figure>
+<p><strong>ARM U-boot 内核传递参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">•	U-boot引导程序，在启动的时候会给给Linux Kernel传递很多参数</span><br><span class="line">•	串口波特率，RAM大小，视频fb，MAC地址等</span><br><span class="line">•	设备树的入口地址</span><br><span class="line">•	u-boot如何进行传递的？</span><br><span class="line">•	U-boot把要传递给kernel的东西：保存在struct tag数据结构中</span><br><span class="line">•	启动kernel时，把这个结构体的物理地址传给kernel</span><br><span class="line">•	kernel解析传递的参数？</span><br><span class="line">•	Linux内核通过这个地址，用parse_tags分析出传递过来的参数</span><br><span class="line"></span><br><span class="line">1、内核引导程 arch/arm/lib/vectors.S   用完释放 kernel_entry()</span><br><span class="line">2、内核启动</span><br><span class="line">执行head-armv.S     关闭中断、关闭 MMU。②、关闭 </span><br><span class="line">ENTERY(stxet)      arch/arm/kernel/head.S</span><br><span class="line">Start_kernel();</span><br><span class="line"></span><br><span class="line">ARM架构上，u-boot向Linux内核传递参数利用了R0，R1和R2三个寄存器</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/linux.jpg" class="">
+
+
+<p>Linux驱动开发</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">主设备号</span><br><span class="line">•	主设备号标识设备对应的驱动程序。</span><br><span class="line">次设备号</span><br><span class="line">•	次设备号由内核使用，用于正确确定设备文件所指的设备。</span><br><span class="line">字符设备的两种注册方式</span><br><span class="line">void cdev_init(struct cdev *cdev, struct file_operations *fops)</span><br><span class="line">int register_chrdev(unsigned int major, const char *namem , struct file_operations *fopen);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">问题：insomd加载一个驱动模块，会执行模块中的那个函数？rmmod呢？这两个函数在设计上要注意什么？遇到过卸载驱动出现异常没？是什么问题引起的？</span><br><span class="line">$ insmod  hello.ko  // 模块加载函数 , 只加载hello.ko模块;</span><br><span class="line">$ modprobe  -r hello.ko	// 模块加载函数,  将加载hello.ko 依赖的所有模块;</span><br><span class="line">（1）insmod调用初始函数，rmmod调用退出函数；</span><br><span class="line">（2）卸载模块时曾出现卸载失败的原因：原因是存在进行中的使用模块，检查代码后发现产生了死锁的问题。</span><br><span class="line">（3）初始化函数中申请的资源在出口函数中要释放：也就是一个模块注册进内核，退出内核时要清理所带来的影响，带走一切不留下一点痕迹。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo常用命令</title>
+    <url>/Other-Lover/xo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>hexo new”postName” #新建文章</p>
+<p>hexo new page”pageName” #新建页面</p>
+<p>hexo new page categories 分类页面</p>
+<p>hexo new page tags 分类页面</p>
+<p>hexo new page about  关于页面</p>
+<p>hexo generate #生成静态页面至public目录</p>
+<p>hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）</p>
+<p>hexo deploy #将.deploy目录部署到指定空间</p>
+<p>hexo help # 查看帮助</p>
+<p>hexo version #查看Hexo的版本</p>
+<p>hexo server 本地</p>
+<p>hexo deploy 部署</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>姓名</th>
+<th>序号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>小明</td>
+<td>男</td>
+<td>5</td>
+</tr>
+<tr>
+<td>小红</td>
+<td>女</td>
+<td>79</td>
+</tr>
+<tr>
+<td>小陆</td>
+<td></td>
+<td>192</td>
+</tr>
+</tbody></table>
+<p><strong>着重号</strong></p>
+<p><em>这是斜体</em> 或 <em>这也是斜体</em></p>
+<p><strong>这是粗体</strong></p>
+<p><strong><em>这是加粗斜体</em></strong></p>
+<p><del>这是删除线</del></p>
+<p>内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6>]]></content>
+      <categories>
+        <category>Other Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>架构概念</title>
+    <url>/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<img src="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/%E6%9E%B6%E6%9E%84.jpg" class="" title="架构概念">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>变量知识点</title>
+    <url>/C-C-Lover/%E5%8F%98%E9%87%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>i.    预编译: 处理#开头的指令，比如拷贝 #include 包含的文件代码,#define 宏定义的替换 , 条件编译等,就是为编译做的预备工作的阶段。<br>ii.    编译: 分析代码的语法和语义, 将变量和关键字 翻译成中间代码或者汇编代码;<br>iii.    汇编: 将汇编语言翻译为机器可识别的二进制代码.o 是二进制文件<br>iv.    链接:将目标文件所需的库, 文件进行链接</p>
+<p>volatile应该是在编译阶段，extern在链接阶段。<br>volatile：告诉编译器，修饰的变量不能优化，每次读取需要从内存中读取；</p>
+<p>Static</p>
+<ol>
+<li>在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。</li>
+<li>在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>extern “C”<br>•    被 extern 限定的函数或变量是 extern 类型的<br>•    被 extern “C” 修饰的变量和函数是按照 C 语言方式编译和链接的<br>•    extern “C” 的作用是让 C++ 编译器将 extern “C” 声明的代码当作 C 语言代码处理，可以避免 C++ 因符号修饰导致代码不能和C语言库中的符号进行链接的问题。</li>
+</ol>
+<p>#define dPS struct s *             // 宏定义 dPS 表示 struct s*<br>typedef struct s * tPS;            // typedef 表示，将struct *s 重命名为tPS</p>
+<p>#define是一个预处理器令牌：编译器本身将永远看不到它。<br>typedef是一个编译器令牌：预处理器不关心它。</p>
+<p>•    typedef以分号结尾，而#define不以分号结尾。<br>•    typedef用于为现有类型赋予新的符号名称，而#define用于创建任何类型和值的别名。</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>串口、COM、RS232、RS485</title>
+    <url>/MCU-Lover/%E5%8F%A3%E3%80%81COM%E3%80%81RS232%E3%80%81RS485/</url>
+    <content><![CDATA[<p><strong>uart</strong> （Universal Asynchronous Receiver／Transmitter）<br><strong>usart</strong> （Universal Synchronous Asynchronous Receiver Transmitter）</p>
+<p>Uart  异步。（预先知道波特率的大小,传输效率比同步通信要低。）  全双工方式<br>Usart <strong>同步多条时钟线</strong>，也可当做uart使用。</p>
+<p>COM异步通信口，被USB取代</p>
+<p>COM/USB -&gt; MAX232-&gt; 单片机UART/USART<br>COM/USB -&gt; CH340-&gt; 单片机UART/USART</p>
+<p>需要注意的是,串口、UART/USART通常指的是硬件接口。</p>
+<p>RS-232指的是属于物理层范畴的串行通信接口标准,RS-232就是个标准。<br>三种接口都是属于串口通信,主要有几个方面的区别。<br>1、通讯距离, RS232接口通讯距离为15米,而RS422/485最大通讯距离可以达到1200米。<br>2、所连设备数, RS232只能连接一个设备,而RS485可以同时连接多个设备。<br>3、端口定义, RS232为标准接口,一般为D型9针的DB9头,接口信号一般为标准默认的。而RS422/RS485为非标准接口,一般为15针串口接口(也可以做9针接口) ,每个设备的接口定义也不太一样, RS422一般为4线制全双工模式,而RS485为两线制,<strong>半双工模式</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>SPI与IIC区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SPI 是同步串行接口，是一种高速、全双工的同步通信总线</td>
+</tr>
+<tr>
+<td>IIC 是多主设备的总线 , 只有一根数据线，所以是半双工通信</td>
+</tr>
+<tr>
+<td>1. SPI适合数据流应用，而IIC更适合“字节设备”的多主设备应用。</td>
+</tr>
+<tr>
+<td>2. IIC 只需两根信号线，而标准SPI至少四根信号。</td>
+</tr>
+<tr>
+<td>3. 数据吞吐/传输速度   SPI &gt; IIC 8M &gt; 400K</td>
+</tr>
+<tr>
+<td>4、7位I2C总线可以挂接127个不同地址的I2C设备,0号”设备”作为群呼地址.</td>
+</tr>
+<tr>
+<td>5、SPI接口的一个缺点：没有指定的流控制,没有应答机制确认是否接收到数据</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>怎么说你了解过IIC</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+  </entry>
+  <entry>
     <title>MySql常见报错</title>
     <url>/MySql-Lover/MySql%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/</url>
     <content><![CDATA[<p>外键约束报错？</p>
@@ -394,19 +559,39 @@
       </tags>
   </entry>
   <entry>
-    <title>STM32单片机</title>
-    <url>/uncategorized/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
       <tags>
-        <tag>STM32</tag>
+        <tag>51</tag>
       </tags>
   </entry>
   <entry>
-    <title>51单片机</title>
-    <url>/uncategorized/%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <title>STM32单片机</title>
+    <url>/MCU-Lover/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
       <tags>
-        <tag>51</tag>
+        <tag>STM32</tag>
       </tags>
   </entry>
   <entry>
@@ -1366,9 +1551,7 @@
   <entry>
     <title>数电概念</title>
     <url>/Circuit-Lover/%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
-
-]]></content>
+    <content><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？</span><br><span class="line"></span><br><span class="line">可是随着电子产品集成度越来越高，功耗和发热越来越严重</span><br><span class="line">芯片厂商非常无奈也在开始想办法避免这个问题，而最直接</span><br><span class="line">的思路当然就是用多少功能就使能多少功能，对每个外设的</span><br><span class="line">时钟都设置了开关，让用户可以精确地控制，关闭不需要的设备</span><br><span class="line">，达到节省供电的目的。</span><br><span class="line">其实这样还有一个好处就是，不是每个外设都需要系统时钟那么高的频率。</span><br><span class="line"></span><br><span class="line">仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Circuit Lover</category>
       </categories>

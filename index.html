@@ -336,6 +336,1296 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/" itemprop="url">Linux系统移植问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T00:02:00+08:00">
+                2020-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工具区别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Bootmgr  RAM空间  选择  windows下</span><br><span class="line">Grub  引导不同的内核启动 RAM空间  选择  支持多操作系统</span><br><span class="line">BIOS  初始化硬件不能引导OS内核   ROM芯片上的程序 开启时运行的第一个程序</span><br><span class="line">Bootloader 引导内核程序运行 RAM空间 内核运行前的程序 Bootloader =BIOS+Grub/Bootmgr </span><br><span class="line">U-boot  通用Bootloader</span><br><span class="line">U-Boot，全称为Universal Boot Loader，即通用Bootloader</span><br></pre></td></tr></table></figure>
+<p><strong>ARM U-boot 内核传递参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">•	U-boot引导程序，在启动的时候会给给Linux Kernel传递很多参数</span><br><span class="line">•	串口波特率，RAM大小，视频fb，MAC地址等</span><br><span class="line">•	设备树的入口地址</span><br><span class="line">•	u-boot如何进行传递的？</span><br><span class="line">•	U-boot把要传递给kernel的东西：保存在struct tag数据结构中</span><br><span class="line">•	启动kernel时，把这个结构体的物理地址传给kernel</span><br><span class="line">•	kernel解析传递的参数？</span><br><span class="line">•	Linux内核通过这个地址，用parse_tags分析出传递过来的参数</span><br><span class="line"></span><br><span class="line">1、内核引导程 arch/arm/lib/vectors.S   用完释放 kernel_entry()</span><br><span class="line">2、内核启动</span><br><span class="line">执行head-armv.S     关闭中断、关闭 MMU。②、关闭 </span><br><span class="line">ENTERY(stxet)      arch/arm/kernel/head.S</span><br><span class="line">Start_kernel();</span><br><span class="line"></span><br><span class="line">ARM架构上，u-boot向Linux内核传递参数利用了R0，R1和R2三个寄存器</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/linux.jpg" class="">
+
+
+<p>Linux驱动开发</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">主设备号</span><br><span class="line">•	主设备号标识设备对应的驱动程序。</span><br><span class="line">次设备号</span><br><span class="line">•	次设备号由内核使用，用于正确确定设备文件所指的设备。</span><br><span class="line">字符设备的两种注册方式</span><br><span class="line">void cdev_init(struct cdev *cdev, struct file_operations *fops)</span><br><span class="line">int register_chrdev(unsigned int major, const char *namem , struct file_operations *fopen);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">问题：insomd加载一个驱动模块，会执行模块中的那个函数？rmmod呢？这两个函数在设计上要注意什么？遇到过卸载驱动出现异常没？是什么问题引起的？</span><br><span class="line">$ insmod  hello.ko  // 模块加载函数 , 只加载hello.ko模块;</span><br><span class="line">$ modprobe  -r hello.ko	// 模块加载函数,  将加载hello.ko 依赖的所有模块;</span><br><span class="line">（1）insmod调用初始函数，rmmod调用退出函数；</span><br><span class="line">（2）卸载模块时曾出现卸载失败的原因：原因是存在进行中的使用模块，检查代码后发现产生了死锁的问题。</span><br><span class="line">（3）初始化函数中申请的资源在出口函数中要释放：也就是一个模块注册进内核，退出内核时要清理所带来的影响，带走一切不留下一点痕迹。</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Other-Lover/xo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Other-Lover/xo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" itemprop="url">Hexo常用命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T23:55:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Other Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Other-Lover/xo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Other-Lover/xo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>hexo new”postName” #新建文章</p>
+<p>hexo new page”pageName” #新建页面</p>
+<p>hexo new page categories 分类页面</p>
+<p>hexo new page tags 分类页面</p>
+<p>hexo new page about  关于页面</p>
+<p>hexo generate #生成静态页面至public目录</p>
+<p>hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）</p>
+<p>hexo deploy #将.deploy目录部署到指定空间</p>
+<p>hexo help # 查看帮助</p>
+<p>hexo version #查看Hexo的版本</p>
+<p>hexo server 本地</p>
+<p>hexo deploy 部署</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>姓名</th>
+<th>序号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>小明</td>
+<td>男</td>
+<td>5</td>
+</tr>
+<tr>
+<td>小红</td>
+<td>女</td>
+<td>79</td>
+</tr>
+<tr>
+<td>小陆</td>
+<td></td>
+<td>192</td>
+</tr>
+</tbody></table>
+<p><strong>着重号</strong></p>
+<p><em>这是斜体</em> 或 <em>这也是斜体</em></p>
+<p><strong>这是粗体</strong></p>
+<p><strong><em>这是加粗斜体</em></strong></p>
+<p><del>这是删除线</del></p>
+<p>内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/" itemprop="url">架构概念</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T23:17:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <img src="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/%E6%9E%B6%E6%9E%84.jpg" class="" title="架构概念">
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/C-C-Lover/%E5%8F%98%E9%87%8F%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/%E5%8F%98%E9%87%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url">变量知识点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T23:16:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/%E5%8F%98%E9%87%8F%E7%9F%A5%E8%AF%86%E7%82%B9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E5%8F%98%E9%87%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>i.    预编译: 处理#开头的指令，比如拷贝 #include 包含的文件代码,#define 宏定义的替换 , 条件编译等,就是为编译做的预备工作的阶段。<br>ii.    编译: 分析代码的语法和语义, 将变量和关键字 翻译成中间代码或者汇编代码;<br>iii.    汇编: 将汇编语言翻译为机器可识别的二进制代码.o 是二进制文件<br>iv.    链接:将目标文件所需的库, 文件进行链接</p>
+<p>volatile应该是在编译阶段，extern在链接阶段。<br>volatile：告诉编译器，修饰的变量不能优化，每次读取需要从内存中读取；</p>
+<p>Static</p>
+<ol>
+<li>在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。</li>
+<li>在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>extern “C”<br>•    被 extern 限定的函数或变量是 extern 类型的<br>•    被 extern “C” 修饰的变量和函数是按照 C 语言方式编译和链接的<br>•    extern “C” 的作用是让 C++ 编译器将 extern “C” 声明的代码当作 C 语言代码处理，可以避免 C++ 因符号修饰导致代码不能和C语言库中的符号进行链接的问题。</li>
+</ol>
+<p>#define dPS struct s *             // 宏定义 dPS 表示 struct s*<br>typedef struct s * tPS;            // typedef 表示，将struct *s 重命名为tPS</p>
+<p>#define是一个预处理器令牌：编译器本身将永远看不到它。<br>typedef是一个编译器令牌：预处理器不关心它。</p>
+<p>•    typedef以分号结尾，而#define不以分号结尾。<br>•    typedef用于为现有类型赋予新的符号名称，而#define用于创建任何类型和值的别名。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E5%8F%A3%E3%80%81COM%E3%80%81RS232%E3%80%81RS485/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MCU-Lover/%E5%8F%A3%E3%80%81COM%E3%80%81RS232%E3%80%81RS485/" itemprop="url">串口、COM、RS232、RS485</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:54:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MCU Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MCU-Lover/%E5%8F%A3%E3%80%81COM%E3%80%81RS232%E3%80%81RS485/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E5%8F%A3%E3%80%81COM%E3%80%81RS232%E3%80%81RS485/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>uart</strong> （Universal Asynchronous Receiver／Transmitter）<br><strong>usart</strong> （Universal Synchronous Asynchronous Receiver Transmitter）</p>
+<p>Uart  异步。（预先知道波特率的大小,传输效率比同步通信要低。）  全双工方式<br>Usart <strong>同步多条时钟线</strong>，也可当做uart使用。</p>
+<p>COM异步通信口，被USB取代</p>
+<p>COM/USB -&gt; MAX232-&gt; 单片机UART/USART<br>COM/USB -&gt; CH340-&gt; 单片机UART/USART</p>
+<p>需要注意的是,串口、UART/USART通常指的是硬件接口。</p>
+<p>RS-232指的是属于物理层范畴的串行通信接口标准,RS-232就是个标准。<br>三种接口都是属于串口通信,主要有几个方面的区别。<br>1、通讯距离, RS232接口通讯距离为15米,而RS422/485最大通讯距离可以达到1200米。<br>2、所连设备数, RS232只能连接一个设备,而RS485可以同时连接多个设备。<br>3、端口定义, RS232为标准接口,一般为D型9针的DB9头,接口信号一般为标准默认的。而RS422/RS485为非标准接口,一般为15针串口接口(也可以做9针接口) ,每个设备的接口定义也不太一样, RS422一般为4线制全双工模式,而RS485为两线制,<strong>半双工模式</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>SPI与IIC区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SPI 是同步串行接口，是一种高速、全双工的同步通信总线</td>
+</tr>
+<tr>
+<td>IIC 是多主设备的总线 , 只有一根数据线，所以是半双工通信</td>
+</tr>
+<tr>
+<td>1. SPI适合数据流应用，而IIC更适合“字节设备”的多主设备应用。</td>
+</tr>
+<tr>
+<td>2. IIC 只需两根信号线，而标准SPI至少四根信号。</td>
+</tr>
+<tr>
+<td>3. 数据吞吐/传输速度   SPI &gt; IIC 8M &gt; 400K</td>
+</tr>
+<tr>
+<td>4、7位I2C总线可以挂接127个不同地址的I2C设备,0号”设备”作为群呼地址.</td>
+</tr>
+<tr>
+<td>5、SPI接口的一个缺点：没有指定的流控制,没有应答机制确认是否接收到数据</td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="url">怎么说你了解过SPI</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:42:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MCU Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="url">怎么说你了解过IIC</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:42:00+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MCU Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MySql-Lover/MySql%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -890,1403 +2180,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E9%94%81/" itemprop="url">死锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T10:49:00+08:00">
-                2020-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E9%94%81/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E9%94%81/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>产生死锁的必要条件是什么？解决死锁有几种方法？</p>
-<p>安全状态与不安全状态：安全状态指系统能按某种进程顺序来为每个进程分配其所需资源，直 至最大需求，使每个进程都可顺利完成。若系统不存在这样一个， 则称系统处于不安全状态。</p>
-<p>死锁：指多个进程因竞争共享资源而造成的一种僵局，若无外力作用，这些进程都将永远不能再 向前推进。<br>产生死锁的原因：（1）竞争系统资源 （2）进程的推进顺序不当<br>满足四个条件：</p>
-<ol>
-<li>互斥（Mutual exclusion）：存在这样一种资源，它在某个时刻只能被分配给一个执行绪（也称为线程）使用；</li>
-<li>占有（Hold and wait）：当请求的资源已被占用从而导致执行绪阻塞时，资源占用者不但无需释放该资源，而且还可以继续请求更多资源；</li>
-<li>不可剥夺（No preemption）：执行绪获得到的互斥资源不可被强行剥夺，换句话说，只有资源占用者自己才能释放资源；</li>
-<li>循环形等待（Circular wait）：若干执行绪以不同的次序获取互斥资源，从而形成环形等待的局面，想象在由多个执行绪组成的环形链中，每个执行绪都在等待下一个执行绪释放它持有的资源。</li>
-</ol>
-<p>解决死锁的基本方法：</p>
-<p>预防死锁：<br>（1）资源一次性分配：（破坏请求和保持条件）<br>（2）可剥夺资源：即当某进程新的资源未满足时，释放已占有的资源（破坏不可剥夺条件）<br>（3）资源有序分配法：系统给每类资源赋予一个编号，每一个进程按编号递增的顺序请求资源，释放则相反（破坏环路等待条件）</p>
-<p>避免死锁:最具有代表性的避免死锁算法是银行家算法。</p>
-<p>解除死锁:<br>剥夺资源：从其它进程剥夺足够数量的资源给死锁进程，以解除死锁状态；<br>撤消进程：可以直接撤消死锁进程或撤消代价最小的进程，直至有足够的资源可用，死锁状态.消除为止；所谓代价是指优先级、运行代价、进程的重要性和价值等。</p>
-<p>检测死锁<br>有两个容器，一个用于保存线程正在请求的锁，一个用于保存线程已经持有的锁。每次加锁之前都会做如下检测:<br>1)检测当前正在请求的锁是否已经被其它线程持有,如果有，则把那些线程找出来<br>2)遍历第一步中返回的线程，检查自己持有的锁是否正被其中任何一个线程请求<br> 如果第二步返回真,表示出现了死锁</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/UDP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/UDP/" itemprop="url">UDP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T23:17:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/UDP/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/UDP/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>基于UDP的网络编程</strong></p>
-<p>主要用到的函数有socket()、bind()、sendto()、recvfrom()和close()。<br>UDP是面向无连接的网络通信，并不需要像TCP套接字编程那样需要通过connect()与服务器建立连接，然后调用listen()函数使服务器处于监听状态，在通过accept()函数接收客户端的连接请求。</p>
-<p>UDP套接字编程，只需要创建用于通信的套接字，然后在服务器端绑定端口，然后就可以实现数据的传输。<br>在绑定了地址信息之后，进行数据传输时，服务器会阻塞recvfrom()函数，等待客户端调用sendto()函数发送数据，同时客户端的recvfrom()被阻塞，然后，服务器会调用recvfrom()函数接收数据，接着向客户端作出应答，同时，服务端的recvfrom()被阻塞，接着，客户端调用recvfrom()接收数据。</p>
-<p>1.发送数据、函数sendto()<br>ssize_t  sendto(int  s,  const  void *buf, size_t len, int flags, const struct sockaddr *to, socklen_t tolen);</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>s</td>
-<td>参数s代表套接字描述符</td>
-</tr>
-<tr>
-<td>buf</td>
-<td>参数buf用于指向发送信息的缓冲区的指针</td>
-</tr>
-<tr>
-<td>len</td>
-<td>参数len是发送的信息的长度</td>
-</tr>
-<tr>
-<td>flags</td>
-<td>参数flags通常会设置为0，代表的是相关控制参数，主要用于控制是否接收数据以及是否预览报文</td>
-</tr>
-<tr>
-<td>to</td>
-<td>参数to为存放接收处的信息的指针</td>
-</tr>
-<tr>
-<td>tolen</td>
-<td>参数tolen是接收方地址的大小</td>
-</tr>
-</tbody></table>
-<p>说明：如果sendto()函数用于面向连接的网络通信时，套接字类型为SOCK_STREAM或SOCK_SEQPACKET。此时参数to指向NULL，参数tolen为0，若不为此值，就会出现错误信息提示。</p>
-<p>2.接收数据、函数recvfrom()</p>
-<p>ssize_t recvfrom(int s, void *buf, size_t len, int flags, struct sockaddr *from, socklen_t *fromlen);</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>s</td>
-<td>参数s代表套接字描述符</td>
-</tr>
-<tr>
-<td>buf</td>
-<td>参数buf指向接收信息的指针</td>
-</tr>
-<tr>
-<td>len</td>
-<td>参数len代表缓冲区的最大长度</td>
-</tr>
-<tr>
-<td>flags</td>
-<td>参数flags通常会设置为0，代表的是相关控制参数，主要用于控制是否接收数据以及是否预览报文</td>
-</tr>
-<tr>
-<td>from</td>
-<td>参数from表示发送此信息处的地址指针</td>
-</tr>
-<tr>
-<td>fromlen</td>
-<td>参数fromlen指向发送处地址大小的指针。</td>
-</tr>
-</tbody></table>
-<p>字节序转换函数 </p>
-<p>    uint32_t htonl(uint32_t hostlong);<br>    uint16_t htons(uint16_t hostshort);<br>    uint32_t ntohl(uint32_t netlong);<br>    uint16_t ntohs(uint16_t netshort);<br>    说明：在上述的函数中，h代表host；<br>    n代表network s代表short；l代表long</p>
-<p>地址转换函数 </p>
-<p>    #include &lt;netinet/in.h&gt;<br>    #include &lt;arpa/inet.h&gt;<br>    int inet_aton(const char *cp, struct in_addr *inp);<br>    in_addr_t inet_addr(const char *cp);<br>    char *inet_ntoa(struct in_addr in);</p>
-<p>serv.c</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">*服务器端*/</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 8886</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	struct sockaddr_in s_addr;	//服务器地址结构</span><br><span class="line">	struct sockaddr_in c_addr;	//客户端地址结构</span><br><span class="line">	int sock;			//套接字描述符</span><br><span class="line">	socklen_t addr_len;		//地址结构长度</span><br><span class="line">	int len;			//接收到的消息字节数</span><br><span class="line">	char buff[128];			//存放接收消息的缓冲区</span><br><span class="line">/* 创建数据报模式的套接字 */</span><br><span class="line">	<span class="keyword">if</span> ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"socket"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create socket successful.\n\r"</span>);</span><br><span class="line">/*清空地址结构*/</span><br><span class="line">	memset(&amp;s_addr, 0, sizeof(struct sockaddr_in));</span><br><span class="line">/* 设置地址和端口信息 */</span><br><span class="line">	s_addr.sin_family = AF_INET;</span><br><span class="line">	s_addr.sin_port = htons(PORT);</span><br><span class="line">	s_addr.sin_addr.s_addr = INADDR_ANY;</span><br><span class="line"></span><br><span class="line">/* 绑定地址和端口信息 */</span><br><span class="line">	<span class="keyword">if</span> ((<span class="built_in">bind</span>(sock, (struct sockaddr *) &amp;s_addr, sizeof(s_addr))) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"bind error"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"bind address to socket successfuly.\n\r"</span>);</span><br><span class="line">/* 循环接收数据 */</span><br><span class="line">	addr_len = sizeof(c_addr);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (1) &#123;</span><br><span class="line">		len = recvfrom(sock, buff, sizeof(buff) - 1, 0,(struct sockaddr *) &amp;c_addr, &amp;addr_len);</span><br><span class="line">		<span class="keyword">if</span> (len &lt; 0) &#123;//接收失败</span><br><span class="line">			perror(<span class="string">"recvfrom error"</span>);</span><br><span class="line">			<span class="built_in">exit</span>(errno);</span><br><span class="line">		&#125;</span><br><span class="line">		buff[len] = <span class="string">'\0'</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"收到来自远端计算机%s，端口号为%d的消息:\n%s\n\r"</span>,inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port), buff);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>client.c</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">/*客户端*/</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 8886</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;//定义变量</span><br><span class="line">	struct sockaddr_in s_addr;	//套接字地址结构</span><br><span class="line">	int sock;			//套接字描述符</span><br><span class="line">	int addr_len;			//地址结构长度</span><br><span class="line">	int len;			//发送字节长度</span><br><span class="line">	char buff[]=<span class="string">"Hello everyone,Merry Christmas!"</span>;	//发送的消息</span><br><span class="line">/* 创建数据报模式的套接字 */</span><br><span class="line">	<span class="keyword">if</span> ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"socket error"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create socket successful.\n\r"</span>);</span><br><span class="line">/* 设置对方地址和端口信息 */</span><br><span class="line">	s_addr.sin_family = AF_INET; 	//地址族</span><br><span class="line"></span><br><span class="line">		s_addr.sin_port = htons(PORT);</span><br><span class="line">	<span class="keyword">if</span> (argv[1])</span><br><span class="line">		s_addr.sin_addr.s_addr = inet_addr(argv[1]);</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"没有输入消息的接受者！\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	addr_len = sizeof(s_addr);	//地址结构长度</span><br><span class="line">/*从客户端的buff缓冲区中发送消息到地址结构为s_addr的远端机器*/</span><br><span class="line">	len = sendto(sock, buff, sizeof(buff), 0,(struct sockaddr *) &amp;s_addr, addr_len);</span><br><span class="line">	<span class="keyword">if</span> (len &lt; 0) &#123;			//如果发送失败</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\rsend error.\n\r"</span>);</span><br><span class="line">		<span class="built_in">return</span> 3;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"send success.\n\r"</span>);	//发送成功</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<img src="/Linux-Lover/UDP/%E7%BB%93%E6%9E%9C.jpg" class="" title="结果">
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/TCP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/TCP/" itemprop="url">TCP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T21:41:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/TCP/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/TCP/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>__TCP三次握手，包头中的标志变化</p>
-<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class="" title="TCP3次握手">
-
-
-<p>第一次握手：建立连接时，客户端发送 syn 包(tcp协议中syn位置1，序号为X)到服务器，并进入 SYN_SEND 状态，等待服务器确认； </p>
-<p>第二次握手：服务器收到 syn 包，必须确认客户的 SYN，同时自己也发送一个 SYN 包，即 SYN+ACK包（tcp协议中syn位置1，ack位置1，序号K，确定序号为X+1），此时服务器进入 SYN_RECV 状态；</p>
-<p>第三次握手：客户端收到服务器的 SYN＋ACK 包，向服务器发送确认包 ACK(tcp协议中ack位置1，确认序号Y+1), 此包发送完毕，客户端和服务器进入 ESTABLISHED 状态，完成三次握手</p>
-<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class="" title="TCP3次握手">
-
-<p>seq是数据包本身的序列号；ack是期望对方继续发送的那个数据包的序列号。 </p>
-<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
-
-<p>serv.c文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>client.c文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>结果</strong></p>
-<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/" itemprop="url">美的面试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T19:43:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>四大业务：数字化业务、消费者家电、空调业务、机器人自动化</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url">计算机网络</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T19:36:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.计算机网络定义<br>所谓的计算机网络，就是一些互相连接的、自治的计算机的集合。计算机网络有很多种类别。<br>（1）根据不同的作用范围可以将计算机网络理解为广域网（WAN）、城域网（MAN）、局域网（LAN）、个人区域网（PAN）。<br>（2）根据不同的使用者，可以将计算机网络分为公用网和专用网。</p>
-<p>2.计算机网络的通信模式<br>计算机网络的通信模式有两种，一种是线路交换，另一种是包交换。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>线路交换</td>
-<td>就是我们家家最开始用的电话的网络连接技术，是通过在发送端和接受端之间建立一条特定的线路，进行数据的传输。</td>
-</tr>
-<tr>
-<td>包交换</td>
-<td>就是我们现在常用到的计算机的网络通信模式，是通过将所有的计算机放到一个共同的网络连接中，数据的发送端将要传输的数据分割成几份，然后将每一份数据封装成一个包，包中含有接收端的属性信息等，且每个包都是单独传输的。</td>
-</tr>
-</tbody></table>
-<p>OSI 7层协议模型 和各个层次的 关系 </p>
-
-
-<table>
-<thead>
-<tr>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>物理层</td>
-</tr>
-<tr>
-<td>数据链路层</td>
-</tr>
-<tr>
-<td>网络层</td>
-</tr>
-<tr>
-<td>传输层</td>
-</tr>
-<tr>
-<td>应用层</td>
-</tr>
-</tbody></table>
-<p>TCP/IP通信协议采用了4层的层级结构，这4层分别为：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>应用层</td>
-<td>应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>在此层中提供了节点间的数据传送服务，如传输控制协议（TCP）、用户数据包协议（UDP）等，TCP和UDP给数据包加入传输数据并把它传输到下一层中。这一层负责传送数据，并且确定数据已被送达并接收。</td>
-</tr>
-<tr>
-<td>互联网络层</td>
-<td>负责提供基本的数据封包传送功能，让每一块数据包都能够到达目的主机（但不检查是否被正确接收），如网际协（IP）。</td>
-</tr>
-<tr>
-<td>网络接口层</td>
-<td>对实际的网络媒体的管理，定义如何使用实际网络（如Ethernet、Serial Line等）来传送数据。</td>
-</tr>
-</tbody></table>
-<p><strong>拥塞控制、流量控制</strong></p>
-<p>拥塞控制：拥塞控制是作用于网络的，它是防止过多的数据注入到网络中，避免出现网络负载过大的情况；常用的方法就是：（ 1 ）慢开始、拥塞避免（ 2 ）快重传、快恢复。<br>流量控制：流量控制是作用于接收者的，它是控制发送者的发送速度从而使接收者来得及接收，防止分组丢失的。窗口控制机制</p>
-<p>TCP和UDP协议的区别，谈谈增强UDP传输安全性的策略<br>共同点：都是传输层的协议<br>不同点：TCP面向连接（通信前要建立通信的通路），可靠性高<br>      UDP无连接，不可靠（可增加校验机制增加可靠性）</p>
-<p>（*）组播的优点： </p>
-<ol>
-<li>需要相同数据流的客户端加入相同的组共享一条数据流，节省了服务器的负载。具备广播所具备的优点。 </li>
-<li>由于组播协议是根据接受者的需要，对数据流进行复制转发，所以服务端的服务总带宽不受客户接入端带宽的限制。IP协议允许有2亿6千多万个（268435456）组播，所以其提供的服务可以非常丰富。 </li>
-<li>此协议和单播协议一样允许在Internet宽带网上传输。</li>
-</ol>
-<p>对于一个没有设置任何套接口选项的阻塞套接口，调用recv接收对方的数据，对方发送数据前突然断电，recv永远不会返回。</p>
-<p><strong>TCP/IP层IP协议的服务是无连接数据报</strong></p>
-<p>一台主机从一个网络移到另一个网络.IP地址需要改变，MAC地址不需要改变</p>
-<p>经典题目：某公司申请到一个C类的IP地址，但要连接6个子公司，最大的一个子公司有26台计算机，每个子公司在一个网段中，则子网掩码应该为多少？<br>因为有六个子公司，所以必须有三位1，有26台，必须有五个0，所以二进制位11100000，转换为十进制是224</p>
-<p>DNS是域名服务器，用来解析域名的（域名与IP之间的解析），如果没有这东西，你必须输入网站的IP地址，有了DNS，你就可以直接输入网址。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">视觉传感器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T14:43:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>定义</strong><br>光学图像转化为数字信号的传感器。//非接触检测方法</p>
-<p><strong>了解器件</strong><br>CCD -电荷耦合器(Charge-Coupled Device)-新型固体器件<br>CCD结构组成：MOS光敏阵列(金属-氧化物-半导体)+读出移位寄存器=一个MOS光敏元或一个像素</p>
-<p><strong>整个过程信号</strong> ：物理-光学-电气-视频<br><strong>CCD</strong> 作用信号转化 :光学-电气</p>
-<p><strong>电荷耦合器工作原理</strong><br>CCD产生（内光电效应）<br>CCD存储（存储在势井）<br>CCD传输（电荷的定向移动（势井的移动））<br>CDD检测或输出（电流输出、电压输出—浮置栅放大器、浮置扩散放大器）</p>
-<p>常见：面型图像传感器组成：感光区+存储+视频输出（串行输出）<br>外形结构和驱动时序不同，原理基本相同，向厂家拿资料。<br>常用：几何量（外加光源工件尺寸或缺陷）、文字、图像识别。</p>
-<p>扩展：mark点又叫光学定位点和反光点，如果没有 mark点，对位就不会不准。</p>
-<p>CMOS - 下节课</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">电阻式传感器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T10:28:00+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>应变式 （丝式、箔式和薄膜式三种）</p>
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%85%AC%E5%BC%8F.jpg" class="" title="应变式">
-
-<p>要把电阻的变化转换为电压或电流的变化，需要转换电路来实现。转换电路常采用直流电桥或交流电桥。</p>
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
-
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BA%A4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
-
-<p><strong>压阻式传感器是基于半导体材料的压阻效应来工作的传感器</strong></p>
-<p>__分为半导体应变式压阻传感器 、扩散型压阻传感器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">与金属电阻应变片相比，半导体应变式具有：体积小、横向效应小、灵敏度高等特点。</span><br><span class="line">将P型杂质扩散到N型硅底层上，形成一层极薄的导电P型层，装上引线接点后，即形成扩散型半导体应变片。</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>电阻式传感器应用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>（1）应变式测力与荷重传感器</td>
-</tr>
-<tr>
-<td>（2）应变式压力传感器</td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2341,7 +2234,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2352,7 +2245,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2425,7 +2318,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCB/" rel="tag">PCB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
