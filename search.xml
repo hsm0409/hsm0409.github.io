@@ -1,6 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>union的用法及应用场景</title>
+    <url>/C-C-Lover/nion%E7%9A%84%E7%94%A8%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
+    <content><![CDATA[<p>union的用法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">大小一块内存选最大的那个声明。</span><br><span class="line">struct&#123;</span><br><span class="line">	char name[20];</span><br><span class="line">    int num ;</span><br><span class="line">    char sex;</span><br><span class="line">    char profession;</span><br><span class="line">    union &#123;</span><br><span class="line">    <span class="built_in">float</span> score;</span><br><span class="line">    char course[20];</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>共用体还真是贴切——完全就是共用一个内存首地址。<br>nion成员共享同一块大小的内存，一次只能使用其中的一个成员；<br>应用场景：</p>
+<p>1、一个学生与老师的数据表中，有一项共用的（老师所教课程与学生课程分数）<br>2、union量的存放顺序是所有成员都从低地址开始存放的，可以用来判断大端和小端</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int checkCPU()</span><br><span class="line">&#123;</span><br><span class="line">     union cpu</span><br><span class="line">    &#123;</span><br><span class="line">        int a;</span><br><span class="line">        char b;</span><br><span class="line">     &#125;c;</span><br><span class="line">    c.a = 1;</span><br><span class="line">    <span class="built_in">return</span> ( c.b == 1 );</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器算法小结</title>
+    <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
+<p><strong>概念</strong><br>一元函数对象：函数参数1个；<br>二元函数对象：函数参数2个；<br>一元谓词对象：函数参数1个,返回bool；<br>二元谓词对象：函数参数2个,返回bool；</p>
+<p>遍历算法 ：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">for_each(v1.begin(),v1.end(), show)   //容器为int</span><br><span class="line"></span><br><span class="line">void show(const int &amp;iItem)  </span><br><span class="line"></span><br><span class="line">&#123;         cout&lt;&lt; iItem;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">transform() //转移容器，用于合并，函数返回值</span><br><span class="line">transform(vecIntA.begin(),vecIntA.end(),vecIntA.begin(),increase);      </span><br><span class="line">int increase (int i) </span><br><span class="line"></span><br><span class="line">&#123;     <span class="built_in">return</span> i+1;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查找算法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">adjacent_find()；查找相邻重复元素，返回指向这对元素的第一个元素的迭代器。</span><br><span class="line"></span><br><span class="line">vector &lt;int&gt;::iterator it = adjacent_find(v.begin(),vend());</span><br><span class="line"></span><br><span class="line">binary_search（）;在有序序列中查找value,无序不可</span><br><span class="line"></span><br><span class="line">bool bFind = binary_search(setInt.begin(),setInt.end(),5);</span><br><span class="line"></span><br><span class="line">count（）；计算个数</span><br><span class="line"></span><br><span class="line">intiCount = count(vecInt.begin(),vecInt.end(),2);  </span><br><span class="line"></span><br><span class="line">count_if()；</span><br><span class="line"></span><br><span class="line">bool GreaterThree(int iNum)</span><br><span class="line"></span><br><span class="line">&#123;  <span class="keyword">if</span>(iNum&gt;=3)</span><br><span class="line">   &#123;</span><br><span class="line">   <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int iCount = count_if(vecIntA.begin(),vecIntA.end(), GreaterThree);</span><br><span class="line"></span><br><span class="line">find()；find顺序查找O(n)</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt;::iterator it = find(vecInt.begin(), vecInt.end(), 5);</span><br><span class="line"></span><br><span class="line">find_if()；</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt;::it = find_if(vecInt.begin(),vecInt.end(),GreaterThree);</span><br></pre></td></tr></table></figure>
+<p>排序算法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">merge();合并排序</span><br><span class="line"></span><br><span class="line">merge(vecIntA.begin(),vecIntA.end(),vecIntB.begin(),vecIntB.end(),vecIntC.begin();</span><br><span class="line"></span><br><span class="line">sort();内省排序O(n*log2n)</span><br><span class="line"></span><br><span class="line">sort(vecStu.begin(),vecStu.end(),Compare);//bool()函数</span><br><span class="line"></span><br><span class="line">random_shuffle();随机排序</span><br><span class="line"></span><br><span class="line">random_shuffle(str.begin(),str.end());   </span><br><span class="line"></span><br><span class="line">reverse()；反序</span><br><span class="line"></span><br><span class="line">拷贝和替换算法</span><br><span class="line"></span><br><span class="line">copy()；</span><br><span class="line"></span><br><span class="line">replace()；</span><br><span class="line"></span><br><span class="line">replace(vecIntA.begin(), vecIntA.end(), 3,8);          //（1,3，5,3,9）&#123;1,8,5,8,9&#125;</span><br><span class="line"></span><br><span class="line">replace_if(vecIntA.begin(),vecIntA.end(), GreaterThree, 8);           </span><br><span class="line"></span><br><span class="line">swap();</span><br><span class="line"></span><br><span class="line">swap(vecIntA,vecIntB);</span><br></pre></td></tr></table></figure>
+
+<p>算术和生成算法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
+<p>集合算法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux并发与竞争</title>
+    <url>/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/</url>
+    <content><![CDATA[<p><strong>Linux 系统并发产生的原因</strong><br>①、多线程并发访问，Linux 是多任务(线程)的系统，所以多线程访问是最基本的原因。<br>②、抢占式并发访问，从 2.6 版本内核开始，Linux 内核支持抢占，也就是说调度程序可以<br>在任意时刻抢占正在运行的线程，从而运行其他的线程。<br>③、中断程序并发访问，这个无需多说，学过 STM32 的同学应该知道，硬件中断的权利可<br>是很大的。<br>④、SMP(多核)核间并发访问，现在 ARM 架构的多核 SOC 很常见，多核 CPU 存在核间并<br>发访问。</p>
+<p>临界区就是共享数据段<br>一般在编写驱动的时候就要考虑到并发与竞争，而不是驱动都编写完了然后再处理并发与竞争。</p>
+<p><strong>原子操作</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/atomic.h&gt;</span></span><br><span class="line">typedef struct &#123;</span><br><span class="line"> int counter;</span><br><span class="line">&#125; atomic_t;/*32位*/</span><br><span class="line">atomic_t v = ATOMIC_INIT(0); /* 定义并初始化原子变零 v=0 */</span><br><span class="line">atomic_set(10); /* 设置 v=10 */</span><br><span class="line">atomic_read(&amp;v); /* 读取 v 的值，肯定是 10 */</span><br><span class="line">atomic_inc(&amp;v); /*++v*/</span><br><span class="line">特点：原子操作只能对整形变量或者位进行保护</span><br><span class="line"></span><br><span class="line">操作一个atomic lock ; </span><br><span class="line">初始赋值为1，打开时判断， 0 错误返回 ， 1 atomic_dec(lock)，同时减1为0 ，（故一个时刻只能打开一次）</span><br><span class="line">关闭 atomic_inc(lock) +1 </span><br><span class="line">操作过程打不开，需等待第一个驱动任务完成，关闭函数atomic_inc(lock) +1 ，然后再次打开</span><br></pre></td></tr></table></figure>
+<p><strong>自旋锁</strong><br>#include &lt;linux/atomic.h&gt;<br>自旋锁的“自旋”也就是“原地打转”的意思，“原地打转”的目的是为了等待自旋锁可以<br>用，可以访问共享资源。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">typedef struct spinlock &#123;</span><br><span class="line"> union &#123;</span><br><span class="line"> struct raw_spinlock rlock;</span><br><span class="line"> <span class="comment">#ifdef CONFIG_DEBUG_LOCK_ALLOC</span></span><br><span class="line"> <span class="comment"># define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))</span></span><br><span class="line"> struct &#123;</span><br><span class="line"> u8 __padding[LOCK_PADSIZE];</span><br><span class="line"> struct lockdep_map dep_map;</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">&#125;;</span><br><span class="line"> &#125; spinlock_t;</span><br><span class="line">特点：自旋锁适用于短时期的轻量级加锁，如果遇到需要长时间持有锁的场景那就需要换其他的方法了</span><br><span class="line"></span><br><span class="line">死锁：</span><br><span class="line">被自旋锁保护的临界区一定不能调用任何能够引起睡眠和阻塞的API 函数。自旋锁会自动禁止抢占，也就说当线程 A得到锁以后会暂时禁止内核抢占。如果线程 A 在持有锁期间进入了休眠状态，那么线程 A 会自动放弃 CPU 使用权。线程 B 开始运行，线程 B 也想要获取锁，但是此时锁被 A 线程持有，而且内核抢占还被禁止了！线程 B 无法被调度出去，那么线程 A 就无法运行，锁也就无法释放，导致死锁现象的发生</span><br><span class="line"></span><br><span class="line">中断里面可以使用自旋锁，但是在中断里面使用自旋锁的时候，在获取锁之前一定要先禁止本地中断(也就是本 CPU 中断，对于多核 SOC来说会有多个 CPU 核)，否则可能导致锁死现象的发生</span><br><span class="line"></span><br><span class="line"> DEFINE_SPINLOCK(lock) /* 定义并初始化一个锁 */</span><br><span class="line"></span><br><span class="line">/* 线程 A */</span><br><span class="line">void <span class="function"><span class="title">functionA</span></span> ()&#123;</span><br><span class="line">unsigned long flags; /* 中断状态 */</span><br><span class="line">spin_lock_irqsave(&amp;lock, flags) /* 获取锁 推荐用这个*/</span><br><span class="line">/* 临界区 */</span><br><span class="line">spin_unlock_irqrestore(&amp;lock, flags)  /* 释放锁推荐用这个 */</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">/* 中断服务函数 */ </span><br><span class="line">void <span class="function"><span class="title">irq</span></span>() &#123;</span><br><span class="line">spin_lock(&amp;lock) /* 获取锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line">spin_unlock(&amp;lock) /* 释放锁 */</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> 其他锁：</span><br><span class="line"> 读写锁》》》顺序锁</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class="" title="自旋锁">
+
+
+<p><strong>信号量</strong></p>
+<p>（1）自旋锁，<strong>信号量可以使线程进入休眠状态</strong>，但信号量不能用于中断中，因为信号量会引起休眠，中断不能休眠。<br>（2）如果共享资源的持有时间比较短，那就不适合使用信号量了，因为频繁的休眠、切换<br>线程引起的开销要远大于信号量带来的那点优势<br>(3)计数型信号量不能用于互斥访问，因为它允许多个线程同时访问共享资源。(二值信号值)<br>自动唤醒</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line">struct semaphore &#123;</span><br><span class="line">raw_spinlock_t lock;</span><br><span class="line">unsigned int count;</span><br><span class="line">struct list_head wait_list;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct semaphore sem; /* 定义信号量 */</span><br><span class="line">sema_init(&amp;sem, 1)； /* 初始化信号量 */</span><br><span class="line">down(&amp;sem); /* 申请信号量 */</span><br><span class="line">/* 临界区 */</span><br><span class="line">up(&amp;sem);</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class="" title="信号量">
+
+
+
+<p><strong>互斥体-mutex</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct mutex &#123;</span><br><span class="line">/* 1: unlocked, 0: locked, negative: locked, possible waiters */</span><br><span class="line">atomic_t count;</span><br><span class="line">spinlock_t wait_lock;</span><br><span class="line">&#125;;</span><br><span class="line"> struct mutex lock; /* 定义一个互斥体 */</span><br><span class="line">mutex_init(&amp;lock); /* 初始化互斥体 */</span><br><span class="line"></span><br><span class="line"> mutex_lock(&amp;lock); /* 上锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line"> mutex_unlock(&amp;lock); /* 解锁 *</span><br><span class="line">①、mutex 可以导致休眠，因此不能在中断中使用 mutex，__中断中只能使用自旋锁__。</span><br><span class="line">②、和信号量一样，mutex 保护的临界区可以调用引起阻塞的 API 函数。</span><br><span class="line">③、因为一次只有一个线程可以持有 mutex，因此，必须由 mutex 的持有者释放 mutex。并</span><br><span class="line">且 mutex 不能递归上锁和解锁</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class="" title="互斥体">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gpioled 基本框架</title>
+    <url>/uncategorized/pioled-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p>用来复习QvQ</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_address.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_gpio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define GPIOLED_CNT   1       /*数量*/</span></span><br><span class="line"><span class="comment">#define GPIOLED_NAME  "gpioled"    /*名字*/</span></span><br><span class="line"><span class="comment">#define LEDOFF       0       /*关闭*/ </span></span><br><span class="line"><span class="comment">#define LEDON       1         /*开启*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*设备结构体*/</span><br><span class="line">struct gpioled_dev&#123;</span><br><span class="line"></span><br><span class="line">    dev_t devid ;</span><br><span class="line">    int major;</span><br><span class="line">    int minor;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct class *class;</span><br><span class="line">    struct device *device;</span><br><span class="line">    struct device_node * nd;</span><br><span class="line">    int led_gpio;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">struct gpioled_dev gpioled;</span><br><span class="line"></span><br><span class="line">static int led_open(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    filp-&gt;private_data = &amp;gpioled; /*传递结构*/</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_release(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static ssize_t led_write(struct file *filp, const char __user *buf,</span><br><span class="line">			 size_t count, loff_t *ppos)</span><br><span class="line">&#123;</span><br><span class="line">    int ret ;</span><br><span class="line">    unsigned char databuf[1];</span><br><span class="line">    struct gpioled_dev *dev = filp-&gt;private_data;</span><br><span class="line">    ret = __copy_from_user(databuf,buf,count);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(databuf[0] == LEDON)</span><br><span class="line">    &#123;</span><br><span class="line">        gpio_set_value(dev-&gt;led_gpio,0);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (databuf[0] == LEDOFF)</span><br><span class="line">    &#123;</span><br><span class="line">       gpio_set_value(dev-&gt;led_gpio, 1); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">/* 操作集 */</span><br><span class="line">static const struct file_operations led_fops = &#123;</span><br><span class="line">    .owner		=	THIS_MODULE,</span><br><span class="line">	.write		=	led_write,</span><br><span class="line">	.open		=	led_open,</span><br><span class="line">	.release	=	led_release,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init led_init(void )</span><br><span class="line">&#123;</span><br><span class="line">int ret  ;</span><br><span class="line">    gpioled.major = 0;</span><br><span class="line">    <span class="keyword">if</span> (gpioled.major)</span><br><span class="line">    &#123;</span><br><span class="line">        gpioled.devid = MKDEV(gpioled.major,0);</span><br><span class="line">        register_chrdev_region(gpioled.devid,GPIOLED_CNT,GPIOLED_NAME);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        alloc_chrdev_region(&amp;gpioled.devid,0,GPIOLED_CNT,GPIOLED_NAME);</span><br><span class="line">        gpioled.major = MAJOR(gpioled.devid);</span><br><span class="line">        gpioled.minor = MINOR(gpioled.devid);</span><br><span class="line">    &#125;</span><br><span class="line">    printk(<span class="string">"gpioled.major = %d ,gpioled.minor = %d\r\n"</span>,gpioled.major,gpioled.minor);</span><br><span class="line"></span><br><span class="line">*初始化cdev*/</span><br><span class="line">    gpioled.cdev.owner = THIS_MODULE ;</span><br><span class="line">    /*初始化*/</span><br><span class="line">    cdev_init(&amp;gpioled.cdev,&amp;led_fops);</span><br><span class="line">    </span><br><span class="line">  ret = cdev_add(&amp;gpioled.cdev,gpioled.devid,GPIOLED_CNT);</span><br><span class="line">     <span class="keyword">if</span>(ret &lt; 0) </span><br><span class="line">        goto fail_cdev;  </span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    /*创建class*/</span><br><span class="line">    gpioled.class = class_create(THIS_MODULE,GPIOLED_NAME);</span><br><span class="line">    <span class="keyword">if</span>(IS_ERR(gpioled.class))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(gpioled.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*创建device*/</span><br><span class="line">   gpioled.device = device_create(gpioled.class,NULL,gpioled.devid,NULL,GPIOLED_NAME);</span><br><span class="line">    <span class="keyword">if</span>(IS_ERR(gpioled.device))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(gpioled.device);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">   /* 1，获取设备节点 */</span><br><span class="line">    gpioled.nd = of_find_node_by_path(<span class="string">"/gpioled"</span>);</span><br><span class="line">    <span class="keyword">if</span>(gpioled.nd == NULL) &#123;</span><br><span class="line">        ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    /* 2, 获取LED所对应的GPIO */</span><br><span class="line">    gpioled.led_gpio = of_get_named_gpio(gpioled.nd, <span class="string">"led-gpios"</span>, 0);</span><br><span class="line">    <span class="keyword">if</span>(gpioled.led_gpio &lt; 0) &#123;</span><br><span class="line">        printk(<span class="string">"can't find led gpio\r\n"</span>);</span><br><span class="line">        ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">    &#125;</span><br><span class="line">    printk(<span class="string">"led gpio num = %d\r\n"</span>, gpioled.led_gpio);</span><br><span class="line"></span><br><span class="line">    /* 3,申请IO */</span><br><span class="line">    ret = gpio_request(gpioled.led_gpio, <span class="string">"led-gpio"</span>);</span><br><span class="line">	<span class="keyword">if</span> (ret) &#123;</span><br><span class="line">		printk(<span class="string">"Failed to request the led gpio\r\n"</span>);</span><br><span class="line">		ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    /* 4,使用IO，设置为输出 */</span><br><span class="line">    ret = gpio_direction_output(gpioled.led_gpio, 1);</span><br><span class="line">	<span class="keyword">if</span> (ret) &#123;</span><br><span class="line">		goto fail_setoutput;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    /* 5,输出底电平，点亮LED灯*/</span><br><span class="line">    gpio_set_value(gpioled.led_gpio, 0);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">    fail_setoutput:</span><br><span class="line">    gpio_free(gpioled.led_gpio);</span><br><span class="line">    fail_findnode:</span><br><span class="line">    fail_cdev:</span><br><span class="line">    unregister_chrdev_region(gpioled.devid,GPIOLED_CNT);</span><br><span class="line">    <span class="built_in">return</span> ret;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">static void __exit led_exit(void )</span><br><span class="line">&#123;</span><br><span class="line">      /* 关灯 */</span><br><span class="line">    gpio_set_value(gpioled.led_gpio, 1);</span><br><span class="line"></span><br><span class="line">    cdev_del(&amp;gpioled.cdev);</span><br><span class="line">    unregister_chrdev_region(gpioled.devid,GPIOLED_CNT);</span><br><span class="line"></span><br><span class="line">    device_destroy(gpioled.class,gpioled.devid);</span><br><span class="line">    class_destroy(gpioled.class);</span><br><span class="line"></span><br><span class="line">    gpio_free(gpioled.led_gpio);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(led_init);</span><br><span class="line">module_exit(led_exit);</span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>设备树</title>
+    <url>/Linux-Lover/%E8%AE%BE%E5%A4%87%E6%A0%91/</url>
+    <content><![CDATA[<p>Linux 内核中 ARM 架构下有太多的冗余的垃圾板</p>
+<p>级信息文件，导致 linus 震怒，然后 ARM 社区引入了设备树</p>
+<p>dts、dtbs、dtc、dtsi<br>设备树包括DTC（device tree compiler）,DTS(device tree source和DTB（device tree blob）。DTC为编译工具，它可以将.dts文件编译成.dtb文件。</p>
+<p><strong>of 查找设备节点</strong></p>
+<p>of_find_node_by_name 函数通过节点名字查找指定的节点</p>
+<p>of_find_node_by_type 函数通过 device_type 属性查找指定的节点</p>
+<p>of_find_compatible_node 函数根据 device_type 和 compatible 这两个属性查找指定的节点</p>
+<p>of_find_node_by_path 函数通过路径来查找指定的节点</p>
+<p><strong>查找父/ 子节点的 OF 函数</strong></p>
+<p>of_get_parent 函数用于获取指定节点的父节点(如果有父节点的话)</p>
+<p>of_get_next_child 函数用迭代的查找子节点</p>
+<p><strong>提取属的 性值的 OF 函数</strong></p>
+<p>of_find_property 函数用于查找指定的属性</p>
+<p>of_property_count_elems_of_size 函数用于获取属性中元素的数量，</p>
+<p>of_property_read_u32_index 函数用于从属性中获取指定标号的 u32 类型数据值</p>
+<p>of_property_read_u8_array 函数</p>
+<p>of_property_read_u16_array  函数</p>
+<p>of_property_read_u32_array  函数</p>
+<p>of_property_read_u64_array</p>
+<p>of_property_read_string 函数用于读取属性中字符串值</p>
+<p>of_n_addr_cells 函数用于获取#address-cells 属性值</p>
+<p>of_size_cells 函数用于获取#size-cells 属性值</p>
+<p>其他常用的 OF</p>
+<p>of_device_is_compatible 函数用于查看节点的 compatible 属性是否有包含 compat 指定的字符串，也就是检查设备节点的兼容性</p>
+<p>of_get_address 函数用于获取地址相关属性，主要是“reg”或者“assigned-addresses”属性</p>
+<p>值，函数属性如下</p>
+<p>of_translate_address 函数负责将从设备树读取到的地址转换为物理地址</p>
+<p>of_address_to_resource 函数，此函数看名字像是从设备树里面提取资源值，但是本质上就是将 reg 属性值，然后将其转换为 resource 结构体类型</p>
+<p>of_iomap 函数用于直接内存映射，以前我们会通过 ioremap 函数来完成物理地址到虚拟地址的映射，采用设备树以后就可以直接通过 of_iomap 函数来获取内存地址所对应的虚拟地址，不需要使用 ioremap 函数了。</p>
+<p>因为设备树最终是被驱动文件所使用的，而驱动文件必须要读取设备树中的属性信息，比如内存信息、GPIO 信息、中断信息等等。要想在驱动中读取设备树的属性值，那么就必须使用 Linux 内核提供的众多的 OF 函数</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>yocto 根文件命令小记</title>
+    <url>/Linux-Lover/octo-%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p>cat /proc/devices  设备</p>
+<p>/lib/module</p>
+<p>depmod //第一次加载驱动的时候需要运行此命令</p>
+<p>modprobe chrdevbase</p>
+<p>//可以看到“chrdevbase init！” chrdevbase_init 输出的信息，说明模块加载成功！</p>
+<p>cat /proc/devices  //查看设备信息</p>
+<p>mknod /dev/chrdevbase c 200 0//设备节点</p>
+<p>原因如下<br>（注意：这里不要有后缀.ko，不然会找不到，如：ko文件名是chrdevbase.ko，那么modprobe chrdevbase） 就可以了。具体步骤：</p>
+<p>rmmod beep.ko</p>
+<p>···<br>cd /proc/device-tree  设备树信息</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>驱动开发准备知识</title>
+    <url>/Linux-Lover/%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<p><strong>学习 Linux驱动开发</strong></p>
+<p>linaro（利纳罗） 5.4.0   交叉编译器<br>ubuntu 16.04.9<br>flash EMMC NAND——–ROM 8g<br>DDR3 ——RAM 512m<br>Linux 内核版本为 4.1.15，其支持设备树(Device tree)<br> Linux 中的三大类驱动：字符设备驱动（简单）、块设备驱动（储存有关）和网络设备驱动（上网功能）（过于复杂开发商写好）。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pinctrl +gpio系统</title>
+    <url>/Linux-Lover/nctrl-gpio%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p><strong>pinctl子系统 设置GPIO复用电气属性</strong><br>imx6ull.dtsi文件</p>
+<p>IO分类：<br>IOMUXC SNVS控制器<br>IOMUXC控制器<br>gpr控制器</p>
+<p>添加一个PIN的信息 打开imx6ul-pinfunc.h</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pinctrl_hog_1: hoggrp-1 &#123;</span><br><span class="line">			fsl,pins = &lt;</span><br><span class="line">				MX6UL_PAD_UART1_RTS_B__GPIO1_IO19	0x17059 </span><br><span class="line">			&gt;;</span><br><span class="line">		&#125;;</span><br><span class="line">MX6UL_PAD_UART1_RTS_B__GPIO1_IO19  0x0090 0x031C 0x0000 0x5 0x0</span><br><span class="line">&lt;mux_reg 	conf_reg	 input_reg	 mux_mode	 input_val&gt;</span><br><span class="line">0x0090 		0x031C 	 0x0000 	  0x5 		 0x0</span><br></pre></td></tr></table></figure>
+<p>mux_reg：IOMUXC父节点首地址0x020e0000，因此UART1_RTS_B这个PIN的mux寄存器地址 就是：0x020e0000+0x0090=0x020e 0090。<br>conf_reg：0x020e0000+0x031C=0x020e 031C，这个寄存器就是UART1_RTS_B的电气属性配置寄存器。<br>input_reg，为0，表示UART1_RTS_B这个PIN没有input功能。<br>mux_mode： 5表示复用为GPIO1_IO19，将其写入0x020e 0090<br>input_val：就是写入input_reg寄存器的值。</p>
+<p><strong>pincrtl驱动原理？</strong><br>    全局搜索，设备节点里面的compatible属性的值，看看在哪个.c文件里面有，那么此.c文件就是驱动文件。<br>    找到pinctrl-imx6ul.c文件，那么此文件就是6UL/6ULL的pinctrl驱动文件。当驱动和设备匹配以后执行，probe函数。也就是imx6ul_pinctrl_probea函数，其中<br>imx_pinconf_set函数设置PIN的电气属性<br>imx_pmx_set函数设置PIN的复用</p>
+<p><strong>gpio子系统 设置引脚属性</strong></p>
+<p>文件devicetree\bindings\gpio<br>用法：<br>cd-gpios = &lt;&amp;gpio1 19 GPIO_ACTIVE_LOW&gt;;</p>
+<p>设备数函数常用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> gpioled.nd = of_find_node_by_path(<span class="string">"/gpioled"</span>);</span><br><span class="line">   <span class="keyword">if</span>(gpioled.nd == NULL) &#123;</span><br><span class="line">       ret = -EINVAL;</span><br><span class="line">       goto fail_findnode;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /* 2, 获取LED所对应的GPIO */</span><br><span class="line">   gpioled.led_gpio = of_get_named_gpio(gpioled.nd, <span class="string">"led-gpios"</span>, 0);</span><br><span class="line">   <span class="keyword">if</span>(gpioled.led_gpio &lt; 0) &#123;</span><br><span class="line">       printk(<span class="string">"can't find led gpio\r\n"</span>);</span><br><span class="line">       ret = -EINVAL;</span><br><span class="line">       goto fail_findnode;</span><br><span class="line">   &#125;</span><br><span class="line">   printk(<span class="string">"led gpio num = %d\r\n"</span>, gpioled.led_gpio);</span><br><span class="line"></span><br><span class="line">   /* 3,申请IO */</span><br><span class="line">   ret = gpio_request(gpioled.led_gpio, <span class="string">"led-gpios"</span>);</span><br><span class="line"><span class="keyword">if</span> (ret) &#123;</span><br><span class="line">	printk(<span class="string">"Failed to request the led gpio\r\n"</span>);</span><br><span class="line">	ret = -EINVAL;</span><br><span class="line">       goto fail_findnode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">   /* 4,使用IO，设置为输出 */</span><br><span class="line">   ret = gpio_direction_output(gpioled.led_gpios, 1);</span><br><span class="line"><span class="keyword">if</span> (ret) &#123;</span><br><span class="line">	goto fail_setoutput;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   /* 5,输出底电平，点亮LED灯*/</span><br><span class="line">   gpio_set_value(gpioled.led_gpio, 0);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>gpio驱动原理</strong><br>1、gpiolib<br>两部分，给原厂编写GPIO底层驱动的，给驱动开发人员使用GPIO操作函数的。<br>使用gpiochip_add向系统添加gpio_chip，这些都是半导体原厂做的，这部分就是最底层的GPIO驱动。<br>2、gpio驱动<br>在drivers/gpio目录下，gpio-xxx.c文件为具体芯片的驱动文件，</p>
+<p>申请IO的时候失败，大部分原因是这个IO被其他外设占用了。检查设备树，查找有哪些使用同一IO的设备。<br>    1，检查复用，也就是pinctl设置。<br>    2，gpio使用</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>信号高级用法(sigaction与sigqueue)</title>
+    <url>/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p><strong>信号的高级用法</strong></p>
+<p>sigaction函数注册信号处理函数<br>int  sigaction(int signum,const struct sigaction *act,const struct sigaction *old);</p>
+<p>第一个参数为信号的值，可以为除SIGKILL及SIGSTOP外的任何一 个特定有效的信号（为这两个信号定义自己的处理函数，将导致信号安装错误）。<br>第二个参数是指向结构sigaction的一个实例的指针，在结构 sigaction的实例中，指定了对特定信号的处理，可以为空，进程会以缺省方式对信号处理<br>第三个参数oldact指向的对象用来保存原来对相应信号的处理，可指定oldact为NULL。<br>基本用法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sigaction 结构体</span><br><span class="line">struct sigaction act;</span><br><span class="line">act.sa_sigaction &#x3D; myhandle;</span><br><span class="line">act.sa_flags &#x3D;SA_SIGINFO;&#x2F;&#x2F;表示能接受数据</span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;recv a sig&#x3D;%d\n&quot;, sig);	</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;         </span><br><span class="line">	struct sigaction act;</span><br><span class="line">	sigset_t sa_mask;</span><br><span class="line">	act.sa_handler &#x3D; handler;</span><br><span class="line">	act.sa_flags &#x3D; 0;</span><br><span class="line">	sigemptyset(&amp;act.sa_mask);</span><br><span class="line">	&#x2F;&#x2F;测试信号安装函数</span><br><span class="line">	sigaction(SIGINT, &amp;act, NULL);</span><br><span class="line">	for (;;)</span><br><span class="line">	&#123;</span><br><span class="line">	pause();</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>封装my_signal</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#define ERR_EXIT(m) \</span></span><br><span class="line">    <span class="keyword">do</span> &#123; \</span><br><span class="line">        perror(m); \</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE); \</span><br><span class="line">    &#125; <span class="keyword">while</span>(0)void handler(int sig);/* 系统调用signal()实际上调用了sigaction() */</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler);int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    my_signal(SIGINT, handler);</span><br><span class="line">    <span class="keyword">for</span> (; ;)</span><br><span class="line">        pause();</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler)</span><br><span class="line">&#123;</span><br><span class="line">    struct sigaction act;</span><br><span class="line">    struct sigaction oldact;</span><br><span class="line">    act.sa_handler = handler;</span><br><span class="line">    sigemptyset(&amp;act.sa_mask);</span><br><span class="line">    act.sa_flags = 0;</span><br><span class="line">    <span class="keyword">if</span> (sigaction(sig, &amp;act, &amp;oldact) &lt; 0)</span><br><span class="line">        <span class="built_in">return</span> SIG_ERR;</span><br><span class="line">    <span class="built_in">return</span> oldact.sa_handler; // 返回先前的处理函数指针&#125;void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"rev sig=%d\n"</span>, sig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/mysignal.jpg" class="" title="5s阻塞后到达">
+
+<p>typedef union sigval<br>{<br>int sival_int;<br>void *sival_ptr;<br>}sigval_t; </p>
+<p>sigqueue新的信号发送函数<br>原型:int sigqueue(pid_t pid, int sig, const union sigval value);<br> 第一个参数是指定接收信号的进程id<br> 第二个参数确定即将发送的信号<br> 第三个参数是一个联合数据结构union sigval，指定了信号传递的参数，即通常所说的4字节值。<br> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"></span><br><span class="line">pid_t pid_Array[10]; //pid 数组</span><br><span class="line">void myhandle(int sig,siginfo_t*st, void *p)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(sig == SIGRTMIN)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子1收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[1] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">			<span class="keyword">if</span>(sig == SIGRTMIN+1)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子2收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[3] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(sig == SIGRTMIN+2)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：父亲收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"pid[0]:%d  pid[1]%d \n"</span>,pid_Array[0],pid_Array[1]);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	pid_t pid;</span><br><span class="line">	</span><br><span class="line">	struct sigaction act;</span><br><span class="line">	act.sa_sigaction = myhandle;</span><br><span class="line">	act.sa_flags =SA_SIGINFO; //可传递数据</span><br><span class="line">	int i=0;</span><br><span class="line">	/*注册信号*/</span><br><span class="line">     <span class="keyword">if</span>(sigaction(SIGRTMIN, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+1, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+2, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*fork两个进程*/</span><br><span class="line">	<span class="keyword">for</span>(i=0;i&lt;2;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		pid_Array[i] = pid = fork();</span><br><span class="line">		<span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">			perror(<span class="string">"fork fail"</span>);</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">if</span>(pid&gt;0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"fork %d \n"</span>,i);</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(pid ==  0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"i:%d\n"</span>,i);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/*两个进程处理函数*/</span><br><span class="line">	<span class="keyword">if</span>( pid==0 &amp;&amp; i == 0)  //第一个子进程</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程1运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程1醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = getpid()*2;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子1给子2发信号  %d \n"</span>,getpid()*2);</span><br><span class="line">		sigqueue(pid_Array[1],SIGRTMIN+1,value);     </span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(pid==0 &amp;&amp; i==1)//第二个子进程</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程2运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程2醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[3];</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子2给父进程发 %d \n"</span>,pid_Array[3]);</span><br><span class="line">		sigqueue(getppid(),SIGRTMIN+2,value);     //父进程pid</span><br><span class="line">			<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">		//父进程</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[1]; //传递进程2 pid   给进程 1 </span><br><span class="line">		sigqueue(pid_Array[0],SIGRTMIN,value);    </span><br><span class="line"></span><br><span class="line">		sleep(10);</span><br><span class="line">		int mypid =0;</span><br><span class="line">		int  pidnum = 1 ;</span><br><span class="line">		<span class="keyword">while</span>((mypid = waitpid(-1,NULL,WNOHANG))&gt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"子进程：%d 退出%d\n"</span>,pidnum++,mypid); </span><br><span class="line">		&#125;</span><br><span class="line">	        <span class="built_in">printf</span>(<span class="string">"父进程退出\n"</span>);</span><br><span class="line">	     <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"> ---------------------------</span><br><span class="line"> ming@ubuntu:~/Day6/22$ ./3</span><br><span class="line">fork 0 </span><br><span class="line">i:0</span><br><span class="line">子进程1运行然后睡眠</span><br><span class="line">fork 1 </span><br><span class="line">i:1</span><br><span class="line">子进程2运行然后睡眠</span><br><span class="line">处理函数：孩子1收到信号5135</span><br><span class="line">信号，子进程1醒来</span><br><span class="line">子1给子2发信号  10268 </span><br><span class="line">处理函数：孩子2收到信号10268</span><br><span class="line">信号，子进程2醒来</span><br><span class="line">子2给父进程发 10268 </span><br><span class="line">处理函数：父亲收到信号10268</span><br><span class="line">pid[0]:5134  pid[1]5135 </span><br><span class="line">子进程：1 退出5134</span><br><span class="line">父进程退出</span><br><span class="line">-----------------------------</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br>和kill函数相比Int kill(pid_t pid, int siq)多了参数<br>但sigqueue()只能向一个进程发送信号，而不能发送信号给一个进程组。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Socket-Api编程</title>
+    <url>/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>多并发？</strong></p>
+<p>每来一个客户，创建一个进程的思路。</p>
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class="" title="基本框架">
+
+<p><strong>流协议与粘包</strong></p>
+<p>tcp    字节流 无边界<br>udp    消息、数据报 有边界<br>对等方，一次读操作，不能保证完全把消息读完。<br>对方接受数据包的个数是不确定的。</p>
+<hr>
+<p><strong>TCP/IP协议的11种状态</strong></p>
+<p>两端同时关闭    将产生closing状态，最后双方都进入TIME_WAIT状态。<br>执行主动关闭的那一端，进入TIME_WAIT状态</p>
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class="" title="11种">
+
+
+<p><strong>为什么TCP/IP要三次握手，和四次断开？</strong></p>
+<p>全双工协议。（客户收发、服务收发确认）</p>
+<p><em>_TIME_WAIT 时间是多长2MSL （2倍的最大生命期时间）</em></p>
+<p>原因：（ACK y+1）如果发送失败可以重发。 最后 一个确认包的确认完成。<br>服务器端处于closed状态，不等于客户端也处于closed状态。。</p>
+<p><strong>SIGPIPE</strong></p>
+<p>如果对方socket已关闭，对等方再发写数据，则会产生SIGPIPE信号<br>常做忽略处理：<br>signal(SIGPIPE, SIG_IGN); </p>
+<p><strong>close与shutdown区别</strong><br>refcnt 引用计数</p>
+<p>close终止了数据传送的两个方向。<br>shutdown可以有选择的终止某个方向的数据传送或者终止数据传送的两个方向。<br>shutdown how=1就可以保证对等方接收到一个EOF字符，而不管其他进程是否已经打开了套接字（引用计数!）。而close不能保证，直到套接字引用计数减为0时才发送。也就是说直到所有的进程都关闭了套接字。</p>
+<p><em>了解5种IO模型_</em></p>
+<p>阻塞IO<br>非阻塞IO<br>复用IO<br>信号驱动IO<br>异步IO</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux系统移植问题</title>
     <url>/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>工具区别</p>
@@ -68,8 +323,7 @@
 
 
 
-
-
+<p>推荐链接：<a href="https://www.simon96.online/2018/10/12/hexo-tutorial/" target="_blank" rel="noopener">https://www.simon96.online/2018/10/12/hexo-tutorial/</a><br>背景清晰度：<a href="https://www.zhihu.com/question/268140594/answer/335335120" target="_blank" rel="noopener">https://www.zhihu.com/question/268140594/answer/335335120</a></p>
 <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6>]]></content>
       <categories>
         <category>Other Lover</category>
@@ -150,16 +404,16 @@
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <title>怎么说你了解过IIC</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过IIC</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -404,9 +658,12 @@
   </entry>
   <entry>
     <title>美的面试</title>
-    <url>/uncategorized/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/</url>
+    <url>/My-interview-Lover/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/</url>
     <content><![CDATA[<p>四大业务：数字化业务、消费者家电、空调业务、机器人自动化</p>
 ]]></content>
+      <categories>
+        <category>My interview Lover</category>
+      </categories>
       <tags>
         <tag>面试</tag>
       </tags>
@@ -559,6 +816,17 @@
       </tags>
   </entry>
   <entry>
+    <title>STM32单片机</title>
+    <url>/MCU-Lover/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>51单片机</title>
     <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
@@ -581,17 +849,6 @@
       </categories>
       <tags>
         <tag>51</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>STM32单片机</title>
-    <url>/MCU-Lover/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>STM32</tag>
       </tags>
   </entry>
   <entry>
@@ -890,6 +1147,20 @@
       </tags>
   </entry>
   <entry>
+    <title>void *</title>
+    <url>/C-C-Lover/id/</url>
+    <content><![CDATA[<p>C语言中void *为不确定类型指针.</p>
+<p>void* 可以用来声明指针。<br>例如: void <em>a;<br>(1) void</em>可以接受任何的t值:void *a= NULL；<br>   int  *b=NULL；<br>   a= b; 任何类型的指针都可以直接赋值给它,无需进行强制类型转换</p>
+<p>(2) void<em>可以赋值给任何类型的变量但是需要进行强制转换:<br>例如：int a = NULL;void*b;a = (int</em>) b:</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>文件</title>
     <url>/Linux-Lover/%E4%BB%B6/</url>
     <content><![CDATA[<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -983,9 +1254,6 @@
       <categories>
         <category>Circuit Lover</category>
       </categories>
-      <tags>
-        <tag>PCB</tag>
-      </tags>
   </entry>
   <entry>
     <title>超声波传感器</title>
