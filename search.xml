@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>测试</title>
+    <url>/uncategorized/%E8%AF%95/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>hexo+gitee</title>
     <url>/Other-Lover/xo-gitee/</url>
     <content><![CDATA[<p>github网速不够快，换成gitees试试？</p>
 <p><a href="https://gitee.com/hsm0409/hsm0409.git" target="_blank" rel="noopener">https://gitee.com/hsm0409/hsm0409.git</a><br>git remote add origin <a href="mailto:git@gitee.com">git@gitee.com</a>:hsm0409/hsm0409.git</p>
 <p>如果同时部署：</p>
 <p>先关联GitHub的远程库：<br>git remote rm origin<br>git remote add github <a href="mailto:git@github.com">git@github.com</a>:hsm0409/hsm0409.github.io.git<br>接着，再关联Gitee的远程库：<br>git remote add gitee <a href="mailto:git@gitee.com">git@gitee.com</a>:hsm0409/hsm0409.git</p>
-<p>如果要推送到GitHub，使用命令：<br>git push github master<br>如果要推送到Gitee，使用命令：<br>git push gitee master</p>
-<p> git push -u origin master</p>
+<p><a href="mailto:ssh-Tgit@github.com">ssh-Tgit@github.com</a></p>
+<p><a href="mailto:ssh-Tgit@gitee.com">ssh-Tgit@gitee.com</a></p>
+<p>git push github master<br>如果要推送到Gitee，使用命令：</p>
+<p>git push gitee master</p>
 <p>不错的参考：<a href="https://www.liaoxuefeng.com/wiki/896043488029600/1163625339727712" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600/1163625339727712</a></p>
 ]]></content>
       <categories>
@@ -41,6 +48,14 @@
 <p><strong>3、电脑关机，开机启动按住“esc”,选择进入U盘，进入PE系统，我们可以先备份好C盘的资料到其他U盘中，然后点击C盘，还原分区，选择U盘中GHO目录下的镜像文件.gho,点击确定即可。</strong></p>
 <p><strong>4、拔出U盘，重启电脑。</strong></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>GUN 汇编随记</title>
+    <url>/GNU-Lover/UN-%E6%B1%87%E7%BC%96%E9%9A%8F%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>GNU Lover</category>
+      </categories>
   </entry>
   <entry>
     <title>ioctl函数</title>
