@@ -111,17 +111,17 @@
 
 
 
-<meta name="description" content="数据库安全概述12345数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。数据库不安全因素:(1)非授权用户对数据库进行破坏(2)数据库重要或者敏感数据泄露(3)安全环境的脆弱性 安全标准1安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)      安全性控制12345678910111213141516171819202122（1）用户身份鉴别	静态鉴别">
+<meta name="description" content="数据库安全概述12345数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。数据库不安全因素:(1)非授权用户对数据库进行破坏(2)数据库重要或者敏感数据泄露(3)安全环境的脆弱性 安全标准1安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)      安全性控制12345678910111213141516171819202122232425262728（1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库安全性">
 <meta property="og:url" content="https://hsm0409.github.io/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/index.html">
 <meta property="og:site_name" content="梦在广工">
-<meta property="og:description" content="数据库安全概述12345数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。数据库不安全因素:(1)非授权用户对数据库进行破坏(2)数据库重要或者敏感数据泄露(3)安全环境的脆弱性 安全标准1安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)      安全性控制12345678910111213141516171819202122（1）用户身份鉴别	静态鉴别">
+<meta property="og:description" content="数据库安全概述12345数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。数据库不安全因素:(1)非授权用户对数据库进行破坏(2)数据库重要或者敏感数据泄露(3)安全环境的脆弱性 安全标准1安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)      安全性控制12345678910111213141516171819202122232425262728（1">
 <meta property="og:image" content="https://hsm0409.github.io/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg">
 <meta property="og:image" content="https://hsm0409.github.io/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg">
 <meta property="og:image" content="https://hsm0409.github.io/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg">
 <meta property="article:published_time" content="2020-04-20T01:17:00.000Z">
-<meta property="article:modified_time" content="2020-04-23T02:42:37.788Z">
+<meta property="article:modified_time" content="2020-04-30T01:18:43.590Z">
 <meta property="article:author" content="Ming">
 <meta property="article:tag" content="MySql">
 <meta name="twitter:card" content="summary">
@@ -467,7 +467,7 @@
 
 <img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class="" title="CC标准">
 
-<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
+<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line">AUDIT ALTER，PDATA</span><br><span class="line">ON SC ;</span><br><span class="line"></span><br><span class="line">NOAUDIT ALTER ,UPDATA</span><br><span class="line">ON SC ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
 <img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class="" title="视图例子">
       
     </div>
@@ -594,7 +594,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -694,7 +694,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -1255,10 +1255,7 @@
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
-
-  
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1275,5 +1272,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
 </script>
 <!-- End: Injected MathJax -->
-<!-- hexo-inject:end --></body>
+<!-- hexo-inject:end -->
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 
