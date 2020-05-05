@@ -336,379 +336,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" itemprop="url">信号高级用法(sigaction与sigqueue)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T16:11:00+08:00">
-                2020-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>信号的高级用法</strong></p>
-<p>sigaction函数注册信号处理函数<br>int  sigaction(int signum,const struct sigaction *act,const struct sigaction *old);</p>
-<p>第一个参数为信号的值，可以为除SIGKILL及SIGSTOP外的任何一 个特定有效的信号（为这两个信号定义自己的处理函数，将导致信号安装错误）。<br>第二个参数是指向结构sigaction的一个实例的指针，在结构 sigaction的实例中，指定了对特定信号的处理，可以为空，进程会以缺省方式对信号处理<br>第三个参数oldact指向的对象用来保存原来对相应信号的处理，可指定oldact为NULL。<br>基本用法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sigaction 结构体</span><br><span class="line">struct sigaction act;</span><br><span class="line">act.sa_sigaction &#x3D; myhandle;</span><br><span class="line">act.sa_flags &#x3D;SA_SIGINFO;&#x2F;&#x2F;表示能接受数据</span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;recv a sig&#x3D;%d\n&quot;, sig);	</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;         </span><br><span class="line">	struct sigaction act;</span><br><span class="line">	sigset_t sa_mask;</span><br><span class="line">	act.sa_handler &#x3D; handler;</span><br><span class="line">	act.sa_flags &#x3D; 0;</span><br><span class="line">	sigemptyset(&amp;act.sa_mask);</span><br><span class="line">	&#x2F;&#x2F;测试信号安装函数</span><br><span class="line">	sigaction(SIGINT, &amp;act, NULL);</span><br><span class="line">	for (;;)</span><br><span class="line">	&#123;</span><br><span class="line">	pause();</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>封装my_signal</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define ERR_EXIT(m) \</span></span><br><span class="line">    <span class="keyword">do</span> &#123; \</span><br><span class="line">        perror(m); \</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE); \</span><br><span class="line">    &#125; <span class="keyword">while</span>(0)void handler(int sig);/* 系统调用signal()实际上调用了sigaction() */</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler);int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    my_signal(SIGINT, handler);</span><br><span class="line">    <span class="keyword">for</span> (; ;)</span><br><span class="line">        pause();</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler)</span><br><span class="line">&#123;</span><br><span class="line">    struct sigaction act;</span><br><span class="line">    struct sigaction oldact;</span><br><span class="line">    act.sa_handler = handler;</span><br><span class="line">    sigemptyset(&amp;act.sa_mask);</span><br><span class="line">    act.sa_flags = 0;</span><br><span class="line">    <span class="keyword">if</span> (sigaction(sig, &amp;act, &amp;oldact) &lt; 0)</span><br><span class="line">        <span class="built_in">return</span> SIG_ERR;</span><br><span class="line">    <span class="built_in">return</span> oldact.sa_handler; // 返回先前的处理函数指针&#125;void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"rev sig=%d\n"</span>, sig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/mysignal.jpg" class="" title="5s阻塞后到达">
-
-<p>typedef union sigval<br>{<br>int sival_int;<br>void *sival_ptr;<br>}sigval_t; </p>
-<p>sigqueue新的信号发送函数<br>原型:int sigqueue(pid_t pid, int sig, const union sigval value);<br> 第一个参数是指定接收信号的进程id<br> 第二个参数确定即将发送的信号<br> 第三个参数是一个联合数据结构union sigval，指定了信号传递的参数，即通常所说的4字节值。<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"></span><br><span class="line">pid_t pid_Array[10]; //pid 数组</span><br><span class="line">void myhandle(int sig,siginfo_t*st, void *p)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(sig == SIGRTMIN)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子1收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[1] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">			<span class="keyword">if</span>(sig == SIGRTMIN+1)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子2收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[3] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(sig == SIGRTMIN+2)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：父亲收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"pid[0]:%d  pid[1]%d \n"</span>,pid_Array[0],pid_Array[1]);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	pid_t pid;</span><br><span class="line">	</span><br><span class="line">	struct sigaction act;</span><br><span class="line">	act.sa_sigaction = myhandle;</span><br><span class="line">	act.sa_flags =SA_SIGINFO; //可传递数据</span><br><span class="line">	int i=0;</span><br><span class="line">	/*注册信号*/</span><br><span class="line">     <span class="keyword">if</span>(sigaction(SIGRTMIN, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+1, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+2, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*fork两个进程*/</span><br><span class="line">	<span class="keyword">for</span>(i=0;i&lt;2;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		pid_Array[i] = pid = fork();</span><br><span class="line">		<span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">			perror(<span class="string">"fork fail"</span>);</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">if</span>(pid&gt;0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"fork %d \n"</span>,i);</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(pid ==  0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"i:%d\n"</span>,i);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/*两个进程处理函数*/</span><br><span class="line">	<span class="keyword">if</span>( pid==0 &amp;&amp; i == 0)  //第一个子进程</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程1运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程1醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = getpid()*2;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子1给子2发信号  %d \n"</span>,getpid()*2);</span><br><span class="line">		sigqueue(pid_Array[1],SIGRTMIN+1,value);     </span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(pid==0 &amp;&amp; i==1)//第二个子进程</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程2运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程2醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[3];</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子2给父进程发 %d \n"</span>,pid_Array[3]);</span><br><span class="line">		sigqueue(getppid(),SIGRTMIN+2,value);     //父进程pid</span><br><span class="line">			<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">		//父进程</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[1]; //传递进程2 pid   给进程 1 </span><br><span class="line">		sigqueue(pid_Array[0],SIGRTMIN,value);    </span><br><span class="line"></span><br><span class="line">		sleep(10);</span><br><span class="line">		int mypid =0;</span><br><span class="line">		int  pidnum = 1 ;</span><br><span class="line">		<span class="keyword">while</span>((mypid = waitpid(-1,NULL,WNOHANG))&gt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"子进程：%d 退出%d\n"</span>,pidnum++,mypid); </span><br><span class="line">		&#125;</span><br><span class="line">	        <span class="built_in">printf</span>(<span class="string">"父进程退出\n"</span>);</span><br><span class="line">	     <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"> ---------------------------</span><br><span class="line"> ming@ubuntu:~/Day6/22$ ./3</span><br><span class="line">fork 0 </span><br><span class="line">i:0</span><br><span class="line">子进程1运行然后睡眠</span><br><span class="line">fork 1 </span><br><span class="line">i:1</span><br><span class="line">子进程2运行然后睡眠</span><br><span class="line">处理函数：孩子1收到信号5135</span><br><span class="line">信号，子进程1醒来</span><br><span class="line">子1给子2发信号  10268 </span><br><span class="line">处理函数：孩子2收到信号10268</span><br><span class="line">信号，子进程2醒来</span><br><span class="line">子2给父进程发 10268 </span><br><span class="line">处理函数：父亲收到信号10268</span><br><span class="line">pid[0]:5134  pid[1]5135 </span><br><span class="line">子进程：1 退出5134</span><br><span class="line">父进程退出</span><br><span class="line">-----------------------------</span><br></pre></td></tr></table></figure></p>
-<p>注意：<br>和kill函数相比Int kill(pid_t pid, int siq)多了参数<br>但sigqueue()只能向一个进程发送信号，而不能发送信号给一个进程组。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/" itemprop="url">Socket-Api编程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T00:36:00+08:00">
-                2020-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>多并发？</strong></p>
-<p>每来一个客户，创建一个进程的思路。</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class="" title="基本框架">
-
-<p><strong>流协议与粘包</strong></p>
-<p>tcp    字节流 无边界<br>udp    消息、数据报 有边界<br>对等方，一次读操作，不能保证完全把消息读完。<br>对方接受数据包的个数是不确定的。</p>
-<hr>
-<p><strong>TCP/IP协议的11种状态</strong></p>
-<p>两端同时关闭    将产生closing状态，最后双方都进入TIME_WAIT状态。<br>执行主动关闭的那一端，进入TIME_WAIT状态</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class="" title="11种">
-
-
-<p><strong>为什么TCP/IP要三次握手，和四次断开？</strong></p>
-<p>全双工协议。（客户收发、服务收发确认）</p>
-<p><em>_TIME_WAIT 时间是多长2MSL （2倍的最大生命期时间）</em></p>
-<p>原因：（ACK y+1）如果发送失败可以重发。 最后 一个确认包的确认完成。<br>服务器端处于closed状态，不等于客户端也处于closed状态。。</p>
-<p><strong>SIGPIPE</strong></p>
-<p>如果对方socket已关闭，对等方再发写数据，则会产生SIGPIPE信号<br>常做忽略处理：<br>signal(SIGPIPE, SIG_IGN); </p>
-<p><strong>close与shutdown区别</strong><br>refcnt 引用计数</p>
-<p>close终止了数据传送的两个方向。<br>shutdown可以有选择的终止某个方向的数据传送或者终止数据传送的两个方向。<br>shutdown how=1就可以保证对等方接收到一个EOF字符，而不管其他进程是否已经打开了套接字（引用计数!）。而close不能保证，直到套接字引用计数减为0时才发送。也就是说直到所有的进程都关闭了套接字。</p>
-<p><em>了解5种IO模型_</em></p>
-<p>阻塞IO<br>非阻塞IO<br>复用IO<br>信号驱动IO<br>异步IO</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1658,7 +1285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -1677,7 +1304,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="url">怎么说你了解过IIC</a></h1>
+                <a class="post-title-link" href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="url">怎么说你了解过SPI</a></h1>
         
 
         <div class="post-meta">
@@ -1730,8 +1357,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="commentCount"></span>
+                <a href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1828,7 +1455,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ming">
@@ -1847,7 +1474,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="url">怎么说你了解过SPI</a></h1>
+                <a class="post-title-link" href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="url">怎么说你了解过IIC</a></h1>
         
 
         <div class="post-meta">
@@ -1900,8 +1527,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/" itemprop="commentCount"></span>
+                <a href="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2158,6 +1785,400 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/MySql-Lover/mysql-qt%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MySql-Lover/mysql-qt%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" itemprop="url">mysql+qt基本命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:10:00+08:00">
+                2020-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySql-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MySql Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySql-Lover/mysql-qt%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySql-Lover/mysql-qt%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>– 创建一个名称为info的数据库。</p>
+<p>create database info;</p>
+<p>– 删除数据库info</p>
+<p>– drop database info;</p>
+<p>– 使用数据库 info</p>
+<p>use info;</p>
+<p>– 创建表</p>
+<p>– create table student(id int primary key auto_increment, name varchar(255), age int, score int);</p>
+<p>create table student(id int primary key, name varchar(255), age int, score int);</p>
+<p>– 删除student表</p>
+<p>– drop table student;</p>
+<p>– 插入数据</p>
+<p>insert into student(id, name, age) values(1, ‘mike’, 18);</p>
+<p>insert into student(id, name, age, score) values(2, ‘lucy’, 22, 90);</p>
+<p>insert into student(id, name, age, score) values(3, ‘Tom’, 20, 78);</p>
+<p>– 更新数据</p>
+<p>update student set score = 90 where id = 3;</p>
+<p>– 查找数据</p>
+<p>select * from student;</p>
+<p>select score from student where name = ‘mike’;</p>
+<p>– 删除数据库</p>
+<p>delete from student where name = ‘mike’;</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hsm0409.github.io/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ming">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦在广工">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/" itemprop="url">原始套接字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T12:20:00+08:00">
+                2020-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于一个自定义的IP包，或者一个ICMP协议包，又是如何实现传送的呢？<br>原始套接字就允许对这些较底层次的协议（IP、ICMP、IGMP）进行直接访问。</p>
+<p><strong>原始套接字定义</strong></p>
+<p>原始套接字编程是一种非面向连接的、C/S传输方式的网络编程，使用原始套接字编程进行服务器端与客户端的通信前，首先要创建各自的套接字，然后对相应的套接字进行数据传输，在数据传输过程中，需要使用sendto()函数和recvfrom()函数进行发送与接收，在发送与接收函数中设置相应的IP地址。</p>
+<p>扩展：原始套接字往往应用于高级网络编程，如比较流行的网络嗅探器（sniffer）、拒绝服务攻击（DOS）、IP欺骗等等都可以实现，并且还可以通过原始套接字来模拟IP的一些实用工具，如Ping命令。</p>
+<p>1.创建函数<br>，如TCP套接字编程选择的是SOCK_STREAM类型的套接字，UDP套接字编程选择的是SOCK_DGRAM类型的套接字，而原始套接字编程则需要选择SOCK_RAW类型的套接字。<br>上述代码创建了一个AF_INET协议族中的原始套接字，协议类型为protocol。<br>协议类型protocol通常设置0，可以取值还包括如下四种：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol</td>
+<td>IPPROTO_IP、IPPROTO_ICMP、IPPROTO_TCP、IPPROTO_UDP</td>
+</tr>
+</tbody></table>
+<p>说明：创建完原始套接字后，可以通过向网络中定义自己的IP数据包，但是在Linux系统中，为了保护网络系统的安全，规定只有超级用户才有创建原始套接口的权限。</p>
+<p>2.设置套接字选项<br>函数setsockopt()主要用于实现对套接字相关的选项设置当前值。</p>
+<p>int setsockopt(int s, int  level,  int  optname,  const  void  *optval, socklen_t optlen);</p>
+<p>|参数解释<br>|-|-|<br>|参数s表示套接字描述符；<br>|参数level代表的是选项定义的层次，如IPPROTO_IP；<br>|参数optname代表套接字选项的名称，例如IP_HDRINCL表示要构造IP头部；<br>|参数optval表示指向存放选项数据的缓冲区的指针；<br>|参数optlen表示optval参数指向的缓冲区的长度。</p>
+<p>当使用套接字选项IP_HDRINCL设置套接字后，接收和发送数据的时候，接收到的数据包含IP数据的，包含IP的头部。用户之后需要对IP层相关的数据段进行处理，例如IP头部数据的设置和分析，校验和的计算等。设置方法如下：<br>int set = 1;<br>if(setsockopt(rawsock, IPPROTO_IP, IP_HDRINCL, &amp;set, sizeof(set))&lt;0)<br>{<br>/<em>错误信息提示</em>/<br>}</p>
+<p><strong>了解报文</strong></p>
+<img src="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="报文结构">
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2212,7 +2233,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2223,7 +2244,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
