@@ -493,7 +493,7 @@ pre,
 }
 pre,
 code {
-  font-family: Menlo, Monaco, Consolas, 'Roboto Mono', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "STHeiti", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "Droid Sans Fallback", "Microsoft YaHei", monospace;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "STHeiti", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "Droid Sans Fallback", "Microsoft YaHei", monospace;
 }
 code {
   padding: 2px 4px;
@@ -1930,7 +1930,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6cfbfc;
+  background: #b03dff;
 }
 .links-of-blogroll {
   font-size: 13px;

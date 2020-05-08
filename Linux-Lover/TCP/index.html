@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/hsm0409.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -62,17 +62,11 @@
   
 
   
-    
-      
-    
-
-    
-  
 
   
     
     
-    <link href="https://fonts.loli.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -80,21 +74,21 @@
 
 
 
-<link href="/hsm0409.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/hsm0409.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/hsm0409.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/hsm0409.github.io/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/hsm0409.github.io/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/hsm0409.github.io/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -115,7 +109,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io/Linux-Lover/TCP/index.html">
-<meta property="og:site_name" content="梦在广工">
+<meta property="og:site_name" content="我的博客">
 <meta property="og:description" content="__TCP三次握手，包头中的标志变化    第一次握手：建立连接时，客户端发送 syn 包(tcp协议中syn位置1，序号为X)到服务器，并进入 SYN_SEND 状态，等待服务器确认；  第二次握手：服务器收到 syn 包，必须确认客户的 SYN，同时自己也发送一个 SYN 包，即 SYN+ACK包（tcp协议中syn位置1，ack位置1，序号K，确定序号为X+1），此时服务器进入 SYN_RE">
 <meta property="og:image" content="https://github.com/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
 <meta property="og:image" content="https://github.com/Linux-Lover/TCP/%E5%8C%85.jpg">
@@ -123,7 +117,7 @@
 <meta property="og:image" content="https://github.com/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg">
 <meta property="article:published_time" content="2020-04-24T13:41:00.000Z">
 <meta property="article:modified_time" content="2020-04-25T02:28:01.300Z">
-<meta property="article:author" content="Ming">
+<meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux应用编程">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
@@ -133,7 +127,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/hsm0409.github.io/',
+    root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -162,7 +156,7 @@
 
 
 
-  <title>TCP | 梦在广工</title>
+  <title>TCP | 我的博客</title>
   
 
 
@@ -182,7 +176,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -191,7 +185,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -200,9 +194,9 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/hsm0409.github.io/"  class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">梦在广工</span>
+        <span class="site-title">我的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -228,7 +222,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/hsm0409.github.io/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -238,7 +232,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/hsm0409.github.io/about/" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -248,7 +242,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/hsm0409.github.io/tags/" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -258,21 +252,11 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/hsm0409.github.io/categories/" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/hsm0409.github.io/404/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
           </a>
         </li>
       
@@ -343,16 +327,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io/hsm0409.github.io/Linux-Lover/TCP/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io/Linux-Lover/TCP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
+      <meta itemprop="name" content="梦在广工">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/hsm0409.github.io/images/avatar.png">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="name" content="我的博客">
     </span>
 
     
@@ -395,7 +379,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/hsm0409.github.io/categories/Linux-Lover/" itemprop="url" rel="index">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
                     <span itemprop="name">Linux Lover</span>
                   </a>
                 </span>
@@ -413,8 +397,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/hsm0409.github.io/Linux-Lover/TCP/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/hsm0409.github.io/Linux-Lover/TCP/" itemprop="commentCount"></span>
+                <a href="/Linux-Lover/TCP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/TCP/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -462,23 +446,23 @@
 
       
         <p>__TCP三次握手，包头中的标志变化</p>
-<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class="" title="TCP3次握手">
+<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class title="TCP3次握手">
 
 
 <p>第一次握手：建立连接时，客户端发送 syn 包(tcp协议中syn位置1，序号为X)到服务器，并进入 SYN_SEND 状态，等待服务器确认； </p>
 <p>第二次握手：服务器收到 syn 包，必须确认客户的 SYN，同时自己也发送一个 SYN 包，即 SYN+ACK包（tcp协议中syn位置1，ack位置1，序号K，确定序号为X+1），此时服务器进入 SYN_RECV 状态；</p>
 <p>第三次握手：客户端收到服务器的 SYN＋ACK 包，向服务器发送确认包 ACK(tcp协议中ack位置1，确认序号Y+1), 此包发送完毕，客户端和服务器进入 ESTABLISHED 状态，完成三次握手</p>
-<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class="" title="TCP3次握手">
+<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class title="TCP3次握手">
 
 <p>seq是数据包本身的序列号；ack是期望对方继续发送的那个数据包的序列号。 </p>
-<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
+<img src="/Linux-Lover/TCP/TCP.jpg" class title="accetp()一直阻塞到客户端连接">
 
 <p>serv.c文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>client.c文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>结果</strong></p>
-<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">
+<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class title="基本套接字">
       
     </div>
     
@@ -495,7 +479,7 @@
       
         <div class="post-tags">
           
-            <a href="/hsm0409.github.io/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag"># Linux应用编程</a>
+            <a href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag"># Linux应用编程</a>
           
         </div>
       
@@ -508,7 +492,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/hsm0409.github.io/My-interview-Lover/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/" rel="next" title="美的面试">
+              <a href="/My-interview-Lover/%E7%BE%8E%E7%9A%84%E9%9D%A2%E8%AF%95/" rel="next" title="美的面试">
                 <i class="fa fa-chevron-left"></i> 美的面试
               </a>
             
@@ -518,7 +502,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/hsm0409.github.io/Linux-Lover/UDP/" rel="prev" title="UDP">
+              <a href="/Linux-Lover/UDP/" rel="prev" title="UDP">
                 UDP <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -581,11 +565,11 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/hsm0409.github.io/images/avatar.png"
-                alt="Ming" />
+                src="/images/avatar.png"
+                alt="梦在广工" />
             
-              <p class="site-author-name" itemprop="name">Ming</p>
-              <p class="site-description motion-element" itemprop="description">人不知QVQ</p>
+              <p class="site-author-name" itemprop="name">梦在广工</p>
+              <p class="site-description motion-element" itemprop="description">可能我还不够优秀</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -593,9 +577,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/hsm0409.github.io/archives">
+                <a href="/archives">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -605,8 +589,8 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/hsm0409.github.io/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -616,7 +600,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/hsm0409.github.io/tags/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -679,7 +663,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -699,7 +683,7 @@
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Ming</span>
+  <span class="author" itemprop="copyrightHolder">梦在广工</span>
 
   
 </div>
@@ -770,74 +754,74 @@
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
   
 
   
   
-    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/hsm0409.github.io/lib/canvas-ribbon/canvas-ribbon.js"></script>
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/hsm0409.github.io/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -909,7 +893,7 @@
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "/hsm0409.github.io/" + search_path;
+    var path = "/" + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
@@ -1243,22 +1227,5 @@
    <script type="text/javascript" src="/js/src/fireworks.js"></script>
 
   
-<script src="/hsm0409.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 

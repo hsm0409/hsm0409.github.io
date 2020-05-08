@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/hsm0409.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -62,17 +62,11 @@
   
 
   
-    
-      
-    
-
-    
-  
 
   
     
     
-    <link href="https://fonts.loli.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -80,21 +74,21 @@
 
 
 
-<link href="/hsm0409.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/hsm0409.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/hsm0409.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/hsm0409.github.io/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/hsm0409.github.io/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/hsm0409.github.io/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -115,13 +109,13 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Socket-Api编程">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/index.html">
-<meta property="og:site_name" content="梦在广工">
+<meta property="og:site_name" content="我的博客">
 <meta property="og:description" content="多并发？ 每来一个客户，创建一个进程的思路。   流协议与粘包 tcp    字节流 无边界udp    消息、数据报 有边界对等方，一次读操作，不能保证完全把消息读完。对方接受数据包的个数是不确定的。  TCP&#x2F;IP协议的11种状态 两端同时关闭    将产生closing状态，最后双方都进入TIME_WAIT状态。执行主动关闭的那一端，进入TIME_WAIT状态    为什么TCP&#x2F;IP要三次">
 <meta property="og:image" content="https://github.com/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg">
 <meta property="og:image" content="https://github.com/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg">
 <meta property="article:published_time" content="2020-04-26T16:36:00.000Z">
 <meta property="article:modified_time" content="2020-04-27T06:41:39.851Z">
-<meta property="article:author" content="Ming">
+<meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux应用编程">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg">
@@ -131,7 +125,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/hsm0409.github.io/',
+    root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -160,7 +154,7 @@
 
 
 
-  <title>Socket-Api编程 | 梦在广工</title>
+  <title>Socket-Api编程 | 我的博客</title>
   
 
 
@@ -180,7 +174,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -189,7 +183,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -198,9 +192,9 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/hsm0409.github.io/"  class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">梦在广工</span>
+        <span class="site-title">我的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -226,7 +220,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/hsm0409.github.io/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -236,7 +230,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/hsm0409.github.io/about/" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -246,7 +240,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/hsm0409.github.io/tags/" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -256,21 +250,11 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/hsm0409.github.io/categories/" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/hsm0409.github.io/404/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
           </a>
         </li>
       
@@ -341,16 +325,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io/hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ming">
+      <meta itemprop="name" content="梦在广工">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/hsm0409.github.io/images/avatar.png">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="name" content="我的博客">
     </span>
 
     
@@ -393,7 +377,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/hsm0409.github.io/categories/Linux-Lover/" itemprop="url" rel="index">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
                     <span itemprop="name">Linux Lover</span>
                   </a>
                 </span>
@@ -411,8 +395,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/hsm0409.github.io/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
+                <a href="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -461,14 +445,14 @@
       
         <p><strong>多并发？</strong></p>
 <p>每来一个客户，创建一个进程的思路。</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class="" title="基本框架">
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class title="基本框架">
 
 <p><strong>流协议与粘包</strong></p>
 <p>tcp    字节流 无边界<br>udp    消息、数据报 有边界<br>对等方，一次读操作，不能保证完全把消息读完。<br>对方接受数据包的个数是不确定的。</p>
 <hr>
 <p><strong>TCP/IP协议的11种状态</strong></p>
 <p>两端同时关闭    将产生closing状态，最后双方都进入TIME_WAIT状态。<br>执行主动关闭的那一端，进入TIME_WAIT状态</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class="" title="11种">
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class title="11种">
 
 
 <p><strong>为什么TCP/IP要三次握手，和四次断开？</strong></p>
@@ -498,7 +482,7 @@
       
         <div class="post-tags">
           
-            <a href="/hsm0409.github.io/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag"># Linux应用编程</a>
+            <a href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag"># Linux应用编程</a>
           
         </div>
       
@@ -511,7 +495,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/hsm0409.github.io/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/" rel="next" title="Linux系统移植问题">
+              <a href="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/" rel="next" title="Linux系统移植问题">
                 <i class="fa fa-chevron-left"></i> Linux系统移植问题
               </a>
             
@@ -521,7 +505,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/hsm0409.github.io/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" rel="prev" title="信号高级用法(sigaction与sigqueue)">
+              <a href="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" rel="prev" title="信号高级用法(sigaction与sigqueue)">
                 信号高级用法(sigaction与sigqueue) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -584,11 +568,11 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/hsm0409.github.io/images/avatar.png"
-                alt="Ming" />
+                src="/images/avatar.png"
+                alt="梦在广工" />
             
-              <p class="site-author-name" itemprop="name">Ming</p>
-              <p class="site-description motion-element" itemprop="description">人不知QVQ</p>
+              <p class="site-author-name" itemprop="name">梦在广工</p>
+              <p class="site-description motion-element" itemprop="description">可能我还不够优秀</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -596,9 +580,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/hsm0409.github.io/archives">
+                <a href="/archives">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,8 +592,8 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/hsm0409.github.io/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -619,7 +603,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/hsm0409.github.io/tags/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -682,7 +666,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/hsm0409.github.io/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -702,7 +686,7 @@
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Ming</span>
+  <span class="author" itemprop="copyrightHolder">梦在广工</span>
 
   
 </div>
@@ -773,74 +757,74 @@
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
   
   
-    <script type="text/javascript" src="/hsm0409.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
   
 
   
   
-    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/hsm0409.github.io/lib/canvas-ribbon/canvas-ribbon.js"></script>
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/hsm0409.github.io/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/hsm0409.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -912,7 +896,7 @@
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "/hsm0409.github.io/" + search_path;
+    var path = "/" + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
@@ -1246,22 +1230,5 @@
    <script type="text/javascript" src="/js/src/fireworks.js"></script>
 
   
-<script src="/hsm0409.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html> 
