@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux驱动开发," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="阻塞IO与非阻塞IO 当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃. 例： 12345678910int fd;int data &#x3D; 0;fd &#x3D; open(&quot;&#x2F;dev&#x2F;xxx_dev&quot;, O_RDWR);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阻塞IO与非阻塞IO">
+<meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="阻塞IO与非阻塞IO 当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃. 例： 12345678910int fd;int data &#x3D; 0;fd &#x3D; open(&quot;&#x2F;dev&#x2F;xxx_dev&quot;, O_RDWR);">
+<meta property="og:image" content="https://github.com/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg">
+<meta property="article:published_time" content="2020-05-07T11:55:00.000Z">
+<meta property="article:modified_time" content="2020-05-08T15:40:47.022Z">
+<meta property="article:author" content="梦在广工">
+<meta property="article:tag" content="Linux驱动开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/塞IO与非阻塞IO/"/>
+
+
+
+
+
+  <title>阻塞IO与非阻塞IO | 我的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e7f79961f2a7818f927768dee3b07b20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">梦在广工</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阻塞IO与非阻塞IO</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T19:55:00+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>阻塞IO与非阻塞IO</strong></p>
+<p>当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃.</p>
+<p>例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR); /* 阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR | O_NONBLOCK);  /* 非阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br></pre></td></tr></table></figure>
+<p><strong>等待队列头 -&gt; 阻塞</strong></p>
+<p>阻塞访问最大的好处就是当设备文件不可操作的时候进程可以进入休眠态，这样可以将CPU 资源让出来。但是，当设备文件可以操作的时候就必须唤醒进程，一般在中断函数里面完成唤醒工作。</p>
+<p>1、等待队列头</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct __wait_queue_head &#123;</span><br><span class="line"> spinlock_t lock;</span><br><span class="line"> struct list_head task_list;</span><br><span class="line"> &#125;;</span><br><span class="line">typedef struct __wait_queue_head wait_queue_head_t;</span><br><span class="line">定义好等待队列头以后需要初始化 </span><br><span class="line">void init_waitqueue_head(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
+<p>2、等待队列项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct __wait_queue &#123;</span><br><span class="line">unsigned int flags;</span><br><span class="line">void *private;</span><br><span class="line">wait_queue_func_t func;</span><br><span class="line">struct list_head task_list;</span><br><span class="line">&#125;;</span><br><span class="line">typedef struct __wait_queue wait_queue_t;</span><br><span class="line"></span><br><span class="line">使用宏 DECLARE_WAITQUEUE 定义并初始化一个等待队列项，宏的内容如下：</span><br><span class="line">DECLARE_WAITQUEUE(name, tsk);</span><br><span class="line">name 等待队列项的名字，tsk 等待队列项所属进程</span><br></pre></td></tr></table></figure>
+<p>3、添加移除等待队列头</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">设备不可访问，只有添加到等待队列头中以后进程才能进入休眠态</span><br><span class="line">可以访问以后再将进程对应的等待队列项从等待队列头中移除即可。</span><br><span class="line"></span><br><span class="line">void add_wait_queue(wait_queue_head_t *q,wait_queue_t *<span class="built_in">wait</span>)</span><br><span class="line"></span><br><span class="line">void remove_wait_queue(wait_queue_head_t *q,</span><br><span class="line">wait_queue_t *<span class="built_in">wait</span>)</span><br></pre></td></tr></table></figure>
+
+<p>4 、等待唤醒</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void wake_up(wait_queue_head_t *q)</span><br><span class="line">void wake_up_interruptible(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
+
+<p>5、等待事件唤醒</p>
+<img src="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class>
+
+<p> 实验小结：wait_event()不能被kill- 9 ,建议使用wait_event_iterruptible()</p>
+<p>wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up(&amp;dev-&gt;r_wait);</p>
+<p>-分割线-</p>
+<p>wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up_interruptible(&amp;dev-&gt;r_wait);</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#if 0</span></span><br><span class="line">     wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    DECLARE_WAITQUEUE(<span class="built_in">wait</span>, current); /*  定义一个等待队列 */</span><br><span class="line">    add_wait_queue(&amp;dev-&gt;r_wait,&amp;<span class="built_in">wait</span>); /*加入队列*/</span><br><span class="line">        __set_current_state(TASK_INTERRUPTIBLE);/*设置为可打断*/</span><br><span class="line">        schedule();  /*切换*/</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(signal_pending(current))</span><br><span class="line">        &#123;</span><br><span class="line">            ret = -ERESTARTSYS;</span><br><span class="line">            goto  wait_error;</span><br><span class="line">        &#125;</span><br><span class="line">         __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">         remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    keyvalue = atomic_read(&amp;dev-&gt;keyvalue);</span><br><span class="line">    releasekey = atomic_read(&amp;dev-&gt;releasekey);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (releasekey)</span><br><span class="line">     &#123; /* 有按键按下 */</span><br><span class="line">        <span class="keyword">if</span> (keyvalue &amp; 0x80)  /*判断有效1000 0000 标志位*/</span><br><span class="line">            &#123;</span><br><span class="line">            keyvalue &amp;= ~0x80;</span><br><span class="line">            ret = copy_to_user(buf, &amp;keyvalue, sizeof(keyvalue));</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">            goto data_error;</span><br><span class="line">            &#125;</span><br><span class="line">            atomic_set(&amp;dev-&gt;releasekey, 0);  /* 按下标志清零 */</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">       goto data_error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">wait_error:</span><br><span class="line">    __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">    remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    data_error:</span><br><span class="line">    <span class="built_in">return</span> -EINVAL;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<p><strong>轮询 -&gt; 非阻塞</strong></p>
+<p>应用程序通过 select、epoll 或 poll 使用函数，设备驱动程序中的 poll 函数就会执行。</p>
+<p>1、select函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">int select(int nfds,</span><br><span class="line">        fd_set *readfds,</span><br><span class="line">        fd_set *writefds,</span><br><span class="line">        fd_set *exceptfds,</span><br><span class="line">        struct timeval *timeout)</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">nfds ：要操作的文件描述符个数</span><br><span class="line">readfds 用于监视指定描述符集的读变化</span><br><span class="line">writefs 用于监视这些文件是否可以进行写操</span><br><span class="line">exceptfds 用于监视这些文件的异常</span><br><span class="line">timeout超时时间</span><br><span class="line">定义一个 fd_set 变量</span><br><span class="line">void FD_ZERO(fd_set *<span class="built_in">set</span>)    	  全部清零</span><br><span class="line">void FD_SET(int fd, fd_set *<span class="built_in">set</span>)   某位加1</span><br><span class="line">void FD_CLR(int fd, fd_set *<span class="built_in">set</span>)	某位清0</span><br><span class="line">int FD_ISSET(int fd, fd_set *<span class="built_in">set</span>)	是否可以进行操作</span><br><span class="line"></span><br><span class="line">select框架</span><br><span class="line">void main(void)</span><br><span class="line">&#123;</span><br><span class="line">  int ret, fd; /* 要监视的文件描述符 */</span><br><span class="line">  fd_set readfds; /* 读操作文件描述符集 */</span><br><span class="line">  struct timeval timeout; /* 超时结构体 */</span><br><span class="line"></span><br><span class="line">  fd = open(<span class="string">"dev_xxx"</span>, O_RDWR | O_NONBLOCK); </span><br><span class="line">  /* 非阻塞式访问 */</span><br><span class="line">   FD_ZERO(&amp;readfds); /* 清除 readfds */</span><br><span class="line">   FD_SET(fd, &amp;readfds);/* 将 fd 添加到 readfds 里面 */</span><br><span class="line">   /* 构造超时时间 */</span><br><span class="line">   timeout.tv_sec = 0;</span><br><span class="line">   timeout.tv_usec = 500000; /* 500ms */</span><br><span class="line">   ret = select(fd + 1, &amp;readfds, NULL, NULL, &amp;timeout);</span><br><span class="line">   switch (ret) &#123;</span><br><span class="line">   <span class="keyword">case</span> 0: /* 超时 */</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"timeout!\r\n"</span>);</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   <span class="keyword">case</span> -1: /* 错误 */</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"error!\r\n"</span>);</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   default: /* 可以读取数据 */</span><br><span class="line">   <span class="keyword">if</span>(FD_ISSET(fd, &amp;readfds)) &#123; /* 判断是否为 fd 文件描述符 */</span><br><span class="line">   /* 使用 <span class="built_in">read</span> 函数读取数据 */</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>2 、poll函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">在单个线程中，select 函数能够监视的文件描述符数量有最大的限制，一般为 1024，可以修改内核将监视的文件描述符数量改大，但是这样会降低效率！这个时候就可以使用 poll 函数，</span><br><span class="line">poll 函数本质上和 select 没有太大的差别，但是 poll 函数没有最大文件描述符限制。</span><br><span class="line">int poll(struct pollfd *fds,</span><br><span class="line">          nfds_t nfds,</span><br><span class="line">          int timeout)</span><br><span class="line">fds要监视的文件描述符集合以及要监视的事件    </span><br><span class="line">struct pollfd &#123;</span><br><span class="line">      int fd; /* 文件描述符 */</span><br><span class="line">      short events; /* 请求的事件 */</span><br><span class="line">      short revents; /* 返回的事件 */</span><br><span class="line">&#125;;          </span><br><span class="line">nfds：poll 函数要监视的文件描述符数量  </span><br><span class="line">timeout ：超时时间，单位为 ms。</span><br><span class="line">可监视的事件类型:</span><br><span class="line">    POLLIN 有数据可以读取。</span><br><span class="line">    POLLPRI 有紧急的数据需要读取。</span><br><span class="line">    POLLOUT  可以写数据。</span><br><span class="line">    POLLERR  指定的文件描述符发生错误。</span><br><span class="line">    POLLHUP  指定的文件描述符挂起。</span><br><span class="line">    POLLNVAL 无效的请求。</span><br><span class="line">    POLLRDNORM  等同于 POLLIN</span><br><span class="line">例</span><br><span class="line"></span><br><span class="line">void main(void)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">int ret;</span><br><span class="line">int fd; /* 要监视的文件描述符 */</span><br><span class="line">struct pollfd fds;</span><br><span class="line">fd = open(filename, O_RDWR | O_NONBLOCK); /* 非阻塞式访问 */</span><br><span class="line"></span><br><span class="line">fds.fd = fd;</span><br><span class="line">fds.events = POLLIN; /* 监视数据是否可以读取*/</span><br><span class="line"></span><br><span class="line">ret = poll(&amp;fds, 1, 500); /* 轮询文件是否可操作，超时 500ms */</span><br><span class="line"><span class="keyword">if</span> (ret) &#123; /* 数据有效 */</span><br><span class="line"> ......</span><br><span class="line">/* 读取数据 */</span><br><span class="line"> ......</span><br><span class="line"> &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret == 0) &#123; /* 超时 */</span><br><span class="line"> ......</span><br><span class="line"> &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret &lt; 0) &#123; /* 错误 */</span><br><span class="line"> ......</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3 、epoll  函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">传统的 selcet 和 poll 函数都会随着所监听的 fd 数量的增加，出现效率低下的问题，而且poll 函数每次必须遍历所有的描述符来检查就绪的描述符，这个过程很浪费时间。为此，epoll因运而生，epoll 就是为处理大并发而准备的，一般常常在网络编程中使用 epoll 函数。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int epoll_create(int size)</span><br><span class="line"></span><br><span class="line">int epoll_ctl(int epfd,</span><br><span class="line">          int op,</span><br><span class="line">          int  fd,</span><br><span class="line">          struct epoll_event *event)</span><br><span class="line"></span><br><span class="line">nt epoll_wait(int epfd,</span><br><span class="line">          struct epoll_event *events,</span><br><span class="line">          int maxevents,</span><br><span class="line">          int timeout)</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询实验</strong></p>
+<p>``bash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">__Linux  驱动下的 poll__</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line"></span><br><span class="line">unsigned int (*poll) (struct file *filp, struct poll_table_struct *wait)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)</span><br><span class="line"></span><br><span class="line">参数 wait_address 是要添加到 poll_table 中的等待队列头，参数 p 就是 poll_table，就是</span><br><span class="line">file_operations 中 poll 函数的 wait 参数</span><br></pre></td></tr></table></figure>
+<p><strong>实验部分</strong></p>
+<p>1、驱动层部分</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct file_operations imx6uirq_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = imx6uirq_open,</span><br><span class="line">            .<span class="built_in">read</span> = imx6uirq_read,</span><br><span class="line">            .poll = imx6uirq_poll,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static unsigned int imx6uirq_poll(struct file *filp ,struct poll_table_struct *<span class="built_in">wait</span>)</span><br><span class="line">&#123;</span><br><span class="line">    int mask = 0;</span><br><span class="line">    struct  imx6uirq_dev *dev = filp -&gt;private_data;</span><br><span class="line"></span><br><span class="line">    poll_wait(filp,&amp;dev-&gt;r_wait,<span class="built_in">wait</span>);</span><br><span class="line">    /*返回应用层是否可读*/</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(atomic_read(&amp;dev-&gt;releasekey))</span><br><span class="line">    &#123;</span><br><span class="line">        mask = POLL_IN | POLLRDNORM ;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> mask ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、应用层</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/ioctl.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include "poll.h"</span></span><br><span class="line"> <span class="comment">#include "sys/select.h"</span></span><br><span class="line"> <span class="comment">#include "sys/time.h"</span></span><br><span class="line"> <span class="comment">#include "linux/ioctl.h"</span></span><br><span class="line">/*</span><br><span class="line"> *argc:应用程序参数个数</span><br><span class="line"> *argv[]:具体的参数内容，字符串形式 </span><br><span class="line"> *./ledAPP  &lt;filename&gt;  &lt;0:1&gt; 0表示关灯，1表示开灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 0    关灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 1    开灯</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*IOctrl 命令*/</span><br><span class="line"><span class="comment">#define CLOSE_CMD (_IO(0XEF, 0x1)) /* 关闭定时器 */</span></span><br><span class="line"><span class="comment">#define OPEN_CMD (_IO(0XEF, 0x2)) /* 打开定时器 */</span></span><br><span class="line"><span class="comment">#define SETPERIOD_CMD (_IO(0XEF, 0x3)) /* 设置定时器周期命令 */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int fd;</span><br><span class="line">    int ret ;</span><br><span class="line">    char *filename;</span><br><span class="line"></span><br><span class="line">    /*select */</span><br><span class="line">    unsigned char data;</span><br><span class="line">    struct timeval timeout;</span><br><span class="line">    fd_set readfds;</span><br><span class="line">    /*poll*/</span><br><span class="line">    struct pollfd  fds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc != 2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Error Usage!\r\n"</span>);</span><br><span class="line">        <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line">    filename = argv[1];</span><br><span class="line">    fd = open(filename,O_RDWR|O_NONBLOCK);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"file %s open failed!\r\n"</span>, argv[1]);</span><br><span class="line">         <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        fds.fd = fd ;</span><br><span class="line">        fds.events = POLLIN;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (1)</span><br><span class="line">    &#123;</span><br><span class="line">       ret = poll(&amp;fds,1,2000);/*事件、数量1、超时2s*/</span><br><span class="line">        <span class="keyword">if</span>(ret)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(data)</span><br><span class="line">            &#123;</span><br><span class="line">                ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"read error !!! \r\n"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret == 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">" time out!!!\r\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"poll error\r\n"</span>);  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">            FD_ZERO(&amp;readfds);</span><br><span class="line">            FD_SET(fd, &amp;readfds);</span><br><span class="line">            timeout.tv_sec = 0;</span><br><span class="line">            timeout.tv_usec = 5000000;</span><br><span class="line"></span><br><span class="line">        ret = select(fd+1,&amp;readfds,NULL,NULL,&amp;timeout);</span><br><span class="line">        switch (ret)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> 0:</span><br><span class="line">            /* 用户自定义超时处理 */</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"time out !!!\r\n"</span>);</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> -1:</span><br><span class="line">            /* 用户错误 */</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"select error!!!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">        default:</span><br><span class="line">            <span class="keyword">if</span>(FD_ISSET(fd, &amp;readfds))</span><br><span class="line">            &#123;</span><br><span class="line">                    ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line">            <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">               &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"rwad error !!!"</span>);</span><br><span class="line">               &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">               <span class="keyword">if</span>(data)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag"># Linux驱动开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Circuit-Lover/%E7%83%AD%E7%94%B5%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="next" title="热电式传感器">
+                <i class="fa fa-chevron-left"></i> 热电式传感器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/C-C-Lover/%E9%87%8F%EF%BC%8C%E9%93%BE%E8%A1%A8%EF%BC%8C%E9%98%9F%E5%88%97%EF%BC%9F/" rel="prev" title="向量，链表，队列？">
+                向量，链表，队列？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="梦在广工" />
+            
+              <p class="site-author-name" itemprop="name">梦在广工</p>
+              <p class="site-description motion-element" itemprop="description">可能我还不够优秀</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/hsm0409" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1260925116@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/69169bf82e91" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://aganr.com/about" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-fab fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+		
+		
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">梦在广工</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B7olYco1h070nkfn7PS2EF47-gzGzoHsz',
+        appKey: 'Uvg0e6aXUIMws2mL5p124laP',
+        placeholder: 'Just go go',
+        avatar:'wavatar',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+   <!-- 页面点击小红心 -->
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html> 

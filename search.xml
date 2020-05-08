@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>异步通知</title>
+    <url>/Linux-Lover/%E6%AD%A5%E9%80%9A%E7%9F%A5/</url>
+    <content><![CDATA[<p><strong>复习：阻塞IO与非阻塞IO</strong></p>
+<p>Linux 应用程序可以通过阻塞或者非阻塞这两种方式来访问驱动设备，通过阻塞方式访问的话应用程序会处于休眠态，等待驱动设备可以使用，非阻塞方式的话会通过 poll 函数来不断的轮询，查看驱动设备文件是否可以使用。这两种方式都需要应用程序主动的去查询设备的使用情况，如果能提供一种类似中断的机制，当驱动程序可以访问的时候主动告诉应用程序那就最好了。</p>
+<p>驱动程序能主动向应用程序发出通知，报告自己可以访问，然后应用程序在从驱动程序中读取或写入数据。<br>异步通知的核心就是信号，在 arch/xtensa/include/uapi/asm/signal.h </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">34 <span class="comment">#define SIGHUP 1 /* 终端挂起或控制进程终止 */</span></span><br><span class="line">35 <span class="comment">#define SIGINT 2 /* 终端中断(Ctrl+C 组合键) */</span></span><br><span class="line">36 <span class="comment">#define SIGQUIT 3 /* 终端退出(Ctrl+\组合键) */</span></span><br><span class="line">37 <span class="comment">#define SIGILL 4 /* 非法指令 */</span></span><br><span class="line">38 <span class="comment">#define SIGTRAP 5 /* debug 使用，有断点指令产生  */</span></span><br><span class="line">39 <span class="comment">#define SIGABRT 6 /* 由 abort(3)发出的退出指令 */</span></span><br><span class="line">40 <span class="comment">#define SIGIOT 6 /* IOT 指令 */</span></span><br><span class="line">41 <span class="comment">#define SIGBUS 7 /* 总线错误 */</span></span><br><span class="line">42 <span class="comment">#define SIGFPE 8 /* 浮点运算错误 */</span></span><br><span class="line">43 <span class="comment">#define SIGKILL 9 /* 杀死、终止进程 */</span></span><br><span class="line">44 <span class="comment">#define SIGUSR1 10 /* 用户自定义信号 1 */</span></span><br><span class="line">45 <span class="comment">#define SIGSEGV 11 /* 段违例(无效的内存段) */</span></span><br><span class="line">46 <span class="comment">#define SIGUSR2 12 /* 用户自定义信号 2 */</span></span><br><span class="line">47 <span class="comment">#define SIGPIPE 13 /* 向非读管道写入数据 */</span></span><br><span class="line">48 <span class="comment">#define SIGALRM 14 /* 闹钟 */</span></span><br><span class="line">49 <span class="comment">#define SIGTERM 15 /* 软件终止 */</span></span><br><span class="line">50 <span class="comment">#define SIGSTKFLT 16 /* 栈异常 */</span></span><br><span class="line">51 <span class="comment">#define SIGCHLD 17 /* 子进程结束 */</span></span><br><span class="line">52 <span class="comment">#define SIGCONT 18 /* 进程继续 */</span></span><br><span class="line">53 <span class="comment">#define SIGSTOP 19 /* 停止进程的执行，只是暂停 */</span></span><br><span class="line">54 <span class="comment">#define SIGTSTP 20 /* 停止进程的运行(Ctrl+Z 组合键) */</span></span><br><span class="line">55 <span class="comment">#define SIGTTIN 21 /* 后台进程需要从终端读取数据  */</span></span><br><span class="line">56 <span class="comment">#define SIGTTOU 22 /* 后台进程需要向终端写数据 */</span></span><br><span class="line">57 <span class="comment">#define SIGURG 23 /* 有"紧急"数据 */</span></span><br><span class="line">58 <span class="comment">#define SIGXCPU 24 /* 超过 CPU 资源限制 */</span></span><br><span class="line">59 <span class="comment">#define SIGXFSZ 25 /* 文件大小超额 */</span></span><br><span class="line">60 <span class="comment">#define SIGVTALRM 26 /* 虚拟时钟信号 */</span></span><br><span class="line">61 <span class="comment">#define SIGPROF 27 /* 时钟信号描述 */</span></span><br><span class="line">62 <span class="comment">#define SIGWINCH 28 /* 窗口大小改变 */</span></span><br><span class="line">63 <span class="comment">#define SIGIO 29 /* 可以进行输入/输出操作 */</span></span><br><span class="line">64 <span class="comment">#define SIGPOLL SIGIO</span></span><br><span class="line">65 /* <span class="comment">#define SIGLOS 29 */</span></span><br><span class="line">66 <span class="comment">#define SIGPWR 30 /* 断点重启 */</span></span><br><span class="line">67 <span class="comment">#define SIGSYS 31 /* 非法的系统调用 */</span></span><br><span class="line">68 <span class="comment">#define SIGUNUSED 31 /* 未使用信号 */</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>信号</strong></p>
+<p>1、信号处理函数<br>sighandler_t signal(int signum, sighandler_t handler)<br>参数：signum：要设置处理函数的信号、handler ：信号的处理函数</p>
+<p>2、驱动中的信号处理</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">主要：struct fasync_struct *async_queue; /* 异步相关结构体 */ </span><br><span class="line"></span><br><span class="line">框架：</span><br><span class="line"> struct xxx_dev &#123;</span><br><span class="line"> ......</span><br><span class="line"> struct fasync_struct *async_queue; /* 异步相关结构体 */</span><br><span class="line"> &#125;;</span><br><span class="line"> static int xxx_fasync(int fd, struct file *filp, int on)</span><br><span class="line"> &#123;</span><br><span class="line"> struct xxx_dev *dev = (xxx_dev)filp-&gt;private_data;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (fasync_helper(fd, filp, on, &amp;dev-&gt;async_queue) &lt; 0)</span><br><span class="line"> <span class="built_in">return</span> -EIO;</span><br><span class="line"> <span class="built_in">return</span> 0;</span><br><span class="line"> &#125;</span><br><span class="line">static struct file_operations xxx_ops = &#123;</span><br><span class="line"> ......</span><br><span class="line"> .fasync = xxx_fasync,</span><br><span class="line">......</span><br><span class="line"> &#125;;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> /*释放*/</span><br><span class="line"> static int xxx_release(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line"> <span class="built_in">return</span> xxx_fasync(-1, filp, 0); /*  删除异步通知 */</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>3、kill_sync函数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1 、kill_fasync  函数</span><br><span class="line">当设备可以访问的时候，驱动程序需要向应用程序发出信号，相当于产生“中断”。kill_fasync</span><br><span class="line">函数负责发送指定的信号，kill_fasync 函数原型如下所示：</span><br><span class="line">void kill_fasync(struct fasync_struct **fp, int sig, int band)</span><br><span class="line">函数参数和返回值含义如下：</span><br><span class="line">fp：要操作的 fasync_struct。</span><br><span class="line">sig ：要发送的信号。</span><br><span class="line">band ：可读时设置为 POLL_IN，可写时设置为 POLL_OUT。</span><br><span class="line">返回值：无。</span><br></pre></td></tr></table></figure>
+
+<p>4、应用层</p>
+<p>1、注册信号函数-&gt;signal()<br>2、将进程号告诉给内核-&gt; fcntl(fd, F_SETOWN, getpid())<br>3、开启异步通知<br>-&gt;&gt;flags = fcntl(fd, F_GETFL); /* 获取当前的进程状态<em>/<br>-&gt;&gt;fcntl(fd, F_SETFL, flags | FASYNC); /</em> 开启当前进程异步通知功能 */</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>container_of函数🏃</title>
     <url>/Linux-Lover/container-of%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>Container_of在Linux内核中是一个常用的宏.<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。<br> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
@@ -32,9 +57,10 @@
   </entry>
   <entry>
     <title>阻塞IO与非阻塞IO</title>
-    <url>//LinuxLover/%E9%98%BB%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/</url>
+    <url>/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/</url>
     <content><![CDATA[<p><strong>阻塞IO与非阻塞IO</strong></p>
-<pre><code>当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃.</code></pre><p>例：</p>
+<p>当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃.</p>
+<p>例：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR); /* 阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR | O_NONBLOCK);  /* 非阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br></pre></td></tr></table></figure>
 <p><strong>等待队列头 -&gt; 阻塞</strong></p>
 <p>阻塞访问最大的好处就是当设备文件不可操作的时候进程可以进入休眠态，这样可以将CPU 资源让出来。但是，当设备文件可以操作的时候就必须唤醒进程，一般在中断函数里面完成唤醒工作。</p>
@@ -49,7 +75,17 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">void wake_up(wait_queue_head_t *q)</span><br><span class="line">void wake_up_interruptible(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
 
 <p>5、等待事件唤醒</p>
-<img src="/LinuxLover/%E9%98%BB%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class>
+<img src="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class>
+
+<p> 实验小结：wait_event()不能被kill- 9 ,建议使用wait_event_iterruptible()</p>
+<p>wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up(&amp;dev-&gt;r_wait);</p>
+<p>-分割线-</p>
+<p>wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up_interruptible(&amp;dev-&gt;r_wait);</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#if 0</span></span><br><span class="line">     wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    DECLARE_WAITQUEUE(<span class="built_in">wait</span>, current); /*  定义一个等待队列 */</span><br><span class="line">    add_wait_queue(&amp;dev-&gt;r_wait,&amp;<span class="built_in">wait</span>); /*加入队列*/</span><br><span class="line">        __set_current_state(TASK_INTERRUPTIBLE);/*设置为可打断*/</span><br><span class="line">        schedule();  /*切换*/</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(signal_pending(current))</span><br><span class="line">        &#123;</span><br><span class="line">            ret = -ERESTARTSYS;</span><br><span class="line">            goto  wait_error;</span><br><span class="line">        &#125;</span><br><span class="line">         __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">         remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    keyvalue = atomic_read(&amp;dev-&gt;keyvalue);</span><br><span class="line">    releasekey = atomic_read(&amp;dev-&gt;releasekey);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (releasekey)</span><br><span class="line">     &#123; /* 有按键按下 */</span><br><span class="line">        <span class="keyword">if</span> (keyvalue &amp; 0x80)  /*判断有效1000 0000 标志位*/</span><br><span class="line">            &#123;</span><br><span class="line">            keyvalue &amp;= ~0x80;</span><br><span class="line">            ret = copy_to_user(buf, &amp;keyvalue, sizeof(keyvalue));</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">            goto data_error;</span><br><span class="line">            &#125;</span><br><span class="line">            atomic_set(&amp;dev-&gt;releasekey, 0);  /* 按下标志清零 */</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">       goto data_error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">wait_error:</span><br><span class="line">    __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">    remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    data_error:</span><br><span class="line">    <span class="built_in">return</span> -EINVAL;</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
 <p><strong>轮询 -&gt; 非阻塞</strong></p>
@@ -61,8 +97,31 @@
 <p>3 、epoll  函数</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">传统的 selcet 和 poll 函数都会随着所监听的 fd 数量的增加，出现效率低下的问题，而且poll 函数每次必须遍历所有的描述符来检查就绪的描述符，这个过程很浪费时间。为此，epoll因运而生，epoll 就是为处理大并发而准备的，一般常常在网络编程中使用 epoll 函数。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int epoll_create(int size)</span><br><span class="line"></span><br><span class="line">int epoll_ctl(int epfd,</span><br><span class="line">          int op,</span><br><span class="line">          int  fd,</span><br><span class="line">          struct epoll_event *event)</span><br><span class="line"></span><br><span class="line">nt epoll_wait(int epfd,</span><br><span class="line">          struct epoll_event *events,</span><br><span class="line">          int maxevents,</span><br><span class="line">          int timeout)</span><br></pre></td></tr></table></figure>
 
-<p><strong>Linux  驱动下的 poll</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">unsigned int (*poll) (struct file *filp, struct poll_table_struct *<span class="built_in">wait</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)</span><br><span class="line"></span><br><span class="line">参数 wait_address 是要添加到 poll_table 中的等待队列头，参数 p 就是 poll_table，就是</span><br><span class="line">file_operations 中 poll 函数的 <span class="built_in">wait</span> 参数</span><br></pre></td></tr></table></figure>
+<p><strong>查询实验</strong></p>
+<p>``bash</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">__Linux  驱动下的 poll__</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line"></span><br><span class="line">unsigned int (*poll) (struct file *filp, struct poll_table_struct *wait)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)</span><br><span class="line"></span><br><span class="line">参数 wait_address 是要添加到 poll_table 中的等待队列头，参数 p 就是 poll_table，就是</span><br><span class="line">file_operations 中 poll 函数的 wait 参数</span><br></pre></td></tr></table></figure>
+<p><strong>实验部分</strong></p>
+<p>1、驱动层部分</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">static struct file_operations imx6uirq_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = imx6uirq_open,</span><br><span class="line">            .<span class="built_in">read</span> = imx6uirq_read,</span><br><span class="line">            .poll = imx6uirq_poll,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static unsigned int imx6uirq_poll(struct file *filp ,struct poll_table_struct *<span class="built_in">wait</span>)</span><br><span class="line">&#123;</span><br><span class="line">    int mask = 0;</span><br><span class="line">    struct  imx6uirq_dev *dev = filp -&gt;private_data;</span><br><span class="line"></span><br><span class="line">    poll_wait(filp,&amp;dev-&gt;r_wait,<span class="built_in">wait</span>);</span><br><span class="line">    /*返回应用层是否可读*/</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(atomic_read(&amp;dev-&gt;releasekey))</span><br><span class="line">    &#123;</span><br><span class="line">        mask = POLL_IN | POLLRDNORM ;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> mask ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、应用层</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/ioctl.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include "poll.h"</span></span><br><span class="line"> <span class="comment">#include "sys/select.h"</span></span><br><span class="line"> <span class="comment">#include "sys/time.h"</span></span><br><span class="line"> <span class="comment">#include "linux/ioctl.h"</span></span><br><span class="line">/*</span><br><span class="line"> *argc:应用程序参数个数</span><br><span class="line"> *argv[]:具体的参数内容，字符串形式 </span><br><span class="line"> *./ledAPP  &lt;filename&gt;  &lt;0:1&gt; 0表示关灯，1表示开灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 0    关灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 1    开灯</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*IOctrl 命令*/</span><br><span class="line"><span class="comment">#define CLOSE_CMD (_IO(0XEF, 0x1)) /* 关闭定时器 */</span></span><br><span class="line"><span class="comment">#define OPEN_CMD (_IO(0XEF, 0x2)) /* 打开定时器 */</span></span><br><span class="line"><span class="comment">#define SETPERIOD_CMD (_IO(0XEF, 0x3)) /* 设置定时器周期命令 */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int fd;</span><br><span class="line">    int ret ;</span><br><span class="line">    char *filename;</span><br><span class="line"></span><br><span class="line">    /*select */</span><br><span class="line">    unsigned char data;</span><br><span class="line">    struct timeval timeout;</span><br><span class="line">    fd_set readfds;</span><br><span class="line">    /*poll*/</span><br><span class="line">    struct pollfd  fds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc != 2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Error Usage!\r\n"</span>);</span><br><span class="line">        <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line">    filename = argv[1];</span><br><span class="line">    fd = open(filename,O_RDWR|O_NONBLOCK);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"file %s open failed!\r\n"</span>, argv[1]);</span><br><span class="line">         <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        fds.fd = fd ;</span><br><span class="line">        fds.events = POLLIN;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (1)</span><br><span class="line">    &#123;</span><br><span class="line">       ret = poll(&amp;fds,1,2000);/*事件、数量1、超时2s*/</span><br><span class="line">        <span class="keyword">if</span>(ret)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(data)</span><br><span class="line">            &#123;</span><br><span class="line">                ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"read error !!! \r\n"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret == 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">" time out!!!\r\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"poll error\r\n"</span>);  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">            FD_ZERO(&amp;readfds);</span><br><span class="line">            FD_SET(fd, &amp;readfds);</span><br><span class="line">            timeout.tv_sec = 0;</span><br><span class="line">            timeout.tv_usec = 5000000;</span><br><span class="line"></span><br><span class="line">        ret = select(fd+1,&amp;readfds,NULL,NULL,&amp;timeout);</span><br><span class="line">        switch (ret)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> 0:</span><br><span class="line">            /* 用户自定义超时处理 */</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"time out !!!\r\n"</span>);</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> -1:</span><br><span class="line">            /* 用户错误 */</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"select error!!!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">        default:</span><br><span class="line">            <span class="keyword">if</span>(FD_ISSET(fd, &amp;readfds))</span><br><span class="line">            &#123;</span><br><span class="line">                    ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line">            <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">               &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"rwad error !!!"</span>);</span><br><span class="line">               &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">               <span class="keyword">if</span>(data)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -71,8 +130,7 @@
 
 ]]></content>
       <categories>
-        <category> </category>
-        <category>LinuxLover</category>
+        <category>Linux Lover</category>
       </categories>
       <tags>
         <tag>Linux驱动开发</tag>
@@ -486,6 +544,27 @@
       </tags>
   </entry>
   <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</memory></functional></numeric></algorithm></p>
@@ -501,27 +580,6 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
@@ -895,16 +953,16 @@
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过IIC</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <title>怎么说你了解过IIC</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
