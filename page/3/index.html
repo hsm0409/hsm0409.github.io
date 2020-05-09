@@ -320,6 +320,516 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/ctl%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/ctl%E5%87%BD%E6%95%B0/" itemprop="url">ioctl函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-01T11:46:00+08:00">
+                2020-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/ctl%E5%87%BD%E6%95%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/ctl%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ioctl 系统调用主要用于增加系统调用的硬件控制能力，它可以构建自己的命令，也能接受参数.<br>应用程序 ioctl 函数<br>int ioctl (int fd, unsigned long cmd, arg)<br>fd 是被打开的设备文件， cmd 是操作设备的命令，“ …”代表可变数目的参数表，通常用 char *argp 来定义，如果 cmd 命令不需要参数，则传入 NULL 即可。</p>
+<p>内核空间 iotcl 函数<br>int (*ioctl) (struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg);</p>
+<p>ioctl 操作与硬件平台相关，使用 ioctl 的驱动需要包含&lt;linux/ioctl.h&gt;文件。每个 ioctl 命令cmd实际上都是一个 32 位整型数，各字段和含义如下表所示。<br>已经被使用的幻数列表详见内核源码目录Documentation/ioctl/ioctl-number.txt文件。</p>
+<p>|一般形式<br>|-|-|<br>|_IO(type,nr) 构造无参数的命令编号<br>|_IOW(type,nr,size) 构造往驱动写入数据的命令编号<br>|_IOR(type,nr,size) 构造从驱动中读取数据的命令编号<br>|_IOWR(type,nr,size)构造双向传输的命令编号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_address.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/mach/map.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/io.h&gt;</span></span><br><span class="line"></span><br><span class="line">/*0XFE---幻数，1.2.3.---功能号*/</span><br><span class="line">/*IOctrl 命令*/</span><br><span class="line"><span class="comment">#define CLOSE_CMD (_IO(0XEF, 0x1)) /* 关闭定时器 */</span></span><br><span class="line"><span class="comment">#define OPEN_CMD (_IO(0XEF, 0x2)) /* 打开定时器 */</span></span><br><span class="line"><span class="comment">#define SETPERIOD_CMD (_IO(0XEF, 0x3)) /* 设置定时器周期命令 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define TIMER_NAME  "timer"</span></span><br><span class="line"><span class="comment">#define TIMER_CNT  1</span></span><br><span class="line">struct timer_dev&#123;</span><br><span class="line"></span><br><span class="line">    dev_t devid;</span><br><span class="line"></span><br><span class="line">    int major;</span><br><span class="line">    int minor;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct device_node *nd;</span><br><span class="line">    struct class * class;</span><br><span class="line">    struct device * device;</span><br><span class="line"></span><br><span class="line">    int led_gpio;</span><br><span class="line">    int timeperiod;</span><br><span class="line">    struct timer_list timer;</span><br><span class="line">    spinlock_t lock;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">struct timer_dev timer;</span><br><span class="line"></span><br><span class="line">static int led_init (struct timer_dev * dev)</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    dev-&gt;nd = of_find_node_by_path(<span class="string">"/gpioled"</span>);</span><br><span class="line">    <span class="keyword">if</span>(dev-&gt;nd == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line">    dev-&gt;led_gpio = of_get_named_gpio(dev-&gt;nd,<span class="string">"led-gpios"</span>,0);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dev-&gt;led_gpio &lt; 0) </span><br><span class="line">    &#123;</span><br><span class="line">        printk(<span class="string">"can't get led \r\n"</span>);</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*申请注册IO*/</span><br><span class="line"></span><br><span class="line">    gpio_request(dev-&gt;led_gpio,<span class="string">"led"</span>);</span><br><span class="line"></span><br><span class="line">    ret = gpio_direction_output(dev-&gt;led_gpio,1);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        printk(<span class="string">"can't set gpion\r\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> ret ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int timer_open(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    filp-&gt;private_data = &amp;timer;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">static long timer_unlocked_ioctl(struct file *filp, unsigned int cmd,</span><br><span class="line">						unsigned long arg)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">        struct timer_dev *dev = (struct timer_dev *)filp-&gt;private_data;</span><br><span class="line">        int ret  = 0;</span><br><span class="line">        int timeperiod ;</span><br><span class="line">        unsigned long flags;</span><br><span class="line">        switch (cmd)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> CLOSE_CMD:</span><br><span class="line">                del_timer(&amp;dev-&gt;timer);</span><br><span class="line">            <span class="built_in">break</span> ;</span><br><span class="line">            <span class="keyword">case</span> OPEN_CMD:</span><br><span class="line">                spin_lock_irqsave(&amp;dev-&gt;lock,flags);</span><br><span class="line">                timeperiod = dev-&gt;timeperiod;</span><br><span class="line">                spin_unlock_irqrestore(&amp;dev-&gt;lock,flags);</span><br><span class="line">                mod_timer(&amp;dev-&gt;timer,jiffies+msecs_to_jiffies(timeperiod));</span><br><span class="line">            <span class="built_in">break</span> ;</span><br><span class="line">            <span class="keyword">case</span> SETPERIOD_CMD:</span><br><span class="line">            dev-&gt;timeperiod = arg;</span><br><span class="line">            mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(arg));</span><br><span class="line">            <span class="built_in">break</span> ;     </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> ret ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int timer_release(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static const struct file_operations timer_fops = &#123;</span><br><span class="line">	.owner = THIS_MODULE,</span><br><span class="line">    .open  = timer_open ,</span><br><span class="line">    .release = timer_release,</span><br><span class="line">	.unlocked_ioctl	= timer_unlocked_ioctl,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void  timer_function(unsigned long arg )</span><br><span class="line">&#123;</span><br><span class="line">    struct timer_dev *dev = (struct timer_dev*)arg;</span><br><span class="line">    static int sta = 1 ;</span><br><span class="line">    int timeperiod;</span><br><span class="line">     unsigned long flags;</span><br><span class="line">    sta = !sta ;</span><br><span class="line">    gpio_set_value(dev-&gt;led_gpio,sta);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     spin_lock_irqsave(&amp;dev-&gt;lock,flags);</span><br><span class="line">     timeperiod = dev-&gt;timeperiod;</span><br><span class="line">     spin_unlock_irqrestore(&amp;dev-&gt;lock,flags);</span><br><span class="line"></span><br><span class="line">   mod_timer(&amp;dev-&gt;timer,jiffies+msecs_to_jiffies(timeperiod));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init timer_init(void )</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    </span><br><span class="line">    spin_lock_init(&amp;timer.lock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(timer.major)</span><br><span class="line">    &#123;</span><br><span class="line">    timer.devid = MKDEV(timer.devid,0);</span><br><span class="line">    register_chrdev_region(timer.devid,TIMER_CNT,TIMER_NAME);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        ret = alloc_chrdev_region(&amp;timer.devid, 0, TIMER_CNT,TIMER_NAME);</span><br><span class="line">        timer.major = MAJOR(timer.devid);</span><br><span class="line">        timer.minor = MINOR(timer.devid);</span><br><span class="line">    &#125;</span><br><span class="line">    timer.cdev.owner = THIS_MODULE ;</span><br><span class="line">	cdev_init(&amp;timer.cdev, &amp;timer_fops);</span><br><span class="line">    cdev_add(&amp;timer.cdev, timer.devid,TIMER_CNT);</span><br><span class="line">	</span><br><span class="line">    /*自动设备节点*/</span><br><span class="line">    timer.class = class_create(THIS_MODULE, TIMER_NAME);</span><br><span class="line">	<span class="keyword">if</span> (IS_ERR(timer.class))</span><br><span class="line">		<span class="built_in">return</span> PTR_ERR(timer.class);</span><br><span class="line"></span><br><span class="line">    timer.device = device_create(timer.class, NULL, timer.devid, NULL, TIMER_NAME);</span><br><span class="line">				  </span><br><span class="line">	<span class="keyword">if</span> (IS_ERR(timer.device))</span><br><span class="line">		<span class="built_in">return</span> PTR_ERR(timer.device);</span><br><span class="line"></span><br><span class="line">        ret  = led_init(&amp;timer);</span><br><span class="line">        <span class="keyword">if</span>(ret  &lt;  0)</span><br><span class="line">        &#123;</span><br><span class="line">            goto fail_ledinit;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    init_timer(&amp;timer.timer);</span><br><span class="line">    timer.timer.function = timer_function;</span><br><span class="line">    timer.timer.data = (unsigned long ) &amp; timer;</span><br><span class="line">    timer.timer.expires = jiffies + msecs_to_jiffies(5000);/*500ms*/</span><br><span class="line">    add_timer(&amp;timer.timer);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0 ;</span><br><span class="line"></span><br><span class="line">    fail_ledinit:</span><br><span class="line">    <span class="built_in">return</span> ret ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void __exit timer_exit(void )</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    gpio_set_value(timer.led_gpio,1);</span><br><span class="line">    del_timer(&amp;timer.timer);</span><br><span class="line"></span><br><span class="line">    cdev_del(&amp;timer.cdev);</span><br><span class="line">    unregister_chrdev_region(timer.devid,TIMER_CNT);</span><br><span class="line">    device_destroy(timer.class,timer.devid);</span><br><span class="line">    class_destroy(timer.class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module_init(timer_init);</span><br><span class="line">module_exit(timer_exit);</span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">ioctl(fd,cmd,arg);</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">电感式传感器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-01T10:58:00+08:00">
+                2020-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>电感式传感器是利用被测量的变化引起线圈自感或互感系数的变化，从而导致线圈电感量改变这一物理现象来实现测量的。因此根据转换原理，电感式传感器可以分为自感式和互感式两大类。<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> 电感式传感器与其它传感器相比，具有以下优点：</span><br><span class="line"> 1) 结构简单，工作可靠，寿命长；</span><br><span class="line"> 2) 灵敏度好、分辨率高。能测量0.1μm甚至更小的机械位移，能感受0.1角秒的微小角位移；</span><br><span class="line"> 3) 重复性好，线性度优良。在一定位移范围 (最小几十微米，最大可达数十至数百毫米) 内，输出线性度可达±0.1%，且比较稳定。</span><br><span class="line"> 4) 输出信号强。电压灵敏度一般可达数百毫伏每毫米，因此，有利于信号的传输和放大。</span><br><span class="line"></span><br><span class="line">主要缺点：</span><br><span class="line"> 1）存在零点残余电压；</span><br><span class="line"> 2）灵敏度、线性度和测量范围相互制约；</span><br><span class="line"> 3）传感器自身频率响应低，不适用于快速动态测量。</span><br></pre></td></tr></table></figure></p>
+<p>自感：闭磁路型、开磁路型</p>
+<p>互感：差动变压器、涡流式</p>
+<img src="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/" itemprop="url">Linux内核定时器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T21:44:23+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>节拍率</strong><br>中断周期性产生的频率就是系统频率，<br>也叫做节拍率(tick rate)(有的资料也叫系统频率)，比如 1000Hz，100Hz 等等说的就是系统节拍率。系统节拍率是可以设置的，单位是 Hz<br>高节拍率和低节<br>拍率的优缺点：<br>①、高节拍率会提高系统时间精度，如果采用 100Hz 的节拍率，时间精度就是 10ms，采用1000Hz 的话时间精度就是 1ms，精度提高了 10 倍。高精度时钟的好处有很多，对于那些对时间要求严格的函数来说，能够以更高的精度运行，时间测量也更加准确。<br>②、高节拍率会导致中断的产生更加频繁，频繁的中断会加剧系统的负担，1000Hz 和 100Hz的系统节拍率相比，中断服务函数占用处理器的时间增加，但是现在的处理器性能都很强大，所以采用 1000Hz 的系统节拍率并不会增加太大的负载压力。根据自己的实际情况，选择合适的系统节拍率，本教程我们全部采用默认的 100Hz 系统节拍率。<br>方法一：make menuconfig<br>-&gt; Kernel Features<br>-&gt; Timer frequency (<choice> [=y])<br>方法二： param.h文件 # define USER_HZ    100    </choice></p>
+<p><strong>节拍数 jiffies</strong></p>
+<p>extern u64 __jiffy_data jiffies_64; /<em>64系统</em>/<br>extern unsigned long volatile __jiffy_data jiffies;/<em>32系统</em>/</p>
+<p>不管是 32 位还是 64 位的 jiffies，都有溢出的风险<br>假如 HZ 为最大值 1000 的时候，32 位的 jiffies 只需要 49.7 天就发生了绕回，对于 64 为的 jiffies 来说大概需要5.8 亿年才能绕回，因此 jiffies_64 的绕回忽略不计。</p>
+<p> HZ 表示一秒的节拍数，jiffies 表示系统运行的 jiffies 节拍数，所以 jiffies/HZ 就<br>是系统运行时间，单位为秒。</p>
+<img src="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/%E8%8A%82%E6%8B%8D%E5%87%BD%E6%95%B0.jpg" class>
+
+
+<p>timer.h总结构体 timer_list</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct timer_list &#123;</span><br><span class="line">struct list_head entry;</span><br><span class="line">unsigned long expires; /* 定时器超时时间，单位是节拍数 */</span><br><span class="line">struct tvec_base *base;</span><br><span class="line">void (*<span class="keyword">function</span>)(unsigned long); /* 定时处理函数 */</span><br><span class="line">unsigned long data; /* 要传递给 <span class="keyword">function</span> 函数的参数 */</span><br><span class="line">int slack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">struct timer_list timer; /* 定义定时器 */</span><br><span class="line">/* 定时器回调函数 */</span><br><span class="line"> void <span class="keyword">function</span>(unsigned long arg)</span><br><span class="line">&#123;</span><br><span class="line">/*</span><br><span class="line">* 定时器处理代码</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">/* 如果需要定时器周期性运行的话就使用 mod_timer</span><br><span class="line"> * 函数重新设置超时值并且启动定时器。</span><br><span class="line"> */</span><br><span class="line"> mod_timer(&amp;dev-&gt;timertest, jiffies + msecs_to_jiffies(2000));</span><br><span class="line"> &#125;</span><br><span class="line"> /* 初始化函数 */</span><br><span class="line"> void init(void)</span><br><span class="line"> &#123;</span><br><span class="line"> init_timer(&amp;timer); /* 初始化定时器 */</span><br><span class="line"></span><br><span class="line"> timer.function = <span class="keyword">function</span>; /* 设置定时处理函数 */</span><br><span class="line"> timer.expires=jffies + msecs_to_jiffies(2000);/* 超时时间 2 秒 */</span><br><span class="line"> timer.data = (unsigned long)&amp;dev; /* 将设备结构体作为参数 */</span><br><span class="line"></span><br><span class="line">add_timer(&amp;timer); /* 启动定时器 */</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> /* 退出函数 */</span><br><span class="line"> void <span class="built_in">exit</span>(void)</span><br><span class="line"> &#123;</span><br><span class="line"> del_timer(&amp;timer); /* 删除定时器 */</span><br><span class="line"> /* 或者使用 */</span><br><span class="line">del_timer_sync(&amp;timer);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">参考正点原子</span><br></pre></td></tr></table></figure>
+<p><strong>纳秒、微秒和毫秒延时函数</strong><br>void ndelay(unsigned long nsecs)<br>void udelay(unsigned long usecs)<br>void mdelay(unsigned long mseces)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/oot%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1086,186 +1596,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/" itemprop="url">容器结构小结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T21:25:00+08:00">
-                2020-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++ Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1401,6 +1731,186 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/" itemprop="url">容器结构小结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T21:25:00+08:00">
+                2020-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+
           
         
       
@@ -1606,568 +2116,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/" itemprop="url">Linux并发与竞争</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T14:18:00+08:00">
-                2020-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Linux 系统并发产生的原因</strong><br>①、多线程并发访问，Linux 是多任务(线程)的系统，所以多线程访问是最基本的原因。<br>②、抢占式并发访问，从 2.6 版本内核开始，Linux 内核支持抢占，也就是说调度程序可以<br>在任意时刻抢占正在运行的线程，从而运行其他的线程。<br>③、中断程序并发访问，这个无需多说，学过 STM32 的同学应该知道，硬件中断的权利可<br>是很大的。<br>④、SMP(多核)核间并发访问，现在 ARM 架构的多核 SOC 很常见，多核 CPU 存在核间并<br>发访问。</p>
-<p>临界区就是共享数据段<br>一般在编写驱动的时候就要考虑到并发与竞争，而不是驱动都编写完了然后再处理并发与竞争。</p>
-<p><strong>原子操作</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/atomic.h&gt;</span></span><br><span class="line">typedef struct &#123;</span><br><span class="line"> int counter;</span><br><span class="line">&#125; atomic_t;/*32位*/</span><br><span class="line">atomic_t v = ATOMIC_INIT(0); /* 定义并初始化原子变零 v=0 */</span><br><span class="line">atomic_set(10); /* 设置 v=10 */</span><br><span class="line">atomic_read(&amp;v); /* 读取 v 的值，肯定是 10 */</span><br><span class="line">atomic_inc(&amp;v); /*++v*/</span><br><span class="line">特点：原子操作只能对整形变量或者位进行保护</span><br><span class="line"></span><br><span class="line">操作一个atomic lock ; </span><br><span class="line">初始赋值为1，打开时判断， 0 错误返回 ， 1 atomic_dec(lock)，同时减1为0 ，（故一个时刻只能打开一次）</span><br><span class="line">关闭 atomic_inc(lock) +1 </span><br><span class="line">操作过程打不开，需等待第一个驱动任务完成，关闭函数atomic_inc(lock) +1 ，然后再次打开</span><br></pre></td></tr></table></figure>
-<p><strong>自旋锁</strong><br>#include &lt;linux/atomic.h&gt;<br>自旋锁的“自旋”也就是“原地打转”的意思，“原地打转”的目的是为了等待自旋锁可以<br>用，可以访问共享资源。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">typedef struct spinlock &#123;</span><br><span class="line"> union &#123;</span><br><span class="line"> struct raw_spinlock rlock;</span><br><span class="line"> <span class="comment">#ifdef CONFIG_DEBUG_LOCK_ALLOC</span></span><br><span class="line"> <span class="comment"># define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))</span></span><br><span class="line"> struct &#123;</span><br><span class="line"> u8 __padding[LOCK_PADSIZE];</span><br><span class="line"> struct lockdep_map dep_map;</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">&#125;;</span><br><span class="line"> &#125; spinlock_t;</span><br><span class="line">特点：自旋锁适用于短时期的轻量级加锁，如果遇到需要长时间持有锁的场景那就需要换其他的方法了</span><br><span class="line"></span><br><span class="line">死锁：</span><br><span class="line">被自旋锁保护的临界区一定不能调用任何能够引起睡眠和阻塞的API 函数。自旋锁会自动禁止抢占，也就说当线程 A得到锁以后会暂时禁止内核抢占。如果线程 A 在持有锁期间进入了休眠状态，那么线程 A 会自动放弃 CPU 使用权。线程 B 开始运行，线程 B 也想要获取锁，但是此时锁被 A 线程持有，而且内核抢占还被禁止了！线程 B 无法被调度出去，那么线程 A 就无法运行，锁也就无法释放，导致死锁现象的发生</span><br><span class="line"></span><br><span class="line">中断里面可以使用自旋锁，但是在中断里面使用自旋锁的时候，在获取锁之前一定要先禁止本地中断(也就是本 CPU 中断，对于多核 SOC来说会有多个 CPU 核)，否则可能导致锁死现象的发生</span><br><span class="line"></span><br><span class="line"> DEFINE_SPINLOCK(lock) /* 定义并初始化一个锁 */</span><br><span class="line"></span><br><span class="line">/* 线程 A */</span><br><span class="line">void <span class="function"><span class="title">functionA</span></span> ()&#123;</span><br><span class="line">unsigned long flags; /* 中断状态 */</span><br><span class="line">spin_lock_irqsave(&amp;lock, flags) /* 获取锁 推荐用这个*/</span><br><span class="line">/* 临界区 */</span><br><span class="line">spin_unlock_irqrestore(&amp;lock, flags)  /* 释放锁推荐用这个 */</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">/* 中断服务函数 */ </span><br><span class="line">void <span class="function"><span class="title">irq</span></span>() &#123;</span><br><span class="line">spin_lock(&amp;lock) /* 获取锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line">spin_unlock(&amp;lock) /* 释放锁 */</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> 其他锁：</span><br><span class="line"> 读写锁》》》顺序锁</span><br></pre></td></tr></table></figure>
-
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class title="自旋锁">
-
-
-<p><strong>信号量</strong></p>
-<p>（1）自旋锁，<strong>信号量可以使线程进入休眠状态</strong>，但信号量不能用于中断中，因为信号量会引起休眠，中断不能休眠。<br>（2）如果共享资源的持有时间比较短，那就不适合使用信号量了，因为频繁的休眠、切换<br>线程引起的开销要远大于信号量带来的那点优势<br>(3)计数型信号量不能用于互斥访问，因为它允许多个线程同时访问共享资源。(二值信号值)<br>自动唤醒</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line">struct semaphore &#123;</span><br><span class="line">raw_spinlock_t lock;</span><br><span class="line">unsigned int count;</span><br><span class="line">struct list_head wait_list;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct semaphore sem; /* 定义信号量 */</span><br><span class="line">sema_init(&amp;sem, 1)； /* 初始化信号量 */</span><br><span class="line">down(&amp;sem); /* 申请信号量 */</span><br><span class="line">/* 临界区 */</span><br><span class="line">up(&amp;sem);</span><br></pre></td></tr></table></figure>
-
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class title="信号量">
-
-
-
-<p><strong>互斥体-mutex</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct mutex &#123;</span><br><span class="line">/* 1: unlocked, 0: locked, negative: locked, possible waiters */</span><br><span class="line">atomic_t count;</span><br><span class="line">spinlock_t wait_lock;</span><br><span class="line">&#125;;</span><br><span class="line"> struct mutex lock; /* 定义一个互斥体 */</span><br><span class="line">mutex_init(&amp;lock); /* 初始化互斥体 */</span><br><span class="line"></span><br><span class="line"> mutex_lock(&amp;lock); /* 上锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line"> mutex_unlock(&amp;lock); /* 解锁 *</span><br><span class="line">①、mutex 可以导致休眠，因此不能在中断中使用 mutex，__中断中只能使用自旋锁__。</span><br><span class="line">②、和信号量一样，mutex 保护的临界区可以调用引起阻塞的 API 函数。</span><br><span class="line">③、因为一次只有一个线程可以持有 mutex，因此，必须由 mutex 的持有者释放 mutex。并</span><br><span class="line">且 mutex 不能递归上锁和解锁</span><br></pre></td></tr></table></figure>
-
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class title="互斥体">
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/pioled-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/pioled-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6/" itemprop="url">gpioled 基本框架</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T11:40:00+08:00">
-                2020-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/pioled-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/pioled-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>用来复习QvQ</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_address.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_gpio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define GPIOLED_CNT   1       /*数量*/</span></span><br><span class="line"><span class="comment">#define GPIOLED_NAME  "gpioled"    /*名字*/</span></span><br><span class="line"><span class="comment">#define LEDOFF       0       /*关闭*/ </span></span><br><span class="line"><span class="comment">#define LEDON       1         /*开启*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*设备结构体*/</span><br><span class="line">struct gpioled_dev&#123;</span><br><span class="line"></span><br><span class="line">    dev_t devid ;</span><br><span class="line">    int major;</span><br><span class="line">    int minor;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct class *class;</span><br><span class="line">    struct device *device;</span><br><span class="line">    struct device_node * nd;</span><br><span class="line">    int led_gpio;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">struct gpioled_dev gpioled;</span><br><span class="line"></span><br><span class="line">static int led_open(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    filp-&gt;private_data = &amp;gpioled; /*传递结构*/</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_release(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static ssize_t led_write(struct file *filp, const char __user *buf,</span><br><span class="line">			 size_t count, loff_t *ppos)</span><br><span class="line">&#123;</span><br><span class="line">    int ret ;</span><br><span class="line">    unsigned char databuf[1];</span><br><span class="line">    struct gpioled_dev *dev = filp-&gt;private_data;</span><br><span class="line">    ret = __copy_from_user(databuf,buf,count);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(databuf[0] == LEDON)</span><br><span class="line">    &#123;</span><br><span class="line">        gpio_set_value(dev-&gt;led_gpio,0);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (databuf[0] == LEDOFF)</span><br><span class="line">    &#123;</span><br><span class="line">       gpio_set_value(dev-&gt;led_gpio, 1); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">/* 操作集 */</span><br><span class="line">static const struct file_operations led_fops = &#123;</span><br><span class="line">    .owner		=	THIS_MODULE,</span><br><span class="line">	.write		=	led_write,</span><br><span class="line">	.open		=	led_open,</span><br><span class="line">	.release	=	led_release,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init led_init(void )</span><br><span class="line">&#123;</span><br><span class="line">int ret  ;</span><br><span class="line">    gpioled.major = 0;</span><br><span class="line">    <span class="keyword">if</span> (gpioled.major)</span><br><span class="line">    &#123;</span><br><span class="line">        gpioled.devid = MKDEV(gpioled.major,0);</span><br><span class="line">        register_chrdev_region(gpioled.devid,GPIOLED_CNT,GPIOLED_NAME);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        alloc_chrdev_region(&amp;gpioled.devid,0,GPIOLED_CNT,GPIOLED_NAME);</span><br><span class="line">        gpioled.major = MAJOR(gpioled.devid);</span><br><span class="line">        gpioled.minor = MINOR(gpioled.devid);</span><br><span class="line">    &#125;</span><br><span class="line">    printk(<span class="string">"gpioled.major = %d ,gpioled.minor = %d\r\n"</span>,gpioled.major,gpioled.minor);</span><br><span class="line"></span><br><span class="line">*初始化cdev*/</span><br><span class="line">    gpioled.cdev.owner = THIS_MODULE ;</span><br><span class="line">    /*初始化*/</span><br><span class="line">    cdev_init(&amp;gpioled.cdev,&amp;led_fops);</span><br><span class="line">    </span><br><span class="line">  ret = cdev_add(&amp;gpioled.cdev,gpioled.devid,GPIOLED_CNT);</span><br><span class="line">     <span class="keyword">if</span>(ret &lt; 0) </span><br><span class="line">        goto fail_cdev;  </span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    /*创建class*/</span><br><span class="line">    gpioled.class = class_create(THIS_MODULE,GPIOLED_NAME);</span><br><span class="line">    <span class="keyword">if</span>(IS_ERR(gpioled.class))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(gpioled.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*创建device*/</span><br><span class="line">   gpioled.device = device_create(gpioled.class,NULL,gpioled.devid,NULL,GPIOLED_NAME);</span><br><span class="line">    <span class="keyword">if</span>(IS_ERR(gpioled.device))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(gpioled.device);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">   /* 1，获取设备节点 */</span><br><span class="line">    gpioled.nd = of_find_node_by_path(<span class="string">"/gpioled"</span>);</span><br><span class="line">    <span class="keyword">if</span>(gpioled.nd == NULL) &#123;</span><br><span class="line">        ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    /* 2, 获取LED所对应的GPIO */</span><br><span class="line">    gpioled.led_gpio = of_get_named_gpio(gpioled.nd, <span class="string">"led-gpios"</span>, 0);</span><br><span class="line">    <span class="keyword">if</span>(gpioled.led_gpio &lt; 0) &#123;</span><br><span class="line">        printk(<span class="string">"can't find led gpio\r\n"</span>);</span><br><span class="line">        ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">    &#125;</span><br><span class="line">    printk(<span class="string">"led gpio num = %d\r\n"</span>, gpioled.led_gpio);</span><br><span class="line"></span><br><span class="line">    /* 3,申请IO */</span><br><span class="line">    ret = gpio_request(gpioled.led_gpio, <span class="string">"led-gpio"</span>);</span><br><span class="line">	<span class="keyword">if</span> (ret) &#123;</span><br><span class="line">		printk(<span class="string">"Failed to request the led gpio\r\n"</span>);</span><br><span class="line">		ret = -EINVAL;</span><br><span class="line">        goto fail_findnode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    /* 4,使用IO，设置为输出 */</span><br><span class="line">    ret = gpio_direction_output(gpioled.led_gpio, 1);</span><br><span class="line">	<span class="keyword">if</span> (ret) &#123;</span><br><span class="line">		goto fail_setoutput;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    /* 5,输出底电平，点亮LED灯*/</span><br><span class="line">    gpio_set_value(gpioled.led_gpio, 0);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">    fail_setoutput:</span><br><span class="line">    gpio_free(gpioled.led_gpio);</span><br><span class="line">    fail_findnode:</span><br><span class="line">    fail_cdev:</span><br><span class="line">    unregister_chrdev_region(gpioled.devid,GPIOLED_CNT);</span><br><span class="line">    <span class="built_in">return</span> ret;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">static void __exit led_exit(void )</span><br><span class="line">&#123;</span><br><span class="line">      /* 关灯 */</span><br><span class="line">    gpio_set_value(gpioled.led_gpio, 1);</span><br><span class="line"></span><br><span class="line">    cdev_del(&amp;gpioled.cdev);</span><br><span class="line">    unregister_chrdev_region(gpioled.devid,GPIOLED_CNT);</span><br><span class="line"></span><br><span class="line">    device_destroy(gpioled.class,gpioled.devid);</span><br><span class="line">    class_destroy(gpioled.class);</span><br><span class="line"></span><br><span class="line">    gpio_free(gpioled.led_gpio);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(led_init);</span><br><span class="line">module_exit(led_exit);</span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E8%AE%BE%E5%A4%87%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E8%AE%BE%E5%A4%87%E6%A0%91/" itemprop="url">设备树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T11:07:00+08:00">
-                2020-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E8%AE%BE%E5%A4%87%E6%A0%91/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E8%AE%BE%E5%A4%87%E6%A0%91/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Linux 内核中 ARM 架构下有太多的冗余的垃圾板</p>
-<p>级信息文件，导致 linus 震怒，然后 ARM 社区引入了设备树</p>
-<p>dts、dtbs、dtc、dtsi<br>设备树包括DTC（device tree compiler）,DTS(device tree source和DTB（device tree blob）。DTC为编译工具，它可以将.dts文件编译成.dtb文件。</p>
-<p><strong>of 查找设备节点</strong></p>
-<p>of_find_node_by_name 函数通过节点名字查找指定的节点</p>
-<p>of_find_node_by_type 函数通过 device_type 属性查找指定的节点</p>
-<p>of_find_compatible_node 函数根据 device_type 和 compatible 这两个属性查找指定的节点</p>
-<p>of_find_node_by_path 函数通过路径来查找指定的节点</p>
-<p><strong>查找父/ 子节点的 OF 函数</strong></p>
-<p>of_get_parent 函数用于获取指定节点的父节点(如果有父节点的话)</p>
-<p>of_get_next_child 函数用迭代的查找子节点</p>
-<p><strong>提取属的 性值的 OF 函数</strong></p>
-<p>of_find_property 函数用于查找指定的属性</p>
-<p>of_property_count_elems_of_size 函数用于获取属性中元素的数量，</p>
-<p>of_property_read_u32_index 函数用于从属性中获取指定标号的 u32 类型数据值</p>
-<p>of_property_read_u8_array 函数</p>
-<p>of_property_read_u16_array  函数</p>
-<p>of_property_read_u32_array  函数</p>
-<p>of_property_read_u64_array</p>
-<p>of_property_read_string 函数用于读取属性中字符串值</p>
-<p>of_n_addr_cells 函数用于获取#address-cells 属性值</p>
-<p>of_size_cells 函数用于获取#size-cells 属性值</p>
-<p>其他常用的 OF</p>
-<p>of_device_is_compatible 函数用于查看节点的 compatible 属性是否有包含 compat 指定的字符串，也就是检查设备节点的兼容性</p>
-<p>of_get_address 函数用于获取地址相关属性，主要是“reg”或者“assigned-addresses”属性</p>
-<p>值，函数属性如下</p>
-<p>of_translate_address 函数负责将从设备树读取到的地址转换为物理地址</p>
-<p>of_address_to_resource 函数，此函数看名字像是从设备树里面提取资源值，但是本质上就是将 reg 属性值，然后将其转换为 resource 结构体类型</p>
-<p>of_iomap 函数用于直接内存映射，以前我们会通过 ioremap 函数来完成物理地址到虚拟地址的映射，采用设备树以后就可以直接通过 of_iomap 函数来获取内存地址所对应的虚拟地址，不需要使用 ioremap 函数了。</p>
-<p>因为设备树最终是被驱动文件所使用的，而驱动文件必须要读取设备树中的属性信息，比如内存信息、GPIO 信息、中断信息等等。要想在驱动中读取设备树的属性值，那么就必须使用 Linux 内核提供的众多的 OF 函数</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2222,7 +2170,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">100</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2306,7 +2254,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
