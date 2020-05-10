@@ -320,6 +320,719 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/" itemprop="url">vim 操作随记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-16T10:58:00+08:00">
+                2020-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">命令模式</span><br><span class="line"></span><br><span class="line">移动：首行gg 末行G</span><br><span class="line"></span><br><span class="line">复制：yy  粘贴p</span><br><span class="line"></span><br><span class="line">剪切：dd      留空剪切：D</span><br><span class="line"></span><br><span class="line">撤销：u   恢复：crtl +  r</span><br><span class="line"></span><br><span class="line">编辑模式（输入模式）</span><br><span class="line"></span><br><span class="line">i a     esc</span><br><span class="line"></span><br><span class="line">末行模式（尾行模式）。</span><br><span class="line"></span><br><span class="line">:w</span><br><span class="line"></span><br><span class="line">:q</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line"></span><br><span class="line">:q！</span><br><span class="line"></span><br><span class="line">：x   保存退出！！！！</span><br><span class="line"></span><br><span class="line">/ 查找</span><br><span class="line"></span><br><span class="line">：s/     g</span><br><span class="line"></span><br><span class="line">:%s/    g</span><br><span class="line"></span><br><span class="line">查看当前已经打开的文件名称：“:files”</span><br><span class="line">： esc    进入 退出</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/vim.jpg" class>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E5%91%BD%E4%BB%A4/" itemprop="url">Linux随记命令(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-15T13:50:00+08:00">
+                2020-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">ctrl +C    终止 <span class="built_in">cd</span> `</span><br><span class="line"></span><br><span class="line">df  -h      磁盘大小</span><br><span class="line"></span><br><span class="line">free -m     内存大小</span><br><span class="line"></span><br><span class="line">head -n  **.txt  文件头几行   默认10</span><br><span class="line"></span><br><span class="line">tail - n <span class="comment">##  ** .txt 文件末尾两行</span></span><br><span class="line"></span><br><span class="line">less 查看文件     ：q退出</span><br><span class="line"></span><br><span class="line"><span class="comment">#wc -lwc 统计文件内容信息（包含行数、单词数、字节数）</span></span><br><span class="line"></span><br><span class="line">         -l：表示lines，行数</span><br><span class="line"></span><br><span class="line">         -w：表示words，单词数  依照空格来判断单词数量</span><br><span class="line"></span><br><span class="line">         -c：表示bytes，字节数</span><br><span class="line"></span><br><span class="line">date 输出的形式：2018年3月24日星期六15:54:28</span><br><span class="line"></span><br><span class="line">date +%F 输出形式：2018-03-24</span><br><span class="line"></span><br><span class="line">date <span class="string">"+%F %T"</span>  ==输出的形式：2018-03-24 16:01:00</span><br><span class="line"></span><br><span class="line">==<span class="comment">#date “+%Y-%m-%d %H:%M:%S”</span></span><br><span class="line"></span><br><span class="line">date -d   <span class="string">"-1 day"</span>  <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"></span><br><span class="line">前天 -  后天 +</span><br><span class="line"></span><br><span class="line">cal  作用：用来操作日历的</span><br><span class="line"></span><br><span class="line">cal -1 本月</span><br><span class="line"></span><br><span class="line">cal -3 上 中 下</span><br><span class="line"></span><br><span class="line">cal   -y  2019 年份月历</span><br><span class="line"></span><br><span class="line">clear     / ctrl +L  清除终端</span><br><span class="line"></span><br><span class="line">ls   /  | wc<span class="_">-l</span>   管道的过滤使用</span><br><span class="line"></span><br><span class="line"><span class="comment">#ls / |grep y</span></span><br><span class="line"></span><br><span class="line">hostname -f </span><br><span class="line"></span><br><span class="line">id  （包含用户id，用户组id，附加组id…）</span><br><span class="line"></span><br><span class="line">whoami   查看当前用户</span><br><span class="line"></span><br><span class="line">ps -ef 服务器进程   ps -ef  |grep http</span><br><span class="line"></span><br><span class="line">top 处理机资源占用情况</span><br><span class="line"></span><br><span class="line">du -sh 目录 查看目录大小</span><br><span class="line"></span><br><span class="line">service 服务名称  start stop  restart</span><br><span class="line"></span><br><span class="line">find  / -name      http    查找</span><br><span class="line"></span><br><span class="line">find  / -name      *.cof </span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> 2986   killall 名称   杀死进程</span><br><span class="line"></span><br><span class="line">ifconfig      inet addr就是网卡的ip地址。</span><br><span class="line"></span><br><span class="line">reboot  启动</span><br><span class="line"></span><br><span class="line">shutdown   重启</span><br><span class="line"></span><br><span class="line">uptime 计算开机到现在的额时间</span><br><span class="line"></span><br><span class="line">uname  操作系统名称</span><br><span class="line"></span><br><span class="line">netstat -tnlp</span><br><span class="line"></span><br><span class="line">       -t：表示只列出tcp协议的连接；</span><br><span class="line"></span><br><span class="line">       -n：表示将地址从字母组合转化成ip地址，将协议转化成端口号来显示；</span><br><span class="line"></span><br><span class="line">       -l：表示过滤出“state（状态）”列中其值为LISTEN（监听）的连接；</span><br><span class="line"></span><br><span class="line">       -p：表示显示发起连接的进程pid和进程名称；</span><br><span class="line"></span><br><span class="line">man   cp 查看帮助文档</span><br><span class="line"></span><br><span class="line">软链接 （符号链接） ln -s   <span class="built_in">source</span>  target  </span><br><span class="line"></span><br><span class="line">硬链接 （实体链接）ln       <span class="built_in">source</span>  target</span><br><span class="line"></span><br><span class="line">Ctrl+s  阻止输入</span><br><span class="line"></span><br><span class="line">Ctrl+q  允许输入</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/" itemprop="url">cron /crontab 计划任务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-14T16:58:00+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/ron-crontab-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>分 时 日  月  星期</p>
+<p>四个符号：</p>
+<p>*：表示取值范围中的每一个数字</p>
+<p>-：做连续区间表达式的，要想表示1~7，则可以写成：1-7</p>
+<p>/：表示每多少个，例如：想每10分钟一次，则可以在分的位置写：*/10</p>
+<p>,：表示多个取值，比如想在1点，2点6点执行，则可以在时的位置写：1,2,6</p>
+<p>问题1：每月1、10、22日的4:45重启network服务</p>
+<p>45 4  1,10,22  * *  service network restart</p>
+<p>问题2：每周六、周日的1:10重启network服务</p>
+<p>10 1  *  * 6,0   service network restart</p>
+<p>问题3：每天18:00至23:00之间每隔30分钟重启network服务</p>
+<p>*/30 18-23  *  * *   service network restart</p>
+<p>问题4：每隔两天的上午8点到11点的第3和第15分钟执行一次重启</p>
+<p>3,15 8-11  */2  * *   reboot</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E7%A3%81%E7%9B%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E7%A3%81%E7%9B%98/" itemprop="url">解压磁盘</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-14T13:58:00+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E7%A3%81%E7%9B%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E7%A3%81%E7%9B%98/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>bzip2</p>
+<p>bzip2 -z xxx</p>
+<p>bzip2 -d xxx.gz</p>
+<p>tar</p>
+<p>tar -vcjf xxx xxx   bz2</p>
+<p>tar -vxjf xxxx</p>
+<p>tar -vczf xxx xxx  压缩gz</p>
+<p>tar -vxzf xxxx  解压</p>
+<p>rar</p>
+<p>rar -a xxx.rar xxx   压缩</p>
+<p>rar -x xxx.rar   解压</p>
+<p>zip</p>
+<p>zip -rv xxx.zip xxx   压缩</p>
+<p>uzip -v xxx.zip   解压</p>
+<p><strong>扩展硬盘</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br><span class="line">参考：https://blog.csdn.net/u010801439/article/details/77676668</span><br></pre></td></tr></table></figure>
+<p><strong>/dev/sda 磁盘不足</strong></p>
+<p>#sudo apt-get autoclean<br> #sudo apt-get clean<br>#sudo apt-get autoremove<br>执行完后直接将/usr下释放了1G左右的空间。<br>整合碎片使用<br>参考：<a href="https://blog.csdn.net/itas109/article/details/83341149" target="_blank" rel="noopener">https://blog.csdn.net/itas109/article/details/83341149</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%A4%87%E5%9C%B0%E5%9D%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1433,719 +2146,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E6%A6%82%E5%BF%B5/" itemprop="url">数电概念</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-24T21:04:00+08:00">
-                2019-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">单片机51、32、合泰芯片基本了解之后？以前觉得没怎么在意，为什么32芯片和合泰，使用时要使能相应的时钟？而51却不用？</span><br><span class="line"></span><br><span class="line">可是随着电子产品集成度越来越高，功耗和发热越来越严重</span><br><span class="line">芯片厂商非常无奈也在开始想办法避免这个问题，而最直接</span><br><span class="line">的思路当然就是用多少功能就使能多少功能，对每个外设的</span><br><span class="line">时钟都设置了开关，让用户可以精确地控制，关闭不需要的设备</span><br><span class="line">，达到节省供电的目的。</span><br><span class="line">其实这样还有一个好处就是，不是每个外设都需要系统时钟那么高的频率。</span><br><span class="line"></span><br><span class="line">仅仅理解为节省资源的方式感觉还不够，后来思考下，才发现答案就来自数电中的锁存器和触发器，然后，又开始复习了。。。QAQ</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/" itemprop="url">继SolidWorks之后另一款3D软件的preo简单的学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-17T15:06:00+08:00">
-                2019-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mechanic-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Mechanic Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Mechanic-Lover/%E7%BB%A7SolidWorks%E4%B9%8B%E5%90%8E%E5%8F%A6%E4%B8%80%E6%AC%BE3D%E8%BD%AF%E4%BB%B6%E7%9A%84preo%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.组件中零件激活了之后要取消，直接ctrl+A即可。</p>
-<p>2.颜色RGB</p>
-<p>255  0  0  红色</p>
-<p>248  255  247  白色</p>
-<p>0     0    0  黑色</p>
-<p>银白色  红(192) 绿(192) 蓝(192)。</p>
-<p>染色过程中，高级的层次会覆盖掉低级的颜色</p>
-<p>例如：总装配体&gt;子装配体&gt;零件</p>
-<p>3.通过不定向，横截面的设置获取“正视于的效果”，配合参考选取视图。</p>
-<p>4.仿真看着很单调，不过可以通过数据或者数学方程式驱动运动的轨迹，存在一个数据文档里；</p>
-<p>钣金加工工艺（综合冷加工工艺）</p>
-<p>下料 、成型、压铆，攻牙、焊接等</p>
-<p>表面处理：喷粉，电镀等；</p>
-<p>机床的知识<br>NC：数字控制，简称数控。<br>CNC：计算机数字控制，简称也是数控。NC是以前的数控，CNC是目前的数控，NC已经淘汰。另外，人们经常把加工中心叫做CNC。<br>DNC：在线加工。也就是一边传输程序，一边加工，用电脑控制数控机床在线加工。<br>2019-1-9 ming</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/" itemprop="url">Linux系统分类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-17T10:07:00+08:00">
-                2019-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="Linux系统分类"><a href="#Linux系统分类" class="headerlink" title="Linux系统分类"></a>Linux系统分类</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一般来说，linux系统基本分为两大类</span><br><span class="line">Redhat系列:Redhat、Centos、Fedora等</span><br><span class="line">Debian系列:Debian、Ubuntu等</span><br></pre></td></tr></table></figure>
-
-<h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
-
-<h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/" itemprop="url">模电概念</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T20:39:00+08:00">
-                2018-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
-<h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
-<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
-<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
-<h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>
-<h4 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h4><h5 id="MOS、NMOS、PMOS、COMS概念"><a href="#MOS、NMOS、PMOS、COMS概念" class="headerlink" title="MOS、NMOS、PMOS、COMS概念"></a>MOS、NMOS、PMOS、COMS概念</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MOS管导通特性，相当于开关闭合。</span><br><span class="line">NMOS的特性，Vgs大于一定的值就会导通，适合用于源极接地时的情况，只要栅极电压达到4V或10V就可以了。导通电阻小，且容易制造，市场广泛应用。</span><br><span class="line">PMOS的特性，Vgs小于一定的值就会导通，适合用于源极接VCC时的情况。导通电阻大，价格贵，替换种类少，通常还是使用NMOS。</span><br><span class="line">CMOS的产生？</span><br><span class="line">一、阈值损</span><br><span class="line">NMOS 传输高电平有阈值损（Vtn），低电平则没有；</span><br><span class="line">PMOS 传输低电平有阈值损（Vtp），高电平则没有。</span><br><span class="line">CMOS 互补结构则利用了上述“互补”特性，传输高低电平时都没有阈值损。</span><br><span class="line">二、线性</span><br><span class="line">NMOS 或 PMOS 单管。</span><br><span class="line">利用两管导通电流的“互补”特性，使得导通电流特性呈“高线性”。</span><br><span class="line">三、功耗</span><br><span class="line">主要差别在功耗上，NMOS和PMOS工作时至少有一个导通，而CMOS导通的时间很短，功耗明显降低</span><br></pre></td></tr></table></figure>
-<h4 id="CMOS-与-TTL"><a href="#CMOS-与-TTL" class="headerlink" title="CMOS 与 TTL"></a>CMOS 与 TTL</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CMOS是场效应晶体管，TTL是双极晶体管2。</span><br><span class="line">COMS具有较宽的逻辑电平范围（5-15V），TTL只能在5V下工作。</span><br><span class="line">CMOS的高低电平差异较大，抗干扰能力强，TTL差小，抗干扰能力差。</span><br><span class="line">CMOS功耗很小，TTL功耗大（1-5mA/门）</span><br><span class="line">CMOS的工作频率略低于TTL，但其高速CMOS几乎与TTL相同。</span><br><span class="line">TTL高电平3.6~5V，低电平0V~2.4V_</span><br><span class="line">CMOS电平VCC可达到12V_</span><br><span class="line">CMOS电路的高电平输出约为0.9VCC，低电平输出约为0.1VCC。</span><br><span class="line">CMOS电路不使用的输入端不能挂起，会引起逻辑混乱。</span><br><span class="line">TTL电路不使用的输入端空旷为高电平_</span><br><span class="line">另外，由于CMOS集成电路的电源电压变化范围大，对电源的要求不如TTL集成电路严格。</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+    <a class="extend prev" rel="prev" href="/page/9/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/11/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2195,7 +2200,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">104</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2279,7 +2284,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>

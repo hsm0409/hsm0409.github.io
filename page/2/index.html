@@ -320,6 +320,795 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/" itemprop="url">阻塞IO与非阻塞IO</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T19:55:00+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>阻塞IO与非阻塞IO</strong></p>
+<p>当应用程序对设备驱动进行操作的时候，如果不能获取到设备资源，那么阻塞式 IO 就会将应用程序对应的线程挂起，直到设备资源可以获取为止。对于非阻塞 IO，应用程序对应的线程不会挂起，它要么一直轮询等待，直到设备资源可以使用，要么就直接放弃.</p>
+<p>例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR); /* 阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int fd;</span><br><span class="line">int data = 0;</span><br><span class="line">fd = open(<span class="string">"/dev/xxx_dev"</span>, O_RDWR | O_NONBLOCK);  /* 非阻塞方式打开 */</span><br><span class="line">ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data)); /* 读取数据 */</span><br></pre></td></tr></table></figure>
+<p><strong>等待队列头 -&gt; 阻塞</strong></p>
+<p>阻塞访问最大的好处就是当设备文件不可操作的时候进程可以进入休眠态，这样可以将CPU 资源让出来。但是，当设备文件可以操作的时候就必须唤醒进程，一般在中断函数里面完成唤醒工作。</p>
+<p>1、等待队列头</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct __wait_queue_head &#123;</span><br><span class="line"> spinlock_t lock;</span><br><span class="line"> struct list_head task_list;</span><br><span class="line"> &#125;;</span><br><span class="line">typedef struct __wait_queue_head wait_queue_head_t;</span><br><span class="line">定义好等待队列头以后需要初始化 </span><br><span class="line">void init_waitqueue_head(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
+<p>2、等待队列项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct __wait_queue &#123;</span><br><span class="line">unsigned int flags;</span><br><span class="line">void *private;</span><br><span class="line">wait_queue_func_t func;</span><br><span class="line">struct list_head task_list;</span><br><span class="line">&#125;;</span><br><span class="line">typedef struct __wait_queue wait_queue_t;</span><br><span class="line"></span><br><span class="line">使用宏 DECLARE_WAITQUEUE 定义并初始化一个等待队列项，宏的内容如下：</span><br><span class="line">DECLARE_WAITQUEUE(name, tsk);</span><br><span class="line">name 等待队列项的名字，tsk 等待队列项所属进程</span><br></pre></td></tr></table></figure>
+<p>3、添加移除等待队列头</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">设备不可访问，只有添加到等待队列头中以后进程才能进入休眠态</span><br><span class="line">可以访问以后再将进程对应的等待队列项从等待队列头中移除即可。</span><br><span class="line"></span><br><span class="line">void add_wait_queue(wait_queue_head_t *q,wait_queue_t *<span class="built_in">wait</span>)</span><br><span class="line"></span><br><span class="line">void remove_wait_queue(wait_queue_head_t *q,</span><br><span class="line">wait_queue_t *<span class="built_in">wait</span>)</span><br></pre></td></tr></table></figure>
+
+<p>4 、等待唤醒</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void wake_up(wait_queue_head_t *q)</span><br><span class="line">void wake_up_interruptible(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
+
+<p>5、等待事件唤醒</p>
+<img src="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class>
+
+<p> 实验小结：wait_event()不能被kill- 9 ,建议使用wait_event_iterruptible()</p>
+<p>wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up(&amp;dev-&gt;r_wait);</p>
+<p>-分割线-</p>
+<p>wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up_interruptible(&amp;dev-&gt;r_wait);</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#if 0</span></span><br><span class="line">     wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    wait_event_interruptible(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    DECLARE_WAITQUEUE(<span class="built_in">wait</span>, current); /*  定义一个等待队列 */</span><br><span class="line">    add_wait_queue(&amp;dev-&gt;r_wait,&amp;<span class="built_in">wait</span>); /*加入队列*/</span><br><span class="line">        __set_current_state(TASK_INTERRUPTIBLE);/*设置为可打断*/</span><br><span class="line">        schedule();  /*切换*/</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(signal_pending(current))</span><br><span class="line">        &#123;</span><br><span class="line">            ret = -ERESTARTSYS;</span><br><span class="line">            goto  wait_error;</span><br><span class="line">        &#125;</span><br><span class="line">         __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">         remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    keyvalue = atomic_read(&amp;dev-&gt;keyvalue);</span><br><span class="line">    releasekey = atomic_read(&amp;dev-&gt;releasekey);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (releasekey)</span><br><span class="line">     &#123; /* 有按键按下 */</span><br><span class="line">        <span class="keyword">if</span> (keyvalue &amp; 0x80)  /*判断有效1000 0000 标志位*/</span><br><span class="line">            &#123;</span><br><span class="line">            keyvalue &amp;= ~0x80;</span><br><span class="line">            ret = copy_to_user(buf, &amp;keyvalue, sizeof(keyvalue));</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">            goto data_error;</span><br><span class="line">            &#125;</span><br><span class="line">            atomic_set(&amp;dev-&gt;releasekey, 0);  /* 按下标志清零 */</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">       goto data_error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">wait_error:</span><br><span class="line">    __set_current_state(TASK_RUNNING); /*  设置任务为运行态 */</span><br><span class="line">    remove_wait_queue(&amp;dev-&gt;r_wait, &amp;<span class="built_in">wait</span>); /*  将等待队列移除 */</span><br><span class="line">    data_error:</span><br><span class="line">    <span class="built_in">return</span> -EINVAL;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<p><strong>轮询 -&gt; 非阻塞</strong></p>
+<p>应用程序通过 select、epoll 或 poll 使用函数，设备驱动程序中的 poll 函数就会执行。</p>
+<p>1、select函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">int select(int nfds,</span><br><span class="line">        fd_set *readfds,</span><br><span class="line">        fd_set *writefds,</span><br><span class="line">        fd_set *exceptfds,</span><br><span class="line">        struct timeval *timeout)</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">nfds ：要操作的文件描述符个数</span><br><span class="line">readfds 用于监视指定描述符集的读变化</span><br><span class="line">writefs 用于监视这些文件是否可以进行写操</span><br><span class="line">exceptfds 用于监视这些文件的异常</span><br><span class="line">timeout超时时间</span><br><span class="line">定义一个 fd_set 变量</span><br><span class="line">void FD_ZERO(fd_set *<span class="built_in">set</span>)    	  全部清零</span><br><span class="line">void FD_SET(int fd, fd_set *<span class="built_in">set</span>)   某位加1</span><br><span class="line">void FD_CLR(int fd, fd_set *<span class="built_in">set</span>)	某位清0</span><br><span class="line">int FD_ISSET(int fd, fd_set *<span class="built_in">set</span>)	是否可以进行操作</span><br><span class="line"></span><br><span class="line">select框架</span><br><span class="line">void main(void)</span><br><span class="line">&#123;</span><br><span class="line">  int ret, fd; /* 要监视的文件描述符 */</span><br><span class="line">  fd_set readfds; /* 读操作文件描述符集 */</span><br><span class="line">  struct timeval timeout; /* 超时结构体 */</span><br><span class="line"></span><br><span class="line">  fd = open(<span class="string">"dev_xxx"</span>, O_RDWR | O_NONBLOCK); </span><br><span class="line">  /* 非阻塞式访问 */</span><br><span class="line">   FD_ZERO(&amp;readfds); /* 清除 readfds */</span><br><span class="line">   FD_SET(fd, &amp;readfds);/* 将 fd 添加到 readfds 里面 */</span><br><span class="line">   /* 构造超时时间 */</span><br><span class="line">   timeout.tv_sec = 0;</span><br><span class="line">   timeout.tv_usec = 500000; /* 500ms */</span><br><span class="line">   ret = select(fd + 1, &amp;readfds, NULL, NULL, &amp;timeout);</span><br><span class="line">   switch (ret) &#123;</span><br><span class="line">   <span class="keyword">case</span> 0: /* 超时 */</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"timeout!\r\n"</span>);</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   <span class="keyword">case</span> -1: /* 错误 */</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"error!\r\n"</span>);</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   default: /* 可以读取数据 */</span><br><span class="line">   <span class="keyword">if</span>(FD_ISSET(fd, &amp;readfds)) &#123; /* 判断是否为 fd 文件描述符 */</span><br><span class="line">   /* 使用 <span class="built_in">read</span> 函数读取数据 */</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="built_in">break</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>2 、poll函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">在单个线程中，select 函数能够监视的文件描述符数量有最大的限制，一般为 1024，可以修改内核将监视的文件描述符数量改大，但是这样会降低效率！这个时候就可以使用 poll 函数，</span><br><span class="line">poll 函数本质上和 select 没有太大的差别，但是 poll 函数没有最大文件描述符限制。</span><br><span class="line">int poll(struct pollfd *fds,</span><br><span class="line">          nfds_t nfds,</span><br><span class="line">          int timeout)</span><br><span class="line">fds要监视的文件描述符集合以及要监视的事件    </span><br><span class="line">struct pollfd &#123;</span><br><span class="line">      int fd; /* 文件描述符 */</span><br><span class="line">      short events; /* 请求的事件 */</span><br><span class="line">      short revents; /* 返回的事件 */</span><br><span class="line">&#125;;          </span><br><span class="line">nfds：poll 函数要监视的文件描述符数量  </span><br><span class="line">timeout ：超时时间，单位为 ms。</span><br><span class="line">可监视的事件类型:</span><br><span class="line">    POLLIN 有数据可以读取。</span><br><span class="line">    POLLPRI 有紧急的数据需要读取。</span><br><span class="line">    POLLOUT  可以写数据。</span><br><span class="line">    POLLERR  指定的文件描述符发生错误。</span><br><span class="line">    POLLHUP  指定的文件描述符挂起。</span><br><span class="line">    POLLNVAL 无效的请求。</span><br><span class="line">    POLLRDNORM  等同于 POLLIN</span><br><span class="line">例</span><br><span class="line"></span><br><span class="line">void main(void)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">int ret;</span><br><span class="line">int fd; /* 要监视的文件描述符 */</span><br><span class="line">struct pollfd fds;</span><br><span class="line">fd = open(filename, O_RDWR | O_NONBLOCK); /* 非阻塞式访问 */</span><br><span class="line"></span><br><span class="line">fds.fd = fd;</span><br><span class="line">fds.events = POLLIN; /* 监视数据是否可以读取*/</span><br><span class="line"></span><br><span class="line">ret = poll(&amp;fds, 1, 500); /* 轮询文件是否可操作，超时 500ms */</span><br><span class="line"><span class="keyword">if</span> (ret) &#123; /* 数据有效 */</span><br><span class="line"> ......</span><br><span class="line">/* 读取数据 */</span><br><span class="line"> ......</span><br><span class="line"> &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret == 0) &#123; /* 超时 */</span><br><span class="line"> ......</span><br><span class="line"> &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret &lt; 0) &#123; /* 错误 */</span><br><span class="line"> ......</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3 、epoll  函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">传统的 selcet 和 poll 函数都会随着所监听的 fd 数量的增加，出现效率低下的问题，而且poll 函数每次必须遍历所有的描述符来检查就绪的描述符，这个过程很浪费时间。为此，epoll因运而生，epoll 就是为处理大并发而准备的，一般常常在网络编程中使用 epoll 函数。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int epoll_create(int size)</span><br><span class="line"></span><br><span class="line">int epoll_ctl(int epfd,</span><br><span class="line">          int op,</span><br><span class="line">          int  fd,</span><br><span class="line">          struct epoll_event *event)</span><br><span class="line"></span><br><span class="line">nt epoll_wait(int epfd,</span><br><span class="line">          struct epoll_event *events,</span><br><span class="line">          int maxevents,</span><br><span class="line">          int timeout)</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询实验</strong></p>
+<p>``bash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">__Linux  驱动下的 poll__</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line"></span><br><span class="line">unsigned int (*poll) (struct file *filp, struct poll_table_struct *wait)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)</span><br><span class="line"></span><br><span class="line">参数 wait_address 是要添加到 poll_table 中的等待队列头，参数 p 就是 poll_table，就是</span><br><span class="line">file_operations 中 poll 函数的 wait 参数</span><br></pre></td></tr></table></figure>
+<p><strong>实验部分</strong></p>
+<p>1、驱动层部分</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct file_operations imx6uirq_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = imx6uirq_open,</span><br><span class="line">            .<span class="built_in">read</span> = imx6uirq_read,</span><br><span class="line">            .poll = imx6uirq_poll,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static unsigned int imx6uirq_poll(struct file *filp ,struct poll_table_struct *<span class="built_in">wait</span>)</span><br><span class="line">&#123;</span><br><span class="line">    int mask = 0;</span><br><span class="line">    struct  imx6uirq_dev *dev = filp -&gt;private_data;</span><br><span class="line"></span><br><span class="line">    poll_wait(filp,&amp;dev-&gt;r_wait,<span class="built_in">wait</span>);</span><br><span class="line">    /*返回应用层是否可读*/</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(atomic_read(&amp;dev-&gt;releasekey))</span><br><span class="line">    &#123;</span><br><span class="line">        mask = POLL_IN | POLLRDNORM ;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> mask ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、应用层</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/ioctl.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include "poll.h"</span></span><br><span class="line"> <span class="comment">#include "sys/select.h"</span></span><br><span class="line"> <span class="comment">#include "sys/time.h"</span></span><br><span class="line"> <span class="comment">#include "linux/ioctl.h"</span></span><br><span class="line">/*</span><br><span class="line"> *argc:应用程序参数个数</span><br><span class="line"> *argv[]:具体的参数内容，字符串形式 </span><br><span class="line"> *./ledAPP  &lt;filename&gt;  &lt;0:1&gt; 0表示关灯，1表示开灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 0    关灯</span><br><span class="line"> * ./ledAPP /dev/dtsled 1    开灯</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*IOctrl 命令*/</span><br><span class="line"><span class="comment">#define CLOSE_CMD (_IO(0XEF, 0x1)) /* 关闭定时器 */</span></span><br><span class="line"><span class="comment">#define OPEN_CMD (_IO(0XEF, 0x2)) /* 打开定时器 */</span></span><br><span class="line"><span class="comment">#define SETPERIOD_CMD (_IO(0XEF, 0x3)) /* 设置定时器周期命令 */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int fd;</span><br><span class="line">    int ret ;</span><br><span class="line">    char *filename;</span><br><span class="line"></span><br><span class="line">    /*select */</span><br><span class="line">    unsigned char data;</span><br><span class="line">    struct timeval timeout;</span><br><span class="line">    fd_set readfds;</span><br><span class="line">    /*poll*/</span><br><span class="line">    struct pollfd  fds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc != 2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Error Usage!\r\n"</span>);</span><br><span class="line">        <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line">    filename = argv[1];</span><br><span class="line">    fd = open(filename,O_RDWR|O_NONBLOCK);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"file %s open failed!\r\n"</span>, argv[1]);</span><br><span class="line">         <span class="built_in">return</span> -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        fds.fd = fd ;</span><br><span class="line">        fds.events = POLLIN;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (1)</span><br><span class="line">    &#123;</span><br><span class="line">       ret = poll(&amp;fds,1,2000);/*事件、数量1、超时2s*/</span><br><span class="line">        <span class="keyword">if</span>(ret)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(data)</span><br><span class="line">            &#123;</span><br><span class="line">                ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"read error !!! \r\n"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret == 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">" time out!!!\r\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ret &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"poll error\r\n"</span>);  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">            FD_ZERO(&amp;readfds);</span><br><span class="line">            FD_SET(fd, &amp;readfds);</span><br><span class="line">            timeout.tv_sec = 0;</span><br><span class="line">            timeout.tv_usec = 5000000;</span><br><span class="line"></span><br><span class="line">        ret = select(fd+1,&amp;readfds,NULL,NULL,&amp;timeout);</span><br><span class="line">        switch (ret)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> 0:</span><br><span class="line">            /* 用户自定义超时处理 */</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"time out !!!\r\n"</span>);</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> -1:</span><br><span class="line">            /* 用户错误 */</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"select error!!!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">        default:</span><br><span class="line">            <span class="keyword">if</span>(FD_ISSET(fd, &amp;readfds))</span><br><span class="line">            &#123;</span><br><span class="line">                    ret = <span class="built_in">read</span>(fd, &amp;data, sizeof(data));</span><br><span class="line">            <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">               &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"rwad error !!!"</span>);</span><br><span class="line">               &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">               <span class="keyword">if</span>(data)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">"key value = %d \r\n"</span>,data);</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E7%83%AD%E7%94%B5%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Circuit-Lover/%E7%83%AD%E7%94%B5%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">热电式传感器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T11:45:00+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Circuit-Lover/%E7%83%AD%E7%94%B5%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E7%83%AD%E7%94%B5%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Circuit-Lover/%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">压电式传感器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T11:43:00+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Circuit Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Circuit-Lover/%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" itemprop="url">关系数据理论🏃</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T09:42:00+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySql-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">MySql Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>关系模式由五部分组成</strong></p>
+<p>它是一个五元组：R(U, D, DOM, F)<br>R：      关系名<br>U：       组成该关系的属性名集合<br>D：       属性组U中属性所来自的域<br>DOM： 属性向域的映象集合<br>F：       属性间数据的依赖关系集合<br>简化为一个三元组：R（U, F）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[例1]建立一个描述学校教务的数据库：</span><br><span class="line">	学生的学号（Sno）、所在系（Sdept）</span><br><span class="line">	系主任姓名（Mname）、课程名（Cname）</span><br><span class="line">	成绩（Grade）</span><br><span class="line"></span><br><span class="line">单一的关系模式 ：   Student &lt;U、F&gt;</span><br><span class="line">U ＝｛ Sno, Sdept, Mname, Cname, Grade ｝</span><br><span class="line">属性组U上的一组函数依赖F：</span><br><span class="line">    F ＝｛ Sno → Sdept,  Sdept → Mname, (Sno, Cname) → Grade ｝</span><br><span class="line"></span><br><span class="line">存在问题：</span><br><span class="line">数据冗余太大</span><br><span class="line">更新异常（Update Anomalies）</span><br><span class="line">插入异常（Insertion Anomalies）</span><br><span class="line">删除异常（Deletion Anomalies</span><br></pre></td></tr></table></figure>
+<p>把这个单一模式分成3个关系模式：<br>     S（Sno，Sdept，Sno → Sdept）;<br>     SC（Sno，Cno，Grade，（Sno，Cno） → Grade）;<br>     DEPT（Sdept，Mname，Sdept→ Mname）</p>
+<p><strong>函数依赖</strong></p>
+<p>依赖：Y函数依赖于X”，记作X→Y。  </p>
+<p>平凡函数依赖与非平凡函数依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">例：在关系SC(Sno, Cno, Grade)中，</span><br><span class="line">   非平凡函数依赖： (Sno, Cno) → Grade</span><br><span class="line">   平凡函数依赖：     (Sno, Cno) → Sno </span><br><span class="line">                                          (Sno, Cno) → Cno</span><br></pre></td></tr></table></figure>
+<p>完全函数依赖与部分函数依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[例1] 中(Sno,Cno)→Grade是完全函数依赖，</span><br><span class="line">   (Sno,Cno)→Sdept是部分函数依赖</span><br><span class="line">   因为Sno →Sdept成立，且Sno是（Sno，Cno）的真子集</span><br></pre></td></tr></table></figure>
+
+<p>传递函数依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例: 在关系Std(Sno, Sdept, Mname)中，有：</span><br><span class="line">	  Sno → Sdept，Sdept → Mname</span><br><span class="line">      Mname传递函数依赖于Sno</span><br></pre></td></tr></table></figure>
+
+<p><strong>码</strong></p>
+<p>主属性与非主属性</p>
+<p>整个属性组是码，称为全码（All-key） </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[例2]</span><br><span class="line">    关系模式S(Sno,Sdept,Sage)，单个属性Sno是码，</span><br><span class="line">    SC（Sno，Cno，Grade）中，（Sno，Cno）是码</span><br><span class="line">[例3]</span><br><span class="line">       关系模式R（P，W，A）</span><br><span class="line">       P：演奏者     W：作品    A：听众</span><br><span class="line">       一个演奏者可以演奏多个作品</span><br><span class="line">       某一作品可被多个演奏者演奏</span><br><span class="line">       听众可以欣赏不同演奏者的不同作品</span><br></pre></td></tr></table></figure>
+
+<p><strong>范式</strong></p>
+<p>一个低一级范式的关系模式，通过模式分解可以转换为若干个高一级范式的关系模式的集合，这种过程就叫规范化 </p>
+<p>1NF<br>如果一个关系模式R的所有属性都是不可分的基本数据项，则R∈1NF,第一范式是对关系模式的最起码的要求。不满足第一范式的数据库模式不能称为关系数据库但是满足第一范式的关系模式并不一定是一个好的关系模式.<br>原因：部分函数依赖于码</p>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/1NF.jpg" class>
+
+<p>2NF</p>
+<p>每一个非主属性完全函数依赖于码</p>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/2NF.jpg" class>
+
+<p>3NF<br>消除传递函数依赖</p>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/3NF.jpg" class>
+
+<p>BCNF<br>1、所有非主属性对每一个码都是完全函数依赖<br>2、所有的主属性对每一个不包含它的码，也是完全函数依赖<br>3、没有任何属性完全函数依赖于非码的任何一组属性</p>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/BCNF.jpg" class>
+
+<p>多值依赖</p>
+<p>4NF</p>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/%E5%B0%8F%E8%8A%82.jpg" class>
+
+<p>并不是规范化程度越高，模式就越好</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Other-Lover/Powershell%E6%8A%A5%E9%94%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1366,716 +2155,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Other-Lover/%E7%94%A8PE%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85win10QvQ/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Other-Lover/%E7%94%A8PE%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85win10QvQ/" itemprop="url">使用PE系统重装win10QvQ</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T17:53:00+08:00">
-                2020-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Other Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Other-Lover/%E7%94%A8PE%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85win10QvQ/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Other-Lover/%E7%94%A8PE%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85win10QvQ/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1、工具：U盘+白菜PE系统</strong>   </p>
-<p><strong>2、系统：win10 解压放在U盘 GHO 目录下。</strong></p>
-<p><strong>3、电脑关机，开机启动按住“esc”,选择进入U盘，进入PE系统，我们可以先备份好C盘的资料到其他U盘中，然后点击C盘，还原分区，选择U盘中GHO目录下的镜像文件.gho,点击确定即可。</strong></p>
-<p><strong>4、拔出U盘，重启电脑。</strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="url">电容传感器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T11:24:00+08:00">
-                2020-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E4%BC%A0%E6%84%9F%E5%99%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>电容式传感器是把被测量的变化转换为电容量变化的一类传感器。实质上是一个具有可变参数的电容器。最常用的是平行板电容传感器和圆柱形电容传感器。可用来测量压力、力、位移、振动、液位、成份含量等。</p>
-<p>①变极距型（变间隙型）：改变极板距离d0 。<br>②变面积型：改变极板相对面积S 。<br>③变介电常数型：改变介电常数ε。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/Linux-%E4%B8%AD%E6%96%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/Linux-%E4%B8%AD%E6%96%AD/" itemprop="url">Linux内核中断</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-01T16:23:00+08:00">
-                2020-05-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/Linux-%E4%B8%AD%E6%96%AD/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Linux-%E4%B8%AD%E6%96%AD/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Linux 内核中也提供了大量的中断相关的 API 函数</p>
-<p>1、知道中断号<br>2 、申请函数request_irq<br>3 、free_irq 释放函数<br>4、request_irq 函数申请中断的时候需要设置中断处理函数<br>5、中断使能与禁止函数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使能或者禁止某一个中断</span><br><span class="line"></span><br><span class="line">void enable_irq(unsigned int irq)</span><br><span class="line">void disable_irq(unsigned int irq)-&gt;void disable_irq_nosync(unsigned int irq)</span><br><span class="line"></span><br><span class="line">使能或者禁止当前处理器中断系统</span><br><span class="line">local_irq_enable()</span><br><span class="line">local_irq_disable()</span><br><span class="line">推荐：</span><br><span class="line">local_irq_save(flags) </span><br><span class="line">local_irq_restore(flags)</span><br></pre></td></tr></table></figure>
-<p><strong>上半部与下半部</strong></p>
-<p>上半部：上半部就是中断处理函数，那些处理过程比较快，不会占用很长时间的处理就可<br>以放在上半部完成。<br>下半部：如果中断处理过程比较耗时，那么就将这些比较耗时的代码提出来，交给下半部<br>去执行，这样中断处理函数就会快进快出</p>
-<p>哪些代码属于下半部并没有明确的规定，一切根据实际使用情况去判断?<br>正点原子参考：<br>①、如果要处理的内容不希望被其他中断打断，那么可以放到上半部。<br>②、如果要处理的任务对时间敏感，可以放到上半部。<br>③、如果要处理的任务与硬件有关，可以放到上半部<br>④、除了上述三点以外的其他任务，优先考虑放到下半部。</p>
-<p><strong>Linux内核下半部中断机制</strong></p>
-<p>buttom half -&gt;软中断和 tasklet </p>
-<p><strong>软中断</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">示例代码 51.1.2.1 softirq_action 结构体</span><br><span class="line">433 struct softirq_action</span><br><span class="line">434 &#123;</span><br><span class="line">435 void (*action)(struct softirq_action *);</span><br><span class="line">436 &#125;;</span><br><span class="line">在 kernel/softirq.c 文件中一共定义了 10 个软中断，如下所示：</span><br><span class="line">示例代码 51.1.2.2 softirq_vec 数组</span><br><span class="line">static struct softirq_action softirq_vec[NR_SOFTIRQS];</span><br><span class="line">NR_SOFTIRQS 是枚举类型，定义在文件 include/linux/interrupt.h 中，定义如下：</span><br><span class="line">示例代码 51.1.2.3 softirq_vec 数组</span><br><span class="line">enum</span><br><span class="line">&#123;</span><br><span class="line">HI_SOFTIRQ=0, /* 高优先级软中断 */</span><br><span class="line">TIMER_SOFTIRQ, /* 定时器软中断 */</span><br><span class="line">NET_TX_SOFTIRQ, /* 网络数据发送软中断 */</span><br><span class="line">NET_RX_SOFTIRQ, /* 网络数据接收软中断 */</span><br><span class="line">BLOCK_SOFTIRQ,</span><br><span class="line">BLOCK_IOPOLL_SOFTIRQ,</span><br><span class="line">TASKLET_SOFTIRQ, /* tasklet 软中断 */</span><br><span class="line">SCHED_SOFTIRQ, /* 调度软中断 */</span><br><span class="line">HRTIMER_SOFTIRQ, /* 高精度定时器软中断  */</span><br><span class="line">RCU_SOFTIRQ, /* RCU 软中断  */</span><br><span class="line">NR_SOFTIRQS</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>每个 CPU 都有自己的触发和控制机制，并且只执行自己所触发的软中断。但是各个 CPU 所执行的软中断服务函数确是相同的，都是数组 softirq_vec 中定义的 action 函数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">open_softirq 函数注册对应的软中断处理函数</span><br><span class="line">void open_softirq(int nr, void (*action)(struct softirq_action *))</span><br><span class="line"></span><br><span class="line">例：open_softirq(TASKLET_SOFTIRQ, tasklet_action);</span><br><span class="line"></span><br><span class="line">raise_softirq 调用函数触发</span><br><span class="line">void raise_softirq(unsigned int nr)</span><br><span class="line"></span><br><span class="line">注意:软中断必须在编译的时候静态注册  kernel/softirq.c</span><br></pre></td></tr></table></figure>
-
-<p><strong>tasklet</strong></p>
-<p>前言：tasklet 是利用软中断来实现的另t外一种下半部机制，在软中断和 tasklet 之间，建议使用 tasklet</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct tasklet_struct</span><br><span class="line">&#123;</span><br><span class="line">struct tasklet_struct *next; /* 下一个 tasklet */</span><br><span class="line"> unsigned long state; /* tasklet 状态 */</span><br><span class="line"> atomic_t count; /* 计数器，记录对 tasklet 的引用数 */</span><br><span class="line">void (*func)(unsigned long); /* tasklet  执行的函数 */</span><br><span class="line"> unsigned long data; /* 函数 func 的参数 */</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line">tasklet_init 函数初始化</span><br><span class="line"></span><br><span class="line">void tasklet_init(struct tasklet_struct *t, void (*func)(unsigned long),unsigned long data)</span><br><span class="line"></span><br><span class="line">也可以初始-》DECLARE_TASKLET(name, func, data)</span><br><span class="line"></span><br><span class="line">void tasklet_schedule(struct tasklet_struct *t)</span><br><span class="line"></span><br><span class="line">t：要调度的 tasklet，也就是 DECLARE_TASKLET 宏里面的 name tasklet 的参考使用示例如下所示</span><br><span class="line"></span><br><span class="line">/* 定义 taselet */</span><br><span class="line">struct tasklet_struct testtasklet;</span><br><span class="line"></span><br><span class="line">void testtasklet_func(unsigned long data)</span><br><span class="line">&#123;</span><br><span class="line">/* tasklet 具体处理内容 */</span><br><span class="line">&#125;</span><br><span class="line">/* 中断处理函数 */</span><br><span class="line">irqreturn_t test_handler(int irq, void *dev_id)</span><br><span class="line">&#123;</span><br><span class="line">......</span><br><span class="line">/* 调度 tasklet */</span><br><span class="line">tasklet_schedule(&amp;testtasklet);</span><br><span class="line">......</span><br><span class="line">&#125;</span><br><span class="line">/* 驱动入口函数 */</span><br><span class="line">static int __init xxxx_init(void)</span><br><span class="line">&#123;</span><br><span class="line">......</span><br><span class="line">/* 初始化 tasklet */</span><br><span class="line">tasklet_init(&amp;testtasklet, testtasklet_func, data);</span><br><span class="line">/* 注册中断处理函数 */</span><br><span class="line">request_irq(xxx_irq, test_handler, 0, <span class="string">"xxx"</span>, &amp;xxx_dev);</span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>工作队列</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">工作队列是另外一种下半部执行方式：推后的工作可以睡眠</span><br><span class="line">表示一个工作结构函数</span><br><span class="line">struct work_struct &#123;</span><br><span class="line">atomic_long_t data;</span><br><span class="line">struct list_head entry;</span><br><span class="line">work_func_t func; /* 工作队列处理函数 */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">工作组织成工作队列结构</span><br><span class="line">struct workqueue_struct &#123;</span><br><span class="line">struct list_head pwqs;</span><br><span class="line">struct list_head list;</span><br><span class="line">struct mutex mutex;</span><br><span class="line">int work_color;</span><br><span class="line">int flush_color;</span><br><span class="line">atomic_t nr_pwqs_to_flush;</span><br><span class="line">struct wq_flusher *first_flusher;</span><br><span class="line">struct list_head flusher_queue;</span><br><span class="line">struct list_head flusher_overflow;</span><br><span class="line">struct list_head maydays;</span><br><span class="line">struct worker *rescuer;</span><br><span class="line">int nr_drainers;</span><br><span class="line">int saved_max_active;</span><br><span class="line">struct workqueue_attrs *unbound_attrs;</span><br><span class="line">struct pool_workqueue *dfl_pwq;</span><br><span class="line">char name[WQ_NAME_LEN];</span><br><span class="line">struct rcu_head rcu;</span><br><span class="line">unsigned int flags ____cacheline_aligned;</span><br><span class="line">struct pool_workqueue __percpu *cpu_pwqs;</span><br><span class="line">struct pool_workqueue __rcu *numa_pwq_tbl[];</span><br><span class="line">&#125;；</span><br><span class="line">LLinux 内核使用工作者线程(worker thred)来处理工作队列中的各个工作结构</span><br><span class="line">struct worker &#123;</span><br><span class="line">union &#123;</span><br><span class="line">struct list_head entry;</span><br><span class="line">struct hlist_node hentry;</span><br><span class="line">&#125;;</span><br><span class="line">struct work_struct *current_work;</span><br><span class="line">work_func_t current_func;</span><br><span class="line">struct pool_workqueue *current_pwq;</span><br><span class="line">bool desc_valid;</span><br><span class="line">struct list_head scheduled;</span><br><span class="line">struct task_struct *task;</span><br><span class="line">struct worker_pool *pool;</span><br><span class="line">struct list_head node;</span><br><span class="line">unsigned long last_active;</span><br><span class="line">unsigned int flags;</span><br><span class="line">int id;</span><br><span class="line">char desc[WORKER_DESC_LEN];</span><br><span class="line">struct workqueue_struct *rescue_wq;</span><br><span class="line">&#125;;</span><br><span class="line">总结：每个 worker 都有一个工作队列</span><br><span class="line">和 tasklet 一样，工作也是需要调度才能运</span><br><span class="line"></span><br><span class="line">例子</span><br><span class="line">/* 定义工作(work) */</span><br><span class="line">struct work_struct testwork;</span><br><span class="line">void testwork_func_t(struct work_struct *work);</span><br><span class="line">&#123;</span><br><span class="line">/* work 具体处理内容 */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">irqreturn_t test_handler(int irq, void *dev_id)</span><br><span class="line">&#123;</span><br><span class="line">......</span><br><span class="line">/* 调度 work */</span><br><span class="line">schedule_work(&amp;testwork);</span><br><span class="line">......</span><br><span class="line">&#125;</span><br><span class="line">static int __init xxxx_init(void)</span><br><span class="line">&#123;</span><br><span class="line">......</span><br><span class="line">/* 初始化 work */</span><br><span class="line">INIT_WORK(&amp;testwork, testwork_func_t);</span><br><span class="line">/* 注册中断处理函数 */</span><br><span class="line">request_irq(xxx_irq, test_handler, 0, <span class="string">"xxx"</span>, &amp;xxx_dev);</span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/nux%E4%B8%8B%E5%87%BD%E6%95%B0%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/nux%E4%B8%8B%E5%87%BD%E6%95%B0%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/" itemprop="url">linux下函数常见报错随记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-01T14:19:00+08:00">
-                2020-05-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/nux%E4%B8%8B%E5%87%BD%E6%95%B0%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/nux%E4%B8%8B%E5%87%BD%E6%95%B0%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>gets(str)<br>函数报错：warning: the ‘gets’ function is dangerous and should not be used.<br>原因：<br>注意，gets的行为与fgets使用stdin作为参数时的行为不完全相同:首先，在使用fgets时，结束换行字符不包含在gets中，而在使用fgets时，它包含在fgets中。其次，gets不允许您指定要读取的字符数限制，因此必须小心使用str指向的数组的大小，以避免缓冲区溢出。<br>解决办法：采用<br>fgets(cmd,100,stdin);//100为size</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2125,7 +2209,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">104</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2209,7 +2293,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/51/" rel="tag">51</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
