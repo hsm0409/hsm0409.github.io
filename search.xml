@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>参考约束</title>
+    <url>/MySql-Lover/%E8%80%83%E7%BA%A6%E6%9D%9F/</url>
+    <content><![CDATA[<p>6、假设有下面两个关系模式:<br>职工(职工号,姓名,年龄,职务,工资,部门号),其中职工号为主码;<br>部门(部门号,名称,经理名,电话),其中部门号为主码。<br>用SQL语言定义这两个关系模式,要求在模式中完成以下完整性约束条件的定义:<br>(1)定义每个模式的主码;<br>(2)定义参照完整性;<br>(3)定义职工年龄不得超过60岁；</p>
+<p>CREATE TABLE 职工<br>(<br>职工号 CHAR(5) PRIMARY KEY,<br>姓名 CHAR(8) NOT NULL,<br>年龄 SMALLINT,<br>职务 CHAR(10),<br>工资 DECIMAL (7,2 ),<br>部门号 CHAR(5)<br>);</p>
+<p>CREATE TABLE 部门<br>(<br>部门号 CHAR(5)PRIMARY KEY,<br>名称 CHAR(20),<br>经理名 CHAR(8)NOT NULL,<br>电话 CHAR(8)<br>);</p>
+<p>ALTER TABLE 职工<br>ADD CONSTRAINT C1 CHECK(年龄 &lt; 60);</p>
+<p>ALTER TABLE 职工<br>ADD CONSTRAINT C2 FOREIGN KEY (部门号) REFERENCES 部门(部门号);/<em>参考完整性约束</em>/</p>
+<p>select * from 职工;<br>select * from 部门;</p>
+<p>表级约束与列级约束？表级用于联合约束。</p>
+]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>INPUT子系统</title>
     <url>/Linux-Lover/NPUT%E5%AD%90%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p><strong>INPUT子系统</strong></p>
@@ -473,6 +491,7 @@
 <p><strong>2、系统：win10 解压放在U盘 GHO 目录下。</strong></p>
 <p><strong>3、电脑关机，开机启动按住“esc”,选择进入U盘，进入PE系统，我们可以先备份好C盘的资料到其他U盘中，然后点击C盘，还原分区，选择U盘中GHO目录下的镜像文件.gho,点击确定即可。</strong></p>
 <p><strong>4、拔出U盘，重启电脑。</strong></p>
+<p>(DiskGenius 数据恢复软件)</p>
 ]]></content>
       <categories>
         <category>Other Lover</category>
@@ -712,6 +731,27 @@
       </tags>
   </entry>
   <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</memory></functional></numeric></algorithm></p>
@@ -727,27 +767,6 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
@@ -1121,16 +1140,16 @@
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过IIC</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <title>怎么说你了解过IIC</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -1142,7 +1161,9 @@
     <content><![CDATA[<p>外键约束报错？</p>
 <p>SET foreign_key_checks = 0;<br>······<br>SET foreign_key_checks = 1;</p>
 <p>update 修改报错？<br>这是因为MySql运行在safe-updates模式下，该模式会导致非主键条件下无法执行update或者delete命令，执行命令SET SQL_SAFE_UPDATES = 0;</p>
-]]></content>
+<p>限制执行完语句<br>DELIMITER $<br>····<br>$</p>
+<p>referencing 在mysql中是不存在的，在mysql里面 等同的是NEW关键字 和OLD关键字</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE SC_U(</span><br><span class="line">	Sno CHAR(9) NOT NULL,</span><br><span class="line">	Cno CHAR(4) NOT NULL,</span><br><span class="line">	Oldgrade SMALLINT,</span><br><span class="line">	Newgrade SMALLINT</span><br><span class="line">);</span><br><span class="line">DELIMITER &#x2F;&#x2F;</span><br><span class="line">CREATE TRIGGER SC_T </span><br><span class="line">AFTER UPDATE  ON SC</span><br><span class="line">FOR EACH ROW </span><br><span class="line">BEGIN</span><br><span class="line">IF (NEW.Grade &gt;&#x3D; 1.1 * OLD.Grade)THEN</span><br><span class="line">	INSERT INTO SC_U(Sno,Cno,OldeGrade,NewGrade)</span><br><span class="line">    VALUES (OLD.Sno,OLD.Cno,OLD.Grade,NEW.Grade);</span><br><span class="line"> END IF;</span><br><span class="line"> END</span><br><span class="line">&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MySql Lover</category>
       </categories>
@@ -1536,7 +1557,7 @@
         <category>MCU Lover</category>
       </categories>
       <tags>
-        <tag>51</tag>
+        <tag>单片机</tag>
       </tags>
   </entry>
   <entry>
@@ -1547,7 +1568,7 @@
         <category>MCU Lover</category>
       </categories>
       <tags>
-        <tag>STM32</tag>
+        <tag>单片机</tag>
       </tags>
   </entry>
   <entry>
@@ -2455,6 +2476,37 @@
       </categories>
       <tags>
         <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>stm32系统架构</title>
+    <url>/MCU-Lover/m32%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<p>截图放博客，懒得翻文档 Q_Q</p>
+<img src="/MCU-Lover/m32%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/stm32.jpg" class>
+
+<p>ICode 总线<br>DCode 总线：该总线将Cortex™-M3内核的DCode总线与闪存存储器的数据接口相连接(常量加载和调试访问)。<br>系统总线<br>DMA 总线<br>总线矩阵<br>AHB/APB 桥(APB)：两个AHB/APB桥在AHB和2个APB总线间提供同步连接。APB1操作速度限于36MHz，APB2操作于全速(最高72MHz)。</p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>stm32最小系统</title>
+    <url>/MCU-Lover/stm32%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p>值得参考：<a href="https://www.21ic.com/jichuzhishi/mcu/questions/2017-06-07/723582.html" target="_blank" rel="noopener">https://www.21ic.com/jichuzhishi/mcu/questions/2017-06-07/723582.html</a></p>
+<img src="/MCU-Lover/stm32%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F/stm32.jpg" class>
+
+<p>stm32低电平复位</p>
+<p>PA9 PA10对应连接RXD TXD<br>烧录： 最小系统板boot0 置1 boot1置0<br>启动：最小系统板boot0 置0 boot1置0</p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
       </tags>
   </entry>
   <entry>
