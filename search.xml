@@ -1,6 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>RTC驱动了解🏃</title>
+    <url>/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/</url>
+    <content><![CDATA[<p>RTC 设备驱动是一个标准的字符设备驱动</p>
+<p> rtc_device 结构体</p>
+<p> rtc_class_ops 结构体</p>
+<p>rtc_dev_ioctl() 函数就会执行，操作 rtc_class_ops 中的 read_time、set_time 等函数来对具体 RTC 设备的读写操作。</p>
+<p>snvs_rtc_ops 操作集</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">struct rtc_device *rtc_device_register(const char *name,</span><br><span class="line">                  struct device *dev,</span><br><span class="line">                  const struct rtc_class_ops *ops,</span><br><span class="line">                  struct module *owner)</span><br><span class="line">                  </span><br><span class="line">struct rtc_device *rtc_device_register(const char *name,</span><br><span class="line">                      struct device *dev,</span><br><span class="line">                      const struct rtc_class_ops *ops,</span><br><span class="line">                      struct module *owner)</span><br></pre></td></tr></table></figure>
+<p> platform_get_resource 函数从设备树中获取到 RTC 外设寄存器基地址</p>
+<p> 函数 devm_ioremap_resource 完成内存映射，得到 RTC 外设寄存器物理基<br>地址对应的虚拟地址。</p>
+<p>snvs-rtc.c 文件会采用 regmap 机制来读写RTC 底层硬件寄存器。<br>这里使用 devm_regmap_init_mmio 函数将 RTC 的硬件寄存器转化为regmap 形式，这样 regmap 机制的 regmap_write、regmap_read 等 API 函数才能操作寄存器。<br>devm_rtc_device_register 函数向系统注册 rtc_devcie</p>
+<p>调用 rtc_read_lp_counter 获取 RTC 计数值，这个时间值是秒数</p>
+<p>调用 rtc_time_to_tm 函数将获取到的秒数转换为时间值</p>
+<p> rtc_read_lp_counter 函数，此函数用于读取 RTC 计数值</p>
+<p>测试</p>
+<p>设置当前时间为 2019 年 8 月 31 日 18:13:00<br>date -s “2019-08-31 18:13:00”</p>
+<p>此时间还没有写入到I.MX6U 内部 RTC 里面或其他的 RTC 芯片里面<br>hwclock -w  //将当前系统时间写入到 RTC 里面</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Framebuffer驱动</title>
+    <url>/Linux-Lover/ramebuffer-%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E5%86%99%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<p>Framebuffer 抽象为一个叫做 fb_info 的结构体，fb_info 结构体包含了 Framebuffer 设备的完整属性和操作集合，因此每一个 Framebuffer 设备都必须有一个 fb_info</p>
+<p>内核内存分配函数<br>函数devm_kzalloc（）和kzalloc（）一样都是内核内存分配函数，但是devm_kzalloc（）是跟设备有关的，自动释放。当内存不在使用时，可以使用函数devm_kfree（）释放。<br>而kzalloc（）则需要手动释放使用kfree（），实现了kmalloc()+memset()的功能</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>#pragma pack</title>
+    <url>/C-C-Lover/ragma-pack/</url>
+    <content><![CDATA[<p>#pragma pack(push)保存对齐状态</p>
+<p>#pram pack(4)设定4字节</p>
+<p>voif func();</p>
+<p>#pragma pack(pop)//恢复对齐</p>
+<p>注意：from dalao  ！！！</p>
+<p>c51 默认按照1字节对其，没有存在字节对齐问题.<br>keil工程编译不报错，语句无效。</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux中断(正旭)</title>
+    <url>/Linux-Lover/Linux%E4%B8%AD%E6%96%AD-%E6%AD%A3%E6%97%AD/</url>
+    <content><![CDATA[<p>中断</p>
+<p>Linux不用FIQ，只用到了IRQ</p>
+<p>中断服务有没有参数主要是看中断发生在裸机上还是实时系统中</p>
+<p>linux中断流程</p>
+<p>Linux不用FIQ，只用到了IRQ</p>
+<p>linux的中断处理都是在SVC模式下处理的。</p>
+<p>当发生中断的时候，代码运行在内核空间</p>
+<p>IRQ执行的时候很快</p>
+<p>在IRQ回到SVC模式时候 R0存着irqnumber</p>
+<p>在SVC模式的内核栈上保存中断时候正在执行任务的寄存器状态 R1-R12 。 R0保存在IRQ那边的内核栈。</p>
+<p>随后会再搬到SVC的内核栈上</p>
+<p>总结分为7点：</p>
+<p>Linux对中断的扩展：硬件中断，软件中断</p>
+<p>中断处理原则1：不能嵌套</p>
+<p>中断处理原则2：越快越好</p>
+<p>要处理的事情实在太多：拆分为：上半部，下半部</p>
+<p>下半部的事情耗时不是太长：tasklet</p>
+<p>下半部要做的事情太多并且很复杂：工作队列</p>
+<p>新技术：threaded irq</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>交换两个变量的值，不使用第三个变量</title>
+    <url>/C-C-Lover/%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>交换两个变量的值，不使用第三个变量。即a=3,b=5,交换之后a=5,b=3;</p>
+<p>答案：有两种解法, 一种用算术算法, 一种用^(异或) </p>
+<p>a = a + b; </p>
+<p>b = a - b;</p>
+<p> a = a - b;    //溢出问题</p>
+<p>or</p>
+<p> a = a^b;// 只能对int,char..</p>
+<p> b = a^b; </p>
+<p>a = a^b;</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt编译报错</title>
+    <url>/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<p>报错make: Nothing to be done for ‘first’</p>
+<p>可执行程序已经存在。</p>
+<p>/usr/bin/ld: main.o：普通ELF重定位（M: 40）</p>
+<p>make cc 修改</p>
+<img src="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/1.JPG" class>
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串大小</title>
+    <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/</url>
+    <content><![CDATA[<p>字符串”\\”A100\”\”的长度是多少？8个长度</p>
+<p> \ 要用 \ 表示</p>
+<p>‘’ 要用 &quot; 表示</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆和栈</title>
+    <url>/C-C-Lover/%E5%A0%86%E5%92%8C%E6%A0%88/</url>
+    <content><![CDATA[<p><strong>堆和栈的分别，优缺点，堆的大小是多少，栈的大小是多少？</strong></p>
+<p><strong>栈区（stack）</strong></p>
+<p>由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈<br>栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域。<br>栈顶的地址和栈的最大容量是系统预先规定好的，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数 ) ,如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。</p>
+<p>优点：<br>1.高速，在栈上分配内存是非常快的。<br>2.简单，栈对象有自己的生命周期，你永远不可能发生内存泄露。<br>因为他总是在超出他的作用域时被自动销毁了。<br>缺点：栈对象严格的定义了生命周期也是其主要的缺点。</p>
+<p><strong>堆区（heap）</strong></p>
+<p>一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表。<br>堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。<br>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。<br>这是由于系统是用链表来存储的空闲内存地址的，<br>自然是不连续的，而链表的遍历方向是由低地址向高地址。<br>堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</p>
+<p>优点：可以自己控制对象的生命周期。<br>缺点：需要程序员手动释放，容易造成内存泄漏。</p>
+<p>转载：网络</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>参考约束</title>
     <url>/MySql-Lover/%E8%80%83%E7%BA%A6%E6%9D%9F/</url>
     <content><![CDATA[<p>6、假设有下面两个关系模式:<br>职工(职工号,姓名,年龄,职务,工资,部门号),其中职工号为主码;<br>部门(部门号,名称,经理名,电话),其中部门号为主码。<br>用SQL语言定义这两个关系模式,要求在模式中完成以下完整性约束条件的定义:<br>(1)定义每个模式的主码;<br>(2)定义参照完整性;<br>(3)定义职工年龄不得超过60岁；</p>
@@ -30,6 +186,10 @@
 <p>#define EV_SYN 0x00 /* 同步事件 <em>/<br>#define EV_KEY 0x01 /</em> 按键事件 <em>/<br>#define EV_REL 0x02 /</em> 相对坐标事件 <em>/<br>#define EV_ABS 0x03 /</em> 绝对坐标事件 <em>/<br>#define EV_MSC 0x04 /</em> 杂项(其他)事件 <em>/<br>#define EV_SW 0x05 /</em> 开关事件 <em>/<br>#define EV_LED 0x11 /</em> LED <em>/<br>#define EV_SND 0x12 /</em> sound(声音) <em>/<br>#define EV_REP 0x14 /</em> 重复事件 <em>/<br>#define EV_FF 0x15 /</em> 压力事件 <em>/<br>#define EV_PWR 0x16 /</em> 电源事件 <em>/<br>#define EV_FF_STATUS 0x17 /</em> 压力状态事件 */</p>
 <p>按键连按：EV_KEY 、EV_REP。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">1、申请一个 input_dev 结构体</span><br><span class="line">struct input_dev *input_allocate_device(void)</span><br><span class="line">注销</span><br><span class="line">void input_free_device(struct input_dev *dev)</span><br><span class="line"></span><br><span class="line">int input_register_device(struct input_dev *dev)</span><br><span class="line">void input_unregister_device(struct input_dev *dev)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;*********第一种设置事件和事件值的方法***********&#x2F;</span><br><span class="line"> __set_bit(EV_KEY, inputdev-&gt;evbit); &#x2F;* 设置产生按键事件 *&#x2F;</span><br><span class="line"> __set_bit(EV_REP, inputdev-&gt;evbit); &#x2F;* 重复事件 *&#x2F;</span><br><span class="line"> __set_bit(KEY_0, inputdev-&gt;keybit); &#x2F;*设置产生哪些按键值 *&#x2F;</span><br><span class="line"> &#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;*********第二种设置事件和事件值的方法***********&#x2F;</span><br><span class="line"> keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |</span><br><span class="line">BIT_MASK(EV_REP);</span><br><span class="line"> keyinputdev.inputdev-&gt;keybit[BIT_WORD(KEY_0)] |&#x3D;</span><br><span class="line">BIT_MASK(KEY_0);</span><br><span class="line"> &#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;*********第三种设置事件和事件值的方法***********&#x2F; keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |</span><br><span class="line">BIT_MASK(EV_REP);</span><br><span class="line">input_set_capability(keyinputdev.inputdev, EV_KEY, KEY_0);</span><br><span class="line">&#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、上报输入事件</span><br><span class="line">但是具体是什么样的输入值 Linux 内核是不知道的.,我们需要获取到具体</span><br><span class="line">的输入值，或者说是输入事件，然后将输入事件上报给 Linux 内核</span><br><span class="line"></span><br><span class="line">void input_event(struct input_dev *dev,</span><br><span class="line">            unsigned int type,</span><br><span class="line">            unsigned int code,</span><br><span class="line">            int value)</span><br><span class="line">其他函数都是基于上面的函数而来。</span><br><span class="line"></span><br><span class="line">void input_report_rel(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_abs(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_ff_status(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_switch(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_mt_sync(struct input_dev *dev) </span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">input_sync 函数来告诉 Linux 内核 input 子系统上报结束</span><br><span class="line"></span><br><span class="line">void input_sync(struct input_dev *dev)&#x2F;* 同步事件 *&#x2F;</span><br><span class="line"></span><br><span class="line">3、input_event  结构体</span><br><span class="line"></span><br><span class="line">struct input_event &#123;</span><br><span class="line"> struct timeval time;   &#x2F;*事件发生的时间*&#x2F;</span><br><span class="line"> __u16 type;          &#x2F;*事件类型*&#x2F;</span><br><span class="line"> __u16 code;			&#x2F;*事件码*&#x2F;</span><br><span class="line"> __s32 value;			&#x2F;*值*&#x2F;</span><br><span class="line"> &#125;;</span><br><span class="line">所有的输入设备最终都是按照 input_event 结构体呈现给用户的，用户应用程序可以通过 input_event 来获取到具体的输入事件或相关的值</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">驱动层</span><br><span class="line">#if  0</span><br><span class="line">    &#x2F;*  初始化 input_dev ，设 置产生哪些事件 *&#x2F;</span><br><span class="line">        __set_bit(EV_KEY, keyinputdev.inputdev-&gt;evbit); &#x2F;* 按键事件 *&#x2F;</span><br><span class="line">        __set_bit(EV_REP, keyinputdev.inputdev-&gt;evbit); &#x2F;*  重复事件 *&#x2F;</span><br><span class="line"></span><br><span class="line">        &#x2F;*  初始化 input_dev ，设置产生哪些按键 *&#x2F;</span><br><span class="line">        __set_bit(KEY_0, keyinputdev.inputdev-&gt;keybit);</span><br><span class="line">        ret &#x3D; input_register_device(keyinputdev.inputdev);</span><br><span class="line">  #endif</span><br><span class="line"></span><br><span class="line">    #if  0</span><br><span class="line">        keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY)|BIT_MASK(EV_REP);</span><br><span class="line"></span><br><span class="line">        keyinputdev.inputdev-&gt;keybit[BIT_WORD(KEY_0)] |&#x3D;BIT_MASK(KEY_0);</span><br><span class="line">                            </span><br><span class="line"></span><br><span class="line">    #endif</span><br><span class="line"></span><br><span class="line">    keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |BIT_MASK(EV_REP);</span><br><span class="line"></span><br><span class="line">    input_set_capability(keyinputdev.inputdev, EV_KEY, KEY_0);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    应用层</span><br><span class="line">    </span><br><span class="line">    &#x2F;* 定义一个 input_event 变量，存放输入事件信息 *&#x2F;</span><br><span class="line"> static struct input_event inputevent;</span><br></pre></td></tr></table></figure>
+
+
 
 
 
@@ -540,6 +700,19 @@
       </tags>
   </entry>
   <entry>
+    <title>c和c++中struct的主要区别</title>
+    <url>/C-C-Lover/c%E5%92%8Cc-%E4%B8%ADstruct%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>c和c++中struct的主要区别是c中的struct不可以含有成员函数，而c++中的struct可以。</p>
+<p>c++中struct和class的主要区别在于默认的存取权限不同，struct默认为public，而class默认为private</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>linux下函数常见报错随记</title>
     <url>/Linux-Lover/nux%E4%B8%8B%E5%87%BD%E6%95%B0%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99/</url>
     <content><![CDATA[<p>gets(str)<br>函数报错：warning: the ‘gets’ function is dangerous and should not be used.<br>原因：<br>注意，gets的行为与fgets使用stdin作为参数时的行为不完全相同:首先，在使用fgets时，结束换行字符不包含在gets中，而在使用fgets时，它包含在fgets中。其次，gets不允许您指定要读取的字符数限制，因此必须小心使用str指向的数组的大小，以避免缓冲区溢出。<br>解决办法：采用<br>fgets(cmd,100,stdin);//100为size</p>
@@ -646,11 +819,7 @@
 <p>setenv mybooyemmc</p>
 <p>run mybootemmc</p>
 <p>4、mtest命令</p>
-<h4 id="IMX6ULL-我的常用小记"><a href="#IMX6ULL-我的常用小记" class="headerlink" title="IMX6ULL 我的常用小记"></a>IMX6ULL 我的常用小记</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">bootcmd 的 默 认 值 就 是 CONFIG_BOOTCOMMAND </span><br><span class="line">bootargs 的 默 认 值 就 是CONFIG_BOOTARGS</span><br><span class="line"></span><br><span class="line">4.1 从EMMC启动</span><br><span class="line"></span><br><span class="line">1、首先查看EMMC里面是否有系统，linux镜像zImage和.dtb文件。先将当前设备切换到EMMC：</span><br><span class="line"></span><br><span class="line">mmc dev 1     &#x2F;&#x2F;切换到EMMC  mmc dev 0 SD 卡</span><br><span class="line"></span><br><span class="line">fatls mmc 1:1  &#x2F;&#x2F;查看EMMC分区1里面的文件</span><br><span class="line">fatload mmc 1:1 80800000 zImage &#x2F;&#x2F;将zimage下载到DDR的0x80800000处</span><br><span class="line">fatload mmc 1:1 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb &#x2F;&#x2F;将dtb读取到0X83000000</span><br><span class="line">bootz 80800000 – 83000000 &#x2F;&#x2F;启动内核</span><br><span class="line"></span><br><span class="line">如果内核启动成功，说明uboot支持emmc启动，验证成功。</span><br><span class="line"></span><br><span class="line">4.2 从网络启动</span><br><span class="line"></span><br><span class="line"> tftp 80800000 zImage         &#x2F;&#x2F;从tftp服务器下载zimage</span><br><span class="line"> tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb &#x2F;&#x2F;从tftp服务器下载.dtb     </span><br><span class="line"> bootz 80800000 – 83000000 &#x2F;&#x2F;启动系统</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;系统烧写</span><br><span class="line">tftp   确保开启！！！！不要从外不复制粘贴，会乱码</span><br><span class="line"></span><br><span class="line">set bootcmd  &#39;tftp 80800000 zImage;tftp 83000000 imx6ull-ming-emmc.dtb;bootz 80800000 - 83000000;&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">setenv bootargs &#39;console&#x3D;ttymxc0,115200 root&#x3D;&#x2F;dev&#x2F;mmcblk1p2 rootwait rw&#39;</span><br><span class="line"></span><br><span class="line">-----------------------------</span><br><span class="line"></span><br><span class="line">tftp 80800000 zImage</span><br><span class="line"></span><br><span class="line">tftp 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dtb</span><br><span class="line"></span><br><span class="line">bootz 80800000 - 83000000</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">fatload mmc 1:1 80800000 zImage</span><br><span class="line"></span><br><span class="line">fatload mmc 1:1 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dtb</span><br><span class="line"></span><br><span class="line">bootz 80800000 - 83000000</span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"></span><br><span class="line">setenv bootcmd &#39;tftp 80800000 zImage;tftp 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dt;bootz 80800000 - 83000000;&#39;</span><br><span class="line"></span><br><span class="line">saveenv</span><br><span class="line"></span><br><span class="line">boot</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------</span><br><span class="line"></span><br><span class="line">tftp 87800000 uart.bin</span><br><span class="line"></span><br><span class="line">go 87800000</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">grep -nr  xxxx</span><br><span class="line"></span><br><span class="line">查找当前目录下包含关键字“NEON”的所有文件，并列出行号。</span><br><span class="line"></span><br><span class="line">QAQ--------&#x2F;修改bootargs进入根系统&#x2F;----------</span><br><span class="line"></span><br><span class="line">setenv bootargs &#39;console&#x3D;ttymxc0,115200 root&#x3D;&#x2F;dev&#x2F;nfs rw nfsroot&#x3D;192.168.0.128:&#x2F;home&#x2F;ming&#x2F;linux&#x2F;nfs&#x2F;rootfs ip&#x3D;192.168.0.50:192.168.0.128:192.168.0.1:255.255.255.0::eth0:off&#39;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
+<h4 id="IMX6ULL-我的常用小记"><a href="#IMX6ULL-我的常用小记" class="headerlink" title="IMX6ULL 我的常用小记"></a>IMX6ULL 我的常用小记</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">bootcmd 的 默 认 值 就 是 CONFIG_BOOTCOMMAND </span><br><span class="line">bootargs 的 默 认 值 就 是CONFIG_BOOTARGS</span><br><span class="line"></span><br><span class="line">4.1 从EMMC启动</span><br><span class="line"></span><br><span class="line">1、首先查看EMMC里面是否有系统，linux镜像zImage和.dtb文件。先将当前设备切换到EMMC：</span><br><span class="line"></span><br><span class="line">mmc dev 1     &#x2F;&#x2F;切换到EMMC  mmc dev 0 SD 卡</span><br><span class="line"></span><br><span class="line">fatls mmc 1:1  &#x2F;&#x2F;查看EMMC分区1里面的文件</span><br><span class="line">fatload mmc 1:1 80800000 zImage &#x2F;&#x2F;将zimage下载到DDR的0x80800000处</span><br><span class="line">fatload mmc 1:1 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb &#x2F;&#x2F;将dtb读取到0X83000000</span><br><span class="line">bootz 80800000 – 83000000 &#x2F;&#x2F;启动内核</span><br><span class="line"></span><br><span class="line">如果内核启动成功，说明uboot支持emmc启动，验证成功。</span><br><span class="line"></span><br><span class="line">4.2 从网络启动</span><br><span class="line"></span><br><span class="line"> tftp 80800000 zImage         &#x2F;&#x2F;从tftp服务器下载zimage</span><br><span class="line"> tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb &#x2F;&#x2F;从tftp服务器下载.dtb     </span><br><span class="line"> bootz 80800000 – 83000000 &#x2F;&#x2F;启动系统</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;系统烧写</span><br><span class="line">tftp   确保开启！！！！不要从外不复制粘贴，会乱码</span><br><span class="line"></span><br><span class="line">set bootcmd  &#39;tftp 80800000 zImage;tftp 83000000 imx6ull-ming-emmc.dtb;bootz 80800000 - 83000000;&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">setenv bootargs &#39;console&#x3D;ttymxc0,115200 root&#x3D;&#x2F;dev&#x2F;mmcblk1p2 rootwait rw&#39;</span><br><span class="line"></span><br><span class="line">-----------------------------</span><br><span class="line"></span><br><span class="line">tftp 80800000 zImage</span><br><span class="line"></span><br><span class="line">tftp 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dtb</span><br><span class="line"></span><br><span class="line">bootz 80800000 - 83000000</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">fatload mmc 1:1 80800000 zImage</span><br><span class="line"></span><br><span class="line">fatload mmc 1:1 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dtb</span><br><span class="line"></span><br><span class="line">bootz 80800000 - 83000000</span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"></span><br><span class="line">setenv bootcmd &#39;tftp 80800000 zImage;tftp 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dt;bootz 80800000 - 83000000;&#39;</span><br><span class="line"></span><br><span class="line">saveenv</span><br><span class="line"></span><br><span class="line">boot</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------</span><br><span class="line"></span><br><span class="line">tftp 87800000 uart.bin</span><br><span class="line"></span><br><span class="line">go 87800000</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">grep -nr  xxxx</span><br><span class="line"></span><br><span class="line">查找当前目录下包含关键字“NEON”的所有文件，并列出行号。</span><br><span class="line"></span><br><span class="line">QAQ--------&#x2F;修改bootargs进入根系统&#x2F;----------</span><br><span class="line"></span><br><span class="line">setenv bootargs &#39;console&#x3D;ttymxc0,115200 root&#x3D;&#x2F;dev&#x2F;nfs rw nfsroot&#x3D;192.168.0.128:&#x2F;home&#x2F;ming&#x2F;linux&#x2F;nfs&#x2F;rootfs ip&#x3D;192.168.0.50:192.168.0.128:192.168.0.1:255.255.255.0::eth0:off&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;buildrootfs 根文件系统</span><br><span class="line">setenv bootargs &#39;console&#x3D;tty1 console&#x3D;ttymxc0,115200 root&#x3D;&#x2F;dev&#x2F;nfs nfsroot&#x3D;192.168.0.128:&#x2F;home&#x2F;ming&#x2F;linux&#x2F;nfs&#x2F;rootfs rw ip&#x3D;192.168.0.50:192.168.0.128:192.168.0.1:255.255.255.0::eth0:off&#39;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -1140,16 +1309,18 @@
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[]]></content>
+    <title>怎么说你了解过IIC</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1</p>
+<p>IIC 速度能到达400K SPI:50M</p>
+]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
   </entry>
   <entry>
-    <title>怎么说你了解过IIC</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -2302,7 +2473,18 @@
   <entry>
     <title>C字符串常用函数</title>
     <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>字符串连接函数 strcat、strncat</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">char  a[10] = <span class="string">"123"</span>;</span><br><span class="line">char b[] = <span class="string">"456"</span>;</span><br><span class="line"></span><br><span class="line">strcat(a,b);//123456</span><br><span class="line">strncat(a,b,2);//1235</span><br></pre></td></tr></table></figure>
+
+<p>字符串复制函数 strcpy、strncpy</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">strcpy(a,b);//123456</span><br><span class="line">strncpy(a,b,2);//1235</span><br></pre></td></tr></table></figure>
+<p>字符串比较strcmp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">strcmp(str1,str2);</span><br></pre></td></tr></table></figure>
+<p>字符长度strlen</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">strlen(str);</span><br></pre></td></tr></table></figure>
+<p>字符分解strtok</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">strtok函数的作用是把字符串以规定的字符分割开：</span><br><span class="line">p &#x3D; strtok(buf, &quot;@&quot;); </span><br><span class="line">p为指针，buf也是指针，这句代码的意思就是把buf中的字符串以&quot;@&quot;为分隔符分割保存到指针p中。</span><br><span class="line">再次调用strtok函数时，不需要再写buf。即：</span><br><span class="line">p &#x3D; strtok(NULL, &quot;@&quot;);</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
@@ -2369,6 +2551,7 @@
 <p>tar -vxjf xxxx</p>
 <p>tar -vczf xxx xxx  压缩gz</p>
 <p>tar -vxzf xxxx  解压</p>
+<p>tar -vxzf xxxx（目录） -C xxx(路径)</p>
 <p>rar</p>
 <p>rar -a xxx.rar xxx   压缩</p>
 <p>rar -x xxx.rar   解压</p>

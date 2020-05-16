@@ -320,6 +320,1434 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/" itemprop="url">RTC驱动了解🏃</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-16T22:02:00+08:00">
+                2020-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>RTC 设备驱动是一个标准的字符设备驱动</p>
+<p> rtc_device 结构体</p>
+<p> rtc_class_ops 结构体</p>
+<p>rtc_dev_ioctl() 函数就会执行，操作 rtc_class_ops 中的 read_time、set_time 等函数来对具体 RTC 设备的读写操作。</p>
+<p>snvs_rtc_ops 操作集</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct rtc_device *rtc_device_register(const char *name,</span><br><span class="line">                  struct device *dev,</span><br><span class="line">                  const struct rtc_class_ops *ops,</span><br><span class="line">                  struct module *owner)</span><br><span class="line">                  </span><br><span class="line">struct rtc_device *rtc_device_register(const char *name,</span><br><span class="line">                      struct device *dev,</span><br><span class="line">                      const struct rtc_class_ops *ops,</span><br><span class="line">                      struct module *owner)</span><br></pre></td></tr></table></figure>
+<p> platform_get_resource 函数从设备树中获取到 RTC 外设寄存器基地址</p>
+<p> 函数 devm_ioremap_resource 完成内存映射，得到 RTC 外设寄存器物理基<br>地址对应的虚拟地址。</p>
+<p>snvs-rtc.c 文件会采用 regmap 机制来读写RTC 底层硬件寄存器。<br>这里使用 devm_regmap_init_mmio 函数将 RTC 的硬件寄存器转化为regmap 形式，这样 regmap 机制的 regmap_write、regmap_read 等 API 函数才能操作寄存器。<br>devm_rtc_device_register 函数向系统注册 rtc_devcie</p>
+<p>调用 rtc_read_lp_counter 获取 RTC 计数值，这个时间值是秒数</p>
+<p>调用 rtc_time_to_tm 函数将获取到的秒数转换为时间值</p>
+<p> rtc_read_lp_counter 函数，此函数用于读取 RTC 计数值</p>
+<p>测试</p>
+<p>设置当前时间为 2019 年 8 月 31 日 18:13:00<br>date -s “2019-08-31 18:13:00”</p>
+<p>此时间还没有写入到I.MX6U 内部 RTC 里面或其他的 RTC 芯片里面<br>hwclock -w  //将当前系统时间写入到 RTC 里面</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/ramebuffer-%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E5%86%99%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/ramebuffer-%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E5%86%99%E6%B5%81%E7%A8%8B/" itemprop="url">Framebuffer驱动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-16T17:54:00+08:00">
+                2020-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/ramebuffer-%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E5%86%99%E6%B5%81%E7%A8%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/ramebuffer-%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E5%86%99%E6%B5%81%E7%A8%8B/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Framebuffer 抽象为一个叫做 fb_info 的结构体，fb_info 结构体包含了 Framebuffer 设备的完整属性和操作集合，因此每一个 Framebuffer 设备都必须有一个 fb_info</p>
+<p>内核内存分配函数<br>函数devm_kzalloc（）和kzalloc（）一样都是内核内存分配函数，但是devm_kzalloc（）是跟设备有关的，自动释放。当内存不在使用时，可以使用函数devm_kfree（）释放。<br>而kzalloc（）则需要手动释放使用kfree（），实现了kmalloc()+memset()的功能</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/ragma-pack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/ragma-pack/" itemprop="url">#pragma pack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T15:04:00+08:00">
+                2020-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/ragma-pack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/ragma-pack/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#pragma pack(push)保存对齐状态</p>
+<p>#pram pack(4)设定4字节</p>
+<p>voif func();</p>
+<p>#pragma pack(pop)//恢复对齐</p>
+<p>注意：from dalao  ！！！</p>
+<p>c51 默认按照1字节对其，没有存在字节对齐问题.<br>keil工程编译不报错，语句无效。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/Linux%E4%B8%AD%E6%96%AD-%E6%AD%A3%E6%97%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/Linux%E4%B8%AD%E6%96%AD-%E6%AD%A3%E6%97%AD/" itemprop="url">Linux中断(正旭)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T14:59:00+08:00">
+                2020-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/Linux%E4%B8%AD%E6%96%AD-%E6%AD%A3%E6%97%AD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Linux%E4%B8%AD%E6%96%AD-%E6%AD%A3%E6%97%AD/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>中断</p>
+<p>Linux不用FIQ，只用到了IRQ</p>
+<p>中断服务有没有参数主要是看中断发生在裸机上还是实时系统中</p>
+<p>linux中断流程</p>
+<p>Linux不用FIQ，只用到了IRQ</p>
+<p>linux的中断处理都是在SVC模式下处理的。</p>
+<p>当发生中断的时候，代码运行在内核空间</p>
+<p>IRQ执行的时候很快</p>
+<p>在IRQ回到SVC模式时候 R0存着irqnumber</p>
+<p>在SVC模式的内核栈上保存中断时候正在执行任务的寄存器状态 R1-R12 。 R0保存在IRQ那边的内核栈。</p>
+<p>随后会再搬到SVC的内核栈上</p>
+<p>总结分为7点：</p>
+<p>Linux对中断的扩展：硬件中断，软件中断</p>
+<p>中断处理原则1：不能嵌套</p>
+<p>中断处理原则2：越快越好</p>
+<p>要处理的事情实在太多：拆分为：上半部，下半部</p>
+<p>下半部的事情耗时不是太长：tasklet</p>
+<p>下半部要做的事情太多并且很复杂：工作队列</p>
+<p>新技术：threaded irq</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%98%E9%87%8F/" itemprop="url">交换两个变量的值，不使用第三个变量</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T14:55:00+08:00">
+                2020-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%98%E9%87%8F/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%98%E9%87%8F/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>交换两个变量的值，不使用第三个变量。即a=3,b=5,交换之后a=5,b=3;</p>
+<p>答案：有两种解法, 一种用算术算法, 一种用^(异或) </p>
+<p>a = a + b; </p>
+<p>b = a - b;</p>
+<p> a = a - b;    //溢出问题</p>
+<p>or</p>
+<p> a = a^b;// 只能对int,char..</p>
+<p> b = a^b; </p>
+<p>a = a^b;</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/" itemprop="url">Qt编译报错</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T14:15:00+08:00">
+                2020-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>报错make: Nothing to be done for ‘first’</p>
+<p>可执行程序已经存在。</p>
+<p>/usr/bin/ld: main.o：普通ELF重定位（M: 40）</p>
+<p>make cc 修改</p>
+<img src="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/1.JPG" class>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/" itemprop="url">字符串大小</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-12T15:03:00+08:00">
+                2020-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>字符串”\\”A100\”\”的长度是多少？8个长度</p>
+<p> \ 要用 \ 表示</p>
+<p>‘’ 要用 &quot; 表示</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E5%A0%86%E5%92%8C%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="梦在广工">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/C-C-Lover/%E5%A0%86%E5%92%8C%E6%A0%88/" itemprop="url">堆和栈</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-12T10:08:00+08:00">
+                2020-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Lover/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++ Lover</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/C-C-Lover/%E5%A0%86%E5%92%8C%E6%A0%88/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E5%A0%86%E5%92%8C%E6%A0%88/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>堆和栈的分别，优缺点，堆的大小是多少，栈的大小是多少？</strong></p>
+<p><strong>栈区（stack）</strong></p>
+<p>由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈<br>栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域。<br>栈顶的地址和栈的最大容量是系统预先规定好的，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数 ) ,如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。</p>
+<p>优点：<br>1.高速，在栈上分配内存是非常快的。<br>2.简单，栈对象有自己的生命周期，你永远不可能发生内存泄露。<br>因为他总是在超出他的作用域时被自动销毁了。<br>缺点：栈对象严格的定义了生命周期也是其主要的缺点。</p>
+<p><strong>堆区（heap）</strong></p>
+<p>一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表。<br>堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。<br>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。<br>这是由于系统是用链表来存储的空闲内存地址的，<br>自然是不连续的，而链表的遍历方向是由低地址向高地址。<br>堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</p>
+<p>优点：可以自己控制对象的生命周期。<br>缺点：需要程序员手动释放，容易造成内存泄漏。</p>
+<p>转载：网络</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/MySql-Lover/%E8%80%83%E7%BA%A6%E6%9D%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -629,6 +2057,7 @@
 <p>按键连按：EV_KEY 、EV_REP。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1、申请一个 input_dev 结构体</span><br><span class="line">struct input_dev *input_allocate_device(void)</span><br><span class="line">注销</span><br><span class="line">void input_free_device(struct input_dev *dev)</span><br><span class="line"></span><br><span class="line">int input_register_device(struct input_dev *dev)</span><br><span class="line">void input_unregister_device(struct input_dev *dev)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;*********第一种设置事件和事件值的方法***********&#x2F;</span><br><span class="line"> __set_bit(EV_KEY, inputdev-&gt;evbit); &#x2F;* 设置产生按键事件 *&#x2F;</span><br><span class="line"> __set_bit(EV_REP, inputdev-&gt;evbit); &#x2F;* 重复事件 *&#x2F;</span><br><span class="line"> __set_bit(KEY_0, inputdev-&gt;keybit); &#x2F;*设置产生哪些按键值 *&#x2F;</span><br><span class="line"> &#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;*********第二种设置事件和事件值的方法***********&#x2F;</span><br><span class="line"> keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |</span><br><span class="line">BIT_MASK(EV_REP);</span><br><span class="line"> keyinputdev.inputdev-&gt;keybit[BIT_WORD(KEY_0)] |&#x3D;</span><br><span class="line">BIT_MASK(KEY_0);</span><br><span class="line"> &#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;*********第三种设置事件和事件值的方法***********&#x2F; keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |</span><br><span class="line">BIT_MASK(EV_REP);</span><br><span class="line">input_set_capability(keyinputdev.inputdev, EV_KEY, KEY_0);</span><br><span class="line">&#x2F;************************************************&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、上报输入事件</span><br><span class="line">但是具体是什么样的输入值 Linux 内核是不知道的.,我们需要获取到具体</span><br><span class="line">的输入值，或者说是输入事件，然后将输入事件上报给 Linux 内核</span><br><span class="line"></span><br><span class="line">void input_event(struct input_dev *dev,</span><br><span class="line">            unsigned int type,</span><br><span class="line">            unsigned int code,</span><br><span class="line">            int value)</span><br><span class="line">其他函数都是基于上面的函数而来。</span><br><span class="line"></span><br><span class="line">void input_report_rel(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_abs(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_ff_status(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_report_switch(struct input_dev *dev, unsigned int code, int value)</span><br><span class="line">void input_mt_sync(struct input_dev *dev) </span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">input_sync 函数来告诉 Linux 内核 input 子系统上报结束</span><br><span class="line"></span><br><span class="line">void input_sync(struct input_dev *dev)&#x2F;* 同步事件 *&#x2F;</span><br><span class="line"></span><br><span class="line">3、input_event  结构体</span><br><span class="line"></span><br><span class="line">struct input_event &#123;</span><br><span class="line"> struct timeval time;   &#x2F;*事件发生的时间*&#x2F;</span><br><span class="line"> __u16 type;          &#x2F;*事件类型*&#x2F;</span><br><span class="line"> __u16 code;			&#x2F;*事件码*&#x2F;</span><br><span class="line"> __s32 value;			&#x2F;*值*&#x2F;</span><br><span class="line"> &#125;;</span><br><span class="line">所有的输入设备最终都是按照 input_event 结构体呈现给用户的，用户应用程序可以通过 input_event 来获取到具体的输入事件或相关的值</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">驱动层</span><br><span class="line">#if  0</span><br><span class="line">    &#x2F;*  初始化 input_dev ，设 置产生哪些事件 *&#x2F;</span><br><span class="line">        __set_bit(EV_KEY, keyinputdev.inputdev-&gt;evbit); &#x2F;* 按键事件 *&#x2F;</span><br><span class="line">        __set_bit(EV_REP, keyinputdev.inputdev-&gt;evbit); &#x2F;*  重复事件 *&#x2F;</span><br><span class="line"></span><br><span class="line">        &#x2F;*  初始化 input_dev ，设置产生哪些按键 *&#x2F;</span><br><span class="line">        __set_bit(KEY_0, keyinputdev.inputdev-&gt;keybit);</span><br><span class="line">        ret &#x3D; input_register_device(keyinputdev.inputdev);</span><br><span class="line">  #endif</span><br><span class="line"></span><br><span class="line">    #if  0</span><br><span class="line">        keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY)|BIT_MASK(EV_REP);</span><br><span class="line"></span><br><span class="line">        keyinputdev.inputdev-&gt;keybit[BIT_WORD(KEY_0)] |&#x3D;BIT_MASK(KEY_0);</span><br><span class="line">                            </span><br><span class="line"></span><br><span class="line">    #endif</span><br><span class="line"></span><br><span class="line">    keyinputdev.inputdev-&gt;evbit[0] &#x3D; BIT_MASK(EV_KEY) |BIT_MASK(EV_REP);</span><br><span class="line"></span><br><span class="line">    input_set_capability(keyinputdev.inputdev, EV_KEY, KEY_0);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    应用层</span><br><span class="line">    </span><br><span class="line">    &#x2F;* 定义一个 input_event 变量，存放输入事件信息 *&#x2F;</span><br><span class="line"> static struct input_event inputevent;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -638,1456 +2067,8 @@
 
 
 
-          
-        
-      
-    </div>
-    
-    
-    
 
-    
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/SC%E9%A9%B1%E5%8A%A8%E5%AE%9E%E9%AA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/SC%E9%A9%B1%E5%8A%A8%E5%AE%9E%E9%AA%8C/" itemprop="url">MISC驱动实验</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T21:05:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/SC%E9%A9%B1%E5%8A%A8%E5%AE%9E%E9%AA%8C/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/SC%E9%A9%B1%E5%8A%A8%E5%AE%9E%E9%AA%8C/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>MISC 驱动也叫做杂项驱动，也就是当我们板子上的某些外设无法进行分类的时候就可以使用 MISC 驱动。<br>所有的 MISC 设备驱动的主设备号都为<code>10</code>，不同的设备使用不同的从设备号。</p>
-<p>miscdevice 结构体</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct miscdevice &#123;</span><br><span class="line">     int minor; /* 子设备号 */</span><br><span class="line">     const char *name; /* 设备名字 */</span><br><span class="line">     const struct file_operations *fops; /* 设备操作集 */</span><br><span class="line">     struct list_head list;</span><br><span class="line">     struct device *parent;</span><br><span class="line">     struct device *this_device;</span><br><span class="line">     const struct attribute_group **groups;</span><br><span class="line">     const char *nodename;</span><br><span class="line">     umode_t mode;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
-<p>minor 表示子设备号，MISC 设备的主设备号为 10，这个是固定的，需要用户指定子设备号，Linux 系统已经预定义了一些 MISC 设备的子设备号，这些预定义的子设备号定义。</p>
-<p>int misc_register(struct miscdevice * misc);<br>int misc_deregister(struct miscdevice *misc);</p>
-<p>ls /dev/miscbeep -l    查看主次设备号</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E5%A4%87%E6%A0%91%E8%87%AA%E5%B8%A6driver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E5%A4%87%E6%A0%91%E8%87%AA%E5%B8%A6driver/" itemprop="url">设备树自带driver</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T14:47:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E5%A4%87%E6%A0%91%E8%87%AA%E5%B8%A6driver/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E5%A4%87%E6%A0%91%E8%87%AA%E5%B8%A6driver/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>打开 RED 这个 LED<br>echo 1 &gt; /sys/class/leds/red/brightness //打开 LED0<br>关闭 RED 这个 LED<br>echo 0 &gt; /sys/class/leds/red/brightness //关闭 LED0</p>
-<p>linux,default-trigger = “heartbeat”; //系统闪烁</p>
-<p>//开机自闪烁<br>linux,default-trigger = “heartbeat”;<br>default-state = “on”;</p>
-<p>函数了解：</p>
-<p>count = device_get_child_node_count(dev);函数统计子节点数量</p>
-<p>device_for_each_child_node(dev, child) //遍历</p>
-<p>led.gpiod = devm_get_gpiod_from_child(dev, NULL, child);</p>
-<p>fwnode_property_read_string（）；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/gdb%E4%B8%8Egdbserver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/gdb%E4%B8%8Egdbserver/" itemprop="url">gdb与gdbserver</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T13:30:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/gdb%E4%B8%8Egdbserver/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/gdb%E4%B8%8Egdbserver/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>GDB移植</strong></p>
-<p>arm-linux-gnueabihf-gcc 就自带了主机使用的 arm-linux-gnueabihf-gdb 和开发板所使用的 gdbserver。</p>
-<p>arm-linux-gnueabihf-gcc gdbtest.c -o gdbtest -g //编译测试程序，注意-g 选项<br>arm-linux-gnueabihf-gdb gdbtest<br>target remote 192.168.0.50:2001 //连接到开发板上</p>
-<p>gdbserver 192.168.0.128：2001 gdbtest //开发板连接主机</p>
-<p>命令：</p>
-<p>l 命令(list)用于列出所有程序源码<br>b 命令(break)用于设置断点<br>c 命令用于运行到断点出，输入 c 命令程序就会运行<br>s 命令(step)是单步运行执行，此函数会进入到函数里面。<br>n 命令(next)也是单步运行，但是 n 命令不会进入到函数里面。<br>p 命令(print)用于打印某个变量值。<br>q 命令(quit)用于退出调试，开发板上的 gdbserver 也会停止。</p>
-<p>查看断点：</p>
-<p>info break ;</p>
-<p> VSCode+gdbserver  图形化调试</p>
-<p> .vscode文件launch.json 文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // 使用 IntelliSense 了解相关属性。 </span><br><span class="line">    // 悬停以查看现有属性的描述。</span><br><span class="line">    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span><br><span class="line">    <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">    <span class="string">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"gdbtest"</span>,</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"cppdbg"</span>,</span><br><span class="line">            <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">            <span class="string">"program"</span>: <span class="string">"<span class="variable">$&#123;workspaceFolder&#125;</span>/gdbtest"</span>,</span><br><span class="line">            <span class="string">"args"</span>: [],</span><br><span class="line">            <span class="string">"stopAtEntry"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">"cwd"</span>: <span class="string">"<span class="variable">$&#123;workspaceFolder&#125;</span>"</span>,</span><br><span class="line">            <span class="string">"environment"</span>: [],</span><br><span class="line">            <span class="string">"externalConsole"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">"MIMode"</span>: <span class="string">"gdb"</span>,</span><br><span class="line">            <span class="string">"setupCommands"</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"description"</span>: <span class="string">"为 gdb 启用整齐打印"</span>,</span><br><span class="line">                    <span class="string">"text"</span>: <span class="string">"-enable-pretty-printing"</span>,</span><br><span class="line">                    <span class="string">"ignoreFailures"</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">            <span class="string">"miDebuggerPath"</span>: <span class="string">"/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gdb"</span>,</span><br><span class="line">            <span class="string">"miDebuggerServerAddress"</span>: <span class="string">"192.168.0.50:2001"</span></span><br><span class="line">       </span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/platform-%E4%BB%A3%E7%A0%81%E5%B0%8F%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/platform-%E4%BB%A3%E7%A0%81%E5%B0%8F%E8%AE%A1/" itemprop="url">platform框架</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-09T21:54:00+08:00">
-                2020-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/platform-%E4%BB%A3%E7%A0%81%E5%B0%8F%E8%AE%A1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/platform-%E4%BB%A3%E7%A0%81%E5%B0%8F%E8%AE%A1/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>无设备树platform</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br></pre></td><td class="code"><pre><span class="line">//devic.c</span><br><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/poll.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/platform_device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/mach/map.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/io.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LEDDEV_CNT 1 /* 设备号长度 */</span></span><br><span class="line"><span class="comment">#define LEDDEV_NAME "platled" /* 设备名字 */</span></span><br><span class="line"><span class="comment">#define LEDOFF 0</span></span><br><span class="line"><span class="comment">#define LEDON 1</span></span><br><span class="line"></span><br><span class="line">static void __iomem *IMX6U_CCM_CCGR1;</span><br><span class="line">static void __iomem *SW_MUX_GPIO1_IO03;</span><br><span class="line">static void __iomem *SW_PAD_GPIO1_IO03;</span><br><span class="line">static void __iomem *GPIO1_DR;</span><br><span class="line">static void __iomem *GPIO1_GDIR;</span><br><span class="line"></span><br><span class="line">/*设备结构体*/</span><br><span class="line">struct leddev_dev&#123;</span><br><span class="line">    dev_t devid;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct class *class;</span><br><span class="line">    struct device *device;</span><br><span class="line">    int  major;</span><br><span class="line">    int minor;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct leddev_dev leddev ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*LED 打开关闭*/</span><br><span class="line">static void led_switch(u8 sta)</span><br><span class="line">&#123;</span><br><span class="line">    u32 val = 0;</span><br><span class="line">    <span class="keyword">if</span>(sta == LEDOFF)</span><br><span class="line">    &#123;</span><br><span class="line">            val = readl(GPIO1_DR);  /*打开灯*/</span><br><span class="line">            val &amp;= ~(1 &lt;&lt; 3 ) ;</span><br><span class="line">            writel(val,GPIO1_DR);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (sta == LEDON)</span><br><span class="line">    &#123; </span><br><span class="line">            val = readl(GPIO1_DR);  /*打开灯*/</span><br><span class="line">            val |= (1 &lt;&lt; 3 ) ;</span><br><span class="line">            writel(val,GPIO1_DR);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_open(struct inode *inode,</span><br><span class="line">                     struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    filp-&gt;private_data = &amp;leddev ;</span><br><span class="line">    //printk(<span class="string">"chrdevbase open!\r\n"</span>);</span><br><span class="line">     <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static ssize_t led_write(struct file *filp, const char __user *buf,</span><br><span class="line">size_t cnt, loff_t *offt)</span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line"> int retvalue;</span><br><span class="line"> unsigned char databuf[1];</span><br><span class="line"> unsigned char ledstat;</span><br><span class="line"></span><br><span class="line"> retvalue = copy_from_user(databuf, buf, cnt);</span><br><span class="line"><span class="keyword">if</span>(retvalue &lt; 0) &#123;</span><br><span class="line"> <span class="built_in">return</span> -EFAULT;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ledstat = databuf[0]; /* 获取状态值 */</span><br><span class="line"><span class="keyword">if</span>(ledstat == LEDON) &#123;</span><br><span class="line"> led_switch(LEDON); /* 打开 LED 灯 */</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ledstat == LEDOFF) &#123;</span><br><span class="line"> led_switch(LEDOFF); /* 关闭 LED 灯 */</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static struct file_operations led_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = led_open,</span><br><span class="line">            .write = led_write,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int led_probe(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    int i = 0;</span><br><span class="line">    int ressize[5];</span><br><span class="line">    u32 val = 0;</span><br><span class="line">    struct resource *ledsource[5];</span><br><span class="line"></span><br><span class="line">    printk(<span class="string">"led driver and device has matched!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">    /*获取资源*/</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; 5 ; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        ledsource[i] =  platform_get_resource(dev,IORESOURCE_MEM,i);</span><br><span class="line">        <span class="keyword">if</span> (!ledsource[i]) &#123;</span><br><span class="line">                dev_err(&amp;dev-&gt;dev, <span class="string">"No MEM resource for always on\r\n"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">return</span> -ENXIO;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        ressize[i] = resource_size(ledsource[i]);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">        IMX6U_CCM_CCGR1  = ioremap(ledsource[0]-&gt;start, ressize[0]);</span><br><span class="line">        SW_MUX_GPIO1_IO03 = ioremap(ledsource[1]-&gt;start, ressize[1]);</span><br><span class="line">        SW_PAD_GPIO1_IO03 = ioremap(ledsource[2]-&gt;start, ressize[2]);</span><br><span class="line">        GPIO1_DR = ioremap(ledsource[3]-&gt;start, ressize[3]);</span><br><span class="line">        GPIO1_GDIR = ioremap(ledsource[4]-&gt;start, ressize[4]);</span><br><span class="line">    val = readl(IMX6U_CCM_CCGR1);</span><br><span class="line">    val &amp;= ~(3 &lt;&lt; 26); /* 清除以前的设置  */</span><br><span class="line">    val |= (3 &lt;&lt; 26); /* 设置新值 */</span><br><span class="line">    writel(val, IMX6U_CCM_CCGR1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        writel(5, SW_MUX_GPIO1_IO03);</span><br><span class="line">        writel(0x10B0, SW_PAD_GPIO1_IO03);</span><br><span class="line"></span><br><span class="line">        val = readl(GPIO1_GDIR);</span><br><span class="line">        val &amp;= ~(1 &lt;&lt; 3); </span><br><span class="line">        val |= (1 &lt;&lt; 3);</span><br><span class="line">        writel(val, GPIO1_GDIR);</span><br><span class="line"></span><br><span class="line">        val = readl(GPIO1_DR);</span><br><span class="line">        val |= (1 &lt;&lt; 3) ;</span><br><span class="line">        writel(val, GPIO1_DR);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> /* 注册字符设备驱动 */</span><br><span class="line">/*1、创建设备号 */</span><br><span class="line"> <span class="keyword">if</span> (leddev.major) &#123; /* 定义了设备号 */</span><br><span class="line"> leddev.devid = MKDEV(leddev.major, 0);</span><br><span class="line"> register_chrdev_region(leddev.devid, LEDDEV_CNT,LEDDEV_NAME);</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123; /* 没有定义设备号 */</span><br><span class="line"> alloc_chrdev_region(&amp;leddev.devid, 0, LEDDEV_CNT,</span><br><span class="line">LEDDEV_NAME);</span><br><span class="line"> leddev.major = MAJOR(leddev.devid);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> /* 2、初始化 cdev */</span><br><span class="line"> leddev.cdev.owner = THIS_MODULE;</span><br><span class="line"> cdev_init(&amp;leddev.cdev, &amp;led_fops);</span><br><span class="line"></span><br><span class="line"> /* 3、添加一个 cdev */</span><br><span class="line"> cdev_add(&amp;leddev.cdev, leddev.devid, LEDDEV_CNT);</span><br><span class="line"> /* 4、创建类 */</span><br><span class="line"> leddev.class = class_create(THIS_MODULE, LEDDEV_NAME);</span><br><span class="line"> <span class="keyword">if</span> (IS_ERR(leddev.class)) &#123;</span><br><span class="line"> <span class="built_in">return</span> PTR_ERR(leddev.class);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> /* 5、创建设备 */</span><br><span class="line"> leddev.device = device_create(leddev.class, NULL, leddev.devid,</span><br><span class="line">NULL, LEDDEV_NAME);</span><br><span class="line"> <span class="keyword">if</span> (IS_ERR(leddev.device)) &#123;</span><br><span class="line"> <span class="built_in">return</span> PTR_ERR(leddev.device);</span><br><span class="line"> &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_remove(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    iounmap(IMX6U_CCM_CCGR1);</span><br><span class="line">    iounmap(SW_MUX_GPIO1_IO03);</span><br><span class="line">    iounmap(SW_PAD_GPIO1_IO03);</span><br><span class="line">    iounmap(GPIO1_DR);</span><br><span class="line">    iounmap(GPIO1_GDIR);</span><br><span class="line"></span><br><span class="line">    cdev_del(&amp;leddev.cdev);</span><br><span class="line">    unregister_chrdev_region(leddev.devid, LEDDEV_CNT);</span><br><span class="line">    device_destroy(leddev.class, leddev.devid);</span><br><span class="line">    class_destroy(leddev.class);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">static struct platform_driver led_driver = &#123;</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name = <span class="string">"imx6ul-led"</span>, /* 驱动名字，用于和设备匹配 */</span><br><span class="line">        &#125;,</span><br><span class="line">        .probe = led_probe,</span><br><span class="line">        .remove = led_remove,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init leddriver_init(void)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">return</span> platform_driver_register(&amp;led_driver);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> static void __exit leddriver_exit(void)</span><br><span class="line"> &#123;</span><br><span class="line"> platform_driver_unregister(&amp;led_driver);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">/*注册驱动函数*/</span><br><span class="line">module_init(leddriver_init);</span><br><span class="line">module_exit(leddriver_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br><span class="line"></span><br><span class="line">//driver.c</span><br><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/poll.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/platform_device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/mach/map.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/io.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LEDDEV_CNT 1 /* 设备号长度 */</span></span><br><span class="line"><span class="comment">#define LEDDEV_NAME "platled" /* 设备名字 */</span></span><br><span class="line"><span class="comment">#define LEDOFF 0</span></span><br><span class="line"><span class="comment">#define LEDON 1</span></span><br><span class="line"></span><br><span class="line">static void __iomem *IMX6U_CCM_CCGR1;</span><br><span class="line">static void __iomem *SW_MUX_GPIO1_IO03;</span><br><span class="line">static void __iomem *SW_PAD_GPIO1_IO03;</span><br><span class="line">static void __iomem *GPIO1_DR;</span><br><span class="line">static void __iomem *GPIO1_GDIR;</span><br><span class="line"></span><br><span class="line">/*设备结构体*/</span><br><span class="line">struct leddev_dev&#123;</span><br><span class="line">    dev_t devid;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct class *class;</span><br><span class="line">    struct device *device;</span><br><span class="line">    int  major;</span><br><span class="line">    int minor;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct leddev_dev leddev ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*LED 打开关闭*/</span><br><span class="line">static void led_switch(u8 sta)</span><br><span class="line">&#123;</span><br><span class="line">    u32 val = 0;</span><br><span class="line">    <span class="keyword">if</span>(sta == LEDOFF)</span><br><span class="line">    &#123;</span><br><span class="line">            val = readl(GPIO1_DR);  /*打开灯*/</span><br><span class="line">            val &amp;= ~(1 &lt;&lt; 3 ) ;</span><br><span class="line">            writel(val,GPIO1_DR);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (sta == LEDON)</span><br><span class="line">    &#123; </span><br><span class="line">            val = readl(GPIO1_DR);  /*打开灯*/</span><br><span class="line">            val |= (1 &lt;&lt; 3 ) ;</span><br><span class="line">            writel(val,GPIO1_DR);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_open(struct inode *inode,</span><br><span class="line">                     struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    filp-&gt;private_data = &amp;leddev ;</span><br><span class="line">    //printk(<span class="string">"chrdevbase open!\r\n"</span>);</span><br><span class="line">     <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static ssize_t led_write(struct file *filp, const char __user *buf,</span><br><span class="line">size_t cnt, loff_t *offt)</span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line"> int retvalue;</span><br><span class="line"> unsigned char databuf[1];</span><br><span class="line"> unsigned char ledstat;</span><br><span class="line"></span><br><span class="line"> retvalue = copy_from_user(databuf, buf, cnt);</span><br><span class="line"><span class="keyword">if</span>(retvalue &lt; 0) &#123;</span><br><span class="line"> <span class="built_in">return</span> -EFAULT;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ledstat = databuf[0]; /* 获取状态值 */</span><br><span class="line"><span class="keyword">if</span>(ledstat == LEDON) &#123;</span><br><span class="line"> led_switch(LEDON); /* 打开 LED 灯 */</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ledstat == LEDOFF) &#123;</span><br><span class="line"> led_switch(LEDOFF); /* 关闭 LED 灯 */</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static struct file_operations led_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = led_open,</span><br><span class="line">            .write = led_write,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">static int led_probe(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    int i = 0;</span><br><span class="line">    int ressize[5];</span><br><span class="line">    u32 val = 0;</span><br><span class="line">    struct resource *ledsource[5];</span><br><span class="line"></span><br><span class="line">    printk(<span class="string">"led driver and device has matched!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">    /*获取资源*/</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; 5 ; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        ledsource[i] =  platform_get_resource(dev,IORESOURCE_MEM,i);</span><br><span class="line">        <span class="keyword">if</span> (!ledsource[i]) &#123;</span><br><span class="line">                dev_err(&amp;dev-&gt;dev, <span class="string">"No MEM resource for always on\r\n"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">return</span> -ENXIO;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        ressize[i] = resource_size(ledsource[i]);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">        IMX6U_CCM_CCGR1  = ioremap(ledsource[0]-&gt;start, ressize[0]);</span><br><span class="line">        SW_MUX_GPIO1_IO03 = ioremap(ledsource[1]-&gt;start, ressize[1]);</span><br><span class="line">        SW_PAD_GPIO1_IO03 = ioremap(ledsource[2]-&gt;start, ressize[2]);</span><br><span class="line">        GPIO1_DR = ioremap(ledsource[3]-&gt;start, ressize[3]);</span><br><span class="line">        GPIO1_GDIR = ioremap(ledsource[4]-&gt;start, ressize[4]);</span><br><span class="line">    val = readl(IMX6U_CCM_CCGR1);</span><br><span class="line">    val &amp;= ~(3 &lt;&lt; 26); /* 清除以前的设置  */</span><br><span class="line">    val |= (3 &lt;&lt; 26); /* 设置新值 */</span><br><span class="line">    writel(val, IMX6U_CCM_CCGR1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        writel(5, SW_MUX_GPIO1_IO03);</span><br><span class="line">        writel(0x10B0, SW_PAD_GPIO1_IO03);</span><br><span class="line"></span><br><span class="line">        val = readl(GPIO1_GDIR);</span><br><span class="line">        val &amp;= ~(1 &lt;&lt; 3); </span><br><span class="line">        val |= (1 &lt;&lt; 3);</span><br><span class="line">        writel(val, GPIO1_GDIR);</span><br><span class="line"></span><br><span class="line">        val = readl(GPIO1_DR);</span><br><span class="line">        val |= (1 &lt;&lt; 3) ;</span><br><span class="line">        writel(val, GPIO1_DR);</span><br><span class="line"></span><br><span class="line"> /* 注册字符设备驱动 */</span><br><span class="line">/*1、创建设备号 */</span><br><span class="line"> <span class="keyword">if</span> (leddev.major) &#123; /* 定义了设备号 */</span><br><span class="line"> leddev.devid = MKDEV(leddev.major, 0);</span><br><span class="line"> register_chrdev_region(leddev.devid, LEDDEV_CNT,LEDDEV_NAME);</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123; /* 没有定义设备号 */</span><br><span class="line"> alloc_chrdev_region(&amp;leddev.devid, 0, LEDDEV_CNT,</span><br><span class="line">LEDDEV_NAME);</span><br><span class="line"> leddev.major = MAJOR(leddev.devid);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> /* 2、初始化 cdev */</span><br><span class="line"> leddev.cdev.owner = THIS_MODULE;</span><br><span class="line"> cdev_init(&amp;leddev.cdev, &amp;led_fops);</span><br><span class="line"></span><br><span class="line"> /* 3、添加一个 cdev */</span><br><span class="line"> cdev_add(&amp;leddev.cdev, leddev.devid, LEDDEV_CNT);</span><br><span class="line"> /* 4、创建类 */</span><br><span class="line"> leddev.class = class_create(THIS_MODULE, LEDDEV_NAME);</span><br><span class="line"> <span class="keyword">if</span> (IS_ERR(leddev.class)) &#123;</span><br><span class="line"> <span class="built_in">return</span> PTR_ERR(leddev.class);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> /* 5、创建设备 */</span><br><span class="line"> leddev.device = device_create(leddev.class, NULL, leddev.devid,</span><br><span class="line">NULL, LEDDEV_NAME);</span><br><span class="line"> <span class="keyword">if</span> (IS_ERR(leddev.device)) &#123;</span><br><span class="line"> <span class="built_in">return</span> PTR_ERR(leddev.device);</span><br><span class="line"> &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_remove(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    iounmap(IMX6U_CCM_CCGR1);</span><br><span class="line">    iounmap(SW_MUX_GPIO1_IO03);</span><br><span class="line">    iounmap(SW_PAD_GPIO1_IO03);</span><br><span class="line">    iounmap(GPIO1_DR);</span><br><span class="line">    iounmap(GPIO1_GDIR);</span><br><span class="line"></span><br><span class="line">    cdev_del(&amp;leddev.cdev);</span><br><span class="line">    unregister_chrdev_region(leddev.devid, LEDDEV_CNT);</span><br><span class="line">    device_destroy(leddev.class, leddev.devid);</span><br><span class="line">    class_destroy(leddev.class);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">static struct platform_driver led_driver = &#123;</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name = <span class="string">"imx6ul-led"</span>, /* 驱动名字，用于和设备匹配 */</span><br><span class="line">        &#125;,</span><br><span class="line">        .probe = led_probe,</span><br><span class="line">        .remove = led_remove,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init leddriver_init(void)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">return</span> platform_driver_register(&amp;led_driver);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> static void __exit leddriver_exit(void)</span><br><span class="line"> &#123;</span><br><span class="line"> platform_driver_unregister(&amp;led_driver);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">/*注册驱动函数*/</span><br><span class="line">module_init(leddriver_init);</span><br><span class="line">module_exit(leddriver_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br></pre></td></tr></table></figure>
-
-
-<p>设备树版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/kernel.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/io.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/irq.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/poll.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/platform_device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/mach/map.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm/io.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;linux/of_gpio.h&gt; </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LEDDEV_CNT 1 /* 设备号长度 */</span></span><br><span class="line"><span class="comment">#define LEDDEV_NAME "dtsplatled" /* 设备名字 */</span></span><br><span class="line"><span class="comment">#define LEDOFF 0</span></span><br><span class="line"><span class="comment">#define LEDON 1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*设备结构体*/</span><br><span class="line">struct leddev_dev&#123;</span><br><span class="line">    dev_t devid;</span><br><span class="line">    struct cdev cdev;</span><br><span class="line">    struct class *class;</span><br><span class="line">    struct device *device;</span><br><span class="line">    struct device_node *node ;</span><br><span class="line">    int  major;</span><br><span class="line">    int minor;</span><br><span class="line">    int led0;  /* LED 灯 GPIO 标号 */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct leddev_dev leddev ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*LED 打开关闭*/</span><br><span class="line">static void led_switch(u8 sta)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="keyword">if</span>(sta == LEDON)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            gpio_set_value(leddev.led0,0);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (sta == LEDOFF)</span><br><span class="line">        &#123;</span><br><span class="line">            gpio_set_value(leddev.led0,1); </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_open(struct inode *inode,</span><br><span class="line">                     struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    filp-&gt;private_data = &amp;leddev ;</span><br><span class="line">    //printk(<span class="string">"chrdevbase open!\r\n"</span>);</span><br><span class="line">     <span class="built_in">return</span> 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static ssize_t led_write(struct file *filp, const char __user *buf,</span><br><span class="line">size_t cnt, loff_t *offt)</span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line"> int retvalue;</span><br><span class="line"> unsigned char databuf[1];</span><br><span class="line"> unsigned char ledstat;</span><br><span class="line"></span><br><span class="line"> retvalue = copy_from_user(databuf, buf, cnt);</span><br><span class="line"><span class="keyword">if</span>(retvalue &lt; 0) &#123;</span><br><span class="line"> <span class="built_in">return</span> -EFAULT;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ledstat = databuf[0]; /* 获取状态值 */</span><br><span class="line"><span class="keyword">if</span>(ledstat == LEDON) &#123;</span><br><span class="line"> led_switch(LEDON); /* 打开 LED 灯 */</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ledstat == LEDOFF) &#123;</span><br><span class="line"> led_switch(LEDOFF); /* 关闭 LED 灯 */</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">return</span> 0;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static struct file_operations led_fops = &#123;</span><br><span class="line">            .owner = THIS_MODULE,</span><br><span class="line">            .open = led_open,</span><br><span class="line">            .write = led_write,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int led_probe(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"led driver and device has matched!\r\n"</span>);</span><br><span class="line"></span><br><span class="line">        /* 注册字符设备驱动 */</span><br><span class="line">        /*1、创建设备号 */</span><br><span class="line">        <span class="keyword">if</span> (leddev.major) &#123; /* 定义了设备号 */</span><br><span class="line">        leddev.devid = MKDEV(leddev.major, 0);</span><br><span class="line">        register_chrdev_region(leddev.devid, LEDDEV_CNT,LEDDEV_NAME);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; /* 没有定义设备号 */</span><br><span class="line">        alloc_chrdev_region(&amp;leddev.devid, 0, LEDDEV_CNT,</span><br><span class="line">        LEDDEV_NAME);</span><br><span class="line">        leddev.major = MAJOR(leddev.devid);</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">        /* 2、初始化 cdev */</span><br><span class="line">        leddev.cdev.owner = THIS_MODULE;</span><br><span class="line">        cdev_init(&amp;leddev.cdev, &amp;led_fops);</span><br><span class="line"></span><br><span class="line">        /* 3、添加一个 cdev */</span><br><span class="line">        cdev_add(&amp;leddev.cdev, leddev.devid, LEDDEV_CNT);</span><br><span class="line">        /* 4、创建类 */</span><br><span class="line">        leddev.class = class_create(THIS_MODULE, LEDDEV_NAME);</span><br><span class="line">        <span class="keyword">if</span> (IS_ERR(leddev.class)) &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(leddev.class);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /* 5、创建设备 */</span><br><span class="line">        leddev.device = device_create(leddev.class, NULL, leddev.devid,</span><br><span class="line">        NULL, LEDDEV_NAME);</span><br><span class="line">        <span class="keyword">if</span> (IS_ERR(leddev.device)) &#123;</span><br><span class="line">        <span class="built_in">return</span> PTR_ERR(leddev.device);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /*初始化IO*/</span><br><span class="line"></span><br><span class="line">        leddev.node = of_find_node_by_path(<span class="string">"/gpioled"</span>);</span><br><span class="line">        <span class="keyword">if</span> (leddev.node == NULL)&#123;</span><br><span class="line">            printk(<span class="string">"gpioled node nost find!\r\n"</span>);</span><br><span class="line">             <span class="built_in">return</span> -EINVAL;</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        leddev.led0 = of_get_named_gpio(leddev.node,<span class="string">"led-gpios"</span>,0);</span><br><span class="line">        <span class="keyword">if</span> (leddev.led0 &lt; 0) &#123;</span><br><span class="line">        printk(<span class="string">"can't get led-gpio\r\n"</span>);</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        gpio_request(leddev.led0, <span class="string">"led0"</span>);</span><br><span class="line"></span><br><span class="line">        gpio_direction_output(leddev.led0, 1); /*设置为输出，默认高电平 */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int led_remove(struct platform_device *dev)</span><br><span class="line">&#123;</span><br><span class="line">    gpio_set_value(leddev.led0,1);</span><br><span class="line">    cdev_del(&amp;leddev.cdev);</span><br><span class="line">    unregister_chrdev_region(leddev.devid, LEDDEV_CNT);</span><br><span class="line">    device_destroy(leddev.class, leddev.devid);</span><br><span class="line">    class_destroy(leddev.class);</span><br><span class="line">    printk(<span class="string">"driver  release!\r\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* 匹配列表 */</span><br><span class="line">static const struct of_device_id  led_of_match[] =&#123;</span><br><span class="line">    &#123; .compatible = <span class="string">"ming,gpioled"</span> &#125;,</span><br><span class="line">    &#123; /* Sentinel */ &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/*驱动匹配*/</span><br><span class="line">static struct platform_driver led_driver = &#123;</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name = <span class="string">"imx6ul-led"</span>, /* 驱动名字，用于和设备匹配 */</span><br><span class="line">        .of_match_table = led_of_match,</span><br><span class="line">        &#125;,</span><br><span class="line">        .probe = led_probe,</span><br><span class="line">        .remove = led_remove,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int __init leddriver_init(void)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">return</span> platform_driver_register(&amp;led_driver);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> static void __exit leddriver_exit(void)</span><br><span class="line"> &#123;</span><br><span class="line"> platform_driver_unregister(&amp;led_driver);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">/*注册驱动函数*/</span><br><span class="line">module_init(leddriver_init);</span><br><span class="line">module_exit(leddriver_exit);</span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"ming"</span>);</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/" itemprop="url">伺服与检测</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-09T10:46:00+08:00">
-                2020-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Circuit-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Circuit Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>伺服系统</strong></p>
-<p>伺服系统，即随动系统，是能够跟踪输入指令信号进行动作，从而获得精确位置、速度或力输出的自动控制系统。</p>
-<p>进给伺服系统（ Feed Servo System ）的定义及组成<br>定义：以移动部件的位置和速度作为控制量的自动控制系统。<br>组成：位置控制单元；速度控制单元；驱动元件(电机)；检测与反馈单元；机械执行部件。</p>
-<p>伺服系统的分类<br>（1）开环伺服系统<br>（2）闭环伺服系统<br>脉冲编码器<br>（3）半闭环伺服系统<br>位置检测传感器</p>
-<p><strong>三个环</strong></p>
-<p> 力环，电流反馈，取样电阻<br> 速度环  速度反馈；测速发电机，光电编码器，旋转变压器等<br> 位置环  位置反馈；光电编码器，旋转变压器，光栅等</p>
-<p><strong>检测元件的分类</strong></p>
-<img src="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/%E6%A3%80%E6%B5%8B%E8%A3%85%E7%BD%AE.jpg" class>
-
-
-<p><strong>旋转变压器与感应同步器</strong></p>
-<p><strong>光电编码器</strong></p>
-<p><strong>光栅尺</strong></p>
-<p>莫尔条纹特点：<br>1.放大作用<br>2.平均效应(误差均化)<br>3.信息变换<br>4.光强分布规律</p>
-<p>同步、异步电机：<br>异步电动机的转速时刻跟随负载大小的变化而变化。</p>
-<p><strong>扩展：</strong></p>
-<p><strong>日系驱动器</strong></p>
-<p>日系伺服品牌众多，其中比较有代表性的产品主要是<br> YASKAWA 的 Σ （ SIGMA ）—-安川电机<br> Mitsubishi 的 MELSERVO<br> Panasonic 的 MINAS A</p>
-<p>这三个可配置数字量输入输出：<br>MINAS A6：10 入 / 6 出；<br>Σ-7： 8 入 / 7 出；<br>MR-J4：3 入 / 3 出；</p>
-<p>模拟量输入输出：<br>MINAS A6：3 入 / 2 出；<br>Σ-7： 1 入 / 2 出；<br>MR-J4：1 入 / 2 出；</p>
-<p><strong>欧系伺服驱动</strong></p>
-<p>比如我们熟知的 SINAMICS S210、HCS01等<br>从驱动器外型上看，大部分主流的欧系伺服驱动，都会采用高、深、薄的书本式设计，并且普遍支持无缝并列的安装样式。这一点可以从几款经典的产品很明显的看出来。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/latform-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/latform-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" itemprop="url">platform  设备驱动</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T00:17:00+08:00">
-                2020-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/latform-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/latform-%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>驱动的分离与分层这样的软件思路</p>
-<p>分离：主机驱动和设备驱动分隔开来。</p>
-<p>分层：input 子系统负责管理所有跟输入有关的驱动，包括键盘、鼠标、触摸等，最底层的就是设备原始驱动，负责获取输入设备的原始值，获取到的输入事件上报给 input 核心层。input 核心层会处理各种 IO 模型，并且提供 file_operations 操作集合。我们在编写输入设备驱动的时候只需要处理好输入事件的上报即可，至于如何处理这些上报的输入事件那是上层去考虑的，我们不用管。</p>
-<p>主机驱动-》API函数接口-》设备驱动</p>
-<p>每个平台的 I2C 控制器都提供一个统一的接口(也叫做主机驱动)，每个设备的话也只提供一个驱动程序(设备驱动)。</p>
-<p><strong>platform  总线</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct bus_type！！！</span><br><span class="line"></span><br><span class="line">static int platform_match(struct device *dev,</span><br><span class="line">struct device_driver *drv)</span><br><span class="line">匹配方式</span><br><span class="line">1、<span class="keyword">if</span> (of_driver_match_device(dev, drv))</span><br><span class="line">每个设备节点的 compatible 属性会和 of_match_table 表中的所有成员比较,probe 函数，当驱动与设备匹配成功以后 probe 函数就会执行</span><br><span class="line">2、<span class="keyword">if</span> (acpi_driver_match_device(dev, drv))</span><br><span class="line">ACPI 匹配方式。</span><br><span class="line">3、<span class="keyword">if</span> (pdrv-&gt;id_table)</span><br><span class="line">id_table 匹配，每个 platform_driver 结构体有一个 id_table</span><br><span class="line">成员变量，顾名思义，保存了很多 id 信息。这些 id 信息存放着这个 platformd 驱动所支持的驱</span><br><span class="line">动类型。</span><br><span class="line">4、<span class="built_in">return</span> (strcmp(pdev-&gt;name, drv-&gt;name) == 0);</span><br><span class="line">直接比较驱动和设备的 name 字段</span><br></pre></td></tr></table></figure>
-<p><strong>platform  驱动</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">include/linux/platform_device.h </span><br><span class="line"></span><br><span class="line">定义并初始化好 platform_driver 结构体变量-&gt; 入口注册Linux 内核注册一个 platform 驱动，platform_driver_register -&gt;出口卸载void platform_driver_unregister(struct platform_driver *drv)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">platform 驱动还是传统的字符设备驱动、块设备驱动或网络设备驱动，目的是为了使用总线、驱动和设备这个驱动模型来实现驱动的分离与分层。</span><br></pre></td></tr></table></figure>
-
-<p><strong>platform  设备</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">include/linux/platform_device.h</span><br><span class="line">不支持设备树的 Linux 版本中使用的</span><br><span class="line">int platform_device_register(struct platform_device *pdev</span><br><span class="line">void platform_device_unregister(struct platform_device *pdev)</span><br><span class="line"></span><br><span class="line">支持设备数版本，从设备树中读取设备信息，然后将其组织成 platform_device 形式</span><br></pre></td></tr></table></figure>
-<p>ls /sys/bus/platform/ 根文件系统目录下查看device、driver</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E6%AD%A5%E9%80%9A%E7%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/%E6%AD%A5%E9%80%9A%E7%9F%A5/" itemprop="url">异步通知</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T00:08:00+08:00">
-                2020-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/%E6%AD%A5%E9%80%9A%E7%9F%A5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/%E6%AD%A5%E9%80%9A%E7%9F%A5/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>复习：阻塞IO与非阻塞IO</strong></p>
-<p>Linux 应用程序可以通过阻塞或者非阻塞这两种方式来访问驱动设备，通过阻塞方式访问的话应用程序会处于休眠态，等待驱动设备可以使用，非阻塞方式的话会通过 poll 函数来不断的轮询，查看驱动设备文件是否可以使用。这两种方式都需要应用程序主动的去查询设备的使用情况，如果能提供一种类似中断的机制，当驱动程序可以访问的时候主动告诉应用程序那就最好了。</p>
-<p>驱动程序能主动向应用程序发出通知，报告自己可以访问，然后应用程序在从驱动程序中读取或写入数据。<br>异步通知的核心就是信号，在 arch/xtensa/include/uapi/asm/signal.h </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">34 <span class="comment">#define SIGHUP 1 /* 终端挂起或控制进程终止 */</span></span><br><span class="line">35 <span class="comment">#define SIGINT 2 /* 终端中断(Ctrl+C 组合键) */</span></span><br><span class="line">36 <span class="comment">#define SIGQUIT 3 /* 终端退出(Ctrl+\组合键) */</span></span><br><span class="line">37 <span class="comment">#define SIGILL 4 /* 非法指令 */</span></span><br><span class="line">38 <span class="comment">#define SIGTRAP 5 /* debug 使用，有断点指令产生  */</span></span><br><span class="line">39 <span class="comment">#define SIGABRT 6 /* 由 abort(3)发出的退出指令 */</span></span><br><span class="line">40 <span class="comment">#define SIGIOT 6 /* IOT 指令 */</span></span><br><span class="line">41 <span class="comment">#define SIGBUS 7 /* 总线错误 */</span></span><br><span class="line">42 <span class="comment">#define SIGFPE 8 /* 浮点运算错误 */</span></span><br><span class="line">43 <span class="comment">#define SIGKILL 9 /* 杀死、终止进程 */</span></span><br><span class="line">44 <span class="comment">#define SIGUSR1 10 /* 用户自定义信号 1 */</span></span><br><span class="line">45 <span class="comment">#define SIGSEGV 11 /* 段违例(无效的内存段) */</span></span><br><span class="line">46 <span class="comment">#define SIGUSR2 12 /* 用户自定义信号 2 */</span></span><br><span class="line">47 <span class="comment">#define SIGPIPE 13 /* 向非读管道写入数据 */</span></span><br><span class="line">48 <span class="comment">#define SIGALRM 14 /* 闹钟 */</span></span><br><span class="line">49 <span class="comment">#define SIGTERM 15 /* 软件终止 */</span></span><br><span class="line">50 <span class="comment">#define SIGSTKFLT 16 /* 栈异常 */</span></span><br><span class="line">51 <span class="comment">#define SIGCHLD 17 /* 子进程结束 */</span></span><br><span class="line">52 <span class="comment">#define SIGCONT 18 /* 进程继续 */</span></span><br><span class="line">53 <span class="comment">#define SIGSTOP 19 /* 停止进程的执行，只是暂停 */</span></span><br><span class="line">54 <span class="comment">#define SIGTSTP 20 /* 停止进程的运行(Ctrl+Z 组合键) */</span></span><br><span class="line">55 <span class="comment">#define SIGTTIN 21 /* 后台进程需要从终端读取数据  */</span></span><br><span class="line">56 <span class="comment">#define SIGTTOU 22 /* 后台进程需要向终端写数据 */</span></span><br><span class="line">57 <span class="comment">#define SIGURG 23 /* 有"紧急"数据 */</span></span><br><span class="line">58 <span class="comment">#define SIGXCPU 24 /* 超过 CPU 资源限制 */</span></span><br><span class="line">59 <span class="comment">#define SIGXFSZ 25 /* 文件大小超额 */</span></span><br><span class="line">60 <span class="comment">#define SIGVTALRM 26 /* 虚拟时钟信号 */</span></span><br><span class="line">61 <span class="comment">#define SIGPROF 27 /* 时钟信号描述 */</span></span><br><span class="line">62 <span class="comment">#define SIGWINCH 28 /* 窗口大小改变 */</span></span><br><span class="line">63 <span class="comment">#define SIGIO 29 /* 可以进行输入/输出操作 */</span></span><br><span class="line">64 <span class="comment">#define SIGPOLL SIGIO</span></span><br><span class="line">65 /* <span class="comment">#define SIGLOS 29 */</span></span><br><span class="line">66 <span class="comment">#define SIGPWR 30 /* 断点重启 */</span></span><br><span class="line">67 <span class="comment">#define SIGSYS 31 /* 非法的系统调用 */</span></span><br><span class="line">68 <span class="comment">#define SIGUNUSED 31 /* 未使用信号 */</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>信号</strong></p>
-<p>1、信号处理函数<br>sighandler_t signal(int signum, sighandler_t handler)<br>参数：signum：要设置处理函数的信号、handler ：信号的处理函数</p>
-<p>2、驱动中的信号处理</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">主要：struct fasync_struct *async_queue; /* 异步相关结构体 */ </span><br><span class="line"></span><br><span class="line">框架：</span><br><span class="line"> struct xxx_dev &#123;</span><br><span class="line"> ......</span><br><span class="line"> struct fasync_struct *async_queue; /* 异步相关结构体 */</span><br><span class="line"> &#125;;</span><br><span class="line"> static int xxx_fasync(int fd, struct file *filp, int on)</span><br><span class="line"> &#123;</span><br><span class="line"> struct xxx_dev *dev = (xxx_dev)filp-&gt;private_data;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (fasync_helper(fd, filp, on, &amp;dev-&gt;async_queue) &lt; 0)</span><br><span class="line"> <span class="built_in">return</span> -EIO;</span><br><span class="line"> <span class="built_in">return</span> 0;</span><br><span class="line"> &#125;</span><br><span class="line">static struct file_operations xxx_ops = &#123;</span><br><span class="line"> ......</span><br><span class="line"> .fasync = xxx_fasync,</span><br><span class="line">......</span><br><span class="line"> &#125;;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> /*释放*/</span><br><span class="line"> static int xxx_release(struct inode *inode, struct file *filp)</span><br><span class="line">&#123;</span><br><span class="line"> <span class="built_in">return</span> xxx_fasync(-1, filp, 0); /*  删除异步通知 */</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>3、kill_sync函数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1 、kill_fasync  函数</span><br><span class="line">当设备可以访问的时候，驱动程序需要向应用程序发出信号，相当于产生“中断”。kill_fasync</span><br><span class="line">函数负责发送指定的信号，kill_fasync 函数原型如下所示：</span><br><span class="line">void kill_fasync(struct fasync_struct **fp, int sig, int band)</span><br><span class="line">函数参数和返回值含义如下：</span><br><span class="line">fp：要操作的 fasync_struct。</span><br><span class="line">sig ：要发送的信号。</span><br><span class="line">band ：可读时设置为 POLL_IN，可写时设置为 POLL_OUT。</span><br><span class="line">返回值：无。</span><br></pre></td></tr></table></figure>
-
-<p>4、应用层</p>
-<p>1、注册信号函数-&gt;signal()<br>2、将进程号告诉给内核-&gt; fcntl(fd, F_SETOWN, getpid())<br>3、开启异步通知<br>-&gt;&gt;flags = fcntl(fd, F_GETFL); /* 获取当前的进程状态<em>/<br>-&gt;&gt;fcntl(fd, F_SETFL, flags | FASYNC); /</em> 开启当前进程异步通知功能 */</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/container-of%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="梦在广工">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux-Lover/container-of%E5%87%BD%E6%95%B0/" itemprop="url">container_of函数🏃</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T20:59:00+08:00">
-                2020-05-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-Lover/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux Lover</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux-Lover/container-of%E5%87%BD%E6%95%B0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Linux-Lover/container-of%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Container_of在Linux内核中是一个常用的宏.<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
 
           
         
@@ -2127,7 +2108,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2177,7 +2158,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">116</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2199,7 +2180,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2261,7 +2242,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
