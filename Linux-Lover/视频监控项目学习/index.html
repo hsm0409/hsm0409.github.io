@@ -105,17 +105,17 @@
 
 
 
-<meta name="description" content="前言 不错的网站：https:&#x2F;&#x2F;www.te.com.cn&#x2F;达尔闻https:&#x2F;&#x2F;course.darwinlearns.com&#x2F;detail&#x2F;v_5e9e57c0c81f5_w4Ey3mm9&#x2F;3 内网 NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问I">
+<meta name="description" content="前言 不错的网站：https:&#x2F;&#x2F;www.te.com.cn&#x2F;达尔闻https:&#x2F;&#x2F;course.darwinlearns.com&#x2F;detail&#x2F;v_5e9e57c0c81f5_w4Ey3mm9&#x2F;3   方案一： mjpg-streamer 运行在开发板，手机浏览器直接看。ARM性能要求不高。缺点：1、要实现内网穿透。2、一款免费基于IP地址的视频流服务,声音不能传，不维护，只做学习。   方案二">
 <meta property="og:type" content="article">
 <meta property="og:title" content="视频监控项目学习">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="我的博客">
-<meta property="og:description" content="前言 不错的网站：https:&#x2F;&#x2F;www.te.com.cn&#x2F;达尔闻https:&#x2F;&#x2F;course.darwinlearns.com&#x2F;detail&#x2F;v_5e9e57c0c81f5_w4Ey3mm9&#x2F;3 内网 NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问I">
+<meta property="og:description" content="前言 不错的网站：https:&#x2F;&#x2F;www.te.com.cn&#x2F;达尔闻https:&#x2F;&#x2F;course.darwinlearns.com&#x2F;detail&#x2F;v_5e9e57c0c81f5_w4Ey3mm9&#x2F;3   方案一： mjpg-streamer 运行在开发板，手机浏览器直接看。ARM性能要求不高。缺点：1、要实现内网穿透。2、一款免费基于IP地址的视频流服务,声音不能传，不维护，只做学习。   方案二">
 <meta property="og:image" content="https://github.com/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/1.JPG">
 <meta property="og:image" content="https://github.com/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/2.JPG">
 <meta property="og:image" content="https://github.com/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/4.JPG">
 <meta property="article:published_time" content="2020-05-18T14:02:00.000Z">
-<meta property="article:modified_time" content="2020-05-19T09:44:55.339Z">
+<meta property="article:modified_time" content="2020-05-20T06:59:23.390Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux项目开发">
 <meta name="twitter:card" content="summary">
@@ -446,10 +446,6 @@
       
         <p><strong>前言</strong></p>
 <p>不错的网站：<a href="https://www.te.com.cn/" target="_blank" rel="noopener">https://www.te.com.cn/</a><br>达尔闻<a href="https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3" target="_blank" rel="noopener">https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3</a></p>
-<p><strong>内网</strong></p>
-<p>NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问Internet上的计算机，但Internet上的计算机无法访问局域网内的计算机。<br>内网是可以上网的，内网需要一台服务器或路由器做网关,通过它来上网。</p>
-<p><strong>内网穿透</strong></p>
-<p>即NAT穿透，采用端口映射，让外网的电脑找到处于内网的电脑，同时也可基于 HTTP/2实现web内网穿透。<br>方法：在局域网内部的任一PC或服务器上运行到花生壳内网穿透客户端，此时域名解析到的IP地址是局域网网关出口处的公网IP地址，再在网关处做端口映射指向监控设备即可。</p>
 <img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/1.JPG" class>
 
 <p><strong>方案一：</strong></p>
@@ -581,7 +577,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">122</span>
+                  <span class="site-state-item-count">124</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -665,7 +661,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>

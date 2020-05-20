@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>内网穿透</title>
+    <url>/Linux-Lover/%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
+    <content><![CDATA[<p><strong>内网</strong></p>
+<p>NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问Internet上的计算机，但Internet上的计算机无法访问局域网内的计算机。<br>内网是可以上网的，内网需要一台服务器或路由器做网关,通过它来上网。</p>
+<p><strong>内网穿透</strong></p>
+<p>即NAT穿透，采用端口映射，让外网的电脑找到处于内网的电脑，同时也可基于 HTTP/2实现web内网穿透。<br>方法：在局域网内部的任一PC或服务器上运行到花生壳内网穿透客户端，此时域名解析到的IP地址是局域网网关出口处的公网IP地址，再在网关处做端口映射指向监控设备即可。</p>
+<p>源IP + 源端口–&gt;路由器-&gt;目的IP + 目的端口</p>
+<p>有NAT转化映射表,这样做目的。<br>1、保护局域网<br>2、节省IP</p>
+<p>内网穿透方法：<br>1、设置路由器</p>
+<p>2、借用软件：花生壳<br><a href="https://www.oray.com/" target="_blank" rel="noopener">https://www.oray.com/</a><br>添加映射，自动生成域名。<br>6元买1年送98年，实惠QAQ!!!</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>了解摄像头和声卡</title>
+    <url>/Linux-Lover/%E4%BA%86%E8%A7%A3%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8C%E5%A3%B0%E5%8D%A1/</url>
+    <content><![CDATA[<p><strong>摄像头</strong></p>
+<p>常见接口：usb、cmos</p>
+<p>主要参数：分辨率（像素点数）、格式、帧率(1s拍几张图)</p>
+<p>API接口：V4l2</p>
+<img src="/Linux-Lover/%E4%BA%86%E8%A7%A3%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8C%E5%A3%B0%E5%8D%A1/1.JPG" class>
+
+
+<p><strong>声卡</strong></p>
+<p>采样频率、采样位宽。<br>声道个数（ADC采集个数）</p>
+<p>API接口：ALSA (复杂)<br>—-&gt;alsa-lib编写APP<br>参考：<a href="http://www.equalarea.com/paul/alsa-audio.html" target="_blank" rel="noopener">代码</a></p>
+<p>buildroot 配置 alsa-utils </p>
+<p>Target packages<br>-&gt; Audio and video applications<br>-&gt; alsa-utils  此目录下的软件全部选中</p>
+<p>只录制声音<br>开发板：ffmpeg -f alsa -ac 1 -i hw:0,0 my.wav<br>//第0个声卡第0个模块，通道一，保存格式.wav<br>播放：  aplay my.wav</p>
+<p>只推送声音：</p>
+<p>ffmpeg -f alsa -ac 1 11025 -i hw:0,0 -acodec aac -f flv rtmp://127.0.0.1/live/ming</p>
+<p>推送视频和声音：<br>ffmpeg -f alsa -ac 1 -ar 11025 -i hw:0,0 -acodec aac -f v4l2 -framerate 10 -i /dev/video1 -q 10 -f flv rtmp://127.0.0.1/live/ming</p>
+<p>拉流http flv协议<br><a href="http://192.168.0.50/test?app=live&amp;stream=ming" target="_blank" rel="noopener">http://192.168.0.50/test?app=live&amp;stream=ming</a></p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>视频监控项目学习方案二</title>
     <url>/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/</url>
     <content><![CDATA[<p><strong>数据的认识</strong></p>
@@ -88,10 +135,6 @@
     <url>/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p><strong>前言</strong></p>
 <p>不错的网站：<a href="https://www.te.com.cn/" target="_blank" rel="noopener">https://www.te.com.cn/</a><br>达尔闻<a href="https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3" target="_blank" rel="noopener">https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3</a></p>
-<p><strong>内网</strong></p>
-<p>NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问Internet上的计算机，但Internet上的计算机无法访问局域网内的计算机。<br>内网是可以上网的，内网需要一台服务器或路由器做网关,通过它来上网。</p>
-<p><strong>内网穿透</strong></p>
-<p>即NAT穿透，采用端口映射，让外网的电脑找到处于内网的电脑，同时也可基于 HTTP/2实现web内网穿透。<br>方法：在局域网内部的任一PC或服务器上运行到花生壳内网穿透客户端，此时域名解析到的IP地址是局域网网关出口处的公网IP地址，再在网关处做端口映射指向监控设备即可。</p>
 <img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/1.JPG" class>
 
 <p><strong>方案一：</strong></p>
@@ -1969,17 +2012,6 @@
       </tags>
   </entry>
   <entry>
-    <title>STM32单片机</title>
-    <url>/MCU-Lover/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>51单片机</title>
     <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
@@ -1997,6 +2029,17 @@
 
 <p>常见问题 </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32单片机</title>
+    <url>/MCU-Lover/M32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
