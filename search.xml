@@ -1,6 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT-中英配置</title>
+    <url>/Linux-Lover/QT-%E4%B8%AD%E8%8B%B1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p><a href="https://blog.csdn.net/kidults/article/details/87969380" target="_blank" rel="noopener">https://blog.csdn.net/kidults/article/details/87969380</a></p>
+<p><a href="https://blog.csdn.net/qq_26787115/article/details/80226060" target="_blank" rel="noopener">https://blog.csdn.net/qq_26787115/article/details/80226060</a></p>
+<p>1、创建语言文件</p>
+<p>　　打开.pro文件，加入以下：</p>
+<p>TRANSLATIONS+=cn.ts</p>
+<p>　　工具-&gt;外部-&gt;Qt语言家-&gt;更新翻译,将生成翻译文件cn.ts  en.ts</p>
+<p>2、Windows则在开始菜单中可以找到：</p>
+<p>在打开的Liguist，把上一步生成的en.ts打开，选择Source text 进行逐个翻译</p>
+<p>翻译完后，将 en.ts 进行保存</p>
+<p>3、工具-&gt;外部-&gt;Qt语言家-&gt;发布翻译,将生成翻译文件**.qm</p>
+<p>QTranslator translator;//系统中英翻译</p>
+<img src="/Linux-Lover/QT-%E4%B8%AD%E8%8B%B1%E9%85%8D%E7%BD%AE/1.JPG" class>
+
+
+
+<p>注意：翻译后，应该避免控件操作控件的操作</p>
+<p>**</p>
+<p>注：翻译文件加载的位置必须在界面实例化之前完成，否则是没有效果的</p>
+<p>**</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-线程</title>
+    <url>/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<p>QT-线程池</p>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E6%B1%A0.jpg" class>
+
+<p>QT-线程QtConcurrent</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一步：</span><br><span class="line">QT -&#x3D; gui concurrent</span><br><span class="line">CONFIG +&#x3D; c++11 console</span><br><span class="line">第二步：#include &lt;QtConcurrent&#x2F;QtConcurrent&gt;</span><br><span class="line">QString filePath&#x3D;&quot;D:&#x2F;test2.txt&quot;;</span><br><span class="line">    QByteArray data&#x3D;&quot;hello concurrentthread2&quot;;</span><br><span class="line">    QtConcurrent::run([&amp;filePath,&amp;data]()&#123;</span><br><span class="line">        qDebug()&lt;&lt;data;</span><br><span class="line">        QFile file(filePath);</span><br><span class="line">        file.open(QIODevice::WriteOnly);</span><br><span class="line">        file.write(data);</span><br><span class="line">        file.waitForBytesWritten(30*1000);&#x2F;&#x2F;等待写入</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>QT-线程QThread</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifndef MYTHREAD_H</span><br><span class="line">#define MYTHREAD_H</span><br><span class="line">#include &lt;QThread&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">&#x2F;&#x2F;继承获取接口</span><br><span class="line">class MyThread:public QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">public:</span><br><span class="line">    void run()&#x2F;&#x2F;斜体虚函数</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;QThread::currentThread();&#x2F;&#x2F;指针 或者说显示当前的线程</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main.c中</span><br><span class="line">MyThread mythread；</span><br><span class="line">  mythread.start();  &#x2F;&#x2F;启动接口函数</span><br></pre></td></tr></table></figure>
+<p>QT-线程制图</p>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE1.jpg" class>
+
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE2.jpg" class>
+
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE3.jpg" class>
+
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE4.jpg" class>
+
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE5.jpg" class>
+
+
+<p>QT-connect第五个参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* 队列连接：槽函数在接受者所在线程执行。QueuedConnection</span><br><span class="line">* 直接连接：槽函数在发送者所在线程执行。DirectConnection</span><br><span class="line">* 自动连接：二者不在同一线程时，等同于队列连接AutoConnection</span><br><span class="line"></span><br><span class="line">connect(thread,&amp;QThread::finished,thread,&amp;QObject::deleteLater);</span><br><span class="line">&#x2F;&#x2F;线程结束后调用deleteLater来销毁分配的内存</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-程序打包</title>
+    <url>/Linux-Lover/QT-%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85/</url>
+    <content><![CDATA[<p>打开 MinGW 5.3.0 32bit</p>
+<p>E:\QT\5.9.6\mingw53_32\bin\windeployqt.exe  环境变量</p>
+<p>当前目录</p>
+<p>  cd    / d   C:\Users\asus\Desktop\212</p>
+<p>windeployqt  put.exe</p>
+<p>windeployqt  Template.exe</p>
+<p>//linux 系统同样有linuxdeployqt</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-常见坐标获取</title>
+    <url>/Linux-Lover/QT-%E5%B8%B8%E8%A7%81%E5%9D%90%E6%A0%87%E8%8E%B7%E5%8F%96/</url>
+    <content><![CDATA[<p>当前光标相对于屏幕的绝对位置/ /对电脑屏幕来说，左上角也为（0，0）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QCursor::pos()</span><br></pre></td></tr></table></figure>
+<p>当前光标相对于当前窗口的位置//相对转化函数mapfromglobal</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this-&gt;mapFromGlobal(QCursor::pos())</span><br></pre></td></tr></table></figure>
+<p>鼠标事件发生的位置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void MainWindow::mouseReleaseEvent(QMouseEvent* event)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    QPoint pos &#x3D; event-&gt;pos();       &#x2F;&#x2F;相对于当前窗口的位置</span><br><span class="line"></span><br><span class="line">    QPoint globalPos &#x3D; event-&gt;globalPos();    &#x2F;&#x2F;相对于屏幕的全局绝对位置</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>窗体的位置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QWidget *widget &#x3D; new QWidget();</span><br><span class="line"></span><br><span class="line">widget.pos();    &#x2F;&#x2F;窗体的左上角的位置</span><br></pre></td></tr></table></figure>
+<p>判断鼠标光标是否悬浮在某个子控件上//xxx-&gt;geometry()-&gt;contains()</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(ui-&gt;pushButtonTest-&gt;geometry().contains( this-&gt;mapFromGlobal(QCursor::pos())))</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;do something...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-制图</title>
+    <url>/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/</url>
+    <content><![CDATA[<p><strong>画笔</strong><br>QPainter</p>
+<p><strong>Device设备</strong><br>QPixmap  QImage QPicture</p>
+<p>QPixmap专门为图像在屏幕上的显示做了优化，其中QBitmap是QPixmap的一个子类，它的色深限定为1，可以使用 QPixmap的isQBitmap()函数来确定这个QPixmap是不是一个QBitmap。（白色变透明）</p>
+<p>QImage专门为图像的像素级访问做了优化。<br>QPicture则可以记录和重现QPainter的各条命令。</p>
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap.jpg" class>
+
+
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap2.jpg" class>
+
+
+
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QImage.jpg" class>
+
+
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPicture.jpg" class>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-写法小发现</title>
+    <url>/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F/</url>
+    <content><![CDATA[<p>QString::arg()用法</p>
+<p>Qstring str=Qstring(“%1 %2 %3 “).arg(1).arg(2).arg(“egdhqdg “);</p>
+<p>Qstring::sprintf()用法</p>
+<p>QString str；</p>
+<p>str.sprintf(“%d %s,10,”hello””);</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-文件</title>
+    <url>/Linux-Lover/QT-%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>文件系统分类:<br>1顺序访问设备:<br>2随机访问设备:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">基本文本</span><br><span class="line">#include &lt;QFile&gt;</span><br><span class="line">#include&lt;QFileInfo&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">#include &lt;QDir&gt;</span><br><span class="line">    QFile file(&quot;D:&#x2F;in.txt&quot;);&#x2F;&#x2F;QFile创建了一个文件对象。</span><br><span class="line">    &#x2F;&#x2F;qDebug()&lt;&lt;QDir::currentPath();</span><br><span class="line">    if (!file.open(QIODevice::ReadOnly|QIODevice::Text))&#x2F;&#x2F;只读 文本</span><br><span class="line">    &#123;</span><br><span class="line">        qDebug()&lt;&lt;&quot;open file failure&quot;;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        while(!file.atEnd())&#123;</span><br><span class="line">            qDebug()&lt;&lt;file.readLine();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   QFileInfo info(file);</span><br><span class="line">    qDebug()&lt;&lt;info.isDir();&#x2F;&#x2F;检查该文件是否是目录；</span><br><span class="line">    qDebug()&lt;&lt;info.isExecutable();  &#x2F;&#x2F;检查该文件是否是可执行文件等。</span><br><span class="line">    qDebug()&lt;&lt;info.baseName();    &#x2F;&#x2F;可以直接获得文件名；</span><br><span class="line">    qDebug()&lt;&lt;info.completeBaseName();  &#x2F;&#x2F;获取完整的文件名</span><br><span class="line">    qDebug()&lt;&lt;info.suffix();     &#x2F;&#x2F;则直接获取文件后缀名。</span><br><span class="line">    qDebug()&lt;&lt;info.completeSuffix(); &#x2F;&#x2F; 获取完整的文件后缀</span><br></pre></td></tr></table></figure>
+<p>二进制文本<br>QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU或者字节顺序（大端或小端）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QFile file(&quot;file.dat&quot;);</span><br><span class="line">file.open(QIODevice::WriteOnly);</span><br><span class="line">QDataStream out(&amp;file);</span><br><span class="line">out &lt;&lt; QString(&quot;the answer is&quot;);  &#x2F;&#x2F;写入</span><br><span class="line">out &lt;&lt; (qint32)42;</span><br><span class="line">QFile file(&quot;file.dat&quot;);</span><br><span class="line">file.open(QIODevice::ReadOnly);</span><br><span class="line">QDataStream in(&amp;file);</span><br><span class="line">QString str;</span><br><span class="line">qint32 a;</span><br><span class="line">in &gt;&gt; str &gt;&gt;a;</span><br></pre></td></tr></table></figure>
+<p>QDataStream提供流的形式，性能上一般比直接调用原始 API 更好一些。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file.open(QIODevice::ReadWrite);&#x2F;&#x2F;读写 </span><br><span class="line">    QDataStream stream(&amp;file);</span><br><span class="line">    QString str &#x3D; &quot;fff answer is 42&quot;;</span><br><span class="line">    stream &lt;&lt; str;</span><br><span class="line">    file.close();</span><br></pre></td></tr></table></figure>
+<p>文本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QCoreApplication a(argc, argv);</span><br><span class="line">    QFile data (&quot;D:&#x2F;file2.txt&quot;);</span><br><span class="line">    if (!data.open(QFile::ReadWrite))</span><br><span class="line">    &#123;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        QTextStream in(&amp;data);</span><br><span class="line">        in.readAll();</span><br><span class="line">        QString inter&#x3D;in.readAll();</span><br><span class="line">        qDebug()&lt;&lt;inter;</span><br><span class="line">    &#125;</span><br><span class="line">data.close();</span><br></pre></td></tr></table></figure>
+<p>QBuffer 内存文件。</p>
+
+
+<p>另外，QBuffer也支持常用的信号。比如，当有数据可读时，它会发出readyRead（）信号；每一次向QBuffer中写入新数据时都会发出bytesWritten()信号。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-事件</title>
+    <url>/Linux-Lover/QT-%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<p><strong>事件</strong></p>
+<p>事件（event）是由系统或者 Qt 本身在不同的时刻发出的。<br>一些事件在对用户操作做出响应时发出，如键盘事件等；另一些事件则是由系统自动发出，如计时器事件。</p>
+<p>Qt 程序需要在main()函数创建一个QApplication对象，然后调用它的exec()函数。这个函数就是开始 Qt 的事件循环。在执行exec()函数之后，程序将进入事件循环来监听应用程序的事件。当事件发生时，Qt 将创建一个事件对象。Qt 中所有事件类都继承于<code>QEvent</code>。在事件对象创建完毕后，Qt 将这个事件对象传递给QObject的event()函数。event()函数并不直接处理事件，而是按照事件对象的类型分派给特定的事件处理函数<code>（event handler）</code>。</p>
+<p>protected  virtual 类 子函数实现</p>
+<p>keyPressEvent()<br>keyReleaseEvent()<br>mouseDoubleClickEvent()<br>mouseMoveEvent()          —-setMouseTracking()<br>mousePressEvent()<br>mouseReleaseEvent() 等。</p>
+<p>event()函数主要用于事件的分发,分发给不同的事件处理器（event handler）。<br>e-&gt;type() == QEvent::KeyPress  事件类别<br>keyEvent-&gt;key() == Qt::Key_Tab  按键值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool CustomTextEdit::event(QEvent*e)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">   if (e-&gt;type() &#x3D;&#x3D; QEvent::KeyPress)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">        QKeyEvent *keyEvent &#x3D;static_cast(e);</span><br><span class="line"></span><br><span class="line">       if (keyEvent-&gt;key() &#x3D;&#x3D; Qt::Key_Tab)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">            qDebug() &lt;&lt; &quot;You presstab.&quot;;</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>事件过滤器</strong><br>virtual bool QObject::eventFilter ( QObject *watched, QEvent * event );</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool MainWindow::eventFilter(QObject *obj, QEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">         if (obj &#x3D;&#x3D; textEdit) &#123;                                                    &#x2F;&#x2F;判断被监视的对象</span><br><span class="line">                 if (event-&gt;type() &#x3D;&#x3D; QEvent::KeyPress) &#123;                   &#x2F;&#x2F;判断事件类型</span><br><span class="line">                         QKeyEvent *keyEvent &#x3D; static_cast&lt;QKeyEvent*&gt;(event);</span><br><span class="line">                         qDebug() &lt;&lt; &quot;Ate key press&quot; &lt;&lt; keyEvent-&gt;key();</span><br><span class="line">                         return true;                                                    &#x2F;&#x2F;将键盘事件过滤</span><br><span class="line">                 &#125; else &#123;</span><br><span class="line">                         return false;                                                &#x2F;&#x2F;继续处理其他事件</span><br><span class="line">                 &#125;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">                 &#x2F;&#x2F; pass the event on to the parent class</span><br><span class="line">                 return QMainWindow::eventFilter(obj, event);           &#x2F;&#x2F;调用父类函数</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以总结一下 Qt 的事件处理，实际上是有五个层次：</p>
+<p>1、重写paintEvent()、mousePressEvent()等事件处理函数。这是最普通、最简单的形式，同时功能也最简单。</p>
+<p>1、重写event()函数。event()函数是所有对象的事件入口，QObject和QWidget中的实现，默认是把事件传递给特定的事件处理函数。</p>
+<p>1、在特定对象上面安装事件过滤器。该过滤器仅过滤该对象接收到的事件。</p>
+<p>1、在QCoreApplication::instance()上面安装事件过滤器。该过滤器将过滤所有对象的所有事件，因此和notify()函数一样强大，但是它更灵活，因为可以安装多个过滤器。全局的事件过滤器可以看到 disabled 组件上面发出的鼠标事件。全局过滤器有一个问题：只能用在主线程。</p>
+<p>1、重写QCoreApplication::notify()函数。这是最强大的，和全局事件过滤器一样提供完全控制，并且不受线程的限制。但是全局范围内只能有一个被使用（因为QCoreApplication是单例的）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class MyApplication : public QApplication</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    MyApplication(int &amp; argc, char ** argv):QApplication(argc, argv)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    virtual bool notify(QObject * obj, QEvent * event)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        if(event-&gt;type() &#x3D;&#x3D; QMouseEvent::MouseButtonPress)</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return QApplication::notify(obj,event);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;来源网络</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-dialog</title>
+    <url>/Linux-Lover/QT-dialog/</url>
+    <content><![CDATA[<p>自定义对话框:</p>
+<p>    使用QDialog::exec()实现应用程序级别的模态对话框</p>
+<p>    使用QDialog::open()实现窗口级别的模态对话框</p>
+<p>    使用QDialog::show()实现非模态对话框。</p>
+<p>dialog-&gt;setAttribute(Qt::WA_DeleteOnClose);//  属性 ： 让dialog关闭时自动销毁   </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">模态&#x2F;&#x2F;对话框需要关闭才能用</span><br><span class="line">void MainWindow::open()</span><br><span class="line">&#123;</span><br><span class="line">    	QDialog dialog;</span><br><span class="line">    	dialog.setWindowTitle(tr(&quot;Hello, dialog!&quot;));</span><br><span class="line">dialog.exec();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">非模态&#x2F;&#x2F;对话框不需要关闭也能用，需要析构</span><br><span class="line">void MainWindow::open()</span><br><span class="line">&#123;</span><br><span class="line">    QDialog *dialog &#x3D; new QDialog;</span><br><span class="line">    dialog-&gt;setAttribute(Qt::WA_DeleteOnClose);&#x2F;&#x2F;   属性 ： 让dialog关闭时自动销毁         释放内存   堆</span><br><span class="line">    dialog-&gt;setWindowTitle(tr(&quot;Hello, dialog!&quot;)); </span><br><span class="line">    dialog-&gt;show();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> QDialog dialog(this);   &#x2F;&#x2F;栈上  子函数里</span><br><span class="line"> QDialog *dialog &#x3D; new QDialog;   &#x2F;&#x2F;堆上    考虑到内存泄漏</span><br></pre></td></tr></table></figure>
+
+
+<p>消息对话框</p>
+<img src="/Linux-Lover/QT-dialog/%E6%B6%88%E6%81%AF%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class>
+
+<p>标准文件对话框</p>
+<img src="/Linux-Lover/QT-dialog/%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class>
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-窗体常用函数</title>
+    <url>/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>窗体常用函数</p>
+<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0.jpg" class>
+
+<p>ui-&gt;stackedWidget-&gt;setCurrentIndex(5);</p>
+<p>设计换页</p>
+<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E8%AE%BE%E8%AE%A1%E6%8D%A2%E9%A1%B5.jpg" class>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-控件</title>
+    <url>/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/</url>
+    <content><![CDATA[<p>继承图</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E7%BB%A7%E6%89%BF%E5%9B%BE.jpg" class title="来源网络">
+
+<p>Qlabel</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/Qlabel.jpg" class>
+
+<p>QTextEdit</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTextEdit.jpg" class>
+
+<p>QListView</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QListView.jpg" class>
+
+<p>QTreeView</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTreeView.jpg" class>
+
+<p>QTableView</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class>
+
+<p>//获取点击行索引int index = tableView-&gt;currentIndex().row();</p>
+<p>QPushButton</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QPushButton.jpg" class>
+
+<p>QComboBox</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QComboBox.jpg" class>
+
+<p>QFontComboBox(字体)</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QFontComboBox.jpg" class>
+
+<p>QRadioButton(单选)</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QRadioButton.jpg" class>
+
+<p>QCheckBox</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QCheckBox.jpg" class>
+
+<p>QScrollBar</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QScrollBar.jpg" class>
+
+<p>QSpinBox</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QSpinBox.jpg" class>
+
+<p>QTimeEdit QDateTime</p>
+
+
+<p>QDateEdit QDateTime</p>
+
+
+<p>QLineEdit</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QLineEdit.jpg" class>
+
+
+<p>布局（水平、网格）</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class>
+
+<p>QGroupBox</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class>
+
+<p>QTabWidget</p>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux音频驱动了解</title>
+    <url>/Linux-Lover/linux%E9%9F%B3%E9%A2%91%E9%A9%B1%E5%8A%A8%E4%BA%86%E8%A7%A3/</url>
+    <content><![CDATA[<p><strong>音频编解码芯片</strong></p>
+<p>音频 CODEC 的本质是 ADC 和 DAC，那么采样率和采样位数就是衡量一款音频CODEC 最重要的指标。比如常见音频采样率有 8K、44.1K、48K、192K 甚至 384K 和 768K，采样位数常见的有 8 位、16 位、24 位、32 位。采样率和采样位数越高，那么音频 CODEC 越能真实的还原声音，也就是大家说的 HIFI。因此大家会看到高端的音频播放器都会有很高的采<br>样率和采样位数，同样的价格也会越高。当然了，实际的效果还与其他部分有关，采样率和采样位数只是其中重要的指标之一。</p>
+<p><strong>WM8960</strong></p>
+<p>WM8960 是一颗由 wolfson(欧胜)公司出品的音频编解码芯片。</p>
+<p>此接口 5 根线的作用如下：<br>ADCDAT：ADC 数据输出引脚，采集到的音频数据转换为数字信号以后通过此引脚传输给<br>主控制器。<br>ADCLRC：ADC 数据对齐时钟，也就是帧时钟(LRCK)，用于切换左右声道数据，此信号<br>的频率就是采样率。此引脚可以配置为 GPIO 功能，配置为 GPIO 以后 ADC 就会使用 DACLRC<br>引脚作为帧时钟。<br>DACDAT：DAC 数据输入引脚，主控器通过此引脚将数字信号输入给 WM8960 的 DAC。<br>DACLRC ：DAC 数据对齐时钟，功能和 ADCLRC 一样，都是帧时钟(LRCK)，用于切换左<br>右声道数据，此信号的频率等于采样率。<br>BCLK ：位时钟，用于同步。<br>MCLK ：主时钟，WM8960 工作的时候还需要一路主时钟，此时钟由 I.MX6ULL 提供，<br>MCLK 频率等于采样率的 256 或 384 倍，因此大家在 WM8960 的数据手册里面常看到<br>MCLK=256fs 或 MCLK=384fs</p>
+<p>I2S 接口需要 3 根信号线<br>SCK ：串行时钟信号，也叫做位时钟(BCLK)，音频数据的每一位数据都对应一个 SCK，立体声都是双声道的，因此 SCK=2×采样率×采样位数。比如采样率为 44.1KHz、16 位的立体声音频，那么 SCK=2×44100×16=1411200Hz=1.4112MHz。</p>
+<p>WS ：字段(声道)选择信号，也叫做 (LRCK)，也叫做帧时钟，用于切换左右声道数据，WS 为“1”表示正在传输左声道的数据，WS 为“0”表示正在传输右声道的数据。WS 的频率等于采样率，比如采样率为 44.1KHz 的音频，WS=44.1KHz。</p>
+<p>SD：串行数据信号，也就是我们实际的音频数据，如果要同时实现放音和录音，那么就需要 2 根数据线，比如 WM8960 的 ADCDAT 和 DACDAT，就是分别用于录音和放音。不管音频数据是多少位的，数据的最高位都是最先传输的。数据的最高位总是出现在一帧开始后(LRCK变化)的第 2 个 SCK 脉冲处。<br>数据格式：Left Justified(左对齐)和 Right Justified(右对齐)</p>
+<p>为了使音频 CODEC 芯片与主控制器之间能够更好的同步，会引入另外一个叫做 (MCLK) 的信号，也叫做主时钟或系统时钟，一般是采样率的 256 倍或 384 倍。</p>
+<p><strong>WM8960重要引脚</strong></p>
+<p> AUD INT<br> SAI2_TX_SYN<br> SAI2_TX_BLCK<br> SAI2_RX_DATA<br> SAI2_TX_DATA</p>
+<p> I2C SCL<br> I2C SDA</p>
+<p>两个接口，SAI 和 I2C，我们依次来看一下这两个接口：<br>①、SAI 接口一共用到了 6 根数据线，这 6 根数据线用于 I.MX6ULL 与 WM8960 之间的音频数据收发。<br>②、WM8960 在使用的时候需要进行配置，配置接口为 I2C，连接到了 I.MX6ULL 的 I2C2上。</p>
+<p>alsa-lib 和 和 alsa-utils  移植（buildroot）</p>
+<p>amixer scontrols  //查看所有设置项</p>
+<p>amixer scontents  //查看设置值</p>
+<p>amixer sset 设置项目 设置值<br>或：<br>amixer cset 设置项目 设置值</p>
+<p>amixer sget 设置项目<br>或：<br>amixer cget 设置项目</p>
+<p>amixer sset Headphone 127,127<br>amixer sset Speaker 127,127<br>amixer sset ‘Right Output Mixer PCM’ on<br>amixer sset ‘Left Output Mixer PCM’ on</p>
+<p>aplay test.wav //播放歌曲</p>
+<p>录音</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #!&#x2F;bin&#x2F;sh</span><br><span class="line"> #正点原子@ALIENTEK</span><br><span class="line"> #设置捕获的音量</span><br><span class="line">amixer cset name&#x3D;&#39;Capture Volume&#39; 90,90</span><br><span class="line"></span><br><span class="line"> #PCM</span><br><span class="line"> amixer sset &#39;PCM Playback&#39; on</span><br><span class="line"> amixer sset &#39;Playback&#39; 256</span><br><span class="line"> amixer sset &#39;Right Output Mixer PCM&#39; on</span><br><span class="line"> amixer sset &#39;Left Output Mixer PCM&#39; on</span><br><span class="line"></span><br><span class="line"> #ADC PCM</span><br><span class="line"> amixer sset &#39;ADC PCM&#39; 200</span><br><span class="line"></span><br><span class="line"> #耳机&#x2F;喇叭（扬声器）设置播放音量，直流&#x2F;交流</span><br><span class="line"> #Turn on Headphone</span><br><span class="line"> amixer sset &#39;Headphone Playback ZC&#39; on</span><br><span class="line"> #Set the volume of your headphones(98% volume，127 is the MaxVolume)</span><br><span class="line"> amixer sset Headphone 125,125</span><br><span class="line"> #Turn on the speaker</span><br><span class="line"></span><br><span class="line"> amixer sset &#39;Speaker Playback ZC&#39; on</span><br><span class="line"> #Set the volume of your Speaker(98% volume，127 is the MaxVolume)</span><br><span class="line"> amixer sset Speaker 125,125</span><br><span class="line"> #Set the volume of your Speaker AC(80% volume，100 is the MaxVolume)</span><br><span class="line"> amixer sset &#39;Speaker AC&#39; 4</span><br><span class="line"> #Set the volume of your Speaker AC(80% volume，5 is the MaxVolume)</span><br><span class="line"> amixer sset &#39;Speaker DC&#39; 4</span><br><span class="line"> #音频输入，左声道管理</span><br><span class="line"> #Turn on Left Input Mixer Boost</span><br><span class="line"> amixer sset &#39;Left Input Mixer Boost&#39; off</span><br><span class="line"> amixer sset &#39;Left Boost Mixer LINPUT1&#39; off</span><br><span class="line"> amixer sset &#39;Left Input Boost Mixer LINPUT1&#39; 0</span><br><span class="line"> amixer sset &#39;Left Boost Mixer LINPUT2&#39; off</span><br><span class="line"> amixer sset &#39;Left Input Boost Mixer LINPUT2&#39; 0</span><br><span class="line"> #Turn off Left Boost Mixer LINPUT3</span><br><span class="line"> amixer sset &#39;Left Boost Mixer LINPUT3&#39; off</span><br><span class="line"> amixer sset &#39;Left Input Boost Mixer LINPUT3&#39; 0</span><br><span class="line"> #音频输入，右声道管理，全部关闭</span><br><span class="line"> #Turn on Right Input Mixer Boost</span><br><span class="line"> amixer sset &#39;Right Input Mixer Boost&#39; on</span><br><span class="line"> amixer sset &#39;Right Boost Mixer RINPUT1&#39; off</span><br><span class="line"> amixer sset &#39;Right Input Boost Mixer RINPUT2&#39; 0</span><br><span class="line"> amixer sset &#39;Right Boost Mixer RINPUT2&#39; on</span><br><span class="line"> amixer sset &#39;Right Input Boost Mixer RINPUT2&#39; 127</span><br><span class="line"> amixer sset &#39;Right Boost Mixer RINPUT3&#39; off</span><br><span class="line"> amixer sset &#39;Right Input Boost Mixer RINPUT3&#39; 0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer cset name &#x3D;&#39;Capture Volume&#39; 100,100</span><br><span class="line"></span><br><span class="line">amixer sset &#39;PCM Playback&#39; on</span><br><span class="line">amixer sset &#39;Playback&#39; 256</span><br><span class="line">amixer sset &#39;Right Output Mixer PCM&#39; on</span><br><span class="line">amixer sset &#39;Left Output Mixer PCM&#39; on</span><br><span class="line"></span><br><span class="line">amixer sset &#39;ADC PCM&#39; 200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Headphone Playback ZC&#39; on</span><br><span class="line"></span><br><span class="line">amixer sset Headphone 125,125</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Speaker Playback ZC&#39; on</span><br><span class="line"></span><br><span class="line">amixer sset Speaker 125,125</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Speaker AC&#39; 4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Speaker DC&#39; 4</span><br><span class="line"></span><br><span class="line">amixer sset &#39;Left Input Mixer Boost&#39; on</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Left Boost Mixer LINPUT1&#39; off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Left Input Boost Mixer LINPUT1&#39; 0</span><br><span class="line"> amixer sset &#39;Left Boost Mixer LINPUT2&#39; on</span><br><span class="line">amixer sset &#39;Left Input Boost Mixer LINPUT2&#39; 127</span><br><span class="line">amixer sset &#39;Left Boost Mixer LINPUT3&#39; off</span><br><span class="line">amixer sset &#39;Left Input Boost Mixer LINPUT3&#39; 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">amixer sset &#39;Right Input Mixer Boost&#39; on</span><br><span class="line">amixer sset &#39;Right Boost Mixer RINPUT1&#39; off</span><br><span class="line">amixer sset &#39;Right Input Boost Mixer RINPUT1&#39; 0</span><br><span class="line">amixer sset &#39;Right Boost Mixer RINPUT2&#39; off</span><br><span class="line">amixer sset &#39;Right Input Boost Mixer RINPUT2&#39; 0</span><br><span class="line"></span><br><span class="line">amixer sset &#39;Right Boost Mixer RINPUT3&#39; on</span><br><span class="line">amixer sset &#39;Right Input Boost Mixer RINPUT3&#39; 127</span><br></pre></td></tr></table></figure>
+<p>arecord -f cd -d 10 record.wav<br>aplay record.wav</p>
+<p>保存声卡设置<br>alsactl -f /var/lib/alsa/asound.state store //保存声卡设置<br>alsactl -f /var/lib/alsa/asound.state restore //配置</p>
+<p>打开/etc/init.d/rcS 文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if [ -f &quot;&#x2F;var&#x2F;lib&#x2F;alsa&#x2F;asound.state&quot; ]; then</span><br><span class="line"> echo &quot;ALSA: Restoring mixer setting......&quot;</span><br><span class="line"> &#x2F;sbin&#x2F;alsactl -f &#x2F;var&#x2F;lib&#x2F;alsa&#x2F;asound.state restore &amp;</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+
+<p><strong>mplayer</strong></p>
+<p>1 、mplayer播放音频<br>mplayer test.flac</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">9 ：增加音量。</span><br><span class="line">0：减小音量。</span><br><span class="line">左键：倒退 10 秒</span><br><span class="line">右键：快进 10 秒</span><br><span class="line">上键：倒退 1 分钟</span><br><span class="line">下键：快进 1 分钟</span><br><span class="line">空格：暂停和播放</span><br></pre></td></tr></table></figure>
+
+<p>2、视频播放测试</p>
+<p>mplayer test.avi -fs //居中播放视频</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-信号传递</title>
+    <url>/Linux-Lover/-%E4%BF%A1%E5%8F%B7%E4%BC%A0%E9%80%92/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送类</span><br><span class="line"></span><br><span class="line"> void send()   &#123; </span><br><span class="line"></span><br><span class="line">  mit newPaper(m_name);  </span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line"></span><br><span class="line">    void newPaper(const QString &amp;name);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">    QString m_name;</span><br><span class="line"></span><br><span class="line">接受类</span><br><span class="line"></span><br><span class="line"> Reader()  &#123;&#125;</span><br><span class="line"></span><br><span class="line">   void receiveNewspaper(const QString &amp;name)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        qDebug() &lt;&lt; &quot;ReceivesNewspaper: &quot; &lt;&lt; name;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 232、485、GPS</title>
+    <url>/Linux-Lover/Linux-232%E3%80%81485%E3%80%81GPS/</url>
+    <content><![CDATA[<p>串口是很常用的一个外设，在 Linux 下通常通过串口和其他设备或传感器进行通信，根据<br>电平的不同，串口分为 TTL 和 RS232。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">uart_driver  注册与注销</span><br><span class="line">int uart_register_driver(struct uart_driver *drv)</span><br><span class="line">void uart_unregister_driver(struct uart_driver *drv)</span><br><span class="line"></span><br><span class="line">添加</span><br><span class="line">int uart_add_one_port(struct uart_driver *drv,</span><br><span class="line">struct uart_port *uport)</span><br><span class="line"></span><br><span class="line">删除</span><br><span class="line">int uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux SPI</title>
+    <url>/Linux-Lover/nux-SPI/</url>
+    <content><![CDATA[<p>spi_master 结构<br>transfer 函数，和 i2c_algorithm 中的 master_xfer 函数一样，控制器数据传输函<br>数。<br>transfer_one_message 函数，也用于 SPI 数据发送，用于发送一个 spi_message，<br>SPI 的数据会打包成 spi_message，然后以队列方式发送出去。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">spi_master  申请与释放</span><br><span class="line">spi_alloc_master 函数用于申请 spi_master，函数原型如下：</span><br><span class="line">struct spi_master *spi_alloc_master(struct device *dev,</span><br><span class="line">unsigned size)</span><br><span class="line"></span><br><span class="line">spi_master 的释放通过 spi_master_put 函数来完成，当我们删除一个 SPI 主机驱动的时候就</span><br><span class="line">需要释放掉前面申请的 spi_master，spi_master_put 函数原型如下：</span><br><span class="line">void spi_master_put(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spi_master  的注册</span><br><span class="line">int spi_register_master(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"> spi_master 的注销</span><br><span class="line">void spi_unregister_master(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spi_message初始化</span><br><span class="line">void spi_message_init(struct spi_message *m)</span><br><span class="line"></span><br><span class="line">spi_transfer 添加到 spi_message 队列中</span><br><span class="line">void spi_message_add_tail(struct spi_transfer *t, struct spi_message *m)</span><br><span class="line"></span><br><span class="line">同步传输函数为 spi_sync，函数原型如下：</span><br><span class="line">int spi_sync(struct spi_device *spi, struct spi_message *message)</span><br><span class="line"></span><br><span class="line">SPI 异步传</span><br><span class="line">输函数为 spi_async，函数原型如下：</span><br><span class="line">int spi_async(struct spi_device *spi, struct spi_message *message)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>wifi驱动了解</title>
     <url>/Linux-Lover/ifi%E9%A9%B1%E5%8A%A8%E4%BA%86%E8%A7%A3/</url>
     <content><![CDATA[<p>支持 USB 和 SDIO 这两种接口的 WIFI。</p>
@@ -376,6 +778,50 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>Linux CAN</title>
+    <url>/Linux-Lover/Linux-CAN/</url>
+    <content><![CDATA[<p><strong>CAN总线</strong></p>
+<p>CAN 的全称为 Controller Area Network，也就是控制局域网络，简称为 CAN。</p>
+<p>CAN 的特点主要有一下几点：<br>①、多主控制<br>在总线空闲时，所有单元都可以发送消息（多主控制），而两个以上的单元同时开始发送消<br>息时，根据标识符（Identifier 以下称为 ID）决定优先级。ID 并不是表示发送的目的地址，而<br>是表示访问总线的消息的优先级。两个以上的单元同时开始发送消息时，对各消息 ID 的每个<br>位进行逐个仲裁比较。仲裁获胜（被判定为优先级最高）的单元可继续发送消息，仲裁失利的<br>单元则立刻停止发送而进行接收工作。</p>
+<p>③、通信速度快，距离远<br>最高 1Mbps（距离小于 40M），最远可达 10KM（速率低于 5Kbps）。<br>④、具有错误检测、错误通知和错误恢复功能</p>
+<p>⑥、连接节点多</p>
+<p>CAN 总线使用两根线来连接各个单元：CAN_H 和 CAN_L.</p>
+<p>显性电平表示逻<br>辑“0”，此时 CAN_H 电平比 CAN_L 高，分别为 3.5V 和 1.5V，电位差为 2V。隐形电平表示<br>逻辑“1”，此时 CAN_H 和 CAN_L 电压都为 2.5V 左右，电位差为 0V。</p>
+<p><strong>CAN协议</strong></p>
+<p>CAN 协议提供了 5 种帧格式来传输<br>数据：数据帧、遥控帧、错误帧、过载帧和帧间隔。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nux-IIC</title>
+    <url>/Linux-Lover/nux-IIC/</url>
+    <content><![CDATA[<p><strong>IIC 总线</strong></p>
+<p>内核也将 I2C 驱动分为两部分：<br>①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。<br>②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;</span><br><span class="line">  -&gt;i2c_algorithm&#x2F;*  总线访问算法 *&#x2F;</span><br><span class="line">		-&gt;master_xfer&#x2F;* I2C 适配器的传输函数*&#x2F;</span><br><span class="line"></span><br><span class="line">两个函数向系统注册设置好</span><br><span class="line">int i2c_add_adapter(struct i2c_adapter *adapter)</span><br><span class="line">int i2c_add_numbered_adapter(struct i2c_adapter *adap)</span><br><span class="line"></span><br><span class="line">删除 I2C 适配器的话使用 i2c_del_adapter 函数即可，函数原型如下：</span><br><span class="line">void i2c_del_adapter(struct i2c_adapter * adap)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">调用 i2c_imx_start 函数开启 I2C 通信。</span><br><span class="line">如果是从 I2C 设备读数据的话就调用 i2c_imx_read 函数。</span><br><span class="line">向 I2C 设备写数据，如果要用 DMA 的话就使用 i2c_imx_dma_write 函数来</span><br><span class="line">完成写数据。</span><br><span class="line">如果不使用 DMA 的话就使用 i2c_imx_write 函数完成写数据。</span><br><span class="line">I2C 通信完成以后调用 i2c_imx_stop 函数停止 I2C 通信&#96;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int i2c_transfer(struct i2c_adapter *adap,</span><br><span class="line">struct i2c_msg *msgs,</span><br><span class="line">int num</span><br></pre></td></tr></table></figure>
+
+
+<p>ls /sys/bus/i2c/devices</p>
+<p>cd /sys/bus/i2c/devices</p>
+<p>cat 0-001e/name //查看设备名字</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTC驱动了解🏃</title>
     <url>/Linux-Lover/RTC%E9%A9%B1%E5%8A%A8/</url>
     <content><![CDATA[<p>RTC 设备驱动是一个标准的字符设备驱动</p>
@@ -494,6 +940,8 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p>非root用户运行无问题，切换到root用户或者以sudo方式运行出现问题。<br>QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to ‘/tmp/runtime-root’这个好像不影响页面显示</p>
+<p>版本兼容问题<br>CONFIG += c++11  //添加标准</p>
+<p>图标报错<br>RC_ICONS += ming.ico<br><a href="http://www.bitbug.net/" target="_blank" rel="noopener">http://www.bitbug.net/</a><br>要用专业软件转化格式</p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
@@ -1348,27 +1796,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</memory></functional></numeric></algorithm></p>
@@ -1384,6 +1811,27 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
