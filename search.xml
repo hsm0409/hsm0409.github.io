@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>炫酷的图片来源QAQ</title>
+    <url>/Linux-Lover/%E7%82%AB%E9%85%B7%E7%9A%84%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90QAQ/</url>
+    <content><![CDATA[<p>JPG的图片格式是有损的，优点是有更丰富的色彩，非常适合来存储照片，用来表达更生动的图像效果，比如颜色渐变。<br>PNG格式的图片是无损的，而且PNG-8格式是GIF格式的非常好的替代者，在达到相同效果的情况下，PNG-8格式体积更小，而且支持透明度的调节。<br>SVG格式的图片是无损的矢量图。在放大的不会失真，适合绘制企业logo，icon等。</p>
+<p>有损压缩是对图像本身的改变,在保存图像时保留了较多的亮度信息,而将色相和色纯度的信息和周围的像素进行合并,合并的比例不同,压缩的比例也不同,由于信息量减少了,所以压缩比可以很高,图像质量也会相应的下降。<br>无损压缩是对文件本身的压缩,和其它数据文件的压缩一样,是对文件的数据存储方式进行优化。</p>
+<p>图标网站：Iconfont：<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">https://www.iconfont.cn/</a></p>
+<p>一位大佬的博客：<a href="https://cloud.tencent.com/developer/article/1631262" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1631262</a></p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT上执行shell</title>
+    <url>/Linux-Lover/T%E4%B8%8A%E6%89%A7%E8%A1%8Cshell/</url>
+    <content><![CDATA[<p>1、脚本echo输出的内容得通过connect调用函数获取。<br>2、start/execute 调用的时候脚本就开始了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifndef WIDGET_H</span><br><span class="line">#define WIDGET_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line">#include &lt;QProcess&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">#include &lt;QString&gt;</span><br><span class="line">#include&lt;QList&gt;</span><br><span class="line">#include&lt;QStringList&gt;</span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class Widget;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Widget : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit Widget(QWidget *parent &#x3D; 0);</span><br><span class="line">    ~Widget();</span><br><span class="line">   &#x2F;&#x2F; void executeShellQProcess(QString str);</span><br><span class="line"></span><br><span class="line">         QString shellOutput;</span><br><span class="line">private slots:</span><br><span class="line">         void executeShellQProcess();</span><br><span class="line">         void readProcess();</span><br><span class="line">         void finishedProcess();</span><br><span class="line">         void on_pushButton_clicked();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    Ui::Widget *ui;</span><br><span class="line">    QProcess *runShellProcess;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; WIDGET_H</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;widget.h&quot;</span><br><span class="line">#include &quot;ui_widget.h&quot;</span><br><span class="line">#include&lt;QProcess&gt;</span><br><span class="line">#include&lt;QDir&gt;</span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line"></span><br><span class="line">    runShellProcess &#x3D; new QProcess(this);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;        connect(runShellProcess, SIGNAL(readyRead()), this, SLOT(readProcess()));</span><br><span class="line">      &#x2F;&#x2F;  connect(runShellProcess, SIGNAL(finished(int)), this, SLOT(finishedProcess()));</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void Widget::executeShellQProcess()&#123;</span><br><span class="line">    shellOutput&#x3D;&quot;&quot;;</span><br><span class="line">    QString filename &#x3D; QCoreApplication::applicationDirPath();</span><br><span class="line">    qDebug()&lt;&lt;filename;</span><br><span class="line">    QDir::setCurrent(filename);</span><br><span class="line">    runShellProcess-&gt;start( &quot;.&#x2F;test.sh&quot;);</span><br><span class="line">    &#x2F;&#x2F; runShellProcess-&gt;execute( &quot;.&#x2F;test.sh&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Widget::readProcess()&#123;</span><br><span class="line">    QString output&#x3D;runShellProcess-&gt;readAll();</span><br><span class="line">      shellOutput+&#x3D;output;</span><br><span class="line">      &#x2F;&#x2F;qDebug()&lt;&lt;&quot;shellOutput1&quot;&lt;&lt;endl;</span><br><span class="line">     &#x2F;&#x2F;do something</span><br><span class="line">       qDebug()&lt;&lt;shellOutput&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Widget::finishedProcess()&#123;</span><br><span class="line">     qDebug()&lt;&lt;shellOutput&lt;&lt;endl;</span><br><span class="line">     &#x2F;&#x2F;do something</span><br><span class="line">&#125;</span><br><span class="line">Widget::~Widget()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Widget::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    executeShellQProcess();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title> imx6ull点灯测试</title>
+    <url>/Linux-Lover/imx6ull%E7%82%B9%E7%81%AF%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p>echo “out” &gt; /sys/class/gpio/gpio130/direction #控制为输出<br>echo “in” &gt; /sys/class/gpio/gpio130/direction #控制为输入<br>echo “1” &gt; /sys/class/gpio/gpio130/value #输出为高电平<br>echo “0” &gt; /sys/class/gpio/gpio130/value #输出为低电平</p>
+<p>brightness 节点用来控制 LED 的亮灭，通过对 brightness 节点写入 0 或 1，可以控制 LED 的亮灭状态。<br>trigger 支持的状态值有：rc-feedback, nand-disk, mmc0, timer,oneshot, heartbeat, backlight, gpio.</p>
+<p>测试中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#define LED1_BRIGHTNESS    &quot;&#x2F;sys&#x2F;devices&#x2F;platform&#x2F;dtsleds&#x2F;leds&#x2F;red&#x2F;brightness&quot;</span><br><span class="line">#define LED1_TRIGGER       &quot;&#x2F;sys&#x2F;devices&#x2F;platform&#x2F;dtsleds&#x2F;leds&#x2F;red&#x2F;trigger&quot;</span><br><span class="line">#define TRIGGER_NONE          &quot;none&quot;</span><br><span class="line">#define TRIGGER_HEARTBEAT     &quot;heartbeat&quot;</span><br></pre></td></tr></table></figure>
+
+<p>视频</p>
+<iframe src="//player.bilibili.com/player.html?aid=883253911&bvid=BV1jK4y1t7iz&cid=197202487&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="600" width="100%"> </iframe>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>i.MX6UL芯片上电过程分析</title>
+    <url>/Linux-Lover/i-MX6UL%E8%8A%AF%E7%89%87%E4%B8%8A%E7%94%B5%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>参考来源：公众号【微联智控】<br>参考来源：正点原子<br><strong>误区</strong></p>
+<p>芯片一上电的时候，首先执行的程序是类似 u-boot 之类的 BootLoader，或者是单片机程序里面类似于 xxxx_start_up.S 的启动文件，更有很多单片机工程师认为，芯片一上电就去执行 main()函数。</p>
+<p><strong>事实</strong></p>
+<p>大部分嵌入式处理器芯片一上电的时候，首先执行的既不是 BootLoader，也不是执行类似于 xxxx_start_up.S 的启动文件。而是执行一段开发者看不见摸不着的程序，通常把这段程序称为 BootROM。这段程序在嵌入式处理器芯片生产设计的时候就被芯片设计厂家固化在芯片里面，开发者作为使用芯片的角色，不需要获得 BootROM 的源码，也不需要对 BootROM 源码进行改写。</p>
+<p>（1）Image Vector Table —— 镜像向量表，简称 IVT，位于固定地址的指针列表，ROM 检<br>查该列表以确定程序映像的其他组件所在的位置。<br>（2）Boot Data —— 表示程序镜像的位置，镜像大小，以及插件标志。<br>（3）Device Configuration Data —— 表示芯片 IC 的初始化数据。<br>（4）User Code and Data —— 用户代码和数据</p>
+<p>以 SD/EMMC 为例，IVT 偏移为 1Kbyte，IVT+Boot data+DCD 的总大小为 4KByte-<br>1KByte=3KByte。<br>IVT+Boot data+DCD+.bin</p>
+<p>参考：<a href="https://www.cnblogs.com/yuanqiangfei/p/10225138.html" target="_blank" rel="noopener">https://www.cnblogs.com/yuanqiangfei/p/10225138.html</a></p>
+<p>Efuse类似于EEPROM，是一次性可编程存储器，在芯片出场之前会被写入信息，在一个芯片中，efuse的容量通常很小，一些芯片efuse只有128bit。<br>28bit的efuse包含芯片电压字段、芯片版本号、芯片生产日期以及其他信息。<br>芯片在初次上电过程中会读取efuse中的电压字段数值，送到芯片外部的电源管理器，电源管理器在芯片初始上电前会提供一个标准的电压（假设为1.0v），在接受到efuse中的电压字段数值后会调节电压大小。完成电源电压调整后，芯片会重新进行上电复位操作。</p>
+<img src="/Linux-Lover/i-MX6UL%E8%8A%AF%E7%89%87%E4%B8%8A%E7%94%B5%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/%E4%B8%8A%E7%94%B5%E5%90%AF%E5%8A%A8.jpg" class>
+
+
+<p>总的来说，i.MX6UL这款芯片的BootROM的主要功能是，根据内部eFUSES或者外部GPIO<br>的状态，来判断芯片从哪里（可以是 SD 卡，NandFlash，eMMC 等）加载启动镜像，然后再<br>从启动镜像获取芯片的初始化方式（启动镜像 u-boot.imx 就是 u-boot.bin + header 数据的集<br>合，这个 header 数据就是提供给芯片的 BootROM 使用的），最后通过绝对地址，跳转到启<br>动镜像那里，执行第一句用户程序指令（通常是 u-boot 里面的_start 函数，通过 u-boot.lds<br>链接脚本，可以看到 u-boot 的第一个函数入口，接下来才是 u-boot 的启动过程）。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>截屏工具gsnap移植</title>
+    <url>/Linux-Lover/gsnap%E7%A7%BB%E6%A4%8D/</url>
+    <content><![CDATA[<p>参考：微联智控</p>
+<p>截屏工具 gsnap 的移植，需要依赖以下库文件：libpng、libjpeg、zlib、libmath。<br>libmath 由于交叉编译器自带，因此 libmath 可以不用移植。</p>
+<p>创建：/opt/work/tools/gsnap<br>基本配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CC&#x3D;arm-linux-gnueabihf-gcc   &#x2F;&#x2F;编译器</span><br><span class="line"># .&#x2F;configure --prefix&#x3D;&#x2F;opt&#x2F;work&#x2F;tools&#x2F;gsnap&#x2F;xxx_install   &#x2F;&#x2F;安装路径</span><br></pre></td></tr></table></figure>
+
+<p>把生成的lib、iclude放到 gsnap_install/lib 目录下的动态库复制到开发板的/lib 目录</p>
+<p>可以进行屏幕截图：gsnap fb.jpg /dev/fb0</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>shell进阶命令</title>
     <url>/shell-Lover/shell%E8%BF%9B%E9%98%B6%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<p>find命令</p>
@@ -52,6 +148,29 @@
       <categories>
         <category>shell Lover</category>
       </categories>
+  </entry>
+  <entry>
+    <title>了解ESP8266</title>
+    <url>/MCU-Lover/ESP8266/</url>
+    <content><![CDATA[<p>参考连接;<a href="https://www.bilibili.com/video/BV1dJ411S723?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1dJ411S723?p=1</a><br><a href="https://www.espressif.com/zh-hans" target="_blank" rel="noopener">https://www.espressif.com/zh-hans</a><br><strong>IOT物联网</strong></p>
+<p>物联网（The Internet of Things，简称IOT）是指通过 各种信息传感器、射频识别技术、全球定位系统、红外感应器、激光扫描器等各种装置与技术，实时采集任何需要监控、 连接、互动的物体或过程，采集其声、光、热、电、力学、化 学、生物、位置等各种需要的信息，通过各类可能的网络接入，实现物与物、物与人的泛在连接，实现对物品和过程的智能化感知、识别和管理。物联网是一个基于互联网、传统电信网等的信息承载体，它让所有能够被独立寻址的普通物理对象形成互联互通的网络 [1]  。</p>
+<img src="/MCU-Lover/ESP8266/%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F.jpg" class>
+
+<p>阿里云、腾讯云</p>
+<p>百度云：<a href="https://console.bce.baidu.com/#/index/overview" target="_blank" rel="noopener">https://console.bce.baidu.com/#/index/overview</a></p>
+<img src="/MCU-Lover/ESP8266/MQTT.jpg" class>
+
+
+<p><strong>ESP8266</strong></p>
+<p>IPv4, TCP/UDP/HTTP/FTP<br>用户配置<br>AT+ 指令集, 云端服务器, Android/iOS APP</p>
+<p>AT指令<br>SDK编程</p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
   </entry>
   <entry>
     <title>正则表达式</title>
@@ -276,6 +395,7 @@
 <p>Qstring::sprintf()用法</p>
 <p>QString str；</p>
 <p>str.sprintf(“%d %s,10,”hello””);</p>
+<p>oLatin1、toLocal8Bit都是QString转QByteArray的方法</p>
 <p>#define TIMEMS      qPrintable(QTime::currentTime().toString(“HH:mm:ss zzz”))</p>
 <p>开源控件链接：<a href="https://gitee.com/feiyangqingyun/QWidgetDemo" target="_blank" rel="noopener">https://gitee.com/feiyangqingyun/QWidgetDemo</a></p>
 ]]></content>
@@ -1106,6 +1226,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 <p>非root用户运行无问题，切换到root用户或者以sudo方式运行出现问题。<br>QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to ‘/tmp/runtime-root’这个好像不影响页面显示</p>
 <p>版本兼容问题<br>CONFIG += c++11  //添加标准</p>
+<p>linux qt 不支持中文输入<br>/opt/Qt5.5.1/Tools/QtCreator/bin/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so </p>
 <p>图标报错<br>RC_ICONS += ming.ico<br><a href="http://www.bitbug.net/" target="_blank" rel="noopener">http://www.bitbug.net/</a><br>要用专业软件转化格式</p>
 <p>字体不显示</p>
 <p>usr文件夹-&gt;share文件夹-&gt;fronts文件夹-&gt;字体.otf</p>
@@ -2322,6 +2443,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>#define dPS struct s *             // 宏定义 dPS 表示 struct s*<br>typedef struct s * tPS;            // typedef 表示，将struct *s 重命名为tPS</p>
 <p>#define是一个预处理器令牌：编译器本身将永远看不到它。<br>typedef是一个编译器令牌：预处理器不关心它。</p>
 <p>•    typedef以分号结尾，而#define不以分号结尾。<br>•    typedef用于为现有类型赋予新的符号名称，而#define用于创建任何类型和值的别名。</p>
+<p> explicit关键字<br>只能用于修饰只有一个参数的类构造函数, 它的作用是表明该构造函数是显示的, 而非隐式的, 跟它相对应的另一个关键字是implicit, 意思是隐藏的,类构造函数默认情况下即声明为implicit(隐式).<br>  如下面写法是否被允许。<br>  CxString string1(24);<br> CxString string2 = 10;  </p>
 ]]></content>
       <categories>
         <category>C/C++ Lover</category>
@@ -2367,32 +2489,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <td>5、SPI接口的一个缺点：没有指定的流控制,没有应答机制确认是否接收到数据</td>
 </tr>
 </tbody></table>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class>
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class>
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class>
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -2457,6 +2553,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class>
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class>
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class>
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -2846,31 +2968,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>51单片机</title>
-    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class width="51">
-
-
-
-
-<p>__晶体与晶振</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class title="晶体与晶振">
-
-
-<p>常见问题 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STM32单片机</title>
     <url>/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<p><strong>时钟系统</strong></p>
@@ -2893,6 +2990,31 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>入堆栈ISR<br>保存现场{PC,PSR,R0-R3,R12,ISR} ISR:当前中断服务寄存器<br>保存完后，ISR进入中断<br>晚来的中断可以ISR进入，不用重新保存现场。</p>
 <p>退出中断<br>出栈恢复现场<br>也可以被打断进入新的中断。</p>
 ]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
@@ -3727,7 +3849,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>Linux随记命令(1)</title>
     <url>/Linux-Lover/%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ctrl +C    终止 <span class="built_in">cd</span> `</span><br><span class="line"></span><br><span class="line">df  -h      磁盘大小</span><br><span class="line"></span><br><span class="line">free -m     内存大小</span><br><span class="line"></span><br><span class="line">head -n  **.txt  文件头几行   默认10</span><br><span class="line"></span><br><span class="line">tail - n <span class="comment">##  ** .txt 文件末尾两行</span></span><br><span class="line"></span><br><span class="line">less 查看文件     ：q退出</span><br><span class="line"></span><br><span class="line"><span class="comment">#wc -lwc 统计文件内容信息（包含行数、单词数、字节数）</span></span><br><span class="line"></span><br><span class="line">         -l：表示lines，行数</span><br><span class="line"></span><br><span class="line">         -w：表示words，单词数  依照空格来判断单词数量</span><br><span class="line"></span><br><span class="line">         -c：表示bytes，字节数</span><br><span class="line"></span><br><span class="line">date 输出的形式：2018年3月24日星期六15:54:28</span><br><span class="line"></span><br><span class="line">date +%F 输出形式：2018-03-24</span><br><span class="line"></span><br><span class="line">date <span class="string">"+%F %T"</span>  ==输出的形式：2018-03-24 16:01:00</span><br><span class="line"></span><br><span class="line">==<span class="comment">#date “+%Y-%m-%d %H:%M:%S”</span></span><br><span class="line"></span><br><span class="line">date -d   <span class="string">"-1 day"</span>  <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"></span><br><span class="line">前天 -  后天 +</span><br><span class="line"></span><br><span class="line">cal  作用：用来操作日历的</span><br><span class="line"></span><br><span class="line">cal -1 本月</span><br><span class="line"></span><br><span class="line">cal -3 上 中 下</span><br><span class="line"></span><br><span class="line">cal   -y  2019 年份月历</span><br><span class="line"></span><br><span class="line">clear     / ctrl +L  清除终端</span><br><span class="line"></span><br><span class="line">ls   /  | wc<span class="_">-l</span>   管道的过滤使用</span><br><span class="line"></span><br><span class="line"><span class="comment">#ls / |grep y</span></span><br><span class="line"></span><br><span class="line">hostname -f </span><br><span class="line"></span><br><span class="line">id  （包含用户id，用户组id，附加组id…）</span><br><span class="line"></span><br><span class="line">whoami   查看当前用户</span><br><span class="line"></span><br><span class="line">ps -ef 服务器进程   ps -ef  |grep http</span><br><span class="line"></span><br><span class="line">top 处理机资源占用情况</span><br><span class="line"></span><br><span class="line">du -sh 目录 查看目录大小</span><br><span class="line"></span><br><span class="line">service 服务名称  start stop  restart</span><br><span class="line"></span><br><span class="line">find  / -name      http    查找</span><br><span class="line"></span><br><span class="line">find  / -name      *.cof </span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> 2986   killall 名称   杀死进程</span><br><span class="line"></span><br><span class="line">ifconfig      inet addr就是网卡的ip地址。</span><br><span class="line"></span><br><span class="line">reboot  启动</span><br><span class="line"></span><br><span class="line">shutdown   重启</span><br><span class="line"></span><br><span class="line">uptime 计算开机到现在的额时间</span><br><span class="line"></span><br><span class="line">uname  操作系统名称</span><br><span class="line"></span><br><span class="line">netstat -tnlp</span><br><span class="line"></span><br><span class="line">       -t：表示只列出tcp协议的连接；</span><br><span class="line"></span><br><span class="line">       -n：表示将地址从字母组合转化成ip地址，将协议转化成端口号来显示；</span><br><span class="line"></span><br><span class="line">       -l：表示过滤出“state（状态）”列中其值为LISTEN（监听）的连接；</span><br><span class="line"></span><br><span class="line">       -p：表示显示发起连接的进程pid和进程名称；</span><br><span class="line"></span><br><span class="line">man   cp 查看帮助文档</span><br><span class="line"></span><br><span class="line">软链接 （符号链接） ln -s   <span class="built_in">source</span>  target  </span><br><span class="line"></span><br><span class="line">硬链接 （实体链接）ln       <span class="built_in">source</span>  target</span><br><span class="line"></span><br><span class="line">Ctrl+s  阻止输入</span><br><span class="line"></span><br><span class="line">Ctrl+q  允许输入</span><br></pre></td></tr></table></figure>]]></content>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ctrl +C    终止 <span class="built_in">cd</span> `</span><br><span class="line"></span><br><span class="line">df  -h      磁盘大小</span><br><span class="line"></span><br><span class="line">free -m     内存大小</span><br><span class="line"></span><br><span class="line">head -n  **.txt  文件头几行   默认10</span><br><span class="line"></span><br><span class="line">tail - n <span class="comment">##  ** .txt 文件末尾两行</span></span><br><span class="line"></span><br><span class="line">less 查看文件     ：q退出</span><br><span class="line"></span><br><span class="line"><span class="comment">#wc -lwc 统计文件内容信息（包含行数、单词数、字节数）</span></span><br><span class="line"></span><br><span class="line">         -l：表示lines，行数</span><br><span class="line"></span><br><span class="line">         -w：表示words，单词数  依照空格来判断单词数量</span><br><span class="line"></span><br><span class="line">         -c：表示bytes，字节数</span><br><span class="line"></span><br><span class="line">date 输出的形式：2018年3月24日星期六15:54:28</span><br><span class="line"></span><br><span class="line">date +%F 输出形式：2018-03-24</span><br><span class="line"></span><br><span class="line">date <span class="string">"+%F %T"</span>  ==输出的形式：2018-03-24 16:01:00</span><br><span class="line"></span><br><span class="line">==<span class="comment">#date “+%Y-%m-%d %H:%M:%S”</span></span><br><span class="line"></span><br><span class="line">date -d   <span class="string">"-1 day"</span>  <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"></span><br><span class="line">前天 -  后天 +</span><br><span class="line"></span><br><span class="line">cal  作用：用来操作日历的</span><br><span class="line"></span><br><span class="line">cal -1 本月</span><br><span class="line"></span><br><span class="line">cal -3 上 中 下</span><br><span class="line"></span><br><span class="line">cal   -y  2019 年份月历</span><br><span class="line"></span><br><span class="line">clear     / ctrl +L  清除终端</span><br><span class="line"></span><br><span class="line">ls   /  | wc<span class="_">-l</span>   管道的过滤使用</span><br><span class="line"></span><br><span class="line"><span class="comment">#ls / |grep y</span></span><br><span class="line"></span><br><span class="line">hostname -f </span><br><span class="line"></span><br><span class="line">id  （包含用户id，用户组id，附加组id…）</span><br><span class="line"></span><br><span class="line">whoami   查看当前用户</span><br><span class="line"></span><br><span class="line">ps -ef 服务器进程   ps -ef  |grep http</span><br><span class="line"></span><br><span class="line">top 处理机资源占用情况</span><br><span class="line"></span><br><span class="line">du -sh 目录 查看目录大小</span><br><span class="line"></span><br><span class="line">service 服务名称  start stop  restart</span><br><span class="line"></span><br><span class="line">find  / -name      http    查找</span><br><span class="line"></span><br><span class="line">find  / -name      *.cof </span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> 2986   killall 名称   杀死进程</span><br><span class="line"></span><br><span class="line">ifconfig      inet addr就是网卡的ip地址。</span><br><span class="line"></span><br><span class="line">reboot  启动</span><br><span class="line"></span><br><span class="line">shutdown   重启</span><br><span class="line"></span><br><span class="line">uptime 计算开机到现在的额时间</span><br><span class="line"></span><br><span class="line">uname  操作系统名称</span><br><span class="line"></span><br><span class="line">netstat -tnlp</span><br><span class="line"></span><br><span class="line">       -t：表示只列出tcp协议的连接；</span><br><span class="line"></span><br><span class="line">       -n：表示将地址从字母组合转化成ip地址，将协议转化成端口号来显示；</span><br><span class="line"></span><br><span class="line">       -l：表示过滤出“state（状态）”列中其值为LISTEN（监听）的连接；</span><br><span class="line"></span><br><span class="line">       -p：表示显示发起连接的进程pid和进程名称；</span><br><span class="line"></span><br><span class="line">man   cp 查看帮助文档</span><br><span class="line"></span><br><span class="line">软链接 （符号链接） ln -s   <span class="built_in">source</span>  target  </span><br><span class="line"></span><br><span class="line">硬链接 （实体链接）ln       <span class="built_in">source</span>  target</span><br><span class="line"></span><br><span class="line">Ctrl+s  阻止输入</span><br><span class="line"></span><br><span class="line">Ctrl+q  允许输入</span><br><span class="line"></span><br><span class="line">Ctrl + a/Home 切换到命令行开始</span><br><span class="line"></span><br><span class="line">Ctrl + e/End 切换到命令行末尾</span><br><span class="line"></span><br><span class="line"><span class="built_in">history</span> 显示你所有执行过的编号+历史命令</span><br><span class="line"></span><br><span class="line">!$ 显示系统最近的一条参数</span><br><span class="line">比如 cat /etc/sysconfig/network-scripts/ifconfig-eth0，想用 vim 编辑。</span><br><span class="line">一般的做法是先用↑ 显示最后一条命令，然后用 Home 移动到命令最前，删除 cat，然后再输入 vim 命令。其实完全可以用 vim !$来代替</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
