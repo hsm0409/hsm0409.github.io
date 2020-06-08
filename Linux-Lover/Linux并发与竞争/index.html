@@ -482,21 +482,21 @@
 <p><strong>自旋锁</strong><br>#include &lt;linux/atomic.h&gt;<br>自旋锁的“自旋”也就是“原地打转”的意思，“原地打转”的目的是为了等待自旋锁可以<br>用，可以访问共享资源。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">typedef struct spinlock &#123;</span><br><span class="line"> union &#123;</span><br><span class="line"> struct raw_spinlock rlock;</span><br><span class="line"> <span class="comment">#ifdef CONFIG_DEBUG_LOCK_ALLOC</span></span><br><span class="line"> <span class="comment"># define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))</span></span><br><span class="line"> struct &#123;</span><br><span class="line"> u8 __padding[LOCK_PADSIZE];</span><br><span class="line"> struct lockdep_map dep_map;</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">&#125;;</span><br><span class="line"> &#125; spinlock_t;</span><br><span class="line">特点：自旋锁适用于短时期的轻量级加锁，如果遇到需要长时间持有锁的场景那就需要换其他的方法了</span><br><span class="line"></span><br><span class="line">死锁：</span><br><span class="line">被自旋锁保护的临界区一定不能调用任何能够引起睡眠和阻塞的API 函数。自旋锁会自动禁止抢占，也就说当线程 A得到锁以后会暂时禁止内核抢占。如果线程 A 在持有锁期间进入了休眠状态，那么线程 A 会自动放弃 CPU 使用权。线程 B 开始运行，线程 B 也想要获取锁，但是此时锁被 A 线程持有，而且内核抢占还被禁止了！线程 B 无法被调度出去，那么线程 A 就无法运行，锁也就无法释放，导致死锁现象的发生</span><br><span class="line"></span><br><span class="line">中断里面可以使用自旋锁，但是在中断里面使用自旋锁的时候，在获取锁之前一定要先禁止本地中断(也就是本 CPU 中断，对于多核 SOC来说会有多个 CPU 核)，否则可能导致锁死现象的发生</span><br><span class="line"></span><br><span class="line"> DEFINE_SPINLOCK(lock) /* 定义并初始化一个锁 */</span><br><span class="line"></span><br><span class="line">/* 线程 A */</span><br><span class="line">void <span class="function"><span class="title">functionA</span></span> ()&#123;</span><br><span class="line">unsigned long flags; /* 中断状态 */</span><br><span class="line">spin_lock_irqsave(&amp;lock, flags) /* 获取锁 推荐用这个*/</span><br><span class="line">/* 临界区 */</span><br><span class="line">spin_unlock_irqrestore(&amp;lock, flags)  /* 释放锁推荐用这个 */</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">/* 中断服务函数 */ </span><br><span class="line">void <span class="function"><span class="title">irq</span></span>() &#123;</span><br><span class="line">spin_lock(&amp;lock) /* 获取锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line">spin_unlock(&amp;lock) /* 释放锁 */</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> 其他锁：</span><br><span class="line"> 读写锁》》》顺序锁</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class title="自旋锁">
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class="" title="自旋锁">
 
 
 <p><strong>信号量</strong></p>
 <p>（1）自旋锁，<strong>信号量可以使线程进入休眠状态</strong>，但信号量不能用于中断中，因为信号量会引起休眠，中断不能休眠。<br>（2）如果共享资源的持有时间比较短，那就不适合使用信号量了，因为频繁的休眠、切换<br>线程引起的开销要远大于信号量带来的那点优势<br>(3)计数型信号量不能用于互斥访问，因为它允许多个线程同时访问共享资源。(二值信号值)<br>自动唤醒</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line">struct semaphore &#123;</span><br><span class="line">raw_spinlock_t lock;</span><br><span class="line">unsigned int count;</span><br><span class="line">struct list_head wait_list;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct semaphore sem; /* 定义信号量 */</span><br><span class="line">sema_init(&amp;sem, 1)； /* 初始化信号量 */</span><br><span class="line">down(&amp;sem); /* 申请信号量 */</span><br><span class="line">/* 临界区 */</span><br><span class="line">up(&amp;sem);</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class title="信号量">
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class="" title="信号量">
 
 
 
 <p><strong>互斥体-mutex</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct mutex &#123;</span><br><span class="line">/* 1: unlocked, 0: locked, negative: locked, possible waiters */</span><br><span class="line">atomic_t count;</span><br><span class="line">spinlock_t wait_lock;</span><br><span class="line">&#125;;</span><br><span class="line"> struct mutex lock; /* 定义一个互斥体 */</span><br><span class="line">mutex_init(&amp;lock); /* 初始化互斥体 */</span><br><span class="line"></span><br><span class="line"> mutex_lock(&amp;lock); /* 上锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line"> mutex_unlock(&amp;lock); /* 解锁 *</span><br><span class="line">①、mutex 可以导致休眠，因此不能在中断中使用 mutex，__中断中只能使用自旋锁__。</span><br><span class="line">②、和信号量一样，mutex 保护的临界区可以调用引起阻塞的 API 函数。</span><br><span class="line">③、因为一次只有一个线程可以持有 mutex，因此，必须由 mutex 的持有者释放 mutex。并</span><br><span class="line">且 mutex 不能递归上锁和解锁</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class title="互斥体">
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class="" title="互斥体">
       
     </div>
     
@@ -617,7 +617,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,7 +628,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -639,7 +639,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -706,7 +706,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">36</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -743,7 +743,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">66.8k</span>
+    <span title="Site words total count">72.9k</span>
   
 </div>
 

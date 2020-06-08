@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>复习c++一些概念</title>
+    <url>/C-C-Lover/Untitled/</url>
+    <content><![CDATA[<p><strong>警惕拷贝构造函数</strong></p>
+<p>匿名对象一个析构；参数没有引用&amp;，算一个；<br>(初始化与赋值是两个不同的概念)赋值=算一个，初始化不算；</p>
+<p><strong>深拷贝与浅拷贝</strong></p>
+<p>析构两次后C++编译器报错     堆malloc<br>如果不自定义拷贝函数，=这种默认的拷贝行为就是浅拷贝，共用同一地址，如若改变其中一个，其他值一起变。<br>这种将对象所持有的其它资源一并拷贝的行为叫做深拷贝，我们必须显式地定义拷贝构造函数才能达到深拷贝的目的。每个拷贝拥有独立的内存空间，防止析构报错。</p>
+<p>注：如果一个类拥有指针类型的成员变量，那么绝大部分情况下就需要深拷贝，因为只有这样，才能将指针指向的内容再复制出一份来，让原有对象和新生对象相互独立，彼此之间不受影响。如果类的成员变量没有指针，一般浅拷贝足以。</p>
+<p><strong>构造函数初始化：在构造中构造</strong></p>
+<p>// 先执行 被组合对象的构造函数<br>//如果组合对象有多个,按照定义顺序, 而不是按照初始化列表的顺序</p>
+<p>结论：malloc不会调用类的构造函数,free不会调用类的析构函数</p>
+<p><strong>C++类对象中的成员变量和成员函数是分开存储的</strong></p>
+<p>一、成员变量(静态、非静态)</p>
+<p>1普通成员变量：存储于对象中，与struct变量有相同的内存布局和字节对齐方式</p>
+<p>2静态成员变量：存储于全局数据区中</p>
+<p>二、成员函数(静态、非静态、虚拟)<br>存储于代码段中。</p>
+<p><strong>this指针隐含</strong></p>
+<p>void setxy(int a,int b ){X=a;Y=b;}<br>void setxy(Simple *const this ,int a,int b){this-&gt;X=0;this-&gt;Y=b;}</p>
+<p>在 C++ 中，每一个对象都能通过 this 指针来访问自己的地址。this 指针是所有成员函数的隐含参数。因此，在成员函数内部，它可以用来指向调用对象。<br>友元函数没有 this 指针，因为友元不是类的成员。只有成员函数才有 this 指针。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局函数PK成员函数</span><br><span class="line">1、把全局函数转化成成员函数，通过this指针隐藏左操作数</span><br><span class="line">Testadd(Test &amp;t1, Test &amp;t2)&#x3D;&#x3D;&#x3D;》Test add(Test &amp;t2)</span><br><span class="line">2、把成员函数转换成全局函数，多了一个参数</span><br><span class="line">voidprintAB()&#x3D;&#x3D;&#x3D;》void printAB(Test *pthis)</span><br><span class="line">3、函数返回元素和返回引用</span><br><span class="line">Test&amp; add(Test &amp;t2) &#x2F;&#x2F;*this &#x2F;&#x2F;函数返回引用</span><br><span class="line">  &#123;</span><br><span class="line"> this-&gt;a &#x3D; this-&gt;a +t2.getA();</span><br><span class="line">   this-&gt;b &#x3D; this-&gt;b +t2.getB();</span><br><span class="line"> return*this; &#x2F;&#x2F;*操作让this指针回到元素状态</span><br><span class="line"> &#125;</span><br><span class="line">Test add2(Test &amp;t2)&#x2F;&#x2F;*this &#x2F;&#x2F;函数返回元素</span><br><span class="line"> &#123;</span><br><span class="line"> &#x2F;&#x2F;t3是局部变量</span><br><span class="line">Test t3(this-&gt;a+t2.getA(),this-&gt;b + t2.getB()) ;</span><br><span class="line">   return t3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>友元函数/友元类</strong></p>
+<p>若B类是A类的友员类，则B类的所有成员函数都是A类的友员函数<br>友员类通常设计为一种对数据操作或类之间传递消息的辅助类</p>
+<p><strong>运算符重载</strong></p>
+<p>重载：函数名相同，函数的参数个数、参数类型或参数顺序三者中必须至少有一种不同。函数返回值的类型可以相同，也可以不相同。发生在一个类内部。多个同名函数同时存在，具有不同的参数个数/类型。重载是一个类中多态性的一种表现。</p>
+<p>重写：也叫做覆盖，一般发生在子类和父类继承关系之间。子类重新定义父类中有相同名称和参数的虚函数。(override)</p>
+<p>重定义：也叫做隐藏，子类重新定义父类中有相同名称的非虚函数 ( 参数列表可以不同 ) ，指派生类的函数屏蔽了与其同名的基类函数。可以理解成发生在继承中的重载。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;前置--</span><br><span class="line">Complex&amp; operator--()</span><br><span class="line">&#123;</span><br><span class="line">this-&gt;a --;</span><br><span class="line">this-&gt;b --;</span><br><span class="line">return *this;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;后置--</span><br><span class="line">Complex operator--(int)</span><br><span class="line">&#123;</span><br><span class="line">Complex tmp &#x3D; *this;</span><br><span class="line">this-&gt;a--;</span><br><span class="line">this-&gt;b--;</span><br><span class="line">return tmp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>虚继承二义性</strong></p>
+<p>1、一般：<br>c1.b = 500; //继承的二义性 和 虚继承解决方案<br>//c1.B1::b = 500;<br>//c1.B2::b = 500;<br>2、引用虚继承 virtual public 解决二义性</p>
+<p><strong>多态性vitrtual</strong></p>
+<p>多态成立的三个条件</p>
+<p>//1 要有继承<br>//2 要有函数重写。。。C 虚函数<br>//3 要有父类指针（父类引用）指向子类对象</p>
+<p>纯虚函数如何定义？使用时应注意什么？<br>答案：virtualvoid f()=0; 是接口，子类必须要实现</p>
+<p>多态的实现效果？<br>多态：同样的调用语句有多种不同的表现形态；<br>多态实现的三个条件？<br>有继承、有virtual重写、有父类指针（引用）指向子类对象。</p>
+<p>在什么情况下应当声明虚函数？<br>构造函数不能是虚函数。建立一个派生类对象时，必须从类层次的根开始，沿着继承路径逐个调用基类的构造函数。析构函数可以是虚的。虚析构函数用于指引 delete 运算符正确析构动态对象</p>
+<p>a编译时多态性：通过重载函数实现 。<br>b运行时多态性：通过虚函数实现</p>
+<p>函数的重载是在编译的时候发生，而虚函数是在运行的时候确定。其实有时候称函数的重载为静态多态性，而虚函数为动态多态性</p>
+<p>继承的多态怎么实现?<br>多继承<br>尽管virtual是private的，子类中重写函数改为public,protected也可以，体现了多态。<br>指针大小，虚指针的大小?<br>vptr (类的第一个成员)-&gt;vtable  同类对象，共享一个vtable  对象里的虚表</p>
+<p><strong>一个具有纯虚函数的的类称为抽象类。</strong></p>
+<p>什么是动态多态？<br>由于有了虚函数，因此动态多态是在运行时完成的，也可以叫做运行期多态。</p>
+<p>什么是静态多态？<br>在模板编程及泛型编程中，是以隐式接口和编译器多态来实现静态多态。</p>
+<p>相同点：<br>都能够实现多态性，静态多态/编译期多态、动态多态/运行期多态；<br>都能够使接口和实现相分离，一个是模板定义接口，类型参数定义实现，一个是基类虚函数定义接口，继承类负责实现；</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Makefile嵌套</title>
+    <url>/Makefile-Lover/Makefile%E5%B5%8C%E5%A5%97/</url>
+    <content><![CDATA[<p>子嵌套</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">subsystem:</span><br><span class="line">cd subdir $ (MAKE)</span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line">subsystem:</span><br><span class="line"> $ (MAKE)  -C subdir</span><br></pre></td></tr></table></figure>
+<p>环境变量的传递与屏蔽</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export variable</span><br><span class="line"></span><br><span class="line">unexport variable</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Makefile Lover</category>
+      </categories>
+      <tags>
+        <tag>Makefile基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>单链表，双链表，循环链表</title>
+    <url>/Data-Structure-and-Algorithms-Lover/%E8%A1%A8/</url>
+    <content><![CDATA[<p><strong>_单链表</strong></p>
+<p>单链表的一个优点是结构简单，但是它也有一个缺点，即在单链表中只能通过一个结点的引用访问其后续结点，而无法直接访问其前驱结点。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct  Node</span><br><span class="line">&#123;</span><br><span class="line">	Int data;</span><br><span class="line">	Struct Node * next;</span><br><span class="line"></span><br><span class="line">&#125;SList;</span><br><span class="line"></span><br><span class="line">创建: SLIST *SList_Create()  SLIST *pHead, *pM, *pCur</span><br><span class="line">遍历int SList_Print(SLIST *pHead) printf(&quot;%d &quot;, tmp-&gt;data);tmp &#x3D; tmp-&gt;next;</span><br><span class="line">插入	SLIST *pM, *pCur, *pPre; &#x2F;&#x2F;创建新的业务节点pM</span><br><span class="line">删除pPre-&gt;next &#x3D; pCur-&gt;next;</span><br><span class="line">销毁tmp &#x3D; pHead-&gt;next; free(pHead);pHead &#x3D; tmp;</span><br><span class="line">反序：	t &#x3D; q-&gt;next; &#x2F;&#x2F;缓冲后面的链表</span><br><span class="line">		q-&gt;next &#x3D; p;	&#x2F;&#x2F;逆置</span><br><span class="line">		p &#x3D; q; &#x2F;&#x2F;让p下移一个结点</span><br><span class="line">		q &#x3D; t;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">代码：</span><br><span class="line">#define  _CRT_SECURE_NO_WARNINGS </span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">typedef struct Node</span><br><span class="line">&#123;</span><br><span class="line">	int data;</span><br><span class="line">	struct Node *next;</span><br><span class="line">&#125;SLIST;</span><br><span class="line">SLIST *SList_Create(); &#x2F;&#x2F;创建链表</span><br><span class="line">int SList_Print(SLIST *pHead); &#x2F;&#x2F;遍历链表</span><br><span class="line">int SList_NodeInsert(SLIST *pHead, int x, int y); &#x2F;&#x2F;插入值  在x值之前 删除y</span><br><span class="line">int SList_NodeDel(SLIST *pHead, int y);</span><br><span class="line">int SList_Destory(SLIST *pHead);</span><br><span class="line">SLIST *SList_Create()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	SLIST *pHead, *pM, *pCur;</span><br><span class="line">	int		data;</span><br><span class="line">	&#x2F;&#x2F;创建头节点 并初始化</span><br><span class="line">	pHead &#x3D; (SLIST *)malloc(sizeof(SLIST));</span><br><span class="line">	if (pHead &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return NULL;</span><br><span class="line">	&#125;</span><br><span class="line">	pHead-&gt;data &#x3D; 0;</span><br><span class="line">	pHead-&gt;next &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">	printf(&quot;\nplease enter you data: &quot;);</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;data);</span><br><span class="line"></span><br><span class="line">	pCur &#x3D; pHead;</span><br><span class="line"></span><br><span class="line">	while (data !&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F;创建业务节点 并初始化 不断接受输入 malloc新结点</span><br><span class="line">		pM &#x3D; (SLIST *)malloc(sizeof(SLIST));</span><br><span class="line">		if (pM &#x3D;&#x3D; NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			return NULL;</span><br><span class="line">		&#125;</span><br><span class="line">		pM-&gt;data &#x3D; data;</span><br><span class="line">		pM-&gt;next &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F;2 新结点 入链表 </span><br><span class="line">		pCur-&gt;next &#x3D; pM;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F;3 新结点变成当前节点</span><br><span class="line">		pCur &#x3D; pM;  &#x2F;&#x2F;链表结点的尾部追加 </span><br><span class="line"></span><br><span class="line">		printf(&quot;\nplease enter you data: &quot;);</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;data);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return pHead;</span><br><span class="line">&#125;</span><br><span class="line">int SList_Print(SLIST *pHead)</span><br><span class="line">&#123;</span><br><span class="line">	SLIST *tmp &#x3D; NULL;</span><br><span class="line">	if (pHead &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	tmp &#x3D; pHead-&gt;next;</span><br><span class="line"></span><br><span class="line">	printf(&quot;\nBegin\t&quot;);</span><br><span class="line">	while (tmp)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%d &quot;, tmp-&gt;data);</span><br><span class="line">		tmp &#x3D; tmp-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\tEnd&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int SList_NodeInsert(SLIST *pHead, int x, int y)</span><br><span class="line">&#123;</span><br><span class="line">	SLIST *pM, *pCur, *pPre;</span><br><span class="line">	&#x2F;&#x2F;创建新的业务节点pM</span><br><span class="line">	pM &#x3D; (SLIST *)malloc(sizeof(SLIST));</span><br><span class="line">	if (pM &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	pM-&gt;next &#x3D; NULL;</span><br><span class="line">	pM-&gt;data &#x3D; y;</span><br><span class="line">	&#x2F;&#x2F;遍历链表</span><br><span class="line">	pPre &#x3D; pHead;</span><br><span class="line">	pCur &#x3D; pHead-&gt;next;</span><br><span class="line"></span><br><span class="line">	while (pCur)</span><br><span class="line">	&#123;</span><br><span class="line">		if (pCur-&gt;data &#x3D;&#x3D; x)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		pPre &#x3D; pCur;</span><br><span class="line">		pCur &#x3D; pCur-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;让新结点 连接 后续链表</span><br><span class="line">	pM-&gt;next &#x3D; pPre-&gt;next;</span><br><span class="line">	&#x2F;&#x2F;让前驱节点 连接 新结点</span><br><span class="line">	pPre-&gt;next &#x3D; pM;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int SList_NodeDel(SLIST *pHead, int y)</span><br><span class="line">&#123;</span><br><span class="line">	SLIST  *pCur, *pPre;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;初始化状态</span><br><span class="line"></span><br><span class="line">	pPre &#x3D; pHead;</span><br><span class="line">	pCur &#x3D; pHead-&gt;next;</span><br><span class="line">	while(pCur !&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		if (pCur-&gt;data &#x3D;&#x3D; y)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		pPre &#x3D; pCur;</span><br><span class="line">		pCur &#x3D; pCur-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;删除操作</span><br><span class="line">	if (pCur &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有找到结点值为:%d 的结点\n&quot;, y);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	pPre-&gt;next &#x3D; pCur-&gt;next;</span><br><span class="line">	if (pCur !&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		free(pCur);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int SList_Destory(SLIST *pHead)</span><br><span class="line">&#123;</span><br><span class="line">	SLIST *tmp &#x3D; NULL;</span><br><span class="line">	if (pHead &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	while (pHead !&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		tmp &#x3D; pHead-&gt;next;</span><br><span class="line">		free(pHead);</span><br><span class="line">		pHead &#x3D; tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int SList_Reverse(SLIST *pHead)</span><br><span class="line">&#123;</span><br><span class="line">	SLIST	*p &#x3D; NULL; &#x2F;&#x2F;前驱指针</span><br><span class="line">	SLIST	*q &#x3D; NULL; &#x2F;&#x2F;当前指针</span><br><span class="line">	SLIST	*t &#x3D; NULL; &#x2F;&#x2F;缓存的一个结点</span><br><span class="line">	if (pHead&#x3D;&#x3D;NULL || pHead-&gt;next &#x3D;&#x3D; NULL ||pHead-&gt;next-&gt;next &#x3D;&#x3D;NULL )</span><br><span class="line">	&#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;初始化 	&#x2F;&#x2F;前驱结点</span><br><span class="line">	p &#x3D; pHead-&gt;next;</span><br><span class="line">	q &#x3D; pHead-&gt;next-&gt;next;</span><br><span class="line">	&#x2F;&#x2F;p &#x3D; pHead;  &#x2F;&#x2F;代码能兼容</span><br><span class="line">	&#x2F;&#x2F;q &#x3D; pHead-&gt;next;</span><br><span class="line">	&#x2F;&#x2F;一个结点 一个结点的逆置</span><br><span class="line">	while(q)</span><br><span class="line">	&#123;</span><br><span class="line">		t &#x3D; q-&gt;next; &#x2F;&#x2F;缓冲后面的链表</span><br><span class="line">		q-&gt;next &#x3D; p;	&#x2F;&#x2F;逆置</span><br><span class="line">		p &#x3D; q; &#x2F;&#x2F;让p下移一个结点</span><br><span class="line">		q &#x3D; t;</span><br><span class="line">	&#125; </span><br><span class="line">	&#x2F;&#x2F;头节点 变成 尾部结点 后  置null</span><br><span class="line">	pHead-&gt;next-&gt;next &#x3D; NULL;  &#x2F;&#x2F;尾部置为NULL</span><br><span class="line">	pHead-&gt;next &#x3D; p;  &#x2F;&#x2F;头部连接</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	int  ret &#x3D; 0;</span><br><span class="line"></span><br><span class="line">	SLIST *pHead &#x3D; NULL;</span><br><span class="line">	pHead &#x3D; SList_Create();</span><br><span class="line">	ret &#x3D; SList_Print(pHead);</span><br><span class="line"></span><br><span class="line">	ret &#x3D; SList_NodeInsert(pHead, 20, 19);</span><br><span class="line">	ret &#x3D; SList_Print(pHead);</span><br><span class="line"></span><br><span class="line">	ret &#x3D; SList_NodeDel(pHead, 19);</span><br><span class="line">	ret &#x3D; SList_Print(pHead);</span><br><span class="line"></span><br><span class="line">	ret &#x3D;  SList_Reverse(pHead);</span><br><span class="line">	ret &#x3D; SList_Print(pHead);</span><br><span class="line"></span><br><span class="line">	SList_Destory(pHead);</span><br><span class="line"></span><br><span class="line">	printf(&quot;hello...\n&quot;);</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>双链表</strong></p>
+<p>其中一个是头结点，另一个是尾结点，它们都不存放数据元素，<br>头结点的pre 为空，而尾结点的 Next 为空。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">struct DouLinkNode &#123;</span><br><span class="line">    int data ;               &#x2F;&#x2F;链表中存放的数据，可以自定义数据结构 </span><br><span class="line">    struct DouLinkNode *pre ,*next;</span><br><span class="line">&#125;;</span><br><span class="line">struct DouLinkNode *create(int n)</span><br><span class="line">&#123;   </span><br><span class="line">    int x;</span><br><span class="line">    struct DouLinkNode *head &#x3D; (struct DouLinkNode *)malloc(sizeof(struct DouLinkNode));</span><br><span class="line">    struct DouLinkNode *p,*s;</span><br><span class="line">    p &#x3D; head;</span><br><span class="line">    p-&gt;pre &#x3D; NULL;</span><br><span class="line">    while(n)</span><br><span class="line">	&#123;</span><br><span class="line">        s &#x3D; (struct DouLinkNode*)malloc(sizeof(struct DouLinkNode));</span><br><span class="line">        printf(&quot;input data of the node:data&#x3D;&quot;);</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        s-&gt;data &#x3D; x;</span><br><span class="line">        p-&gt;next &#x3D; s;</span><br><span class="line">        s-&gt;pre &#x3D; p;</span><br><span class="line">        p &#x3D; s;</span><br><span class="line">        n--;</span><br><span class="line">    &#125;</span><br><span class="line">    s-&gt;next &#x3D; NULL;</span><br><span class="line">    return head;</span><br><span class="line">&#125;</span><br><span class="line"> &#x2F;* 双向链表打印 *&#x2F;</span><br><span class="line">void display(struct DouLinkNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *p &#x3D; head-&gt;next;</span><br><span class="line">    while(p-&gt;next) &#123;</span><br><span class="line">        printf(&quot;%d &lt;---&gt; &quot;,p-&gt;data);</span><br><span class="line">        p &#x3D; p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;%d \n&quot;,p-&gt;data);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 链表头插节点 *&#x2F;&#x2F;&#x2F;头插法  第二个</span><br><span class="line">void insertListHead(struct DouLinkNode *pList, int data)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *pNode &#x3D; (struct DouLinkNode *)malloc(sizeof(struct DouLinkNode));</span><br><span class="line">    pNode-&gt;data &#x3D; data;</span><br><span class="line">    pNode-&gt;next &#x3D; pList-&gt;next;</span><br><span class="line">    pNode-&gt;pre &#x3D; pList;</span><br><span class="line">    if (NULL !&#x3D; pNode-&gt;next) &#123;</span><br><span class="line">        pNode-&gt;next-&gt;pre &#x3D; pNode;</span><br><span class="line">    &#125;</span><br><span class="line">    pList-&gt;next &#x3D; pNode;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 链表尾插节点 *&#x2F; </span><br><span class="line">void insertListTail(struct DouLinkNode *pList, int data)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *pNode &#x3D; (struct DouLinkNode *)malloc(sizeof(struct DouLinkNode));</span><br><span class="line">    pNode-&gt;data &#x3D; data;</span><br><span class="line">    struct DouLinkNode *pCur &#x3D; pList; </span><br><span class="line">    while(NULL !&#x3D; pCur-&gt;next) &#123;</span><br><span class="line">        pCur &#x3D; pCur-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    pCur-&gt;next &#x3D; pNode;</span><br><span class="line">    pNode-&gt;pre &#x3D; pCur;</span><br><span class="line">    pNode-&gt;next &#x3D; NULL;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 在链表的指定位置插入节点: index &#x3D; 0 ---&gt; 头插； index &#x3D; length ---&gt; 尾插 *&#x2F;</span><br><span class="line">int insertList(struct DouLinkNode *pList, int data, int index)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *pCur &#x3D; pList; </span><br><span class="line">    int len &#x3D;  get_List_Length(pCur);</span><br><span class="line">    if(index &gt; len) &#123;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125; else if (index &#x3D;&#x3D; 0) &#123;</span><br><span class="line">        insertListHead(pList, data);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125; else if(index &#x3D;&#x3D; len) &#123;</span><br><span class="line">        insertListTail(pList, data);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    struct DouLinkNode *pNode &#x3D; (struct DouLinkNode *)malloc(sizeof(struct DouLinkNode));</span><br><span class="line">    pNode-&gt;data &#x3D; data;</span><br><span class="line">    pCur &#x3D; pList;</span><br><span class="line">    int i &#x3D; 0;</span><br><span class="line">    while( index--) &#123;</span><br><span class="line">        pCur &#x3D; pCur-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    pNode-&gt;next &#x3D; pCur-&gt;next;</span><br><span class="line">    pCur-&gt;next &#x3D; pNode;</span><br><span class="line">    pNode-&gt;pre &#x3D; pCur;</span><br><span class="line">    pNode-&gt;next-&gt;pre &#x3D; pNode;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 删除链表中的指定值 *&#x2F;</span><br><span class="line">int deleteListNode(struct DouLinkNode *pList, int key)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *pPre &#x3D; pList;</span><br><span class="line">    struct DouLinkNode *pCur &#x3D; pList-&gt;next;</span><br><span class="line">    int count &#x3D; 0; &#x2F;&#x2F;记录删除节点个数 </span><br><span class="line">    while(NULL!&#x3D;pCur) &#123;</span><br><span class="line">        if(pCur-&gt;data &#x3D;&#x3D; key) &#123;</span><br><span class="line">            if(NULL !&#x3D; pCur-&gt;next) &#123;</span><br><span class="line">                pCur-&gt;next-&gt;pre &#x3D; pCur-&gt;pre;</span><br><span class="line">            &#125;</span><br><span class="line">            pCur-&gt;pre-&gt;next &#x3D; pCur-&gt;next;</span><br><span class="line">            pPre &#x3D; pCur; </span><br><span class="line">            pCur &#x3D; pCur-&gt;next;</span><br><span class="line">            free(pPre);</span><br><span class="line">            count ++;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            pPre &#x3D; pCur;</span><br><span class="line">            pCur &#x3D; pCur-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return count; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 链表求长 *&#x2F;</span><br><span class="line">int get_List_Length(struct DouLinkNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *p;</span><br><span class="line">    int len &#x3D; 0;</span><br><span class="line">    p &#x3D; head;</span><br><span class="line">    for (p; p-&gt;next!&#x3D;NULL; p&#x3D;p-&gt;next) &#123;</span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line">    return len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 双向链表排序 *&#x2F;</span><br><span class="line">struct DouLinkNode *sort(struct DouLinkNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    struct DouLinkNode *p,*s,*min;</span><br><span class="line">    int tmp;</span><br><span class="line"></span><br><span class="line">    for(p &#x3D; head-&gt;next ;p-&gt;next!&#x3D;NULL ;p&#x3D;p-&gt;next) &#123;</span><br><span class="line">        min &#x3D; p ;</span><br><span class="line">        for(s&#x3D; p-&gt;next ; s!&#x3D;NULL ;s&#x3D;s-&gt;next) &#123;</span><br><span class="line">            if(s-&gt;data &lt;min-&gt;data)</span><br><span class="line">                min &#x3D; s;               &#x2F;&#x2F;找到每次排序中最小的节点，然后记住这个节点</span><br><span class="line">        &#125; if(min !&#x3D; p) &#123;               &#x2F;&#x2F;把这个节点与前面的节点的数据进行交换，把最小的数据放在前面的节点内。</span><br><span class="line">            tmp &#x3D; min-&gt;data;</span><br><span class="line">            min-&gt;data &#x3D; p-&gt;data;</span><br><span class="line">            p-&gt;data &#x3D; tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>循环链表</strong></p>
+<p>特点：”无头无尾”。</p>
+<p>单循环链表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">来源：网络</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;约瑟夫环问题   环状链</span><br><span class="line">#define _CRT_SECURE_NO_WARNINGS</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">typedef struct node </span><br><span class="line">&#123;	</span><br><span class="line">	int number;</span><br><span class="line">	struct node *next;</span><br><span class="line">&#125;person ;</span><br><span class="line">person *initlink(int n)</span><br><span class="line">&#123;</span><br><span class="line">	person *head &#x3D;(person*)malloc(sizeof(person));</span><br><span class="line">	head-&gt;number &#x3D;1;</span><br><span class="line">	head-&gt;next &#x3D;NULL;</span><br><span class="line">	person *cyclic &#x3D;head;</span><br><span class="line">	int i;</span><br><span class="line">	for (i&#x3D;2 ; i &lt;&#x3D; n ; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		person* body &#x3D; (person*)malloc(sizeof(person));</span><br><span class="line">		body-&gt;number &#x3D; i ;</span><br><span class="line">		body-&gt;next &#x3D; NULL;</span><br><span class="line">		cyclic-&gt;next &#x3D; body;</span><br><span class="line">		cyclic &#x3D; cyclic-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	cyclic-&gt;next &#x3D;head;&#x2F;&#x2F;呈环状</span><br><span class="line">	return head;</span><br><span class="line">&#125;</span><br><span class="line">void findAndKillK(person * head,int k,int m)</span><br><span class="line">&#123; </span><br><span class="line">	person * tail&#x3D;head;   &#x2F;&#x2F;找到链表第一个结点的上一个结点</span><br><span class="line">	while(tail-&gt;next !&#x3D; head)&#123;tail&#x3D;tail-&lt;next;&#125;&#x2F;&#x2F;找到链表第一个结点的上一个结点，为删除操作做准备 </span><br><span class="line">	</span><br><span class="line">	person *p &#x3D; head ;</span><br><span class="line">	while(p-&gt;number!&#x3D; k) &#x2F;&#x2F;找到k编号</span><br><span class="line">	&#123;</span><br><span class="line">		tail&#x3D;p;</span><br><span class="line">		p&#x3D; p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	while(p-&gt;next !&#x3D; p) &#x2F;&#x2F;剩最后一个</span><br><span class="line">	&#123;</span><br><span class="line">		int i ;</span><br><span class="line">		for(i &#x3D;1 ;i &lt; m; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			tail &#x3D; p;</span><br><span class="line">			p &#x3D; p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		tail-&gt;next &#x3D; p-&gt;next;&#x2F;&#x2F;摘除</span><br><span class="line">		printf(&quot;出列：%d\n&quot;,p-&gt;number);</span><br><span class="line">		free(p);</span><br><span class="line">		p &#x3D; tail-&gt;next; &#x2F;&#x2F;下一个为第一个</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">		printf(&quot;出列：%d\n&quot;,p-&gt;number); &#x2F;&#x2F;最后一个</span><br><span class="line">		free(p);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">int main() </span><br><span class="line">	&#123;</span><br><span class="line">    printf(&quot;输入圆桌上的人数n:&quot;);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    person * head&#x3D;initLink(n);</span><br><span class="line">    printf(&quot;从第k人开始报数(k&gt;1且k&lt;%d)：&quot;,n);</span><br><span class="line">    int k;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;k);</span><br><span class="line">    printf(&quot;数到m的人出列：&quot;);</span><br><span class="line">    int m;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;m);</span><br><span class="line">    findAndKillK(head, k, m);</span><br><span class="line">	return 0;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>双链循环链表：略</p>
+]]></content>
+      <categories>
+        <category>Data Structure and Algorithms Lover</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>炫酷的图片来源QAQ</title>
     <url>/Linux-Lover/%E7%82%AB%E9%85%B7%E7%9A%84%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90QAQ/</url>
     <content><![CDATA[<p>JPG的图片格式是有损的，优点是有更丰富的色彩，非常适合来存储照片，用来表达更生动的图像效果，比如颜色渐变。<br>PNG格式的图片是无损的，而且PNG-8格式是GIF格式的非常好的替代者，在达到相同效果的情况下，PNG-8格式体积更小，而且支持透明度的调节。<br>SVG格式的图片是无损的矢量图。在放大的不会失真，适合绘制企业logo，icon等。</p>
@@ -36,6 +126,19 @@
       </categories>
       <tags>
         <tag>Qt应用开发</tag>
+        <tag>shell基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>imx6ull亮度调节</title>
+    <url>/Linux-Lover/imx6ull%E4%BA%AE%E5%BA%A6%E8%B0%83%E8%8A%82/</url>
+    <content><![CDATA[<p>设置背 8 级背光(0~7)，分别为 0、4、8、16、32、64、128、255，对应占空比为<br>0%、1.57%、3.13%、6.27%、12.55%、25.1%、50.19%、100%<br>actual_brightness：这个节点只读，可以通过读取这个节点，获取 LCD 实际的亮度值。<br>brightness：这个节点可读可写，向这个节点写入不同值（0-7），可调节 LCD 亮度。<br>max_brightness：这个节点只读，通过读取此节点</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
       </tags>
   </entry>
   <entry>
@@ -47,7 +150,8 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#define LED1_BRIGHTNESS    &quot;&#x2F;sys&#x2F;devices&#x2F;platform&#x2F;dtsleds&#x2F;leds&#x2F;red&#x2F;brightness&quot;</span><br><span class="line">#define LED1_TRIGGER       &quot;&#x2F;sys&#x2F;devices&#x2F;platform&#x2F;dtsleds&#x2F;leds&#x2F;red&#x2F;trigger&quot;</span><br><span class="line">#define TRIGGER_NONE          &quot;none&quot;</span><br><span class="line">#define TRIGGER_HEARTBEAT     &quot;heartbeat&quot;</span><br></pre></td></tr></table></figure>
 
 <p>视频</p>
-<iframe src="//player.bilibili.com/player.html?aid=883253911&bvid=BV1jK4y1t7iz&cid=197202487&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="600" width="100%"> </iframe>]]></content>
+<iframe src="//player.bilibili.com/player.html?aid=883253911&bvid=BV1jK4y1t7iz&cid=197202487&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
+height="600" width="100%" > </iframe>]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -66,7 +170,7 @@
 <p>以 SD/EMMC 为例，IVT 偏移为 1Kbyte，IVT+Boot data+DCD 的总大小为 4KByte-<br>1KByte=3KByte。<br>IVT+Boot data+DCD+.bin</p>
 <p>参考：<a href="https://www.cnblogs.com/yuanqiangfei/p/10225138.html" target="_blank" rel="noopener">https://www.cnblogs.com/yuanqiangfei/p/10225138.html</a></p>
 <p>Efuse类似于EEPROM，是一次性可编程存储器，在芯片出场之前会被写入信息，在一个芯片中，efuse的容量通常很小，一些芯片efuse只有128bit。<br>28bit的efuse包含芯片电压字段、芯片版本号、芯片生产日期以及其他信息。<br>芯片在初次上电过程中会读取efuse中的电压字段数值，送到芯片外部的电源管理器，电源管理器在芯片初始上电前会提供一个标准的电压（假设为1.0v），在接受到efuse中的电压字段数值后会调节电压大小。完成电源电压调整后，芯片会重新进行上电复位操作。</p>
-<img src="/Linux-Lover/i-MX6UL%E8%8A%AF%E7%89%87%E4%B8%8A%E7%94%B5%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/%E4%B8%8A%E7%94%B5%E5%90%AF%E5%8A%A8.jpg" class>
+<img src="/Linux-Lover/i-MX6UL%E8%8A%AF%E7%89%87%E4%B8%8A%E7%94%B5%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/%E4%B8%8A%E7%94%B5%E5%90%AF%E5%8A%A8.jpg" class="">
 
 
 <p>总的来说，i.MX6UL这款芯片的BootROM的主要功能是，根据内部eFUSES或者外部GPIO<br>的状态，来判断芯片从哪里（可以是 SD 卡，NandFlash，eMMC 等）加载启动镜像，然后再<br>从启动镜像获取芯片的初始化方式（启动镜像 u-boot.imx 就是 u-boot.bin + header 数据的集<br>合，这个 header 数据就是提供给芯片的 BootROM 使用的），最后通过绝对地址，跳转到启<br>动镜像那里，执行第一句用户程序指令（通常是 u-boot 里面的_start 函数，通过 u-boot.lds<br>链接脚本，可以看到 u-boot 的第一个函数入口，接下来才是 u-boot 的启动过程）。</p>
@@ -122,6 +226,9 @@
       <categories>
         <category>shell Lover</category>
       </categories>
+      <tags>
+        <tag>shell基础</tag>
+      </tags>
   </entry>
   <entry>
     <title>shell流程语句小记</title>
@@ -148,17 +255,20 @@
       <categories>
         <category>shell Lover</category>
       </categories>
+      <tags>
+        <tag>shell基础</tag>
+      </tags>
   </entry>
   <entry>
     <title>了解ESP8266</title>
     <url>/MCU-Lover/ESP8266/</url>
     <content><![CDATA[<p>参考连接;<a href="https://www.bilibili.com/video/BV1dJ411S723?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1dJ411S723?p=1</a><br><a href="https://www.espressif.com/zh-hans" target="_blank" rel="noopener">https://www.espressif.com/zh-hans</a><br><strong>IOT物联网</strong></p>
 <p>物联网（The Internet of Things，简称IOT）是指通过 各种信息传感器、射频识别技术、全球定位系统、红外感应器、激光扫描器等各种装置与技术，实时采集任何需要监控、 连接、互动的物体或过程，采集其声、光、热、电、力学、化 学、生物、位置等各种需要的信息，通过各类可能的网络接入，实现物与物、物与人的泛在连接，实现对物品和过程的智能化感知、识别和管理。物联网是一个基于互联网、传统电信网等的信息承载体，它让所有能够被独立寻址的普通物理对象形成互联互通的网络 [1]  。</p>
-<img src="/MCU-Lover/ESP8266/%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F.jpg" class>
+<img src="/MCU-Lover/ESP8266/%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F.jpg" class="">
 
 <p>阿里云、腾讯云</p>
 <p>百度云：<a href="https://console.bce.baidu.com/#/index/overview" target="_blank" rel="noopener">https://console.bce.baidu.com/#/index/overview</a></p>
-<img src="/MCU-Lover/ESP8266/MQTT.jpg" class>
+<img src="/MCU-Lover/ESP8266/MQTT.jpg" class="">
 
 
 <p><strong>ESP8266</strong></p>
@@ -187,9 +297,9 @@
     <title>QT-数据库操作</title>
     <url>/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<p>sqlite数据库(本地数据库）</p>
-<img src="/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/1.jpg" class>
+<img src="/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/1.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/2.jpg" class>
+<img src="/Linux-Lover/QT-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/2.jpg" class="">
 
 
 <p>QT-Mysql数据库<br>QT+ = core gui sl</p>
@@ -208,7 +318,7 @@
   <entry>
     <title>QT-传输文件</title>
     <url>/Linux-Lover/QT-%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<img src="/Linux-Lover/QT-%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/1.jpg" class>
+    <content><![CDATA[<img src="/Linux-Lover/QT-%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/1.jpg" class="">
 
 
 <p>定时发送，防止粘包。。。</p>
@@ -227,7 +337,7 @@
   <entry>
     <title>QT-UDP</title>
     <url>/Linux-Lover/QT-UDP/</url>
-    <content><![CDATA[<img src="/Linux-Lover/QT-UDP/1.jpg" class>
+    <content><![CDATA[<img src="/Linux-Lover/QT-UDP/1.jpg" class="">
 
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifndef WIDGET_H</span><br><span class="line">#define WIDGET_H</span><br><span class="line"></span><br><span class="line">#include &quot;ui_widget.h&quot;</span><br><span class="line">#include &lt;QUdpSocket&gt;</span><br><span class="line"></span><br><span class="line">class Widget : public QWidget, private Ui::Widget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit Widget(QWidget *parent &#x3D; 0);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    QUdpSocket *udpsocket;&#x2F;&#x2F;udp套接字</span><br><span class="line">private slots:</span><br><span class="line">    void on_pushButtontsend_clicked();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; WIDGET_H</span><br></pre></td></tr></table></figure>
@@ -255,7 +365,7 @@
 <p>翻译完后，将 en.ts 进行保存</p>
 <p>3、工具-&gt;外部-&gt;Qt语言家-&gt;发布翻译,将生成翻译文件**.qm</p>
 <p>QTranslator translator;//系统中英翻译</p>
-<img src="/Linux-Lover/QT-%E4%B8%AD%E8%8B%B1%E9%85%8D%E7%BD%AE/1.JPG" class>
+<img src="/Linux-Lover/QT-%E4%B8%AD%E8%8B%B1%E9%85%8D%E7%BD%AE/1.JPG" class="">
 
 
 
@@ -283,7 +393,7 @@
 
 <p>server</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifndef SERVERWIDGET_H</span><br><span class="line">#define SERVERWIDGET_H</span><br><span class="line"></span><br><span class="line">#include &quot;ui_serverwidget.h&quot;</span><br><span class="line"></span><br><span class="line">#include &lt;QTcpServer&gt;&#x2F;&#x2F; 监听套接字</span><br><span class="line">#include &lt;QTcpSocket&gt;&#x2F;&#x2F;通信套接字  服务器两个</span><br><span class="line">class ServerWidget : public QWidget, private Ui::ServerWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit ServerWidget(QWidget *parent &#x3D; 0);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">private slots:</span><br><span class="line">    void on_Buttonsend_clicked();</span><br><span class="line"></span><br><span class="line">    void on_Buttonclose_clicked();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    QTcpServer *tcpSerever;</span><br><span class="line">    QTcpSocket *tcpSocket;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; SERVERWIDGET_H</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">.c</span><br><span class="line">#include &quot;serverwidget.h&quot;</span><br><span class="line">#include &lt;QString&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">ServerWidget::ServerWidget(QWidget *parent) :</span><br><span class="line">    QWidget(parent)</span><br><span class="line">&#123;</span><br><span class="line">    setupUi(this);</span><br><span class="line"></span><br><span class="line">     tcpSocket&#x3D;NULL;&#x2F;&#x2F;否则提示。。</span><br><span class="line">     tcpSerever&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">    this-&gt;setWindowTitle(&quot;服务端 8888&quot;);</span><br><span class="line"></span><br><span class="line">    tcpSerever&#x3D;new QTcpServer (this);&#x2F;&#x2F;监听</span><br><span class="line"></span><br><span class="line">    tcpSerever-&gt;listen(QHostAddress::Any,8888);&#x2F;&#x2F;只能在接收成功  server  newConnection是接收信息</span><br><span class="line"></span><br><span class="line">    connect(tcpSerever,&amp;QTcpServer::newConnection,[&#x3D;]()&#123;&#x2F;&#x2F;取出套接字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        tcpSocket&#x3D;tcpSerever-&gt;nextPendingConnection();</span><br><span class="line"></span><br><span class="line">        QString ip&#x3D;tcpSocket-&gt;peerAddress().toString();</span><br><span class="line"></span><br><span class="line">        qint16 port&#x3D;tcpSocket-&gt;peerPort();</span><br><span class="line"></span><br><span class="line">       QString temp&#x3D;QString (&quot;[%1 : %2]:连接成功！QAQ&quot;).arg(ip).arg(port);</span><br><span class="line">     &#x2F;&#x2F;  qDebug()&lt;&lt;&quot;  d &quot;;</span><br><span class="line">       this-&gt;textEdit-&gt;setText(temp);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       connect(tcpSocket,&amp;QTcpSocket::readyRead,[&#x3D;]()</span><br><span class="line">       &#123;</span><br><span class="line">          &#x2F;&#x2F;通信取出来</span><br><span class="line">           QByteArray array &#x3D;tcpSocket-&gt;readAll();</span><br><span class="line"></span><br><span class="line">           textEdit-&gt;append(array);</span><br><span class="line"></span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void ServerWidget::on_Buttonsend_clicked()&#x2F;&#x2F;写传输</span><br><span class="line">&#123;</span><br><span class="line">    if(NULL &#x3D;&#x3D; tcpSocket)</span><br><span class="line">    &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取编辑区内容</span><br><span class="line">    QString str &#x3D;this-&gt;textEdit_2-&gt;toPlainText();</span><br><span class="line">    &#x2F;&#x2F;发送</span><br><span class="line">    tcpSocket-&gt;write(str.toUtf8().data());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void ServerWidget::on_Buttonclose_clicked()&#x2F;&#x2F;关闭</span><br><span class="line">&#123;</span><br><span class="line">    if(NULL &#x3D;&#x3D; tcpSocket)</span><br><span class="line">    &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tcpSocket-&gt;disconnectFromHost();</span><br><span class="line">    tcpSocket-&gt;close();</span><br><span class="line">     tcpSocket&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/QT-TCP/1.JPG" class>]]></content>
+<img src="/Linux-Lover/QT-TCP/1.JPG" class="">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -295,7 +405,7 @@
     <title>QT-线程</title>
     <url>/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<p>QT-线程池</p>
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E6%B1%A0.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E6%B1%A0.jpg" class="">
 
 <p>QT-线程QtConcurrent</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一步：</span><br><span class="line">QT -&#x3D; gui concurrent</span><br><span class="line">CONFIG +&#x3D; c++11 console</span><br><span class="line">第二步：#include &lt;QtConcurrent&#x2F;QtConcurrent&gt;</span><br><span class="line">QString filePath&#x3D;&quot;D:&#x2F;test2.txt&quot;;</span><br><span class="line">    QByteArray data&#x3D;&quot;hello concurrentthread2&quot;;</span><br><span class="line">    QtConcurrent::run([&amp;filePath,&amp;data]()&#123;</span><br><span class="line">        qDebug()&lt;&lt;data;</span><br><span class="line">        QFile file(filePath);</span><br><span class="line">        file.open(QIODevice::WriteOnly);</span><br><span class="line">        file.write(data);</span><br><span class="line">        file.waitForBytesWritten(30*1000);&#x2F;&#x2F;等待写入</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
@@ -303,15 +413,15 @@
 <p>QT-线程QThread</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifndef MYTHREAD_H</span><br><span class="line">#define MYTHREAD_H</span><br><span class="line">#include &lt;QThread&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">&#x2F;&#x2F;继承获取接口</span><br><span class="line">class MyThread:public QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">public:</span><br><span class="line">    void run()&#x2F;&#x2F;斜体虚函数</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;QThread::currentThread();&#x2F;&#x2F;指针 或者说显示当前的线程</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main.c中</span><br><span class="line">MyThread mythread；</span><br><span class="line">  mythread.start();  &#x2F;&#x2F;启动接口函数</span><br></pre></td></tr></table></figure>
 <p>QT-线程制图</p>
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE1.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE1.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE2.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE2.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE3.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE3.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE4.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE4.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE5.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE5.jpg" class="">
 
 
 <p>QT-connect第五个参数</p>
@@ -369,17 +479,17 @@
 <p><strong>Device设备</strong><br>QPixmap  QImage QPicture</p>
 <p>QPixmap专门为图像在屏幕上的显示做了优化，其中QBitmap是QPixmap的一个子类，它的色深限定为1，可以使用 QPixmap的isQBitmap()函数来确定这个QPixmap是不是一个QBitmap。（白色变透明）</p>
 <p>QImage专门为图像的像素级访问做了优化。<br>QPicture则可以记录和重现QPainter的各条命令。</p>
-<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap.jpg" class>
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap.jpg" class="">
 
 
-<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap2.jpg" class>
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPixmap2.jpg" class="">
 
 
 
-<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QImage.jpg" class>
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QImage.jpg" class="">
 
 
-<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPicture.jpg" class>]]></content>
+<img src="/Linux-Lover/QT-%E5%88%B6%E5%9B%BE/QPicture.jpg" class="">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -469,10 +579,10 @@
 
 
 <p>消息对话框</p>
-<img src="/Linux-Lover/QT-dialog/%E6%B6%88%E6%81%AF%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class>
+<img src="/Linux-Lover/QT-dialog/%E6%B6%88%E6%81%AF%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class="">
 
 <p>标准文件对话框</p>
-<img src="/Linux-Lover/QT-dialog/%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class>
+<img src="/Linux-Lover/QT-dialog/%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6%E5%AF%B9%E8%AF%9D%E6%A1%86.jpg" class="">
 
 
 
@@ -493,11 +603,11 @@
     <title>QT-窗体常用函数</title>
     <url>/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>窗体常用函数</p>
-<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0.jpg" class>
+<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0.jpg" class="">
 
 <p>ui-&gt;stackedWidget-&gt;setCurrentIndex(5);</p>
 <p>设计换页</p>
-<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E8%AE%BE%E8%AE%A1%E6%8D%A2%E9%A1%B5.jpg" class>]]></content>
+<img src="/Linux-Lover/QT-%E7%AA%97%E4%BD%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/%E8%AE%BE%E8%AE%A1%E6%8D%A2%E9%A1%B5.jpg" class="">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -509,44 +619,44 @@
     <title>QT-控件</title>
     <url>/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/</url>
     <content><![CDATA[<p>继承图</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E7%BB%A7%E6%89%BF%E5%9B%BE.jpg" class title="来源网络">
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E7%BB%A7%E6%89%BF%E5%9B%BE.jpg" class="" title="来源网络">
 
 <p>Qlabel</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/Qlabel.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/Qlabel.jpg" class="">
 
 <p>QTextEdit</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTextEdit.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTextEdit.jpg" class="">
 
 <p>QListView</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QListView.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QListView.jpg" class="">
 
 <p>QTreeView</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTreeView.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTreeView.jpg" class="">
 
 <p>QTableView</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class="">
 
 <p>//获取点击行索引int index = tableView-&gt;currentIndex().row();</p>
 <p>QPushButton</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QPushButton.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QPushButton.jpg" class="">
 
 <p>QComboBox</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QComboBox.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QComboBox.jpg" class="">
 
 <p>QFontComboBox(字体)</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QFontComboBox.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QFontComboBox.jpg" class="">
 
 <p>QRadioButton(单选)</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QRadioButton.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QRadioButton.jpg" class="">
 
 <p>QCheckBox</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QCheckBox.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QCheckBox.jpg" class="">
 
 <p>QScrollBar</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QScrollBar.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QScrollBar.jpg" class="">
 
 <p>QSpinBox</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QSpinBox.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QSpinBox.jpg" class="">
 
 <p>QTimeEdit QDateTime</p>
 
@@ -555,17 +665,17 @@
 
 
 <p>QLineEdit</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QLineEdit.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QLineEdit.jpg" class="">
 
 
 <p>布局（水平、网格）</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class="">
 
 <p>QGroupBox</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/%E5%B8%83%E5%B1%80.jpg" class="">
 
 <p>QTabWidget</p>
-<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class>]]></content>
+<img src="/Linux-Lover/QT-%E6%8E%A7%E4%BB%B6/QTableView.jpg" class="">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -632,6 +742,27 @@
       </categories>
       <tags>
         <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>摄像头和声卡驱动</title>
+    <url>/Linux-Lover/%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8C%E5%A3%B0%E5%8D%A1%E9%A9%B1%E5%8A%A8/</url>
+    <content><![CDATA[<p>写一个摄像头驱动程序<br>-&gt; uvc驱动程序重点<br>描述符的分析<br>属性的控制：VideoControl Interface 设置<br>格式的选择：VideoStreaming Interface 设置<br>数据的获取：VideoStreaming Interface 的URB来获得</p>
+<p>内核配置摄像头</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Device Drivers </span><br><span class="line">---&gt;&lt;*&gt; Multimedia support</span><br><span class="line">   ---&gt;  [*] Media USB Adapters </span><br><span class="line">        &lt;*&gt;USB Video Class (UVC)</span><br><span class="line">        [*]UVC input events device support</span><br></pre></td></tr></table></figure>
+
+
+
+<p>声卡驱动</p>
+<p>oss(交钱)<br>alsa（主流，可以模拟oss）</p>
+<p>存储：数字信号。<br>播放：一定条件，采样频率越高失真率越少，容量越大。44k<br>转化精度:8bit,16bit。<br>通道：单/双</p>
+<p>写一个声卡驱动程序<br>-&gt;alsa 驱动程序</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux驱动开发</tag>
       </tags>
   </entry>
   <entry>
@@ -749,21 +880,21 @@
 <p> <strong>USB 设备常用描述符</strong></p>
 <p>Device Descriptor  设备描述符  1<br>Configuration Descriptor  配置描述符  2<br>String Descriptor  字符串描述符  3<br>Interface Descriptor  接口字符串  4<br>Endpoint Descriptor  端点描述符  5</p>
 <p><strong>设备描述符用于描述 USB</strong></p>
-<img src="/Linux-Lover/SB/1.JPG" class>
+<img src="/Linux-Lover/SB/1.JPG" class="">
 
-<img src="/Linux-Lover/SB/2.JPG" class>
+<img src="/Linux-Lover/SB/2.JPG" class="">
 
-<img src="/Linux-Lover/SB/3.JPG" class>
+<img src="/Linux-Lover/SB/3.JPG" class="">
 
-<img src="/Linux-Lover/SB/4.JPG" class>
+<img src="/Linux-Lover/SB/4.JPG" class="">
 
-<img src="/Linux-Lover/SB/5.JPG" class>
+<img src="/Linux-Lover/SB/5.JPG" class="">
 
 
 
 <p> <strong>USB数据包</strong></p>
 <p>USB 是串行通信，需要一位一位的去传输数据， USB 传输的时候先将原始数据进行打包，USB 中传输的基本单元就是数据包。<br>这四种包通过包标识<br>符 PID 来区分，PID 共有 8 位，USB 协议使用低 4 位 PID3<del>PID0。令牌包的 PID1</del>0 为 01，数<br>据包的 PID1<del>0 为 11，握手包的 PID1</del>0 为 10，特殊包的 PID1~0 为 00。</p>
- <img src="/Linux-Lover/SB/6.JPG" class>
+ <img src="/Linux-Lover/SB/6.JPG" class="">
 
 <p> <strong>USB传输</strong></p>
 <p> 1、控制传输<br> 2、同步传输<br> 3、批量传输<br> 4 、中断传输</p>
@@ -788,7 +919,7 @@
 <pre><code>cat /proc/sys/kernel/msgmax 最大消息长度 限制
 cat /proc/sys/kernel/msgmnb 消息队列总的字节数
 cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Communication，进程间通信</p>
-<img src="/Linux-Lover/%E4%BA%86%E8%A7%A3Linux%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/1.JPG" class>
+<img src="/Linux-Lover/%E4%BA%86%E8%A7%A3Linux%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/1.JPG" class="">
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">消息队列函数 </span><br><span class="line">	#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">	#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">	#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line">	int msgget(key_t key, int msgflg);&#x2F;&#x2F;用来创建和访问一个消息队列</span><br><span class="line">	int msgctl(int msqid, int cmd, struct msqid_ds *buf);&#x2F;&#x2F;消息队列的控制函数</span><br><span class="line">	int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);&#x2F;&#x2F;发送</span><br><span class="line">	ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);&#x2F;&#x2F;接受</span><br></pre></td></tr></table></figure>
 
@@ -829,12 +960,12 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><strong>进程间通信目的</strong></p>
 <p>1、数据传输：一个进程需要将它的数据发送给另一个进程<br>2、资源共享：多个进程之间共享同样的资源。<br>3、通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程）。<br>4、进程控制：有些进程希望完全控制另一个进程的执行（如Debug进程），此时控制进程希望能够拦截另一个进程的所有陷入和异常，并能够及时知道它的状态改变。</p>
 <p>进程间通信分类<br>    文件<br>    文件锁<br>    管道（pipe）和有名管道（FIFO）<br>    信号（signal）<br>    消息队列<br>    共享内存<br>    信号量<br>    互斥量<br>    条件变量<br>    读写锁<br>    套接字（socket）</p>
-<img src="/Linux-Lover/inux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E8%AE%AF/1.JPG" class>
+<img src="/Linux-Lover/inux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E8%AE%AF/1.JPG" class="">
 
 
 <p><strong>共享内存</strong></p>
 <p>共享内存区是最快的IPC形式。一旦这样的内存映射到共享它的进程的地址空间，这些进程间数据传递不再涉及到内核，换句话说是进程不再通过执行进入内核的系统调用来传递彼此的数据。</p>
-<img src="/Linux-Lover/inux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E8%AE%AF/2.jpg" class>
+<img src="/Linux-Lover/inux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E8%AE%AF/2.jpg" class="">
 
 
 
@@ -856,7 +987,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>管道限制：<br>1、半双工，需要两个管道<br>2、只能用于具有共同祖先的进程（具有亲缘关系的进程）之间进行通信。<br> ls | wc -w // 统计当前目录下文件个数</p>
 <p><strong>匿名管道</strong></p>
 <p>int pipe(int pipefd[2]);<br>fd：文件描述符数组,其中fd[0]表示读端, fd[1]表示写端。</p>
-<img src="/Linux-Lover/%E8%A7%A3Linux%E7%AE%A1%E9%81%93/1.JPG" class>
+<img src="/Linux-Lover/%E8%A7%A3Linux%E7%AE%A1%E9%81%93/1.JPG" class="">
 
 
 <p><strong>管道一些常见规则</strong></p>
@@ -898,7 +1029,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>常见接口：usb、cmos</p>
 <p>主要参数：分辨率（像素点数）、格式、帧率(1s拍几张图)</p>
 <p>API接口：V4l2</p>
-<img src="/Linux-Lover/%E4%BA%86%E8%A7%A3%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8C%E5%A3%B0%E5%8D%A1/1.JPG" class>
+<img src="/Linux-Lover/%E4%BA%86%E8%A7%A3%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8C%E5%A3%B0%E5%8D%A1/1.JPG" class="">
 
 
 <p><strong>声卡</strong></p>
@@ -924,19 +1055,19 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/</url>
     <content><![CDATA[<p><strong>数据的认识</strong></p>
 <p>mp4指的是音频视频封装格式。</p>
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/1.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/1.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/2.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/2.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/3.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/3.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/4.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/4.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/5.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/5.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/6.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/6.JPG" class="">
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/ffmeg%E5%8F%82%E6%95%B0.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/ffmeg%E5%8F%82%E6%95%B0.JPG" class="">
 
 <p><strong>ffmpeg</strong></p>
 <p>buildroot 下载 ffmpeg</p>
@@ -954,8 +1085,8 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p> $(TOPDIR)/dl/nginx/nginx-http-flv-module</p>
 <p> nginx version: nginx/1.16.1<br> vi /etc/nginx/ngixn.conf<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #user  nobody;</span><br><span class="line">worker_processes  auto;</span><br><span class="line"></span><br><span class="line">#error_log  logs&#x2F;error.log;</span><br><span class="line">#error_log  logs&#x2F;error.log  notice;</span><br><span class="line">#error_log  logs&#x2F;error.log  info;</span><br><span class="line"></span><br><span class="line">#pid        logs&#x2F;nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rtmp&#123;</span><br><span class="line"></span><br><span class="line">  server&#123;</span><br><span class="line">        listen 1935;</span><br><span class="line">        chunk_size 4096;</span><br><span class="line">  application live&#123;</span><br><span class="line">        allow publish 127.0.0.1;</span><br><span class="line">        allow play all;</span><br><span class="line">        live on ;</span><br><span class="line">        record off;</span><br><span class="line">        meta copy;</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application&#x2F;octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span><br><span class="line">    #                  &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span><br><span class="line">    #                  &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span><br><span class="line"></span><br><span class="line">    #access_log  logs&#x2F;access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs&#x2F;host.access.log  main;</span><br><span class="line"></span><br><span class="line">        location &#x2F; &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #error_page  404              &#x2F;404.html;</span><br><span class="line"></span><br><span class="line">        # redirect server error pages to the static page &#x2F;50x.html</span><br><span class="line">    error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">       location  &#x2F;test&#123;</span><br><span class="line">           flv_live on;</span><br><span class="line">           chunked_transfer_encoding on; </span><br><span class="line">            add_header &#39;Access-Control-Allow-Origin&#39; &#39;*&#39;; </span><br><span class="line">            add_header &#39;Access-Control-Allow-Credentials&#39; &#39;true&#39;;</span><br><span class="line">        &#125;</span><br><span class="line">        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    proxy_pass   http:&#x2F;&#x2F;127.0.0.1;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    root           html;</span><br><span class="line">        #    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">        #    fastcgi_index  index.php;</span><br><span class="line">     #    fastcgi_param  SCRIPT_FILENAME  &#x2F;scripts$fastcgi_script_name;</span><br><span class="line">        #    include        fastcgi_params;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # deny access to .htaccess files, if Apache&#39;s document root</span><br><span class="line">        # concurs with nginx&#39;s one</span><br><span class="line">        #</span><br><span class="line">        #location ~ &#x2F;\.ht &#123;</span><br><span class="line">        #    deny  all;</span><br><span class="line">        #&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       8000;</span><br><span class="line">    #    listen       somename:8080;</span><br><span class="line">    #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">    #    location &#x2F; &#123;</span><br><span class="line">  #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # HTTPS server</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       443 ssl;</span><br><span class="line">    #    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #    ssl_certificate      cert.pem;</span><br><span class="line">    #    ssl_certificate_key  cert.key;</span><br><span class="line"></span><br><span class="line">    #    ssl_session_cache    shared:SSL:1m;</span><br><span class="line">    #    ssl_session_timeout  5m;</span><br><span class="line"></span><br><span class="line">    #    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">    #    ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">  #    location &#x2F; &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p> 修改后重启<br> /etc/init.d/S50nginx  restart</p>
-<p> 在线摄像头推流<br> ffmpeg -f v4l2 -framerate 10 -i /dev/video1 -q 10 -f flv    rtmp:://127.0.0.1/live/ming</p>
-<p>//1 秒10帧，质量10</p>
+<p> 在线摄像头推流</p>
+<p>ffmpeg -f v4l2 -framerate 10 -i /dev/video1 -q 10 -f flv rtmp://127.0.0.1/live/ming<br>//1 秒10帧，质量10</p>
 <p> 下载播放器<br> <a href="https://www.videolan.org/" target="_blank" rel="noopener">https://www.videolan.org/</a></p>
 <p> 播放器在线拉流：</p>
 <p> 1、rtmp协议 (延时太大)—imx6ull性能差<br> rtmp://192.168.0.50/live/ming</p>
@@ -967,7 +1098,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>原理：<br>ngnix把flv流传给flv.js插件，转换为html语言，我们就可以用浏览器访问。<br>妙！QAQ</p>
 <p>my.html</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta content&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot; http-equiv&#x3D;&quot;Content-Type&quot;&gt;</span><br><span class="line">    &lt;title&gt;flv.js demo&lt;&#x2F;title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .mainContainer &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 1024px;</span><br><span class="line">            margin-left: auto;</span><br><span class="line">            margin-right: auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .urlInput &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 100%;</span><br><span class="line">            margin-left: auto;</span><br><span class="line">            margin-right: auto;</span><br><span class="line">            margin-top: 8px;</span><br><span class="line">            margin-bottom: 8px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .centeredVideo &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 100%;</span><br><span class="line">            height: 576px;</span><br><span class="line">            margin-left: auto;</span><br><span class="line">            margin-right: auto;</span><br><span class="line">            margin-bottom: auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .controls &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 100%;</span><br><span class="line">            text-align: left;</span><br><span class="line">            margin-left: auto;</span><br><span class="line">            margin-right: auto;</span><br><span class="line">            margin-top: 8px;</span><br><span class="line">            margin-bottom: 10px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .logcatBox &#123;</span><br><span class="line">            border-color: #CCCCCC;</span><br><span class="line">            font-size: 11px;</span><br><span class="line">            font-family: Menlo, Consolas, monospace;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 100%;</span><br><span class="line">            text-align: left;</span><br><span class="line">            margin-left: auto;</span><br><span class="line">            margin-right: auto;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;div class&#x3D;&quot;mainContainer&quot;&gt;</span><br><span class="line">        &lt;video name&#x3D;&quot;videoElement&quot; class&#x3D;&quot;centeredVideo&quot; id&#x3D;&quot;videoElement&quot; controls width&#x3D;&quot;1024&quot; height&#x3D;&quot;576&quot; autoplay&gt;</span><br><span class="line">            Your browser is too old which doesn&#39;t support HTML5 video.</span><br><span class="line">        &lt;&#x2F;video&gt;</span><br><span class="line"></span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;flv.js&#x2F;1.5.0&#x2F;flv.js&quot;&gt;&lt;&#x2F;script&gt;   </span><br><span class="line">    </span><br><span class="line">    &lt;script&gt;</span><br><span class="line">         if (flvjs.isSupported()) &#123;</span><br><span class="line">            startVideo()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function startVideo()&#123;</span><br><span class="line">            var videoElement &#x3D; document.getElementById(&#39;videoElement&#39;);</span><br><span class="line">            var flvPlayer &#x3D; flvjs.createPlayer(&#123;</span><br><span class="line">                type: &#39;flv&#39;,</span><br><span class="line">                isLive: true,</span><br><span class="line">                hasAudio: true,</span><br><span class="line">                hasVideo: true,</span><br><span class="line">                enableStashBuffer: true,</span><br><span class="line">                url: &#39; http:&#x2F;&#x2F;192.168.0.50&#x2F;test?app&#x3D;live&amp;stream&#x3D;ming&#39;</span><br><span class="line">            &#125;);</span><br><span class="line">            flvPlayer.attachMediaElement(videoElement);</span><br><span class="line">            flvPlayer.load();</span><br><span class="line">            flvPlayer.play();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        videoElement.addEventListener(&#39;click&#39;, function()&#123;</span><br><span class="line">            alert( &#39;是否支持点播视频：&#39; + flvjs.getFeatureList().mseFlvPlayback + &#39; 是否支持httpflv直播流：&#39; + flvjs.getFeatureList().mseLiveFlvPlayback )</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        function destoryVideo()&#123;</span><br><span class="line">            flvPlayer.pause();</span><br><span class="line">            flvPlayer.unload();</span><br><span class="line">            flvPlayer.detachMediaElement();</span><br><span class="line">            flvPlayer.destroy();</span><br><span class="line">            flvPlayer &#x3D; null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function reloadVideo()&#123;</span><br><span class="line">            destoryVideo()</span><br><span class="line">            startVideo()</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line">    </span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/9.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%A1%88%E4%BA%8C/9.JPG" class="">
 
 <p>放在ARM板子上，nginx 192.168.0.50访问<br>cd /usr/html</p>
 <blockquote>
@@ -1009,16 +1140,16 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p><strong>前言</strong></p>
 <p>不错的网站：<a href="https://www.te.com.cn/" target="_blank" rel="noopener">https://www.te.com.cn/</a><br>达尔闻<a href="https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3" target="_blank" rel="noopener">https://course.darwinlearns.com/detail/v_5e9e57c0c81f5_w4Ey3mm9/3</a></p>
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/1.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/1.JPG" class="">
 
 <p><strong>方案一：</strong></p>
 <p>mjpg-streamer 运行在开发板，手机浏览器直接看。ARM性能要求不高。<br>缺点：<br>1、要实现内网穿透。<br>2、一款免费基于IP地址的视频流服务,声音不能传，不维护，只做学习。</p>
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/2.JPG" class>
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/2.JPG" class="">
 
 <p><strong>方案二:</strong><br>流媒体方案（一边下载一边观看）<br>互联网 -服务器-推送拉取— 》涉及流媒体协议</p>
 
 
-<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/4.JPG" class title="特点区别">
+<img src="/Linux-Lover/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/4.JPG" class="" title="特点区别">
 
 
 <p>选择开源软件方案：</p>
@@ -1052,7 +1183,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>nux-IIC</title>
+    <title>Linux-IIC</title>
     <url>/Linux-Lover/nux-IIC/</url>
     <content><![CDATA[<p><strong>IIC 总线</strong></p>
 <p>内核也将 I2C 驱动分为两部分：<br>①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。<br>②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。</p>
@@ -1146,6 +1277,25 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>Makefile报错记录</title>
+    <url>/Makefile-Lover/Makefile%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">报错：</span><br><span class="line">Your display is too small to run Menuconfig!</span><br><span class="line">It must be at least 19 lines by 80 columns.</span><br><span class="line">Makefile:950: recipe for target &#39;menuconfig&#39; failed</span><br><span class="line">make[1]: *** [menuconfig] Error 1</span><br><span class="line">Makefile:84: recipe for target &#39;_all&#39; failed</span><br><span class="line">make: *** [_all] Error 2</span><br><span class="line"></span><br><span class="line">make menuconfig配置内核时出错</span><br><span class="line">Makefile:</span><br><span class="line">解决：</span><br><span class="line">窗口太小的原因，把terminal变大就可以显示。QaQ</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-Wall表示显示编译的时候所有警告nostdib表示不链接系统标准启动文件和文件,否则编译可能会出错.-O2表示优等级,和MDK上的设置含义一样</span><br><span class="line"></span><br><span class="line">通过printf： @echo 调试变量值。</span><br></pre></td></tr></table></figure>
+
+<img src="/Makefile-Lover/Makefile%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/1.jpg" class="">
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">gcc编译时遇到&quot;inline function &#39;*** declared butnever defined&quot;问题</span><br><span class="line"></span><br><span class="line">解决：-fgnu89-inline</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">-march&#x3D;armv7-a -mfpu&#x3D;neon-vfpv4 -mfloat-abi&#x3D;hard   浮点数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;浮点数</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Makefile Lover</category>
+      </categories>
+      <tags>
+        <tag>Makefile基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>#pragma pack</title>
     <url>/C-C-Lover/ragma-pack/</url>
     <content><![CDATA[<p>#pragma pack(push)保存对齐状态</p>
@@ -1219,7 +1369,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>可执行程序已经存在。</p>
 <p>/usr/bin/ld: main.o：普通ELF重定位（M: 40）</p>
 <p>make cc 修改</p>
-<img src="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/1.JPG" class>
+<img src="/Linux-Lover/Qt%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99/1.JPG" class="">
 
 
 
@@ -1470,7 +1620,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><strong>三个环</strong></p>
 <p> 力环，电流反馈，取样电阻<br> 速度环  速度反馈；测速发电机，光电编码器，旋转变压器等<br> 位置环  位置反馈；光电编码器，旋转变压器，光栅等</p>
 <p><strong>检测元件的分类</strong></p>
-<img src="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/%E6%A3%80%E6%B5%8B%E8%A3%85%E7%BD%AE.jpg" class>
+<img src="/Circuit-Lover/%E4%BC%BA%E6%9C%8D%E4%B8%8E%E6%A3%80%E6%B5%8B/%E6%A3%80%E6%B5%8B%E8%A3%85%E7%BD%AE.jpg" class="">
 
 
 <p><strong>旋转变压器与感应同步器</strong></p>
@@ -1589,7 +1739,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">void wake_up(wait_queue_head_t *q)</span><br><span class="line">void wake_up_interruptible(wait_queue_head_t *q)</span><br></pre></td></tr></table></figure>
 
 <p>5、等待事件唤醒</p>
-<img src="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class>
+<img src="/Linux-Lover/%E5%A1%9EIO%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0.jpg" class="">
 
 <p> 实验小结：wait_event()不能被kill- 9 ,建议使用wait_event_iterruptible()</p>
 <p>wait_event(dev-&gt;r_wait,atomic_read(&amp;dev-&gt;releasekey));<br>wake_up(&amp;dev-&gt;r_wait);</p>
@@ -1697,21 +1847,21 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><strong>范式</strong></p>
 <p>一个低一级范式的关系模式，通过模式分解可以转换为若干个高一级范式的关系模式的集合，这种过程就叫规范化 </p>
 <p>1NF<br>如果一个关系模式R的所有属性都是不可分的基本数据项，则R∈1NF,第一范式是对关系模式的最起码的要求。不满足第一范式的数据库模式不能称为关系数据库但是满足第一范式的关系模式并不一定是一个好的关系模式.<br>原因：部分函数依赖于码</p>
-<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/1NF.jpg" class>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/1NF.jpg" class="">
 
 <p>2NF</p>
 <p>每一个非主属性完全函数依赖于码</p>
-<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/2NF.jpg" class>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/2NF.jpg" class="">
 
 <p>3NF<br>消除传递函数依赖</p>
-<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/3NF.jpg" class>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/3NF.jpg" class="">
 
 <p>BCNF<br>1、所有非主属性对每一个码都是完全函数依赖<br>2、所有的主属性对每一个不包含它的码，也是完全函数依赖<br>3、没有任何属性完全函数依赖于非码的任何一组属性</p>
-<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/BCNF.jpg" class>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/BCNF.jpg" class="">
 
 <p>多值依赖</p>
 <p>4NF</p>
-<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/%E5%B0%8F%E8%8A%82.jpg" class>
+<img src="/MySql-Lover/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/%E5%B0%8F%E8%8A%82.jpg" class="">
 
 <p>并不是规范化程度越高，模式就越好</p>
 ]]></content>
@@ -1726,11 +1876,11 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>Powershell报错🌝</title>
     <url>/Other-Lover/Powershell%E6%8A%A5%E9%94%99/</url>
     <content><![CDATA[<p><strong>powershell不能执行脚本</strong></p>
-<img src="/Other-Lover/Powershell%E6%8A%A5%E9%94%99/%E6%8A%A5%E9%94%99.jpg" class title="报错">
+<img src="/Other-Lover/Powershell%E6%8A%A5%E9%94%99/%E6%8A%A5%E9%94%99.jpg" class="" title="报错">
 
 
 
-<img src="/Other-Lover/Powershell%E6%8A%A5%E9%94%99/shell.jpg" class title="管理员方式打开">]]></content>
+<img src="/Other-Lover/Powershell%E6%8A%A5%E9%94%99/shell.jpg" class="" title="管理员方式打开">]]></content>
       <categories>
         <category>Other Lover</category>
       </categories>
@@ -1855,6 +2005,60 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>汇编基础常用</title>
+    <url>/ARM-Lover/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%E5%B8%B8%E7%94%A8/</url>
+    <content><![CDATA[<p><strong>伪操作</strong></p>
+<p>.section  【段名】<br>.text代码段<br>.data数据<br>.bss未初始化<br>.rodata只读<br>.section   .textsection @定义一个数据段</p>
+<p>imx6ull start.S</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> SECTIONS&#123;</span><br><span class="line"> . &#x3D; 0X87800000;</span><br><span class="line"> .text :</span><br><span class="line"> &#123;</span><br><span class="line"> start.o</span><br><span class="line"> main.o</span><br><span class="line"> *(.text)</span><br><span class="line"> &#125;</span><br><span class="line"> .rodata ALIGN(4) : &#123;*(.rodata*)&#125;</span><br><span class="line"> .data ALIGN(4) : &#123; *(.data) &#125;</span><br><span class="line"> __bss_start &#x3D; .;</span><br><span class="line"> .bss ALIGN(4) : &#123; *(.bss) *(COMMON) &#125;</span><br><span class="line">__bss_end &#x3D; .;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">注：</span><br><span class="line">COMMON未初始化的全局变量</span><br><span class="line">.bss未初始化的静态变量，以及初始化为0的全局变量或静态变量</span><br><span class="line">包含data和BSS段的整个区段此时通常称为数据区。</span><br><span class="line">.bss是不占用.exe文件空间的，其内容由操作系统初始化（清零）；</span><br><span class="line">.data却需要占用，其内容由程序初始化。</span><br></pre></td></tr></table></figure>
+
+<p>常见的伪操作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.byte 定义单字节数据，比如.byte 0x12</span><br><span class="line">.short  定义双字节数据，比如.byte 0x1234。</span><br><span class="line">.long 定义一个 4 字节数如.long0x12345678。</span><br><span class="line">.equ 表达式，比如.equ num, 0x12  num&#x3D;0x12</span><br><span class="line">.align  数据字节对齐，比如：.align 4 表示 4 字节对齐</span><br><span class="line">.end  表示源文件结束</span><br><span class="line">.global  定义一个全局符号，格式为：.global symbol，比如：.global _start。</span><br></pre></td></tr></table></figure>
+<p>Cortex-A7常用汇编指令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、处理器内部数据传输指令</span><br><span class="line">使用处理器做的最多事情就是在处理器内部来回的传递数据，常见的操作有：</span><br><span class="line">①、将数据从一个寄存器传递到另外一个寄存器。</span><br><span class="line">MOV R1,R2</span><br><span class="line">②、将数据从一个寄存器传递到特殊寄存器，如 CPSR 和 SPSR 寄存器。</span><br><span class="line">MRS R0,CPSR</span><br><span class="line">或者：MSR CPSR,R1</span><br><span class="line">③、将立即数传递到寄存器。</span><br><span class="line">MOV R1,#0X12</span><br><span class="line"></span><br><span class="line">2、储存器访问指令   RAM</span><br><span class="line">从存储器 Rn+offset 的位置读取数据存放到 Rd 中</span><br><span class="line">LDR  Rd,[Rn,#offset]    @eg:</span><br><span class="line">LDR R0,&#x3D;0X0209C004@将寄存器地址 0X0209C004 加载到 R0 中，即 R0&#x3D;0X0209C004</span><br><span class="line">LDR R1,[R0]@读取地址 0X0209C004 中的数据到 R1 寄存器中</span><br><span class="line">将 Rd 中的数据写入到存储器中的 Rn+offset 位置。</span><br><span class="line">STR Rd,[Rn,#offset]</span><br><span class="line">LDR R0, &#x3D;0X0209C004 @将寄存器地址 0X0209C004 加载到 R0 中，即 R0&#x3D;0X0209C004</span><br><span class="line">LDR R1, &#x3D;0X20000002 @R1 保存要写入到寄存器的值，即 R1&#x3D;0X20000002</span><br><span class="line">STR R1, [R0] @将 R1 中的值写入到 R0 中所保存的地址中</span><br><span class="line"></span><br><span class="line">3、压栈和出栈</span><br><span class="line">PUSH &lt;reg list&gt; 将寄存器列表存入栈中。</span><br><span class="line">POP &lt;reg list&gt;  从栈中恢复寄存器列表。</span><br><span class="line">PUSH &#123;R0~R3, R12&#125; @将 R0~R3 和 R12 压栈</span><br><span class="line">PUSH &#123;LR&#125;</span><br><span class="line">POP &#123;LR&#125; @先恢复 LR</span><br><span class="line">POP &#123;R0~R3,R12&#125; @在恢复 R0~R3,R12</span><br><span class="line">第二种写法：  FD 是 Full Descending 的缩写，即满递减的意思。</span><br><span class="line">STMFD SP！   LDMFD SP!</span><br><span class="line">STMFD SP!,&#123;R0~R3, R12&#125; @R0~R3,R12 入栈      右边高地址</span><br><span class="line">STMFD SP!,&#123;LR&#125; @LR 入栈</span><br><span class="line">LDMFD SP!, &#123;LR&#125; @先恢复 LR</span><br><span class="line">LDMFD SP!, &#123;R0~R3, R12&#125; @再恢复 R0~R3, R12</span><br><span class="line"></span><br><span class="line">4、跳转指令</span><br><span class="line"></span><br><span class="line">B &lt;label&gt;如果跳转范围超过了+&#x2F;-2KB，可以指定，不用返回</span><br><span class="line">_start:</span><br><span class="line">ldr sp,&#x3D;0X80200000 @设置栈指针</span><br><span class="line">b main @跳转到 main 函数</span><br><span class="line"></span><br><span class="line">BL &lt;label&gt;  跳转到标号地址，并将返回地址保存在 LR 中。</span><br><span class="line">push &#123;r0, r1&#125; @保存 r0,r1</span><br><span class="line">cps #0x13 @进入 SVC 模式，允许其他中断再次进去</span><br><span class="line">bl system_irqhandler @加载 C 语言中断处理函数到 r2 寄存器中</span><br><span class="line">cps #0x12 @进入 IRQ 模式</span><br><span class="line">pop &#123;r0, r1&#125;</span><br><span class="line">str r0, [r1, #0X10] @中断执行完成，写 EOIR</span><br><span class="line"></span><br><span class="line">L连接寄存器</span><br><span class="line">一是用来保存子程序返回地址；二是当异常发生时，LR中保存的值等于异常发生时PC的值减4（或者减2），因此在各种异常模式下可以根据LR的值返回到异常发生前的相应位置继续执行。</span><br><span class="line"></span><br><span class="line">B.W&lt;label&gt;使用 32 位版本的跳转指令， 这样可以得到较大范围的跳转</span><br><span class="line">BX &lt;Rm&gt;  间接跳转，跳转到存放于 Rm 中的地址处，并且切换指令集</span><br><span class="line">BLX &lt;Rm&gt;结合 BX 和 BL 的特点，跳转到 Rm 指定的地址，并将返回地</span><br><span class="line">址保存在 LR 中，切换指令集。</span><br><span class="line"></span><br><span class="line">5、算数指令</span><br><span class="line"></span><br><span class="line">ADD Rd,Rn,Rm  @ Rd&#x3D;Rn+Rm</span><br><span class="line">DD Rd, Rn, #immed @Rd &#x3D; Rn + #immed</span><br><span class="line">ADC Rd, Rn, Rm Rd &#x3D; Rn + Rm + 进位</span><br><span class="line">ADC Rd, Rn, #immed  Rd &#x3D; Rn + #immed +进位</span><br><span class="line"></span><br><span class="line">SUB Rd, Rn, Rm @Rd &#x3D; Rn – Rm</span><br><span class="line">SUB Rd, #immed  @Rd &#x3D; Rd - #immed</span><br><span class="line">SUB Rd, Rn, #immed @Rd &#x3D; Rn - #immed</span><br><span class="line">SBC Rd, Rn, #immed Rd &#x3D; Rn - #immed – 借位</span><br><span class="line">SBC Rd, Rn ,Rm  Rd &#x3D; Rn – Rm – 借位</span><br><span class="line"></span><br><span class="line">MUL Rd, Rn, Rm    Rd &#x3D; Rn * Rm  乘法(32 位)</span><br><span class="line"></span><br><span class="line">UDIV Rd, Rn, Rm   Rd &#x3D; Rn &#x2F; Rm  无符号除法</span><br><span class="line">SDIV Rd, Rn, Rm   Rd &#x3D; Rn &#x2F; Rm  有符号除法</span><br><span class="line"></span><br><span class="line">6、逻辑指令</span><br><span class="line"></span><br><span class="line">AND Rd, Rn    	@  Rd &#x3D; Rd &amp;Rn</span><br><span class="line">AND Rd, Rn, #immed 	 @Rd &#x3D; Rn &amp;#immed</span><br><span class="line">AND Rd, Rn, Rm	 @Rd &#x3D; Rn &amp; Rm</span><br><span class="line"></span><br><span class="line">ORR Rd, Rn	 @Rd &#x3D; Rd | Rn </span><br><span class="line">ORR Rd, Rn, #immed	 @Rd &#x3D; Rn | #immed</span><br><span class="line">ORR Rd, Rn, Rm 	 @Rd &#x3D; Rn | Rm</span><br><span class="line"></span><br><span class="line">BIC Rd, Rn 	@Rd &#x3D; Rd &amp; (~Rn)   位清除  </span><br><span class="line">BIC Rd, Rn, #immed	 @Rd &#x3D; Rn &amp; (~#immed)</span><br><span class="line">BIC Rd, Rn , Rm 	 @Rd &#x3D; Rn &amp; (~Rm)</span><br><span class="line"></span><br><span class="line">ORN Rd, Rn, #immed    @Rd &#x3D; Rn | (#immed) 按位或非</span><br><span class="line">ORN Rd, Rn, Rm     Rd &#x3D; Rn | (Rm)</span><br><span class="line"></span><br><span class="line">EOR Rd, Rn               Rd &#x3D; Rd ^ Rn按位异或 </span><br><span class="line">EOR Rd, Rn, #immed        Rd &#x3D; Rn ^ #immed</span><br><span class="line">EOR Rd, Rn, Rm            Rd &#x3D; Rn ^ Rm</span><br></pre></td></tr></table></figure>
+
+<p>MRC: 将 CP15 协处理器中的寄存器数据读到 ARM 寄存器中。<br>MRC 就是读 CP15 寄存器， MCR 就是写 CP15 寄存器，MCR 指令格式如下：</p>
+<p>cps   #0x13   模式切换为SVC<br>adr<br>可实际上adr是将基于PC相对偏移的地址值或基于寄存器相对地址值读取的为指令,<br>而ldr用于加载32为立即数或一个地址到指定的寄存器中。</p>
+<p><strong>隔离指令</strong><br>DMB<br>数据存储器隔离。 仅当所有在它前面的存储器访问操作都执行完毕后，才提交在它后面的存储器访问操作。<br>DSB<br>数据同步隔离。 仅当所有在它前面的存储器访问操作都执行完毕后，才执行在它后面的指令<br>ISB<br>指令同步隔离。它会清洗流水线，以保证所有它前面的指令都执行完毕之后，才执行它后面的指令。</p>
+]]></content>
+      <categories>
+        <category>ARM Lover</category>
+      </categories>
+      <tags>
+        <tag>ARM汇编基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Makefile小记</title>
+    <url>/Makefile-Lover/Makefile%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p>学习Makefie,最重要的是搞清楚<code>目标和依赖</code>!!!<br>自动变量</p>
+<img src="/Makefile-Lover/Makefile%E5%B0%8F%E8%AE%B0/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%98%E9%87%8F.jpg" class="" title="自动化变量">
+
+
+
+<p>命令前加@即为不显示<br>make -s  不输出<br>V=1“来实现完整的命令输出<br>.PHONY 意思表示 clean 是一个“伪目标”<br>Makefile 特定文件命名 make -f Make.Linux</p>
+<p>在linux中和编译有关的配置文件有：<br>makefile:<br>Kconfig:<br>.config:全局的配置文件，由它决定makefile来编译哪些文件，一般是自动生成。</p>
+<p>执行make menuconfig就会读取源码目录下所有Kconfig内容，并生成界面中的选项菜单</p>
+]]></content>
+      <categories>
+        <category>Makefile Lover</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Makefile调试参考</title>
+    <url>/Makefile-Lover/Makefile%E8%B0%83%E8%AF%95%E5%8F%82%E8%80%83/</url>
+    <content><![CDATA[<p>led.s</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">arm-linux-gnueabihf-gcc -g -c led.s -o led.o</span><br><span class="line">arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf</span><br><span class="line">arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin</span><br><span class="line">arm-linux-gnueabihf-objdump -D led.elf &gt; led.dis</span><br></pre></td></tr></table></figure>
+
+
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CROSS_COMPILE  ?= arm-linux-gnueabihf-</span><br><span class="line">TARGET         ?= uart</span><br><span class="line"></span><br><span class="line">CC            := $(CROSS_COMPILE)gcc</span><br><span class="line">LD            := $(CROSS_COMPILE)ld</span><br><span class="line">OBJCOPY       := $(CROSS_COMPILE)objcopy</span><br><span class="line">OBJDUMP       := $(CROSS_COMPILE)objdump</span><br><span class="line"></span><br><span class="line">LIBPATH      := -lgcc -L /usr/<span class="built_in">local</span>/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INCUDIRS     := stdio/include\</span><br><span class="line">				imx6ul \</span><br><span class="line">			    bsp/clk\</span><br><span class="line">				bsp/delay\</span><br><span class="line">				bsp/beep\</span><br><span class="line">				bsp/key\</span><br><span class="line">				bsp/gpio\</span><br><span class="line">				bsp/int\</span><br><span class="line">				bsp/led\</span><br><span class="line">				bsp/<span class="built_in">exit</span>\</span><br><span class="line">				bsp/epit\</span><br><span class="line">				bsp/keyfilter\</span><br><span class="line">				bsp/uart</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SRCUDIRS     := stdio/lib\</span><br><span class="line">				project\</span><br><span class="line">			    bsp/clk\</span><br><span class="line">				bsp/delay\</span><br><span class="line">				bsp/beep\</span><br><span class="line">				bsp/key\</span><br><span class="line">				bsp/gpio\</span><br><span class="line">				bsp/int\</span><br><span class="line">				bsp/led\</span><br><span class="line">				bsp/<span class="built_in">exit</span>\</span><br><span class="line">				bsp/epit\</span><br><span class="line">				bsp/keyfilter\</span><br><span class="line">				bsp/uart</span><br><span class="line"></span><br><span class="line">INCLUDE       := $(patsubst %, -I % , $(INCUDIRS))</span><br><span class="line"></span><br><span class="line">SFILES        := $(foreach dir,$(SRCUDIRS),$(wildcard $(dir)/*.S))</span><br><span class="line">CFILES        := $(foreach dir,$(SRCUDIRS),$(wildcard $(dir)/*.c)) </span><br><span class="line"></span><br><span class="line">SFILESNDIR        := $(notdir $(SFILES))</span><br><span class="line">CFILESNDIR        := $(notdir $(CFILES))</span><br><span class="line"></span><br><span class="line">SOBJS              := $(patsubst %,obj/%,$(SFILESNDIR:.S=.o))</span><br><span class="line">COBJS             := $(patsubst %,obj/%,$(CFILESNDIR:.c=.o))</span><br><span class="line"></span><br><span class="line">OBJS              := $(SOBJS) $(COBJS)</span><br><span class="line"></span><br><span class="line">VPATH             := $(SRCUDIRS)</span><br><span class="line">.PHONY:clean</span><br><span class="line"></span><br><span class="line">$(TARGET).bin : $(OBJS)</span><br><span class="line">	$(LD) -Timx6u.lds -o $(TARGET).elf $^ $(LIBPATH)</span><br><span class="line">	$(OBJCOPY) -O binary -S $(TARGET).elf <span class="variable">$@</span></span><br><span class="line">	$(OBJDUMP) -D -m arm $(TARGET).elf &gt;$(TARGET).dis</span><br><span class="line"></span><br><span class="line">$(COBJS):obj/%.o:%.c</span><br><span class="line">	$(CC) -Wall -Wa,-mimplicit-it=thumb -nostdlib -fno-builtin -c -O2 $(INCLUDE)-o <span class="variable">$@</span> $&lt;</span><br><span class="line">$(SOBJS):obj/%.o:%.S</span><br><span class="line">	$(CC) -Wall -nostdlib -fno-builtin -c -O2 $(INCLUDE)-o <span class="variable">$@</span> $&lt;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm -rf $(TARGET).elf $(TARGET).bin $(TARGET).dis $(OBJS)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Makefile Lover</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Linux内核中断</title>
     <url>/Linux-Lover/Linux-%E4%B8%AD%E6%96%AD/</url>
     <content><![CDATA[<p>Linux 内核中也提供了大量的中断相关的 API 函数</p>
@@ -1931,7 +2135,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <content><![CDATA[<p>电感式传感器是利用被测量的变化引起线圈自感或互感系数的变化，从而导致线圈电感量改变这一物理现象来实现测量的。因此根据转换原理，电感式传感器可以分为自感式和互感式两大类。<br> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> 电感式传感器与其它传感器相比，具有以下优点：</span><br><span class="line"> 1) 结构简单，工作可靠，寿命长；</span><br><span class="line"> 2) 灵敏度好、分辨率高。能测量0.1μm甚至更小的机械位移，能感受0.1角秒的微小角位移；</span><br><span class="line"> 3) 重复性好，线性度优良。在一定位移范围 (最小几十微米，最大可达数十至数百毫米) 内，输出线性度可达±0.1%，且比较稳定。</span><br><span class="line"> 4) 输出信号强。电压灵敏度一般可达数百毫伏每毫米，因此，有利于信号的传输和放大。</span><br><span class="line"></span><br><span class="line">主要缺点：</span><br><span class="line"> 1）存在零点残余电压；</span><br><span class="line"> 2）灵敏度、线性度和测量范围相互制约；</span><br><span class="line"> 3）传感器自身频率响应低，不适用于快速动态测量。</span><br></pre></td></tr></table></figure></p>
 <p>自感：闭磁路型、开磁路型</p>
 <p>互感：差动变压器、涡流式</p>
-<img src="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class>]]></content>
+<img src="/Circuit-Lover/%E7%94%B5%E6%84%9F%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="">]]></content>
       <categories>
         <category>Circuit Lover</category>
       </categories>
@@ -1942,12 +2146,12 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>Linux内核定时器</title>
     <url>/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/</url>
-    <content><![CDATA[<p><strong>节拍率</strong><br>中断周期性产生的频率就是系统频率，<br>也叫做节拍率(tick rate)(有的资料也叫系统频率)，比如 1000Hz，100Hz 等等说的就是系统节拍率。系统节拍率是可以设置的，单位是 Hz<br>高节拍率和低节<br>拍率的优缺点：<br>①、高节拍率会提高系统时间精度，如果采用 100Hz 的节拍率，时间精度就是 10ms，采用1000Hz 的话时间精度就是 1ms，精度提高了 10 倍。高精度时钟的好处有很多，对于那些对时间要求严格的函数来说，能够以更高的精度运行，时间测量也更加准确。<br>②、高节拍率会导致中断的产生更加频繁，频繁的中断会加剧系统的负担，1000Hz 和 100Hz的系统节拍率相比，中断服务函数占用处理器的时间增加，但是现在的处理器性能都很强大，所以采用 1000Hz 的系统节拍率并不会增加太大的负载压力。根据自己的实际情况，选择合适的系统节拍率，本教程我们全部采用默认的 100Hz 系统节拍率。<br>方法一：make menuconfig<br>-&gt; Kernel Features<br>-&gt; Timer frequency (<choice> [=y])<br>方法二： param.h文件 # define USER_HZ    100    </choice></p>
+    <content><![CDATA[<p><strong>节拍率</strong><br>中断周期性产生的频率就是系统频率，<br>也叫做节拍率(tick rate)(有的资料也叫系统频率)，比如 1000Hz，100Hz 等等说的就是系统节拍率。系统节拍率是可以设置的，单位是 Hz<br>高节拍率和低节<br>拍率的优缺点：<br>①、高节拍率会提高系统时间精度，如果采用 100Hz 的节拍率，时间精度就是 10ms，采用1000Hz 的话时间精度就是 1ms，精度提高了 10 倍。高精度时钟的好处有很多，对于那些对时间要求严格的函数来说，能够以更高的精度运行，时间测量也更加准确。<br>②、高节拍率会导致中断的产生更加频繁，频繁的中断会加剧系统的负担，1000Hz 和 100Hz的系统节拍率相比，中断服务函数占用处理器的时间增加，但是现在的处理器性能都很强大，所以采用 1000Hz 的系统节拍率并不会增加太大的负载压力。根据自己的实际情况，选择合适的系统节拍率，本教程我们全部采用默认的 100Hz 系统节拍率。<br>方法一：make menuconfig<br>-&gt; Kernel Features<br>-&gt; Timer frequency (<choice> [=y])<br>方法二： param.h文件 # define USER_HZ    100    </p>
 <p><strong>节拍数 jiffies</strong></p>
 <p>extern u64 __jiffy_data jiffies_64; /<em>64系统</em>/<br>extern unsigned long volatile __jiffy_data jiffies;/<em>32系统</em>/</p>
 <p>不管是 32 位还是 64 位的 jiffies，都有溢出的风险<br>假如 HZ 为最大值 1000 的时候，32 位的 jiffies 只需要 49.7 天就发生了绕回，对于 64 为的 jiffies 来说大概需要5.8 亿年才能绕回，因此 jiffies_64 的绕回忽略不计。</p>
 <p> HZ 表示一秒的节拍数，jiffies 表示系统运行的 jiffies 节拍数，所以 jiffies/HZ 就<br>是系统运行时间，单位为秒。</p>
-<img src="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/%E8%8A%82%E6%8B%8D%E5%87%BD%E6%95%B0.jpg" class>
+<img src="/uncategorized/ux%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8/%E8%8A%82%E6%8B%8D%E5%87%BD%E6%95%B0.jpg" class="">
 
 
 <p>timer.h总结构体 timer_list</p>
@@ -2015,16 +2219,16 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>ubuntu系统根目录空间不足</title>
     <url>/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/</url>
-    <content><![CDATA[<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/1.jpg" class>
+    <content><![CDATA[<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/1.jpg" class="">
 
 
-<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/2.jpg" class>
+<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/2.jpg" class="">
 
 
 
 
 
-<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/4.jpg" class>
+<img src="/Linux-Lover/ubuntu%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3/4.jpg" class="">
 
 <p>参考<br><a href="https://blog.csdn.net/daemon_2017/article/details/80660372" target="_blank" rel="noopener">https://blog.csdn.net/daemon_2017/article/details/80660372</a></p>
 ]]></content>
@@ -2087,7 +2291,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</memory></functional></numeric></algorithm></p>
+    <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
 <p><strong>概念</strong><br>一元函数对象：函数参数1个；<br>二元函数对象：函数参数2个；<br>一元谓词对象：函数参数1个,返回bool；<br>二元谓词对象：函数参数2个,返回bool；</p>
 <p>遍历算法 ：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">for_each(v1.begin(),v1.end(), show)   //容器为int</span><br><span class="line"></span><br><span class="line">void show(const int &amp;iItem)  </span><br><span class="line"></span><br><span class="line">&#123;         cout&lt;&lt; iItem;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">transform() //转移容器，用于合并，函数返回值</span><br><span class="line">transform(vecIntA.begin(),vecIntA.end(),vecIntA.begin(),increase);      </span><br><span class="line">int increase (int i) </span><br><span class="line"></span><br><span class="line">&#123;     <span class="built_in">return</span> i+1;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2150,21 +2354,21 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><strong>自旋锁</strong><br>#include &lt;linux/atomic.h&gt;<br>自旋锁的“自旋”也就是“原地打转”的意思，“原地打转”的目的是为了等待自旋锁可以<br>用，可以访问共享资源。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">typedef struct spinlock &#123;</span><br><span class="line"> union &#123;</span><br><span class="line"> struct raw_spinlock rlock;</span><br><span class="line"> <span class="comment">#ifdef CONFIG_DEBUG_LOCK_ALLOC</span></span><br><span class="line"> <span class="comment"># define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))</span></span><br><span class="line"> struct &#123;</span><br><span class="line"> u8 __padding[LOCK_PADSIZE];</span><br><span class="line"> struct lockdep_map dep_map;</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">&#125;;</span><br><span class="line"> &#125; spinlock_t;</span><br><span class="line">特点：自旋锁适用于短时期的轻量级加锁，如果遇到需要长时间持有锁的场景那就需要换其他的方法了</span><br><span class="line"></span><br><span class="line">死锁：</span><br><span class="line">被自旋锁保护的临界区一定不能调用任何能够引起睡眠和阻塞的API 函数。自旋锁会自动禁止抢占，也就说当线程 A得到锁以后会暂时禁止内核抢占。如果线程 A 在持有锁期间进入了休眠状态，那么线程 A 会自动放弃 CPU 使用权。线程 B 开始运行，线程 B 也想要获取锁，但是此时锁被 A 线程持有，而且内核抢占还被禁止了！线程 B 无法被调度出去，那么线程 A 就无法运行，锁也就无法释放，导致死锁现象的发生</span><br><span class="line"></span><br><span class="line">中断里面可以使用自旋锁，但是在中断里面使用自旋锁的时候，在获取锁之前一定要先禁止本地中断(也就是本 CPU 中断，对于多核 SOC来说会有多个 CPU 核)，否则可能导致锁死现象的发生</span><br><span class="line"></span><br><span class="line"> DEFINE_SPINLOCK(lock) /* 定义并初始化一个锁 */</span><br><span class="line"></span><br><span class="line">/* 线程 A */</span><br><span class="line">void <span class="function"><span class="title">functionA</span></span> ()&#123;</span><br><span class="line">unsigned long flags; /* 中断状态 */</span><br><span class="line">spin_lock_irqsave(&amp;lock, flags) /* 获取锁 推荐用这个*/</span><br><span class="line">/* 临界区 */</span><br><span class="line">spin_unlock_irqrestore(&amp;lock, flags)  /* 释放锁推荐用这个 */</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">/* 中断服务函数 */ </span><br><span class="line">void <span class="function"><span class="title">irq</span></span>() &#123;</span><br><span class="line">spin_lock(&amp;lock) /* 获取锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line">spin_unlock(&amp;lock) /* 释放锁 */</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> 其他锁：</span><br><span class="line"> 读写锁》》》顺序锁</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class title="自旋锁">
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E8%87%AA%E6%97%8B%E9%94%81.jpg" class="" title="自旋锁">
 
 
 <p><strong>信号量</strong></p>
 <p>（1）自旋锁，<strong>信号量可以使线程进入休眠状态</strong>，但信号量不能用于中断中，因为信号量会引起休眠，中断不能休眠。<br>（2）如果共享资源的持有时间比较短，那就不适合使用信号量了，因为频繁的休眠、切换<br>线程引起的开销要远大于信号量带来的那点优势<br>(3)计数型信号量不能用于互斥访问，因为它允许多个线程同时访问共享资源。(二值信号值)<br>自动唤醒</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/semaphore.h&gt;</span></span><br><span class="line">struct semaphore &#123;</span><br><span class="line">raw_spinlock_t lock;</span><br><span class="line">unsigned int count;</span><br><span class="line">struct list_head wait_list;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct semaphore sem; /* 定义信号量 */</span><br><span class="line">sema_init(&amp;sem, 1)； /* 初始化信号量 */</span><br><span class="line">down(&amp;sem); /* 申请信号量 */</span><br><span class="line">/* 临界区 */</span><br><span class="line">up(&amp;sem);</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class title="信号量">
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BF%A1%E5%8F%B7%E9%87%8F.jpg" class="" title="信号量">
 
 
 
 <p><strong>互斥体-mutex</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">struct mutex &#123;</span><br><span class="line">/* 1: unlocked, 0: locked, negative: locked, possible waiters */</span><br><span class="line">atomic_t count;</span><br><span class="line">spinlock_t wait_lock;</span><br><span class="line">&#125;;</span><br><span class="line"> struct mutex lock; /* 定义一个互斥体 */</span><br><span class="line">mutex_init(&amp;lock); /* 初始化互斥体 */</span><br><span class="line"></span><br><span class="line"> mutex_lock(&amp;lock); /* 上锁 */</span><br><span class="line"> /* 临界区 */</span><br><span class="line"> mutex_unlock(&amp;lock); /* 解锁 *</span><br><span class="line">①、mutex 可以导致休眠，因此不能在中断中使用 mutex，__中断中只能使用自旋锁__。</span><br><span class="line">②、和信号量一样，mutex 保护的临界区可以调用引起阻塞的 API 函数。</span><br><span class="line">③、因为一次只有一个线程可以持有 mutex，因此，必须由 mutex 的持有者释放 mutex。并</span><br><span class="line">且 mutex 不能递归上锁和解锁</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class title="互斥体">]]></content>
+<img src="/Linux-Lover/Linux%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89/%E4%BA%92%E6%96%A5%E4%BD%93.jpg" class="" title="互斥体">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -2297,7 +2501,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sigaction 结构体</span><br><span class="line">struct sigaction act;</span><br><span class="line">act.sa_sigaction &#x3D; myhandle;</span><br><span class="line">act.sa_flags &#x3D;SA_SIGINFO;&#x2F;&#x2F;表示能接受数据</span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;recv a sig&#x3D;%d\n&quot;, sig);	</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;         </span><br><span class="line">	struct sigaction act;</span><br><span class="line">	sigset_t sa_mask;</span><br><span class="line">	act.sa_handler &#x3D; handler;</span><br><span class="line">	act.sa_flags &#x3D; 0;</span><br><span class="line">	sigemptyset(&amp;act.sa_mask);</span><br><span class="line">	&#x2F;&#x2F;测试信号安装函数</span><br><span class="line">	sigaction(SIGINT, &amp;act, NULL);</span><br><span class="line">	for (;;)</span><br><span class="line">	&#123;</span><br><span class="line">	pause();</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>封装my_signal</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#define ERR_EXIT(m) \</span></span><br><span class="line">    <span class="keyword">do</span> &#123; \</span><br><span class="line">        perror(m); \</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE); \</span><br><span class="line">    &#125; <span class="keyword">while</span>(0)void handler(int sig);/* 系统调用signal()实际上调用了sigaction() */</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler);int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    my_signal(SIGINT, handler);</span><br><span class="line">    <span class="keyword">for</span> (; ;)</span><br><span class="line">        pause();</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">__sighandler_t my_signal(int sig, __sighandler_t handler)</span><br><span class="line">&#123;</span><br><span class="line">    struct sigaction act;</span><br><span class="line">    struct sigaction oldact;</span><br><span class="line">    act.sa_handler = handler;</span><br><span class="line">    sigemptyset(&amp;act.sa_mask);</span><br><span class="line">    act.sa_flags = 0;</span><br><span class="line">    <span class="keyword">if</span> (sigaction(sig, &amp;act, &amp;oldact) &lt; 0)</span><br><span class="line">        <span class="built_in">return</span> SIG_ERR;</span><br><span class="line">    <span class="built_in">return</span> oldact.sa_handler; // 返回先前的处理函数指针&#125;void handler(int sig)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"rev sig=%d\n"</span>, sig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/mysignal.jpg" class title="5s阻塞后到达">
+<img src="/Linux-Lover/%E5%8F%B7%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/mysignal.jpg" class="" title="5s阻塞后到达">
 
 <p>typedef union sigval<br>{<br>int sival_int;<br>void *sival_ptr;<br>}sigval_t; </p>
 <p>sigqueue新的信号发送函数<br>原型:int sigqueue(pid_t pid, int sig, const union sigval value);<br> 第一个参数是指定接收信号的进程id<br> 第二个参数确定即将发送的信号<br> 第三个参数是一个联合数据结构union sigval，指定了信号传递的参数，即通常所说的4字节值。<br> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"></span><br><span class="line">pid_t pid_Array[10]; //pid 数组</span><br><span class="line">void myhandle(int sig,siginfo_t*st, void *p)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(sig == SIGRTMIN)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子1收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[1] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">			<span class="keyword">if</span>(sig == SIGRTMIN+1)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：孩子2收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			pid_Array[3] = st-&gt;si_int;   </span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(sig == SIGRTMIN+2)   //</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"处理函数：父亲收到信号%d\n"</span>,st-&gt;si_int);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"pid[0]:%d  pid[1]%d \n"</span>,pid_Array[0],pid_Array[1]);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	pid_t pid;</span><br><span class="line">	</span><br><span class="line">	struct sigaction act;</span><br><span class="line">	act.sa_sigaction = myhandle;</span><br><span class="line">	act.sa_flags =SA_SIGINFO; //可传递数据</span><br><span class="line">	int i=0;</span><br><span class="line">	/*注册信号*/</span><br><span class="line">     <span class="keyword">if</span>(sigaction(SIGRTMIN, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+1, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigaction(SIGRTMIN+2, &amp;act,NULL)&lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error sigaction\n"</span>);</span><br><span class="line">	<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*fork两个进程*/</span><br><span class="line">	<span class="keyword">for</span>(i=0;i&lt;2;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		pid_Array[i] = pid = fork();</span><br><span class="line">		<span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">			perror(<span class="string">"fork fail"</span>);</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">if</span>(pid&gt;0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"fork %d \n"</span>,i);</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(pid ==  0)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"i:%d\n"</span>,i);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/*两个进程处理函数*/</span><br><span class="line">	<span class="keyword">if</span>( pid==0 &amp;&amp; i == 0)  //第一个子进程</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程1运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程1醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = getpid()*2;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子1给子2发信号  %d \n"</span>,getpid()*2);</span><br><span class="line">		sigqueue(pid_Array[1],SIGRTMIN+1,value);     </span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(pid==0 &amp;&amp; i==1)//第二个子进程</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子进程2运行然后睡眠\n"</span>);</span><br><span class="line">		sleep(10);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"信号，子进程2醒来\n"</span>);</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[3];</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"子2给父进程发 %d \n"</span>,pid_Array[3]);</span><br><span class="line">		sigqueue(getppid(),SIGRTMIN+2,value);     //父进程pid</span><br><span class="line">			<span class="built_in">exit</span>(0);</span><br><span class="line">		&#125;</span><br><span class="line">		//父进程</span><br><span class="line">		union sigval value;</span><br><span class="line">		value.sival_int = pid_Array[1]; //传递进程2 pid   给进程 1 </span><br><span class="line">		sigqueue(pid_Array[0],SIGRTMIN,value);    </span><br><span class="line"></span><br><span class="line">		sleep(10);</span><br><span class="line">		int mypid =0;</span><br><span class="line">		int  pidnum = 1 ;</span><br><span class="line">		<span class="keyword">while</span>((mypid = waitpid(-1,NULL,WNOHANG))&gt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"子进程：%d 退出%d\n"</span>,pidnum++,mypid); </span><br><span class="line">		&#125;</span><br><span class="line">	        <span class="built_in">printf</span>(<span class="string">"父进程退出\n"</span>);</span><br><span class="line">	     <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"> ---------------------------</span><br><span class="line"> ming@ubuntu:~/Day6/22$ ./3</span><br><span class="line">fork 0 </span><br><span class="line">i:0</span><br><span class="line">子进程1运行然后睡眠</span><br><span class="line">fork 1 </span><br><span class="line">i:1</span><br><span class="line">子进程2运行然后睡眠</span><br><span class="line">处理函数：孩子1收到信号5135</span><br><span class="line">信号，子进程1醒来</span><br><span class="line">子1给子2发信号  10268 </span><br><span class="line">处理函数：孩子2收到信号10268</span><br><span class="line">信号，子进程2醒来</span><br><span class="line">子2给父进程发 10268 </span><br><span class="line">处理函数：父亲收到信号10268</span><br><span class="line">pid[0]:5134  pid[1]5135 </span><br><span class="line">子进程：1 退出5134</span><br><span class="line">父进程退出</span><br><span class="line">-----------------------------</span><br></pre></td></tr></table></figure></p>
@@ -2315,14 +2519,14 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<p><strong>多并发？</strong></p>
 <p>每来一个客户，创建一个进程的思路。</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class title="基本框架">
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91.jpg" class="" title="基本框架">
 
 <p><strong>流协议与粘包</strong></p>
 <p>tcp    字节流 无边界<br>udp    消息、数据报 有边界<br>对等方，一次读操作，不能保证完全把消息读完。<br>对方接受数据包的个数是不确定的。</p>
 <hr>
 <p><strong>TCP/IP协议的11种状态</strong></p>
 <p>两端同时关闭    将产生closing状态，最后双方都进入TIME_WAIT状态。<br>执行主动关闭的那一端，进入TIME_WAIT状态</p>
-<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class title="11种">
+<img src="/Linux-Lover/ocket-Api%E7%BC%96%E7%A8%8B/11.jpg" class="" title="11种">
 
 
 <p><strong>为什么TCP/IP要三次握手，和四次断开？</strong></p>
@@ -2350,7 +2554,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Bootmgr  RAM空间  选择  windows下</span><br><span class="line">Grub  引导不同的内核启动 RAM空间  选择  支持多操作系统</span><br><span class="line">BIOS  初始化硬件不能引导OS内核   ROM芯片上的程序 开启时运行的第一个程序</span><br><span class="line">Bootloader 引导内核程序运行 RAM空间 内核运行前的程序 Bootloader =BIOS+Grub/Bootmgr </span><br><span class="line">U-boot  通用Bootloader</span><br><span class="line">U-Boot，全称为Universal Boot Loader，即通用Bootloader</span><br></pre></td></tr></table></figure>
 <p><strong>ARM U-boot 内核传递参数</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">•	U-boot引导程序，在启动的时候会给给Linux Kernel传递很多参数</span><br><span class="line">•	串口波特率，RAM大小，视频fb，MAC地址等</span><br><span class="line">•	设备树的入口地址</span><br><span class="line">•	u-boot如何进行传递的？</span><br><span class="line">•	U-boot把要传递给kernel的东西：保存在struct tag数据结构中</span><br><span class="line">•	启动kernel时，把这个结构体的物理地址传给kernel</span><br><span class="line">•	kernel解析传递的参数？</span><br><span class="line">•	Linux内核通过这个地址，用parse_tags分析出传递过来的参数</span><br><span class="line"></span><br><span class="line">1、内核引导程 arch/arm/lib/vectors.S   用完释放 kernel_entry()</span><br><span class="line">2、内核启动</span><br><span class="line">执行head-armv.S     关闭中断、关闭 MMU。②、关闭 </span><br><span class="line">ENTERY(stxet)      arch/arm/kernel/head.S</span><br><span class="line">Start_kernel();</span><br><span class="line"></span><br><span class="line">ARM架构上，u-boot向Linux内核传递参数利用了R0，R1和R2三个寄存器</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/linux.jpg" class>
+<img src="/Linux-Lover/nux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E9%97%AE%E9%A2%98/linux.jpg" class="">
 
 
 <p>Linux驱动开发</p>
@@ -2410,9 +2614,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><del>这是删除线</del></p>
 <p>内容</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<p>///</p>
 <p>推荐链接：<a href="https://www.simon96.online/2018/10/12/hexo-tutorial/" target="_blank" rel="noopener">https://www.simon96.online/2018/10/12/hexo-tutorial/</a><br>背景清晰度：<a href="https://www.zhihu.com/question/268140594/answer/335335120" target="_blank" rel="noopener">https://www.zhihu.com/question/268140594/answer/335335120</a></p>
 <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6>]]></content>
       <categories>
@@ -2422,7 +2624,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>架构概念</title>
     <url>/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<img src="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/%E6%9E%B6%E6%9E%84.jpg" class title="架构概念">]]></content>
+    <content><![CDATA[<img src="/Linux-Lover/%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/%E6%9E%B6%E6%9E%84.jpg" class="" title="架构概念">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -2502,15 +2704,15 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
     <content><![CDATA[<p><strong>四线SPI</strong></p>
 <p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
 
 <p><em>_SPI 有四种工作模式</em></p>
 <p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
 
 
 <p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
 
 <p> <strong>spi基本框架</strong></p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
@@ -2527,19 +2729,19 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/iic.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/iic.JPG" class="">
 
 
 <p><strong>起始位</strong></p>
 <p>在 SCL 为高电平的时候，SDA 出现下降沿就表示为起始位</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E8%B5%B7%E5%A7%8B%E4%BD%8D.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E8%B5%B7%E5%A7%8B%E4%BD%8D.JPG" class="">
 
 <p><strong>停止位</strong></p>
 <p>在 SCL 位高电平的时候，SDA出现上升沿就表示为停止位</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E5%81%9C%E6%AD%A2%E4%BD%8D.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E5%81%9C%E6%AD%A2%E4%BD%8D.JPG" class="">
 
 <p><strong>数据传输</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93.JPG" class>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93.JPG" class="">
 
 <p><strong>应答信号</strong></p>
 <p>应答信号是由从机发出的，主机需要提供应答信号所需的时钟，主机发送完 8 位数据以后紧跟着的一个时钟信号就是给应答信号使用的。从机通过将 SDA 拉低来表示发出应答信号，表示通信成功，否则表示通信失败。</p>
@@ -2662,7 +2864,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>|参数解释<br>|-|-|<br>|参数s表示套接字描述符；<br>|参数level代表的是选项定义的层次，如IPPROTO_IP；<br>|参数optname代表套接字选项的名称，例如IP_HDRINCL表示要构造IP头部；<br>|参数optval表示指向存放选项数据的缓冲区的指针；<br>|参数optlen表示optval参数指向的缓冲区的长度。</p>
 <p>当使用套接字选项IP_HDRINCL设置套接字后，接收和发送数据的时候，接收到的数据包含IP数据的，包含IP的头部。用户之后需要对IP层相关的数据段进行处理，例如IP头部数据的设置和分析，校验和的计算等。设置方法如下：<br>int set = 1;<br>if(setsockopt(rawsock, IPPROTO_IP, IP_HDRINCL, &amp;set, sizeof(set))&lt;0)<br>{<br>/<em>错误信息提示</em>/<br>}</p>
 <p><strong>了解报文</strong></p>
-<img src="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class title="报文结构">
+<img src="/Linux-Lover/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="报文结构">
 
 
 
@@ -2788,7 +2990,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/*客户端*/</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 8886</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;//定义变量</span><br><span class="line">	struct sockaddr_in s_addr;	//套接字地址结构</span><br><span class="line">	int sock;			//套接字描述符</span><br><span class="line">	int addr_len;			//地址结构长度</span><br><span class="line">	int len;			//发送字节长度</span><br><span class="line">	char buff[]=<span class="string">"Hello everyone,Merry Christmas!"</span>;	//发送的消息</span><br><span class="line">/* 创建数据报模式的套接字 */</span><br><span class="line">	<span class="keyword">if</span> ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) &#123;</span><br><span class="line">		perror(<span class="string">"socket error"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(errno);</span><br><span class="line">	&#125;</span><br><span class="line">       	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create socket successful.\n\r"</span>);</span><br><span class="line">/* 设置对方地址和端口信息 */</span><br><span class="line">	s_addr.sin_family = AF_INET; 	//地址族</span><br><span class="line"></span><br><span class="line">		s_addr.sin_port = htons(PORT);</span><br><span class="line">	<span class="keyword">if</span> (argv[1])</span><br><span class="line">		s_addr.sin_addr.s_addr = inet_addr(argv[1]);</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"没有输入消息的接受者！\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line">	addr_len = sizeof(s_addr);	//地址结构长度</span><br><span class="line">/*从客户端的buff缓冲区中发送消息到地址结构为s_addr的远端机器*/</span><br><span class="line">	len = sendto(sock, buff, sizeof(buff), 0,(struct sockaddr *) &amp;s_addr, addr_len);</span><br><span class="line">	<span class="keyword">if</span> (len &lt; 0) &#123;			//如果发送失败</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\rsend error.\n\r"</span>);</span><br><span class="line">		<span class="built_in">return</span> 3;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"send success.\n\r"</span>);	//发送成功</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<img src="/Linux-Lover/UDP/%E7%BB%93%E6%9E%9C.jpg" class title="结果">
+<img src="/Linux-Lover/UDP/%E7%BB%93%E6%9E%9C.jpg" class="" title="结果">
 
 ]]></content>
       <categories>
@@ -2802,23 +3004,23 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>TCP</title>
     <url>/Linux-Lover/TCP/</url>
     <content><![CDATA[<p>__TCP三次握手，包头中的标志变化</p>
-<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class title="TCP3次握手">
+<img src="/Linux-Lover/TCP/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" class="" title="TCP3次握手">
 
 
 <p>第一次握手：建立连接时，客户端发送 syn 包(tcp协议中syn位置1，序号为X)到服务器，并进入 SYN_SEND 状态，等待服务器确认； </p>
 <p>第二次握手：服务器收到 syn 包，必须确认客户的 SYN，同时自己也发送一个 SYN 包，即 SYN+ACK包（tcp协议中syn位置1，ack位置1，序号K，确定序号为X+1），此时服务器进入 SYN_RECV 状态；</p>
 <p>第三次握手：客户端收到服务器的 SYN＋ACK 包，向服务器发送确认包 ACK(tcp协议中ack位置1，确认序号Y+1), 此包发送完毕，客户端和服务器进入 ESTABLISHED 状态，完成三次握手</p>
-<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class title="TCP3次握手">
+<img src="/Linux-Lover/TCP/%E5%8C%85.jpg" class="" title="TCP3次握手">
 
 <p>seq是数据包本身的序列号；ack是期望对方继续发送的那个数据包的序列号。 </p>
-<img src="/Linux-Lover/TCP/TCP.jpg" class title="accetp()一直阻塞到客户端连接">
+<img src="/Linux-Lover/TCP/TCP.jpg" class="" title="accetp()一直阻塞到客户端连接">
 
 <p>serv.c文件</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;netinet/in.h&gt;  // 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include&lt;arpa/inet.h&gt; // 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char sendbuf[256]=<span class="string">"ok"</span>;</span><br><span class="line">   char buf[256] ;</span><br><span class="line">   int s_fd,c_fd;// 服务器和客户套接字标识符</span><br><span class="line">   int s_len,c_len;// 服务器和客户消息长度</span><br><span class="line">   </span><br><span class="line">   struct sockaddr_in s_addr; // 服务器套接字地址</span><br><span class="line">   struct sockaddr_in c_addr;// 客户套接字地址</span><br><span class="line">   </span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,0); //创建套接字</span><br><span class="line">   </span><br><span class="line">   s_addr.sin_family = AF_INET;//套接字的域</span><br><span class="line">   s_addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">   s_addr.sin_port = PORT ;//定义服务器套接字端口</span><br><span class="line">   s_len = sizepf(s_addr);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">bind</span>(s_fd,(struct sockaddr *) &amp;s_addr,s_len);//绑定套接字 </span><br><span class="line">   </span><br><span class="line">   listen(s_fd,10); // 监听状态，守候进程,允许等待队列请求数10 </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"请稍后，等待客户端的发送数据\n"</span>);</span><br><span class="line">   </span><br><span class="line">   /*接收客户端请求*/</span><br><span class="line">   c_len = sizeof(c_addr);</span><br><span class="line">   c_fd = accetp(s_fd,(struct sockaddr*)&amp; c_addr,c_len); </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(1)</span><br><span class="line">   &#123;</span><br><span class="line">    	<span class="keyword">if</span>(recv(c_fd,buf,256,0) &gt; 0) //收到客户   </span><br><span class="line">        &#123;</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"收到客户端消息：\n %s\n"</span>,buf);</span><br><span class="line">         send(c_fd,sendbuf,sizeof(sendbuf),0);//回复客户</span><br><span class="line">   		 &#125;</span><br><span class="line">   &#125;</span><br><span class="line">	close(c_fd);// 关闭连接</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>client.c文件</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;		   // 包含套接字函数库</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;			// 包含AF_INET相关结构</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;			// 包含AF_INET相关操作的函数</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#define PORT 3339</span></span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">   int sockfd;								// 客户套接字标识符</span><br><span class="line">   int len;									// 客户消息长度</span><br><span class="line">   struct sockaddr_in addr;				// 客户套接字地址</span><br><span class="line">   int newsockfd;</span><br><span class="line">   char buf[256]=<span class="string">"come on!"</span>;//要发送的消息</span><br><span class="line">   int len2;							</span><br><span class="line">   char rebuf[256];  </span><br><span class="line">  </span><br><span class="line">	sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">   addr.sin_family = AF_INET;  // 客户端套接字地址中的域</span><br><span class="line">   addr.sin_addr.s_addr=htonl(INADDR_ANY);   </span><br><span class="line">   addr.sin_port = PORT;		// 客户端套接字端口</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">   len = sizeof(addr);</span><br><span class="line">  	newsockfd = connect(sockfd,(struct sockaddr *)&amp;addr ,len);//发送连接服务器的请求</span><br><span class="line">  <span class="keyword">if</span> (newsockfd == -1)</span><br><span class="line">  &#123;</span><br><span class="line">  perror(<span class="string">"连接诶失败\n"</span>);</span><br><span class="line">  <span class="built_in">return</span> 1;</span><br><span class="line">  &#125;</span><br><span class="line">  len2 = sizeof(buf);</span><br><span class="line">  <span class="keyword">while</span>(1)</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"请输入要发送的数据:"</span>);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,buf);</span><br><span class="line">    send(sockfd,buf,len2,0); //发送消息</span><br><span class="line">  <span class="keyword">if</span>(recv(sockfd,rebuf,256,0) &gt; 0)  //接收到</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"收到服务器消息:\n%s\n"</span>,rebuf);//输出到终端	</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  close(sockfd);</span><br><span class="line">   <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>结果</strong></p>
-<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class title="基本套接字">]]></content>
+<img src="/Linux-Lover/TCP/%E5%9F%BA%E6%9C%AC%E5%A5%97%E6%8E%A5%E5%AD%97.jpg" class="" title="基本套接字">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -2935,12 +3137,12 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>电阻式传感器</title>
     <url>/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</url>
     <content><![CDATA[<p>应变式 （丝式、箔式和薄膜式三种）</p>
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%85%AC%E5%BC%8F.jpg" class title="应变式">
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%85%AC%E5%BC%8F.jpg" class="" title="应变式">
 
 <p>要把电阻的变化转换为电压或电流的变化，需要转换电路来实现。转换电路常采用直流电桥或交流电桥。</p>
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class>
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
 
-<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BA%A4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class>
+<img src="/Circuit-Lover/%E7%94%B5%E9%98%BB%E5%BC%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BA%A4%E6%B5%81%E7%94%B5%E6%A1%A5.jpg" class="">
 
 <p><strong>压阻式传感器是基于半导体材料的压阻效应来工作的传感器</strong></p>
 <p>__分为半导体应变式压阻传感器 、扩散型压阻传感器</p>
@@ -2972,7 +3174,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
 
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class width="51">
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
 
 
 
@@ -2980,7 +3182,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>__晶体与晶振</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
 
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class title="晶体与晶振">
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
 
 
 <p>常见问题 </p>
@@ -2998,7 +3200,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <content><![CDATA[<p><strong>时钟系统</strong></p>
 <p>晶体振荡器与RC振荡器</p>
 <p>注意：RC振荡器成本低，但是受电阻电容温度影响较大。</p>
-<img src="/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/clock.jpg" class>
+<img src="/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/clock.jpg" class="">
 
 
 <p>四种时钟源</p>
@@ -3069,6 +3271,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       <categories>
         <category>shell Lover</category>
       </categories>
+      <tags>
+        <tag>shell基础</tag>
+      </tags>
   </entry>
   <entry>
     <title>数据库SQL语言</title>
@@ -3095,14 +3300,14 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>（1）关系：域、笛卡尔积、关系..<br>扩展：<br>候选码(Candidate Key)：一个或者多个属性的集合，可以唯一确定实体的一个实例；<br>主码(Primary Key):从候选码中，选中用来作为唯一标识的属性或者属性组被称为主码；<br>可选码(Alternative Key):候选码中没有选中的其他码，称为可选码；</p>
 <p>（2）关系操作：查询分一类，插入、删除、修改一类</p>
 <p>关系数据库语言：关系代数与关系演算(SQL 两者的结合)<br>（3）关系代数</p>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0.jpg" class title="关系代数">
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0.jpg" class="" title="关系代数">
 
 <p>专门关系运算：选择、投射、连接、除运算。</p>
 
 
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%A4%96%E8%BF%9E%E6%8E%A5.jpg" class title="外连接是自然连接">
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E5%A4%96%E8%BF%9E%E6%8E%A5.jpg" class="" title="外连接是自然连接">
 
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E9%99%A4%E6%B3%95.jpg" class title="除运算">
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E9%99%A4%E6%B3%95.jpg" class="" title="除运算">
 
 <p>（4）关系演算（*）</p>
 ]]></content>
@@ -3119,18 +3324,18 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <content><![CDATA[<h5 id="微波"><a href="#微波" class="headerlink" title="微波"></a>微波</h5><p>微波是0.1m-1m的电磁波，波长相对较长的电磁波。对应的波段频率范围为300 MHz～3000 GHz。 </p>
 <h5 id="微波特点"><a href="#微波特点" class="headerlink" title="微波特点"></a>微波特点</h5><p>(1)似光性和似声性<br>(2)分析方法的独特性<br>低频电路不适用<br>(3)共度性<br>电子在真空管内的渡越时间（10-9秒左右）与微波的振荡周期（ 10-9 ～10-15秒）相当的这一特性称共度性，利用该特性可以做成各种微波电真空器件，得到微波振荡源。<br>(4)穿透性<br>(5)信息性<br>(6)非电离性</p>
 <h5 id="微波传感器"><a href="#微波传感器" class="headerlink" title="微波传感器"></a>微波传感器</h5><p><strong>原理</strong><br>微波传感器是利用微波特性来检测某些物理量的器件或装置。由发射天线发出微波，此波遇到被测物体时将被吸收或反射，使微波功率发生变化。若利用接收天线，接收到通过被测物体或由被测物体反射回来的微波，并将它转换为电信号，再经过信号调理电路，即可以显示出被测量，实现了微波检测。<br><strong>分类</strong><br>根据微波传感器的原理，微波传感器可以分为反射式和遮断式两类。<br><strong>组成</strong><br>微波传感器通常由微波发射器（即微波振荡器）、 微波天线及微波检测器三部分组成。<br><strong>微波振荡器</strong> 的器件有调速管、磁控管或某些固态器件，小型微波振荡器也可以采用体效应管<br><strong>微波天线</strong> 为了使发射的微波具有尖锐的方向性，天线要具有特殊的结构。</p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E5%A4%A9%E7%BA%BF.jpg" class title="微波天线">
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E5%A4%A9%E7%BA%BF.jpg" class="" title="微波天线">
 <p><strong>微波检测器</strong><br>一种是将微波变化为电流的视频变化方式<br>一种是与本机振荡器并用而变化为频率比微波低的外差法。（差分方式）</p>
 <h5 id="微波传感器应用"><a href="#微波传感器应用" class="headerlink" title="微波传感器应用"></a>微波传感器应用</h5><p><strong>微波液位计</strong></p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E4%BE%A7%E4%BD%8D%E8%AE%A1.jpg" class title="微波侧位计">
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E4%BE%A7%E4%BD%8D%E8%AE%A1.jpg" class="" title="微波侧位计">
 
 <p><strong>微波湿度传感器</strong></p>
 <p>扩展：<br>一般干燥的物体，如木材、皮革、谷物、 纸张、 塑料等，其ε′在1～5范围内， 而水的ε′则高达64， 因此如果材料中含有少量水分子时，其复合ε′将显著上升， ε″也有类似性质。 使用微波传感器，测量干燥物体与含一定水分的潮湿物体所引起的微波信号的相移与衰减量， 就可以换算出物体的含水量。</p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B9%BF%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class title="微波湿度传感器">
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B9%BF%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="微波湿度传感器">
 
 <p><strong>微波测厚仪</strong><br>利用微波在传播过程中遇到被测物体金属表面被反射，且反射波的波长与速度都不变的特性进行测厚的。<br>基本原理：<br>（1）在被测金属物体上下两表面各安装一个终端器。微波信号源发出的微波，经过环行器A、 上传输波导管传输到上终端器，由上终端器发射到被测物体上表面上，微波在被测物体上表面全反射后又回到上终端器，再经过传输导管、环行器A、下传输波导管传输到下终端器。</p>
 <p>（2）由下终端器发射到被测物体下表面的微波，经全反射后又回到下终端<br>器，再经过传输导管回到环行器A。因此被测物体的厚度与微波传输过<br>程中的行程长度有密切关系，当被测物体厚度增加时，微波传输的行程<br>长度便减小。 </p>
-<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B5%8B%E5%8E%9A%E4%BB%AA.jpg" class title="微波测厚仪">
+<img src="/Circuit-Lover/%E5%BE%AE%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%BE%AE%E6%B3%A2%E6%B5%8B%E5%8E%9A%E4%BB%AA.jpg" class="" title="微波测厚仪">
 
 
 <p><strong>微波辐射计（温度传感器）</strong>(*)</p>
@@ -3148,10 +3353,10 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>Socket编程了解</title>
     <url>/Linux-Lover/Socket%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3/</url>
     <content><![CDATA[<h5 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h5><p>1)socket可以看成是用户进程与内核网络协议栈的编程接口。<br>1)socket不仅可以用于本机的进程间通信，还可以用于网络上不同主机的进程间通信。</p>
-<img src="/Linux-Lover/Socket%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3/1.jpg" class>
+<img src="/Linux-Lover/Socket%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3/1.jpg" class="">
 
 <h5 id="大端、小端"><a href="#大端、小端" class="headerlink" title="大端、小端"></a>大端、小端</h5><p>0x 12 34 56 78<br>低字节78放高位地址，大端；高字节12放低位位地址<br>低字节78放低位地址，小端；高字节12放高位地址</p>
-<p>大端：0x12345678<br>小端：0x87654321<br>#include <iostream><br>using namespace std;<br>int main ()<br>{<br>int i =0x12345678 ;<br>if (<em>(char</em>)&amp;i == 0x12) //地址转化再访问<br>{<br>cout &lt;&lt; “大端” &lt;&lt;endl;<br>}<br>else<br>{<br>cout &lt;&lt; “小端” &lt;&lt;endl;<br>}<br>}</iostream></p>
+<p>大端：0x12345678<br>小端：0x87654321<br>#include <iostream><br>using namespace std;<br>int main ()<br>{<br>int i =0x12345678 ;<br>if (<em>(char</em>)&amp;i == 0x12) //地址转化再访问<br>{<br>cout &lt;&lt; “大端” &lt;&lt;endl;<br>}<br>else<br>{<br>cout &lt;&lt; “小端” &lt;&lt;endl;<br>}<br>}</p>
 <h5 id="Socket-API基本用法"><a href="#Socket-API基本用法" class="headerlink" title="Socket API基本用法"></a>Socket API基本用法</h5><p>#include &lt;sys/socket.h&gt;</p>
 <p><strong>socket函数</strong></p>
 <p>int socket(int domain, int type, int protocol);<br>创建一个套接字用于通信</p>
@@ -3276,7 +3481,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <h5 id="不可重入与可重入函数"><a href="#不可重入与可重入函数" class="headerlink" title="不可重入与可重入函数"></a>不可重入与可重入函数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">不可重入函数每次可能调用效果不一样。</span><br><span class="line">全局变量、mallco函数调用（重新覆盖很恐怖）。</span><br><span class="line"></span><br><span class="line">所谓可重入函数是指一个可以被多个任务调用的过程，任务在调用时不必担心数据是否会出错。</span><br><span class="line"></span><br><span class="line">启示：尽量不使用全局变量和静态变量的函数。特别是这个变量在程序中随时读写。</span><br></pre></td></tr></table></figure>
 
 <h5 id="信号阻塞、未决、忽略"><a href="#信号阻塞、未决、忽略" class="headerlink" title="信号阻塞、未决、忽略"></a>信号阻塞、未决、忽略</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">信号屏蔽状态字（block）、信号未决状态字（pending）、忽略标志。</span><br><span class="line">注：阻塞和忽略是不同，只要信号被阻塞就不会递达，而忽略是在递达之后可选的一种处理动作。</span><br><span class="line"></span><br><span class="line">过程：</span><br><span class="line">向进程发送SIGINT，内核首先判断信号屏蔽状态字是否阻塞，信号未决状态字（pending相应位制成1；若阻塞解除，信号未决状态字（pending）相应位制成0；表示信号可以抵达了。</span><br><span class="line">block状态字、pending状态字 64bit；</span><br><span class="line">block状态字用户可以读写，pending状态字用户只能读；这是信号设计机制。</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/%E4%BF%A1%E5%8F%B7/1.jpg" class title="来源：linux编程王保明">
+<img src="/Linux-Lover/%E4%BF%A1%E5%8F%B7/1.jpg" class="" title="来源：linux编程王保明">
 
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sigset_t pset; //用来打印的信号集</span><br><span class="line">sigset_t bset; //用来设置阻塞的信号集</span><br><span class="line"></span><br><span class="line">sigemptyset(&amp;bset);</span><br><span class="line">sigaddset(&amp;bset, SIGINT);</span><br><span class="line"></span><br><span class="line">sigprocmask()读取或更改进程的信号屏蔽状态（block） </span><br><span class="line">eg:</span><br><span class="line">sigprocmask(SIG_UNBLOCK,&amp;bsetbset,NUU);//阻塞</span><br><span class="line">sigprocmask(SIG_BLOCK,&amp;bset,NULL);//解除阻塞</span><br><span class="line">sigpending(&amp;pset);//获取未决字信息</span><br></pre></td></tr></table></figure>
@@ -3401,13 +3606,13 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/</url>
     <content><![CDATA[<h5 id="数据库安全概述"><a href="#数据库安全概述" class="headerlink" title="数据库安全概述"></a>数据库安全概述</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。</span><br><span class="line">数据库不安全因素:</span><br><span class="line">(1)非授权用户对数据库进行破坏</span><br><span class="line">(2)数据库重要或者敏感数据泄露</span><br><span class="line">(3)安全环境的脆弱性</span><br></pre></td></tr></table></figure>
 <h5 id="安全标准"><a href="#安全标准" class="headerlink" title="安全标准"></a>安全标准</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安全标准：TCSEC标准、CC标准(TCSEC相互总结互补发展而来)</span><br></pre></td></tr></table></figure>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg" class title="TCSEC标准">
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/1.jpg" class="" title="TCSEC标准">
 
 
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class title="CC标准">
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/2.jpg" class="" title="CC标准">
 
 <h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">（1）用户身份鉴别</span><br><span class="line">	静态鉴别、动态鉴别、生物鉴别、智能卡鉴别。</span><br><span class="line">（2）存取控制 （自主存取控制和强制存取控制，定义用户权限和合法权限检查机制）</span><br><span class="line">	授权:授予和收回</span><br><span class="line">    </span><br><span class="line">	GRANT  &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	TO &lt;用户&gt;</span><br><span class="line">	WITH GRANT OPTION ;（能传递权限，但不能形成循环传递）</span><br><span class="line"></span><br><span class="line">	REVOKE &lt;权限&gt;</span><br><span class="line">	ON  &lt;对象&gt;</span><br><span class="line">	FROM &lt;用户&gt;</span><br><span class="line"></span><br><span class="line">（3）视图机制</span><br><span class="line"></span><br><span class="line">（4）审计</span><br><span class="line">审计功能把用户对数据库的所有操作自动记录下来放入审计日志(auditlog)中。</span><br><span class="line">审计员可以利用审计日志监控数据库中的各种行为,重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间、内容等。</span><br><span class="line">AUDIT ALTER，PDATA</span><br><span class="line">ON SC ;</span><br><span class="line"></span><br><span class="line">NOAUDIT ALTER ,UPDATA</span><br><span class="line">ON SC ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">（5）数据加密：传输加密、存储加密</span><br><span class="line">其他安全性保护：推理控制、隐蔽信道、数据隐私保护。</span><br></pre></td></tr></table></figure>
-<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class title="视图例子">]]></content>
+<img src="/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/3.jpg" class="" title="视图例子">]]></content>
       <categories>
         <category>MySql Lover</category>
       </categories>
@@ -3483,7 +3688,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p><strong>超声波传感器</strong><br>超声物位传感器：单换能器、双换能器<br>只要测得超声波脉冲从发射到接收的时间间隔，便可以求得待测的物位。 </p>
 <p><strong>超声侧厚传感器</strong><br>双晶直探头中的压电晶片发射超声振动脉冲，超声脉冲到达试件底面时，被反射回来，并被另一只压电晶片所接收。</p>
 <p><strong>超声波流量传感器</strong><br>目前应用较广的主要是超声波传播时间差法.超声波在流体中传播时，在静止流体和流动流体中的传播速度是不同的，利用这一特点可以求出流体的速度，再根据管道流体的截面积， 便可知道流体的流量。</p>
-<img src="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class title="超声波传感器">
+<img src="/Circuit-Lover/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8/%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8.jpg" class="" title="超声波传感器">
 
 
 <p><strong>超声波传感器的应用</strong><br>超声波流量计<br>超声波侧厚<br>超声波探伤<br>超声波报警器</p>
@@ -3498,13 +3703,13 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>Linux编程常识</title>
     <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/</url>
-    <content><![CDATA[<h5 id="计算机常识QAQ"><a href="#计算机常识QAQ" class="headerlink" title="计算机常识QAQ"></a>计算机常识QAQ</h5><img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/1.jpg" class title="计算机系统硬件组成（linux王保明）">
+    <content><![CDATA[<h5 id="计算机常识QAQ"><a href="#计算机常识QAQ" class="headerlink" title="计算机常识QAQ"></a>计算机常识QAQ</h5><img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/1.jpg" class="" title="计算机系统硬件组成（linux王保明）">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽贯穿整个系统的一组电子管道称为总线</span><br><span class="line">片内总线</span><br><span class="line">系统总线：数据总线DB、地址总线CB、控制总线CB</span><br><span class="line">外部总线</span><br><span class="line"></span><br><span class="line">CPU：运算寄存器ALU、控制器、寄存器（状态寄存器、通用寄存器）</span><br><span class="line">取指、译码、执行、写回、跳转。pc指针多32位。</span><br><span class="line"></span><br><span class="line">什么是操作系统</span><br><span class="line">操作系统：有效地管理计算机系统中的资源，合理地管理计算机系统的工作流程，方便用户使用的程序的集合。</span><br><span class="line"></span><br><span class="line">操作系统五大任务</span><br><span class="line">(1)文件管理</span><br><span class="line">(2)处理器管理</span><br><span class="line">(3)内存管理</span><br><span class="line">(4)设备管理</span><br><span class="line">(5)作业管理</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/2.jpg" class>
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/2.jpg" class="">
 
 <h5 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">体系结构:linux内核被划分为多个子系统。基本服务都集成到内核中,例如通信、I/O、内存和进程管理，更具体的服务都是插入到微内核层中的。（收包和发包产生大量中断，放在内核最有效率）。</span><br><span class="line">主要子系统：</span><br><span class="line">（1）系统调用接口</span><br><span class="line">（2）进程管理</span><br><span class="line">（3）内存管理：其中，为每个子程序提供了一个2^32虚拟内存。</span><br><span class="line">为n个进程提供访问的物理空间、段式管理和页式管理就行了。linux进程并发模型.</span><br><span class="line">（4）虚拟文件系统（VFS）：虚拟文件系统 在 系统调用层接口（SCI ）和内核所支持的文件系统之间提供了一个交换层。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">扩展： Linux 可以在一个具有内存管理单元（MMU）的处理器上运行，也可以在那些不提供MMU的处理器上运行。Linux 内核的uClinux移植提供了对非 MMU 的支持</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/3.jpg" class>
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B8%B8%E8%AF%86/3.jpg" class="">
 
 
 ]]></content>
@@ -3619,28 +3824,28 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>自振荡产生正弦波、方波、三角波</title>
     <url>/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/</url>
-    <content><![CDATA[<h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><h5 id="1、振荡条件"><a href="#1、振荡条件" class="headerlink" title="1、振荡条件"></a>1、振荡条件</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" class>
-<h5 id="2、起振、稳幅"><a href="#2、起振、稳幅" class="headerlink" title="2、起振、稳幅"></a>2、起振、稳幅</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" class>
+    <content><![CDATA[<h4 id="振荡电路知识"><a href="#振荡电路知识" class="headerlink" title="振荡电路知识"></a>振荡电路知识</h4><h5 id="1、振荡条件"><a href="#1、振荡条件" class="headerlink" title="1、振荡条件"></a>1、振荡条件</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t1.jpg" class="">
+<h5 id="2、起振、稳幅"><a href="#2、起振、稳幅" class="headerlink" title="2、起振、稳幅"></a>2、起振、稳幅</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t2.jpg" class="">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(1)无输入源，起振信号源来自哪里？</span><br><span class="line">答：电器内部噪声以及电源接通扰动。</span><br><span class="line">(2)稳幅作用？</span><br><span class="line">答：信号输出幅度达到一定程度时，会失真。必须通过调幅限制，使得振幅平衡回到AF = 1。</span><br></pre></td></tr></table></figure>
 <p>3、基本组成部分</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">▽放大电路</span><br><span class="line">▽反馈电路</span><br><span class="line">▽选频网络</span><br><span class="line">▽稳幅环节</span><br></pre></td></tr></table></figure>
 <p>移相式正弦振荡电路</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" class>
+<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t4.jpg" class="">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">扩展知识点：</span><br><span class="line">1. 电阻上的电压电流同相位</span><br><span class="line">2. 电感上的电流落后电压90°相位</span><br><span class="line">3. 电容上的电流超前电压90°相位</span><br></pre></td></tr></table></figure>
 <p>RC振荡电路</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" class>
+<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t3.jpg" class="">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">注：Rf为热敏电阻。</span><br></pre></td></tr></table></figure>
 <h4 id="课设设计：100Hz与5000Hz"><a href="#课设设计：100Hz与5000Hz" class="headerlink" title="课设设计：100Hz与5000Hz"></a>课设设计：100Hz与5000Hz</h4><h5 id="原理设计"><a href="#原理设计" class="headerlink" title="原理设计"></a>原理设计</h5><p>正弦波发生</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" class>
+<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t6.jpg" class="">
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">f0=1/(2π√R1R2C1C2)  </span><br><span class="line">①可以修改 R1 R2 C1 C2 来产生100Hz 和 5000Hz</span><br><span class="line">通过调节R1，R2，C1，C2的值，使得f0=100Hz。先取C1=100nF，C2=100nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=16K,R2=16K。</span><br><span class="line">为了方便调试，16k采用20k滑动变阻器。</span><br><span class="line">②通过调节R1，R2，C1，C2的值，使得f0=5000Hz。先取C1=1nF，C2=1nF，然后再确定R1，R2，考虑到要得到精确的输出值，计算得出R1=1K,R2≈640Ω。</span><br><span class="line">为了方便调试， 640Ω采用1k滑动变阻器</span><br></pre></td></tr></table></figure>
 <p>正弦波转方波、三角波</p>
-<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" class>
+<img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t7.jpg" class="">
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">正弦波转方波：过零比较器</span><br><span class="line">方波转三角波: 积分放大器</span><br></pre></td></tr></table></figure>
-<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" class>
+<h5 id="proteus仿真"><a href="#proteus仿真" class="headerlink" title="proteus仿真"></a>proteus仿真</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t8.jpg" class="">
 
-<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" class>
+<h5 id="实物演示"><a href="#实物演示" class="headerlink" title="实物演示"></a>实物演示</h5><img src="/Circuit-Lover/%E8%87%AA%E6%8C%AF%E8%8D%A1%E4%BA%A7%E7%94%9F%E6%AD%A3%E5%BC%A6%E6%B3%A2%E3%80%81%E6%96%B9%E6%B3%A2%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%A2/t9.jpg" class="">
 
 <h5 id="课设总结"><a href="#课设总结" class="headerlink" title="课设总结"></a>课设总结</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">我在这次课程设计中遇到，一直都调不出理想的波形，检查了很多东西，像接线问题、电路问题、电源问题、示波器问题地线问题等等，所以我总结出，对于要求精度很高的电路，一旦出现实际问题时，应该具备以下三个点：</span><br><span class="line">1.重新审查电路原理图，计算相关数据，运行仿真结果。</span><br><span class="line">2.元件器件的损坏或性能的影响，因为在这个放大电路中稍有偏差，结果就会相差很大，此次个人觉得时间较为紧迫，选择附近的元件卖家，结果性能远远达不到所需的要求。</span><br><span class="line">3.要有足够的耐心和冷静的思考，当图形出现差异时，冷静的思考是必不可少的。</span><br><span class="line">通过这次课程设计,我懂得了要完成一个电路的设计,理论基础是根基,实践操作是完成实物的重要部分,而创新能力则决定了一个电路的价值,因为设计一个电路,决不是简单地按课本的电路图进行焊接成型,我们要进行电路各个元件参数的计算,这个涉及我们所掌握的理论知识,元件的计算是设计中较为重要的一部分,计算准了,则设计出来的电路误差不大,否则,设计出来的电路性能指标跟要求相差甚远。</span><br><span class="line">最困难的是当电路出现错误是,如何检测出错误之处,如何排除错误,它考验了我们如何运用理论知识和实际的调试的能力, 这也是我大三这一年最需要注重和提高的地方。</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -3838,7 +4043,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>vim 操作随记</title>
     <url>/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/</url>
     <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">命令模式</span><br><span class="line"></span><br><span class="line">移动：首行gg 末行G</span><br><span class="line"></span><br><span class="line">复制：yy  粘贴p</span><br><span class="line"></span><br><span class="line">剪切：dd      留空剪切：D</span><br><span class="line"></span><br><span class="line">撤销：u   恢复：crtl +  r</span><br><span class="line"></span><br><span class="line">编辑模式（输入模式）</span><br><span class="line"></span><br><span class="line">i a     esc</span><br><span class="line"></span><br><span class="line">末行模式（尾行模式）。</span><br><span class="line"></span><br><span class="line">:w</span><br><span class="line"></span><br><span class="line">:q</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line"></span><br><span class="line">:q！</span><br><span class="line"></span><br><span class="line">：x   保存退出！！！！</span><br><span class="line"></span><br><span class="line">/ 查找</span><br><span class="line"></span><br><span class="line">：s/     g</span><br><span class="line"></span><br><span class="line">:%s/    g</span><br><span class="line"></span><br><span class="line">查看当前已经打开的文件名称：“:files”</span><br><span class="line">： esc    进入 退出</span><br></pre></td></tr></table></figure>
-<img src="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/vim.jpg" class>]]></content>
+<img src="/Linux-Lover/vim%20%E6%93%8D%E4%BD%9C%E9%9A%8F%E8%AE%B0/vim.jpg" class="">]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -4007,7 +4212,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>stm32系统架构</title>
     <url>/MCU-Lover/m32%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[<p>截图放博客，懒得翻文档 Q_Q</p>
-<img src="/MCU-Lover/m32%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/stm32.jpg" class>
+<img src="/MCU-Lover/m32%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/stm32.jpg" class="">
 
 <p>ICode 总线<br>DCode 总线：该总线将Cortex™-M3内核的DCode总线与闪存存储器的数据接口相连接(常量加载和调试访问)。<br>系统总线<br>DMA 总线<br>总线矩阵<br>AHB/APB 桥(APB)：两个AHB/APB桥在AHB和2个APB总线间提供同步连接。APB1操作速度限于36MHz，APB2操作于全速(最高72MHz)。</p>
 ]]></content>
@@ -4022,7 +4227,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <title>stm32最小系统</title>
     <url>/MCU-Lover/stm32%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p>值得参考：<a href="https://www.21ic.com/jichuzhishi/mcu/questions/2017-06-07/723582.html" target="_blank" rel="noopener">https://www.21ic.com/jichuzhishi/mcu/questions/2017-06-07/723582.html</a></p>
-<img src="/MCU-Lover/stm32%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F/stm32.jpg" class>
+<img src="/MCU-Lover/stm32%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F/stm32.jpg" class="">
 
 <p>stm32低电平复位</p>
 <p>PA9 PA10对应连接RXD TXD<br>烧录： 最小系统板boot0 置1 boot1置0<br>启动：最小系统板boot0 置0 boot1置0</p>
@@ -4055,16 +4260,16 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>555概念及使用</title>
     <url>/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class>
+    <content><![CDATA[<h5 id="常见波形"><a href="#常见波形" class="headerlink" title="常见波形"></a>常见波形</h5><img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/555-2.jpg" class="">
 <h5 id="单稳态触发器"><a href="#单稳态触发器" class="headerlink" title="单稳态触发器"></a>单稳态触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单稳态触发器----用于脉冲波形的变换和定时、延时 (74121、MC14528)</span><br><span class="line">Tw = 0.7 RC</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class title="波形变换">
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class title="定时">
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/3.jpg" class="" title="波形变换">
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/4.jpg" class="" title="定时">
 <h5 id="多谐振荡器"><a href="#多谐振荡器" class="headerlink" title="多谐振荡器"></a>多谐振荡器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">多谐振荡器----用于产生脉冲，没有稳定状态，只有两个暂稳态，从而产生自激振荡，无需外触发。</span><br><span class="line">T=0.7(R1C1+R2C2)</span><br></pre></td></tr></table></figure>
 
 <h5 id="施密特触发器"><a href="#施密特触发器" class="headerlink" title="施密特触发器"></a>施密特触发器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">施密特触发器----用于脉冲波形的变换，尤其是将模拟量转换成数字波形</span><br><span class="line">具有回差：有两个触发翻转电平。输入信号增加时，在VT+处翻转；输入信号减小时，在VT- 处翻转。VT+-VT-称为回差电压，用ΔVT表示，所以其传输特性呈回线状。</span><br><span class="line">无记忆功能：施密特触发器的稳态要靠外加触发电压维持，信号撤除会导致电路状态的改变。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/5.jpg" class="">
 <h5 id="555定时器"><a href="#555定时器" class="headerlink" title="555定时器"></a>555定时器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可以经过内部链接构成施密特触发器。</span><br><span class="line">它的作用可以整流，整幅，以及整波。</span><br></pre></td></tr></table></figure>
-<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class>
+<img src="/Circuit-Lover/555%E6%A6%82%E5%BF%B5%E5%8F%8A%E4%BD%BF%E7%94%A8/1.jpg" class="">
 
 <table>
 <thead>
@@ -4116,7 +4321,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/</url>
     <content><![CDATA[<p>偶然的一次发现QAQ</p>
 <p>PCB电路板与solidworks的完美结合</p>
-<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class>
+<img src="/Mechanic-Lover/Solidworks%E4%B8%8EPCB%E7%9A%84%E7%BB%93%E5%90%88/solidworks.jpg" class="">
 
 
 <p>转载[<a href="https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]" target="_blank" rel="noopener">https://wenku.baidu.com/view/138bd7b9700abb68a982fbca.html]</a></p>
@@ -4169,7 +4374,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <h5 id="Redhat系列"><a href="#Redhat系列" class="headerlink" title="Redhat系列"></a>Redhat系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">商业用途，企业版，一般付费。</span><br><span class="line">rmp:包安装工具</span><br><span class="line">yum:程序与程序之间存在非常复杂的依赖关系。RPM无法解决软件包的依赖关系。</span><br></pre></td></tr></table></figure>
 
 <h5 id="Debian系列"><a href="#Debian系列" class="headerlink" title="Debian系列"></a>Debian系列</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">社区维护，桌面版，一般免费。</span><br><span class="line">dpkg:包安装工具</span><br><span class="line">apt-get:会解决和安装模块的依赖问题</span><br></pre></td></tr></table></figure>
-<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class>
+<h5 id="区别对比"><a href="#区别对比" class="headerlink" title="区别对比"></a>区别对比</h5><img src="/Linux-Lover/Linux%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB/example.jpg" class="">
 
 
 <p>了解RTOS<br>实时操作系统，实时性。</p>
@@ -4190,9 +4395,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
     <url>/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/</url>
     <content><![CDATA[<h6 id="放大电路"><a href="#放大电路" class="headerlink" title="放大电路"></a>放大电路</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">放大电路模型:电压放大电路、电流放大电路</span><br><span class="line">放大电路的性能：输入电阻、输出电阻、增益、频率响应及带宽。</span><br></pre></td></tr></table></figure>
 <h6 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h6><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">同相电路</span><br><span class="line">反相电路</span><br><span class="line">求和电路</span><br><span class="line">求差电路</span><br><span class="line">差分电路</span><br><span class="line">积分电路</span><br><span class="line">微分电路</span><br><span class="line">·····</span><br></pre></td></tr></table></figure>
-<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class>
+<h5 id="晶体三极管及其基本放大电路（BJT）"><a href="#晶体三极管及其基本放大电路（BJT）" class="headerlink" title="晶体三极管及其基本放大电路（BJT）"></a>晶体三极管及其基本放大电路（BJT）</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/4.jpg" class="">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">外部条件：发射结正偏，集电结反偏</span><br><span class="line">共发射极、共基极、共集电极</span><br></pre></td></tr></table></figure>
-<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class>
+<h5 id="场效应三极管及其放大电路"><a href="#场效应三极管及其放大电路" class="headerlink" title="场效应三极管及其放大电路"></a>场效应三极管及其放大电路</h5><img src="/Circuit-Lover/3157%E6%A8%A1%E6%8B%9F%E5%BC%80%E5%85%B3/3.jpg" class="">
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">沟道中只有一种类型的载流子参与导电，所以场效应管也称为单极型三极管。</span><br><span class="line">共源极、共栅极、共源极</span><br></pre></td></tr></table></figure>
 <h4 id="模拟开关与多路复用器区别"><a href="#模拟开关与多路复用器区别" class="headerlink" title="模拟开关与多路复用器区别"></a>模拟开关与多路复用器区别</h4><p>对信号通路进行选择，或者档位切换，想问模拟通道开关和多路复用器有什么区别？</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">模拟开关和多路复用器件其实在电气上，或者架构上，原理上没什么区别。</span><br><span class="line">多路复用的话主要用在通道数比较多的场合，例如：4输入1输出，16输入1输出。</span><br><span class="line">模拟/数字开关主要用于通道数目比较小的。低导通电阻，根据应用需求不同；模拟开关可以分为音频模拟开关、视频模拟开关。</span><br></pre></td></tr></table></figure>

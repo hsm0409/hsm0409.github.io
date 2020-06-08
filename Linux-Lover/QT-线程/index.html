@@ -479,7 +479,7 @@
 
       
         <p>QT-线程池</p>
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E6%B1%A0.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E6%B1%A0.jpg" class="">
 
 <p>QT-线程QtConcurrent</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">第一步：</span><br><span class="line">QT -&#x3D; gui concurrent</span><br><span class="line">CONFIG +&#x3D; c++11 console</span><br><span class="line">第二步：#include &lt;QtConcurrent&#x2F;QtConcurrent&gt;</span><br><span class="line">QString filePath&#x3D;&quot;D:&#x2F;test2.txt&quot;;</span><br><span class="line">    QByteArray data&#x3D;&quot;hello concurrentthread2&quot;;</span><br><span class="line">    QtConcurrent::run([&amp;filePath,&amp;data]()&#123;</span><br><span class="line">        qDebug()&lt;&lt;data;</span><br><span class="line">        QFile file(filePath);</span><br><span class="line">        file.open(QIODevice::WriteOnly);</span><br><span class="line">        file.write(data);</span><br><span class="line">        file.waitForBytesWritten(30*1000);&#x2F;&#x2F;等待写入</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
@@ -487,15 +487,15 @@
 <p>QT-线程QThread</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#ifndef MYTHREAD_H</span><br><span class="line">#define MYTHREAD_H</span><br><span class="line">#include &lt;QThread&gt;</span><br><span class="line">#include &lt;QDebug&gt;</span><br><span class="line">&#x2F;&#x2F;继承获取接口</span><br><span class="line">class MyThread:public QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">public:</span><br><span class="line">    void run()&#x2F;&#x2F;斜体虚函数</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;QThread::currentThread();&#x2F;&#x2F;指针 或者说显示当前的线程</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main.c中</span><br><span class="line">MyThread mythread；</span><br><span class="line">  mythread.start();  &#x2F;&#x2F;启动接口函数</span><br></pre></td></tr></table></figure>
 <p>QT-线程制图</p>
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE1.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE1.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE2.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE2.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE3.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE3.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE4.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE4.jpg" class="">
 
-<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE5.jpg" class>
+<img src="/Linux-Lover/QT-%E7%BA%BF%E7%A8%8B/QT-%E7%BA%BF%E7%A8%8B%E5%88%B6%E5%9B%BE5.jpg" class="">
 
 
 <p>QT-connect第五个参数</p>
@@ -621,7 +621,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -632,7 +632,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -643,7 +643,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -710,7 +710,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">36</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -747,7 +747,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">66.8k</span>
+    <span title="Site words total count">72.9k</span>
   
 </div>
 
