@@ -1,55 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>复习c++一些概念</title>
-    <url>/C-C-Lover/Untitled/</url>
-    <content><![CDATA[<p><strong>警惕拷贝构造函数</strong></p>
-<p>匿名对象一个析构；参数没有引用&amp;，算一个；<br>(初始化与赋值是两个不同的概念)赋值=算一个，初始化不算；</p>
-<p><strong>深拷贝与浅拷贝</strong></p>
-<p>析构两次后C++编译器报错     堆malloc<br>如果不自定义拷贝函数，=这种默认的拷贝行为就是浅拷贝，共用同一地址，如若改变其中一个，其他值一起变。<br>这种将对象所持有的其它资源一并拷贝的行为叫做深拷贝，我们必须显式地定义拷贝构造函数才能达到深拷贝的目的。每个拷贝拥有独立的内存空间，防止析构报错。</p>
-<p>注：如果一个类拥有指针类型的成员变量，那么绝大部分情况下就需要深拷贝，因为只有这样，才能将指针指向的内容再复制出一份来，让原有对象和新生对象相互独立，彼此之间不受影响。如果类的成员变量没有指针，一般浅拷贝足以。</p>
-<p><strong>构造函数初始化：在构造中构造</strong></p>
-<p>// 先执行 被组合对象的构造函数<br>//如果组合对象有多个,按照定义顺序, 而不是按照初始化列表的顺序</p>
-<p>结论：malloc不会调用类的构造函数,free不会调用类的析构函数</p>
-<p><strong>C++类对象中的成员变量和成员函数是分开存储的</strong></p>
-<p>一、成员变量(静态、非静态)</p>
-<p>1普通成员变量：存储于对象中，与struct变量有相同的内存布局和字节对齐方式</p>
-<p>2静态成员变量：存储于全局数据区中</p>
-<p>二、成员函数(静态、非静态、虚拟)<br>存储于代码段中。</p>
-<p><strong>this指针隐含</strong></p>
-<p>void setxy(int a,int b ){X=a;Y=b;}<br>void setxy(Simple *const this ,int a,int b){this-&gt;X=0;this-&gt;Y=b;}</p>
-<p>在 C++ 中，每一个对象都能通过 this 指针来访问自己的地址。this 指针是所有成员函数的隐含参数。因此，在成员函数内部，它可以用来指向调用对象。<br>友元函数没有 this 指针，因为友元不是类的成员。只有成员函数才有 this 指针。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局函数PK成员函数</span><br><span class="line">1、把全局函数转化成成员函数，通过this指针隐藏左操作数</span><br><span class="line">Testadd(Test &amp;t1, Test &amp;t2)&#x3D;&#x3D;&#x3D;》Test add(Test &amp;t2)</span><br><span class="line">2、把成员函数转换成全局函数，多了一个参数</span><br><span class="line">voidprintAB()&#x3D;&#x3D;&#x3D;》void printAB(Test *pthis)</span><br><span class="line">3、函数返回元素和返回引用</span><br><span class="line">Test&amp; add(Test &amp;t2) &#x2F;&#x2F;*this &#x2F;&#x2F;函数返回引用</span><br><span class="line">  &#123;</span><br><span class="line"> this-&gt;a &#x3D; this-&gt;a +t2.getA();</span><br><span class="line">   this-&gt;b &#x3D; this-&gt;b +t2.getB();</span><br><span class="line"> return*this; &#x2F;&#x2F;*操作让this指针回到元素状态</span><br><span class="line"> &#125;</span><br><span class="line">Test add2(Test &amp;t2)&#x2F;&#x2F;*this &#x2F;&#x2F;函数返回元素</span><br><span class="line"> &#123;</span><br><span class="line"> &#x2F;&#x2F;t3是局部变量</span><br><span class="line">Test t3(this-&gt;a+t2.getA(),this-&gt;b + t2.getB()) ;</span><br><span class="line">   return t3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>友元函数/友元类</strong></p>
-<p>若B类是A类的友员类，则B类的所有成员函数都是A类的友员函数<br>友员类通常设计为一种对数据操作或类之间传递消息的辅助类</p>
-<p><strong>运算符重载</strong></p>
-<p>重载：函数名相同，函数的参数个数、参数类型或参数顺序三者中必须至少有一种不同。函数返回值的类型可以相同，也可以不相同。发生在一个类内部。多个同名函数同时存在，具有不同的参数个数/类型。重载是一个类中多态性的一种表现。</p>
-<p>重写：也叫做覆盖，一般发生在子类和父类继承关系之间。子类重新定义父类中有相同名称和参数的虚函数。(override)</p>
-<p>重定义：也叫做隐藏，子类重新定义父类中有相同名称的非虚函数 ( 参数列表可以不同 ) ，指派生类的函数屏蔽了与其同名的基类函数。可以理解成发生在继承中的重载。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;前置--</span><br><span class="line">Complex&amp; operator--()</span><br><span class="line">&#123;</span><br><span class="line">this-&gt;a --;</span><br><span class="line">this-&gt;b --;</span><br><span class="line">return *this;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;后置--</span><br><span class="line">Complex operator--(int)</span><br><span class="line">&#123;</span><br><span class="line">Complex tmp &#x3D; *this;</span><br><span class="line">this-&gt;a--;</span><br><span class="line">this-&gt;b--;</span><br><span class="line">return tmp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>虚继承二义性</strong></p>
-<p>1、一般：<br>c1.b = 500; //继承的二义性 和 虚继承解决方案<br>//c1.B1::b = 500;<br>//c1.B2::b = 500;<br>2、引用虚继承 virtual public 解决二义性</p>
-<p><strong>多态性vitrtual</strong></p>
-<p>多态成立的三个条件</p>
-<p>//1 要有继承<br>//2 要有函数重写。。。C 虚函数<br>//3 要有父类指针（父类引用）指向子类对象</p>
-<p>纯虚函数如何定义？使用时应注意什么？<br>答案：virtualvoid f()=0; 是接口，子类必须要实现</p>
-<p>多态的实现效果？<br>多态：同样的调用语句有多种不同的表现形态；<br>多态实现的三个条件？<br>有继承、有virtual重写、有父类指针（引用）指向子类对象。</p>
-<p>在什么情况下应当声明虚函数？<br>构造函数不能是虚函数。建立一个派生类对象时，必须从类层次的根开始，沿着继承路径逐个调用基类的构造函数。析构函数可以是虚的。虚析构函数用于指引 delete 运算符正确析构动态对象</p>
-<p>a编译时多态性：通过重载函数实现 。<br>b运行时多态性：通过虚函数实现</p>
-<p>函数的重载是在编译的时候发生，而虚函数是在运行的时候确定。其实有时候称函数的重载为静态多态性，而虚函数为动态多态性</p>
-<p>继承的多态怎么实现?<br>多继承<br>尽管virtual是private的，子类中重写函数改为public,protected也可以，体现了多态。<br>指针大小，虚指针的大小?<br>vptr (类的第一个成员)-&gt;vtable  同类对象，共享一个vtable  对象里的虚表</p>
-<p><strong>一个具有纯虚函数的的类称为抽象类。</strong></p>
-<p>什么是动态多态？<br>由于有了虚函数，因此动态多态是在运行时完成的，也可以叫做运行期多态。</p>
-<p>什么是静态多态？<br>在模板编程及泛型编程中，是以隐式接口和编译器多态来实现静态多态。</p>
-<p>相同点：<br>都能够实现多态性，静态多态/编译期多态、动态多态/运行期多态；<br>都能够使接口和实现相分离，一个是模板定义接口，类型参数定义实现，一个是基类虚函数定义接口，继承类负责实现；</p>
+    <title>ARM体系架构</title>
+    <url>/ARM-Lover/ARM%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<p>ARM处理器是精简指令集计算机（RISC）。</p>
+<p>ARM由于各种因素的偶然组合而诞生,成为Aconn产品线的核心部分,后来,在明智地将缩写字ARM的意义修改为Advanced RISC Machine以后,它把它的名字借给新组成的公司去在Acorn的产品范围之外扩展市场。尽管名称变化了,体系结构仍保持同原Acorn的设计相近。</p>
+<p><strong>采用的技术特征</strong></p>
+<p>ARM体系结构采用了Berkcley RISC设计中的特征<br>（1）Load/Store体系结构；<br>      针对存储器状态的惟一操作是将存储器的值拷贝到寄存器(Load指令)或将寄存器中的值拷贝到存储器(Store指令).<br>（2）固定的32位指令；<br>    load/store指令：装载和存储指令<br>    ldr、sdr单寄存器<br>    ldm、stm多寄存器<br>（3）3地址指令格式；<br>    在这种指令中包括两个操作数地址码和一个结果地址码，可使得在操作结束后，原来的操作数不被改变。</p>
+<p><strong>也放弃了其他特征</strong></p>
+<p>（1）寄存器窗口：带来的主要问题是大量的寄存器占用很大的芯片面积。不采用<br>（2）延迟转移：在原来的ARM中延迟转移没有采用,因为它使异常处理更加复杂。从长远观点来看,这是一个好的决定,因为当采用不同流水线重新实现体系结构时,它能使任务简化。不采用<br>（3）所有指令单周期执行：ARM被设计为使用最少的时钟周期来访问存储器,而不是所有的指令都单周期,执行。当访问在储器需要超过1个周期时,就多用1个周期、有可能时,做一些有用的事,如支持自动变址寻址模式。这减少了完成任何操作序列所需要的ARM指令总数,提高效率和改进代码密度。</p>
+<p><strong>ARM编程模型</strong></p>
+<p>处理器指令集定义了操作。程序员可以用这些操作来改变集成了处理器的系统的态</p>
+<p>当编写用户级程序时,仅有15个通用32位寄存器(ro~r14)、程序计数器PC(r15)和当前程序状态寄存器(CPSR. Current Program Status Register)需要考虑。其余寄存器仅用于系统级编程和异常处理（如中断）。</p>
+<p><strong>ARM异常</strong></p>
+<p>ARM体系结构支持-系列中断、陷阱和监控调用为异常。<br>在任何情况下处理异常的方法都是一-样的,即<br>1)通过将PC拷贝到r14-exc以及将CPSR拷贝到SPSR-exc(在此cxc表示异常类型)来保存当前状态<br>2)将处理器操作模式改变为适当的异常模式<br>3)将PC强制变为00(16)~1C(16)范围内某个与异常类型有关的特殊值。<br>这个特殊值位置(向量地址)的指令通常是指向异常处理程序的转移指令。通常将13-exc初始化,使其指向存储器中一个专用堆栈。异常处理程序将使用r13_exc来保存一些用户寄存器,使其能作为工作寄存器使用。</p>
 ]]></content>
       <categories>
-        <category>C/C++ Lover</category>
+        <category>ARM Lover</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
+        <tag>ARM汇编基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ARM处理器知识</title>
+    <url>/ARM-Lover/Untitled/</url>
+    <content><![CDATA[<p>需要是发明之母！！！</p>
+<p>第一片ARM 由Acorn Computers Limited公司研发 1983-1985<br>高性能，低功耗和低价格，立足市场。</p>
+<p><strong>什么是片上调试？</strong></p>
+<p>通过一个片上的调试模块OCD，可以实现对MCU的运行过程进行单步调试、全速运行、设置硬件断点等调试操作，还可以dao随时查看或者修改MCU的片内/片外数据存储区域的内容，从而为调试者提供了访问MCU运行时的内部状态以及控制MCU运行过程的方法和途径。</p>
+<p>缺点：调试过程只能有一个接口。</p>
+<p><strong>SIMD指令</strong></p>
+<p>SIMD全称Single Instruction Multiple Data，单指令多数据流，能够复制多个操作数，并把它们打包在大型寄存器的一组指令集。</p>
+<p>伴随着指令集结构的进展,微结构也出现一些变化以增强性能。<br>ARM7TDMI采用基子3级流水线的微结构,这与最初ARM核使用的结构是样的,但是对于像5级流水线ARM9TDMI这样更高速芯核的市场正在快速发展。<br>这种简单性是这些机器实或低功耗和小硅片面积的关键。</p>
+<p>基于微处理器核的片上系统(SoC, System on-Chip)设计,也可用于微处理器核设计<br>Thumb新型压缩指令格式。</p>
+<p>1980年，精简指令集计算机(RISC , Reduced Introduction Set Computer)的思想起源于1980年斯坦福大学的一项处理器研究项目,而其中一些核心思想可以追溯到更早的计算机。这些思想也影响了ARM处理器设计。</p>
+<p><strong>计算机体系结构</strong></p>
+<p>计算机体系结构描述从用户角度看到的计算机。指令集,可见寄存器、存储器管理表结构和异常处理模式都是体系结构的一部分。</p>
+<p><strong>计算机组织</strong></p>
+<p>计算机组织描述用户不能看到的体系结构的实现方式。流水线结构、透明的Cache(高速缓存)、步行表(table-walking)硬件以及转换后备缓冲(TLB, TranslationLook-aside Bufer)都是计算机组织的问题。</p>
+<p><strong>处理器</strong></p>
+<p>通用处理器是一个执行存储器中指令的有限状态机。</p>
+<p><strong>存储程序计算机</strong></p>
+<p>存储程序(stored-program)数字计算机把指令和数据存放在同一个存储器系统中,必要时可以将指令作为数据处理。</p>
+<p><strong>简单的处理器</strong></p>
+<p>MU0可以由一些基本的部件构成,即<br>程序计数器(PC)寄存器:用来保存当前指令的地址。<br>累加器(ACC)寄存器:用来保存正在处理的数据。<br>算术逻辑单元(ALU):可以对二进制操作数进行若干操作,如加、减、增值等。<br>指令寄存器(IR):保仔当前执行的指令。<br>指令译码器和控制逻辑:它根据指令控制上述部件产生所需的结果。</p>
+<p>其中4位为操作码(opceode),12位为地址域(S),最简单的指令集只使用了16种可用操作码中的8种。<br>指令基本都是操作ACC,PC跳转，执行指令。<br>所有不改变PC的指令，占2个时钟周期。<br>1、访问存储器中的操作并执行操作<br>2、读取下一步要执行的指令</p>
+<p>指令的演变-》隐含的方式不断发展。如地址指令ADD</p>
+<p>1970年单片复杂指令集计算机(CISC, ComplexInstruction Set Computer),这是带有小型计算机指令集的微处理器。而这个指令集义是以有限的可用硅资源为代价的。<br>（1）一个指令多个周期</p>
+<p>期间，处理器由比主存储器速度快的微码ROM(只读存储器)控制,因此,将经常使用的操作以微码序列实现,而不使用需要从主仔储器读取几条指令的方式</p>
+<p>1980年RISC革命精简指令集计算机(RISC, Reduced Instruction Set Computer)诞生在指令集日益复杂的时候, RISC的概念对ARM处理器的设计有重大影响。<br>（1）一个指令一个周期<br>（2）固定的(32位)指令长度,指令类型很少。而CISC处理器指令集的长度一般可变,指令类型也很多。<br>切勿单以时钟频率来评价处理器。<br>缺点：<br>（1）RISC不能执行x86代码。<br>（2）与CISC相比,通常RISC的代码密度低。</p>
+<p>代码密度：同样的一段代码，对于不同的单片机来说，编译之后多数情况下占用的空间是不相同的。占用的空间越大，则说明代码密度越低，反之异然。<br>代码密度低是指令集长度固定的结果,而且当应用领域较宽时,这个问题会更加严重。如果没有Cache,则代码密度低会导致在取指时使用更大的主存储器带宽,造成更高的存储器功耗。当处理器集成一定规模的片上Cache时,代码密度低会导致在任何时候都只有少部分正在工作的指令集能够装入Cache,会降低(ache的命中率,造成对主存储器带宽的需求以及功耗有更大的增长。</p>
+<p>ARM处理器是根据RISC原理设计的,但是由于各种原因,在低代码密度问题上它比其他多数RISC要好一些,然而它的代码密度仍然不如某些CISC处理器的。</p>
+<p>在代码密度特别重要的场合, ARM公司在某些版本的ARM处理器中,加入了一个称为Thumb结构的新型机构。Thumb指令集是原来32位ARM指令集的16位压缩形式,并在指令流水线中使用了动态解压缩硬件。Thumb代码密度优于多数CISC:处理器达到的代码密度</p>
+<p>RISC实际上就是ARM的别名。<br>指令集的发展</p>
+<p><strong>处理器做些什么</strong></p>
+<p>实际上,它只用很少的时间进行这个意义上的“计算”。尽管它进行相当数量的,算术运算,但是,这些运算多数需要寻址,以便找到相关数据与程序的位置。找到用户的数据后,多数是把它们移来移去,而不是进行转换意义上的处理。(优化对象)</p>
+<table>
+<thead>
+<tr>
+<th>指令类型</th>
+<th>动态使用率 (/%)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据移动</td>
+<td>43</td>
+</tr>
+<tr>
+<td>控制流</td>
+<td>23</td>
+</tr>
+<tr>
+<td>算术操作</td>
+<td>15</td>
+</tr>
+<tr>
+<td>比较</td>
+<td>13</td>
+</tr>
+<tr>
+<td>逻辑操作</td>
+<td>5</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>流水线</strong></p>
+<p>处理器按照一系列步骤来执行每一条指令。典型的步骤如下:<br>1)从存储器读取指令(fetch)<br>2)译码以鉴别它是哪一类指令(dec)<br>3)从寄存器堆取得所需的操作数(reg)<br>4)将操作数进行组合以得到结果或存储器地址(ALU)<br>5)如果需要,则访问存储器以存取数据(mem)<br>6)将结果回写到寄存器堆(res)</p>
+<p>转移指令—-》流水线冒险–》“写后读”</p>
+<p>流水线效率尽管有些技术可以减少这些流水线问题的影响,但是,不能完全消除这些困难。</p>
+<p>（1）流水线越深(就是流水线的级数越多),问题就越严重。对于相对简单的处理器,使用3~5级流水线效果会更好。<br>（2）但是,超过了这个级数,收益递减的法则开始生效,增加的成本和复杂度将超过收益。<br>（3）显然,只有当所有指令都依相似的步骤执行时,流水线才能带来好处。如果处理器的指令非常复杂,每一条指令的行为都与下一条指令不同,那么就很难用流水线实现。<br>1980年,因为有限的硅资源、有限的设计资源,以及设计一个复杂指令集的流水线的高度复杂性,当时的复杂指令集微处理器没有采用流水线。<br>（4）流水线的高度复杂性,当时的复杂指令集微处理器没有采用流水线。</p>
+]]></content>
+      <categories>
+        <category>ARM Lover</category>
+      </categories>
+      <tags>
+        <tag>ARM汇编基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1692,7 +1741,17 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>container_of函数🏃</title>
     <url>/Linux-Lover/container-of%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<p>Container_of在Linux内核中是一个常用的宏.<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。<br> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
+    <content><![CDATA[<p>offsetof  宏  判断结构体中成员的偏移位置<br>使用 offsetof 宏需要包含 stddef.h 头文件，实例可以参考<br>offsetof 宏的定义如下：<br>#define offsetof(type, member) (size_t)&amp;(((type*)0)-&gt;member)<br>巧妙之处在于将地址 0 强制转换为 type 类型的指针，从而定位到 member 在结构体中偏移位置。编译<br>器认为 0 是一个有效的地址，从而认为 0 是 type 指针的起始地址。</p>
+<p>参考：<a href="http://www.cnblogs.com/Anker/p/3472271.html。" target="_blank" rel="noopener">http://www.cnblogs.com/Anker/p/3472271.html。</a></p>
+<p>Container_of在Linux内核中是一个常用的宏，inux/kernel.h 。<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #define container_of(ptr, type, member) (&#123; \</span><br><span class="line">      const typeof( ((type *)0)-&gt;member ) *__mptr &#x3D; (ptr); \</span><br><span class="line">      (type *)( (char *)__mptr - offsetof(type,member) );&#125;)</span><br><span class="line">      </span><br><span class="line">第一部分：const typeof( ((type *)0)-&gt;member ) *__mptr &#x3D; (ptr);</span><br><span class="line">通过 typeof 定义一个 member 指针类型的指针变量__mptr， （即__mptr 是指向 member 类型的指针），并将__mptr 赋值为 ptr。第一部分的目的是为了将统一转换为 member 类型指针。</span><br><span class="line">第二部分： (type *)( (char *)__mptr - offsetof(type,member) )，通过 offsetof 宏计算出member 在 type 中的偏移，然后用 member 的实际地址__mptr 减去偏移，得到 type 的起始地址，即指</span><br><span class="line">向 type 类型的指针。</span><br></pre></td></tr></table></figure>
+
+
+
+
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
+<p>参考：<a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-chain" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/linux/kernel/l-chain</a></p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
@@ -2020,6 +2079,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>MRC: 将 CP15 协处理器中的寄存器数据读到 ARM 寄存器中。<br>MRC 就是读 CP15 寄存器， MCR 就是写 CP15 寄存器，MCR 指令格式如下：</p>
 <p>cps   #0x13   模式切换为SVC<br>adr<br>可实际上adr是将基于PC相对偏移的地址值或基于寄存器相对地址值读取的为指令,<br>而ldr用于加载32为立即数或一个地址到指定的寄存器中。</p>
 <p><strong>隔离指令</strong><br>DMB<br>数据存储器隔离。 仅当所有在它前面的存储器访问操作都执行完毕后，才提交在它后面的存储器访问操作。<br>DSB<br>数据同步隔离。 仅当所有在它前面的存储器访问操作都执行完毕后，才执行在它后面的指令<br>ISB<br>指令同步隔离。它会清洗流水线，以保证所有它前面的指令都执行完毕之后，才执行它后面的指令。</p>
+<p>题外话：<br>今天,差不多所有编程都是基于高级语言的,所以,大程序很少采用这里介绍的汇编语言编程。然而,有时可能需要用汇编语言开发小的软件组件,以达到关键应用所需”的最佳性能。因此,了解如何编写汇编代码是很有用处的。</p>
 ]]></content>
       <categories>
         <category>ARM Lover</category>
@@ -2043,6 +2103,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       <categories>
         <category>Makefile Lover</category>
       </categories>
+      <tags>
+        <tag>Makefile基础</tag>
+      </tags>
   </entry>
   <entry>
     <title>Makefile调试参考</title>
@@ -2057,6 +2120,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       <categories>
         <category>Makefile Lover</category>
       </categories>
+      <tags>
+        <tag>Makefile基础</tag>
+      </tags>
   </entry>
   <entry>
     <title>Linux内核中断</title>
@@ -2289,6 +2355,27 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
@@ -2304,27 +2391,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>

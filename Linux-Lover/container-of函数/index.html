@@ -115,14 +115,14 @@
 
 
 
-<meta name="description" content="Container_of在Linux内核中是一个常用的宏. 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。 12345678910111213141516 hanshucontainer_of(ptr, type, member) ptr:表示结构体中member的地址type:表示结构体类型member:表示结构体中的成员void key_work(struct work_st">
+<meta name="description" content="offsetof  宏  判断结构体中成员的偏移位置使用 offsetof 宏需要包含 stddef.h 头文件，实例可以参考offsetof 宏的定义如下：#define offsetof(type, member) (size_t)&amp;(((type*)0)-&gt;member)巧妙之处在于将地址 0 强制转换为 type 类型的指针，从而定位到 member 在结构体中偏移位置。编译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="container_of函数🏃">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/container-of%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="我的博客">
-<meta property="og:description" content="Container_of在Linux内核中是一个常用的宏. 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。 12345678910111213141516 hanshucontainer_of(ptr, type, member) ptr:表示结构体中member的地址type:表示结构体类型member:表示结构体中的成员void key_work(struct work_st">
+<meta property="og:description" content="offsetof  宏  判断结构体中成员的偏移位置使用 offsetof 宏需要包含 stddef.h 头文件，实例可以参考offsetof 宏的定义如下：#define offsetof(type, member) (size_t)&amp;(((type*)0)-&gt;member)巧妙之处在于将地址 0 强制转换为 type 类型的指针，从而定位到 member 在结构体中偏移位置。编译">
 <meta property="article:published_time" content="2020-05-07T12:59:00.000Z">
-<meta property="article:modified_time" content="2020-05-07T13:04:14.488Z">
+<meta property="article:modified_time" content="2020-06-09T08:07:48.251Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux驱动开发">
 <meta name="twitter:card" content="summary">
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  147 字
+                  435 字
                 </span>
               
 
@@ -471,7 +471,17 @@
       
 
       
-        <p>Container_of在Linux内核中是一个常用的宏.<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
+        <p>offsetof  宏  判断结构体中成员的偏移位置<br>使用 offsetof 宏需要包含 stddef.h 头文件，实例可以参考<br>offsetof 宏的定义如下：<br>#define offsetof(type, member) (size_t)&amp;(((type*)0)-&gt;member)<br>巧妙之处在于将地址 0 强制转换为 type 类型的指针，从而定位到 member 在结构体中偏移位置。编译<br>器认为 0 是一个有效的地址，从而认为 0 是 type 指针的起始地址。</p>
+<p>参考：<a href="http://www.cnblogs.com/Anker/p/3472271.html。" target="_blank" rel="noopener">http://www.cnblogs.com/Anker/p/3472271.html。</a></p>
+<p>Container_of在Linux内核中是一个常用的宏，inux/kernel.h 。<br> 通过结构体变量中某个成员的首地址进而获得整个结构体变量的首地址。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> #define container_of(ptr, type, member) (&#123; \</span><br><span class="line">      const typeof( ((type *)0)-&gt;member ) *__mptr &#x3D; (ptr); \</span><br><span class="line">      (type *)( (char *)__mptr - offsetof(type,member) );&#125;)</span><br><span class="line">      </span><br><span class="line">第一部分：const typeof( ((type *)0)-&gt;member ) *__mptr &#x3D; (ptr);</span><br><span class="line">通过 typeof 定义一个 member 指针类型的指针变量__mptr， （即__mptr 是指向 member 类型的指针），并将__mptr 赋值为 ptr。第一部分的目的是为了将统一转换为 member 类型指针。</span><br><span class="line">第二部分： (type *)( (char *)__mptr - offsetof(type,member) )，通过 offsetof 宏计算出member 在 type 中的偏移，然后用 member 的实际地址__mptr 减去偏移，得到 type 的起始地址，即指</span><br><span class="line">向 type 类型的指针。</span><br></pre></td></tr></table></figure>
+
+
+
+
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">hanshucontainer_of(ptr, <span class="built_in">type</span>, member) </span><br><span class="line">ptr:表示结构体中member的地址</span><br><span class="line"><span class="built_in">type</span>:表示结构体类型</span><br><span class="line">member:表示结构体中的成员</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void key_work(struct work_struct *work)</span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">"work 调用处理下半区\r\n"</span>);</span><br><span class="line">    struct imx6uirq_dev *dev = container_of(work,struct imx6uirq_dev,work);</span><br><span class="line">      </span><br><span class="line">    /*消除抖动处理 10ms*/</span><br><span class="line">    dev-&gt;timer.data = (unsigned long)dev; /*指定设备*/</span><br><span class="line">    mod_timer(&amp;dev-&gt;timer, jiffies + msecs_to_jiffies(10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体不能强制转换类型，但是地址（指针可以）!!!!🏌️</p>
+<p>参考：<a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-chain" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/linux/kernel/l-chain</a></p>
 
       
     </div>
@@ -593,7 +603,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">170</span>
+                  <span class="site-state-item-count">171</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -682,7 +692,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -719,7 +729,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">72.9k</span>
+    <span title="Site words total count">74.5k</span>
   
 </div>
 
