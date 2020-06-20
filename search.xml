@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>usb烧录系统启动内核失败</title>
+    <url>/Linux-Lover/usb%E7%83%A7%E5%BD%95%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%86%85%E6%A0%B8%E5%A4%B1%E8%B4%A5/</url>
+    <content><![CDATA[<p>出现“Starting kernel …”以后就再也没有任何信息输出了，说明Linux 内核启动失败了。</p>
+<p>解决Linux 内核启动失败</p>
+<p>mmc dev 1  //切换到 EMMC<br>ls mmc 1:1  //输出 EMMC1 分区 1 中的所有文件</p>
+<p>setenv bootcmd ‘mmc dev 1;fatload mmc 1:1 80800000 zImage;fatload mmc 1:1 83000000 imx6ull-14x14-emmc-4.3-800x480-c.dtb;bootz 80800000 - 83000000’</p>
+<p>setenv bootargs ‘console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw’</p>
+<p>saveenv</p>
+<p>2 、修改 uboot<br>uboot 源码。打开 uboot 源码中的文件include/configs/mx6ull_alientek_emmc.h<br>在宏 CONFIG_EXTRA_ENV_SETTINGS</p>
+<p>“findfdt=”<br> “if test $fdt_file = undefined; then “ <br> “setenv fdt_file imx6ull-alientek-emmc.dtb; “ <br>“fi;\0” \</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统移植</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>进一步了解qt项目文件</title>
     <url>/QT-Lover/%E4%B8%80%E6%AD%A5%E4%BA%86%E8%A7%A3qt%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6-0/</url>
     <content><![CDATA[<p><a href="https://blog.csdn.net/u011012932/article/details/51774724" target="_blank" rel="noopener">https://blog.csdn.net/u011012932/article/details/51774724</a></p>
@@ -26,6 +45,12 @@
 <p>常见 使用</p>
 <p>struct PortSettings portSettings;</p>
 <p>portSettings = { BAUD57600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 2 };</p>
+<p>串口设置时需要先将串口打开</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QString _SerialPortName &#x3D; &quot;\\\\.\\&quot;;</span><br><span class="line">_SerialPortName.append(PortName);</span><br><span class="line">SerialPort &#x3D; new Win_QextSerialPort(_SerialPortName, QextSerialBase::Polling);</span><br><span class="line"></span><br><span class="line">if (SerialPort-&gt;open(QIODevice::ReadWrite))</span><br><span class="line">&#123;</span><br><span class="line">	SerialPort-&gt;setBaudRate(portSettings.BaudRate);</span><br><span class="line">	SerialPort-&gt;setParity(portSettings.Parity);</span><br><span class="line">	SerialPort-&gt;setStopBits(portSettings.StopBits);</span><br><span class="line">	SerialPort-&gt;setDataBits(portSettings.DataBits);</span><br><span class="line">	&#x2F;&#x2F;	SerialPort-&gt;setTimeout(5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>字节读写</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QSerialPort-&gt;putChar(c);</span><br><span class="line">QSerialPort-&gt;getChar(c);</span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
       <categories>
         <category>QT Lover</category>
@@ -691,6 +716,11 @@ height="600" width="100%" > </iframe>]]></content>
 <p>QString str；</p>
 <p>str.sprintf(“%d %s,10,”hello””);</p>
 <p>oLatin1、toLocal8Bit都是QString转QByteArray的方法</p>
+<p>用法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QByteArray qByteArray(&quot;&quot;) ; </span><br><span class="line">qByteArray.append(&quot;daniel&quot;);</span><br><span class="line">qByteArray.size();</span><br><span class="line">qByteArray.count(&#39;a&#39;);</span><br><span class="line">qByteArray.fill(&#39;a&#39;);</span><br><span class="line">qByteArray.data();</span><br></pre></td></tr></table></figure>
+
+
+
 <p>#define TIMEMS      qPrintable(QTime::currentTime().toString(“HH:mm:ss zzz”))</p>
 <p>开源控件链接：<a href="https://gitee.com/feiyangqingyun/QWidgetDemo" target="_blank" rel="noopener">https://gitee.com/feiyangqingyun/QWidgetDemo</a></p>
 ]]></content>
@@ -2394,8 +2424,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>1、fatinfo命令</p>
 <p>2、fatls命令</p>
 <p>3、fstype命令</p>
-<p>4、fatload命令</p>
-<p>5、fatwrite命令</p>
+<p>4、fatload命令    命令用于将指定的文件读取到 DRAM 中</p>
+<p>5、fatwrite命令     命令用于将 DRAM 中的数据写入到 MMC 设备中</p>
+<p>fatwrite mmc 1:1 80800000 zImage 0x5c2720</p>
 <p><strong>2.11 EXT格式文件系统操作命令</strong></p>
 <p>1、ext4ls命令(略)</p>
 <p>2.13 BOOT操作命令</p>
@@ -2491,27 +2522,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
@@ -2527,6 +2537,27 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
@@ -2902,6 +2933,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -2957,32 +3014,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -4306,7 +4337,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>rar -x xxx.rar   解压</p>
 <p>zip</p>
 <p>zip -rv xxx.zip xxx   压缩</p>
-<p>uzip -v xxx.zip   解压</p>
+<p>unzip -v xxx.zip   解压</p>
 <p><strong>扩展硬盘</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br><span class="line">参考：https://blog.csdn.net/u010801439/article/details/77676668</span><br></pre></td></tr></table></figure>
 <p><strong>/dev/sda 磁盘不足</strong></p>
