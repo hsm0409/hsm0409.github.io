@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT-内存泄漏小记</title>
+    <url>/Linux-Lover/QT-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p>QT 内存泄漏的问题要不断学习QAQ 2020/6/28</p>
+<p>Qt中使用了new却很少delete，因为QObject的类及其继承的类，设置了parent,故parent被delete时，这个parent的相关所有child都会自动delete，不用用户手动处理。</p>
+<p> explicit Widget(QWidget *parent = 0);</p>
+<p>但是问题：</p>
+<p>1、可以释放掉任何的对象，而delete栈上对象就会导致内存出错，这需要了解Qt的半自动的内存管理。<br>Qt的半自动化的内存管理 </p>
+<p>（1）QObject及其派生类的对象，如果其parent非0，那么其parent析构时会析构该对象。<br>（2）QWidget及其派生类的对象，可以设置 Qt::WA_DeleteOnClose 标志位(当close时会析构该对象)。<br>（3）QAbstractAnimation派生类的对象，可以设置 QAbstractAnimation::DeleteWhenStopped。<br>（4）QRunnable::setAutoDelete()、MediaSource::setAutoDelete()。 </p>
+<p>2、child不知道它自己是否被delete掉了，故可能会出现野指针。那就要了解Qt的智能指针QPointer。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">设置标志位，close()后会delete label。</span><br><span class="line"></span><br><span class="line">label-&gt;setAttribute(Qt::WA_DeleteOnClose);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QLabel label(&quot;Hello Qt!&quot;);  </span><br><span class="line">QWidget w;  </span><br><span class="line">label.setParent(&amp;w);  </span><br><span class="line">w.show(); </span><br><span class="line">原因：label先被析构，当w被析构时，会删除chilren列表中的对象label，但label是分配到栈上的，因delete栈上的对象而出错。</span><br><span class="line"></span><br><span class="line">  QWidget w;  </span><br><span class="line">   QLabel label(&quot;Hello Qt!&quot;);  </span><br><span class="line">   label.setParent(&amp;w);  </span><br><span class="line">   w.show();</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QLabel *label &#x3D; new QLabel(&quot;Hello Qt!&quot;);  </span><br><span class="line">label 既没有指定parent，也没有对其调用delete，所以会造成内存泄漏。</span><br><span class="line">改进方式：分配对象到栈上而不是堆上</span><br><span class="line">QLabel label(&quot;Hello Qt!&quot;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">将label分配到堆上</span><br><span class="line"></span><br><span class="line">QLabel *label &#x3D; new QLabel(&quot;Hello Qt!&quot;);</span><br><span class="line">label-&gt;setParent(&amp;w)</span><br><span class="line">或者QLabel *label &#x3D; new QLabel(“Hello Qt!”,this);</span><br><span class="line"></span><br><span class="line">没有指定父类的需要</span><br><span class="line">new后手动delete  !!!</span><br><span class="line"></span><br><span class="line">serialport &#x3D; new QSerialPort(this); &#x2F;&#x2F;new的时候指定了 mainwindow这个父对象 不用手动释放</span><br><span class="line">serialport &#x3D; new QSerialPort;&#x2F;&#x2F;不指定父对象 则需要自己使用完delete</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">程序崩溃，因为label被close时，delete &amp;label;但label对象是在栈上分配的内存空间，delete栈上的地址会出错。 </span><br><span class="line">可以测试QLabel label(“Hello Qt!”); label.show();delete &amp;label;第一次delete就会出错。</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">野指针 -----&gt;QPointer智能指针</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#include &lt;QApplication&gt;  </span><br><span class="line">#include &lt;QLabel&gt;  </span><br><span class="line">#include &lt;QPointer&gt;  </span><br><span class="line">int main(int argc, char* argv[])  </span><br><span class="line">&#123;  </span><br><span class="line">   QApplication app(argc, argv);  </span><br><span class="line">   QWidget *w &#x3D; new QWidget;  </span><br><span class="line">   QLabel *label &#x3D; new QLabel(&quot;Hello Qt!&quot;);  </span><br><span class="line">   label-&gt;setParent(w);  </span><br><span class="line">   QPointer&lt;QLabel&gt; p &#x3D; label;  </span><br><span class="line">   w-&gt;show();  </span><br><span class="line">   delete w;  </span><br><span class="line">   if (!p.isNull()) &#123;  </span><br><span class="line">     label-&gt;setText(&quot;go&quot;);  </span><br><span class="line">   &#125;  </span><br><span class="line">   return app.exec();</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a href="https://blog.csdn.net/qq_33485434/article/details/79649647?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/qq_33485434/article/details/79649647?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>imx6ull滑动界面</title>
+    <url>/uncategorized/imx6ull%E6%BB%91%E5%8A%A8%E7%95%8C%E9%9D%A2/</url>
+    <content><![CDATA[<p>界面效果：</p>
+<iframe src="//player.bilibili.com/player.html?aid=753737773&bvid=BV1Xk4y1q7tb&cid=206590500&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height ="600" width="100%"> </iframe>]]></content>
+  </entry>
+  <entry>
     <title>QT-画面滑动切换</title>
     <url>/QT-Lover/QT-%E7%94%BB%E9%9D%A2%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*widget.h*&#x2F;</span><br><span class="line">#ifndef WIDGET_H</span><br><span class="line">#define WIDGET_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line">#include &lt;QMouseEvent&gt;</span><br><span class="line">#include &lt;QEvent&gt;</span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class Widget;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Widget : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">public:</span><br><span class="line">    explicit Widget(QWidget *parent &#x3D; 0);</span><br><span class="line">    ~Widget();</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">     bool eventFilter(QObject *watched, QEvent *event);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    Ui::Widget *ui;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; WIDGET_H</span><br></pre></td></tr></table></figure>
@@ -109,6 +146,22 @@ return count;</code></pre><p> <strong>方式二</strong><br>自定义延时函�
       </categories>
       <tags>
         <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-键盘输入类</title>
+    <url>/Linux-Lover/QT-%E9%94%AE%E7%9B%98%E8%BE%93%E5%85%A5%E7%B1%BB/</url>
+    <content><![CDATA[<p>参考：<a href="https://justchen.com/2020/02/19/qt-virtualkeyboard-%E6%8F%92%E4%BB%B6%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BD%BF%E7%94%A8.html" target="_blank" rel="noopener">https://justchen.com/2020/02/19/qt-virtualkeyboard-%E6%8F%92%E4%BB%B6%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BD%BF%E7%94%A8.html</a></p>
+<p><a href="https://www.iemblog.com/?p=1389&amp;lang=zh" target="_blank" rel="noopener">https://www.iemblog.com/?p=1389&amp;lang=zh</a></p>
+<p>下载<br><a href="https://github.com/qt/qtvirtualkeyboard/releases/tag/v5.12.8">https://github.com/qt/qtvirtualkeyboard/releases/tag/v5.12.8</a></p>
+<p>压缩<br>sudo unzip qtvirtualkeyboard-everywhere-src-5.14.2.zip</p>
+<p>编译<br>/opt/Qt5.5.1/5.5/gcc_64/bin/qmake myuart.pro -spec linux-g++ ‘CONFIG+=lang-all’</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
       </tags>
   </entry>
   <entry>
@@ -1010,6 +1063,22 @@ height="600" width="100%" > </iframe>]]></content>
       </categories>
       <tags>
         <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>其他芯片了解-------嵌入式群聊记录</title>
+    <url>/Linux-Lover/%E4%BB%96%E8%8A%AF%E7%89%87%E4%BA%86%E8%A7%A3/</url>
+    <content><![CDATA[<p>imx6ull性能有点差，视频传输拉流都一卡一卡的，有比imx6ull 芯片好的介绍不，玩这一款就懂这个感觉不行<br>imx6q吗？好的，谢谢<br>@广工-明 rk3288</p>
+<p>通过uart 口AT命令就可以，但是受uart口速率限制，速度上不了，用4G模块太浪费，2G gprs差不多刚合适。要充分发挥4G的速度优势，还是得走USB高速接口，但这对stm32开发来说难度太大，不如上linux </p>
+<p><a href="http://www.topeetboard.com/product/imx6.html" target="_blank" rel="noopener">http://www.topeetboard.com/product/imx6.html</a></p>
+<p>@广工-明 LWIP UIP。绝对能打牢基础。</p>
+<p>PS流，H265，RTSP，live555，感觉真正大神都不愿意讲解</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
       </tags>
   </entry>
   <entry>
@@ -3050,6 +3119,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3105,32 +3200,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -3935,14 +4004,24 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>文件</title>
+    <title>文件IO</title>
     <url>/Linux-Lover/%E4%BB%B6/</url>
-    <content><![CDATA[<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h5 id="典型产品开发过程"><a href="#典型产品开发过程" class="headerlink" title="典型产品开发过程"></a>典型产品开发过程</h5><p>1、让 Linux 系统在硬件上跑起来（系统移植工作）<br>2、基于 Linux 系统来开发应用程序实现产品功能（应用编程属于这一步骤）<br>基于 Linux 做应用编程其实就是调用 API 来实现应用需要完成的一些任务。</p>
+<h5 id="文件自身信息"><a href="#文件自身信息" class="headerlink" title="文件自身信息"></a>文件自身信息</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//索引节点所包含信息存在结构体<span class="built_in">stat</span></span><br><span class="line">struct <span class="built_in">stat</span></span><br><span class="line">&#123;</span><br><span class="line">dev_t stdev; /*文件使用设备号*/</span><br><span class="line">ino_t st_ino;  /*索引节点*/</span><br><span class="line">mode_t st_mode; /*访问模式*/</span><br><span class="line">nlink_t st_nlink;/*硬链接*/</span><br><span class="line">uidt st_uid; /*所有者用户ID*/</span><br><span class="line">gid_t st_gid; /*用户组ID*/</span><br><span class="line">dev_t st_rdev;/*设备文件设备号 */</span><br><span class="line">off_t st_size; /*文件大小 字节单位/</span><br><span class="line">blksize_t st_blksize; /*系统磁盘块大小*/</span><br><span class="line">blkcnt_t st blocks; /*文件磁盘块大小*/</span><br><span class="line">time_t st_atime; /*最后一次访问时间*/</span><br><span class="line">time_t st_mtime; /*最后一次修改时间*/</span><br><span class="line">time_t st_ctime; /*最后一次修改文件状态时间*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br></pre></td></tr></table></figure>
-<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">文件描述符</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line">数据流概述</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<h5 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">根据处理的不同：</span><br><span class="line">缓冲区文件、非缓冲区文件（系统I/O，二进制文件）</span><br><span class="line"></span><br><span class="line">缓冲：缓冲区的大小由各个具体的C 版本确定，一般为512 字节。</span><br><span class="line">全缓冲(文件把缓冲区写满才写到文件里)</span><br><span class="line">行缓冲（<span class="built_in">printf</span>）</span><br><span class="line">无缓冲（内核调用函数）</span><br><span class="line">根据其存放数据的作用的不同：</span><br><span class="line">其分为普通文件、目录文件、链接文件、设备文件和管道文件</span><br><span class="line"></span><br><span class="line">linux 文件 IO操作有两套大类的操作方式：不带缓存的文件 IO 操作，带缓存的文件 IO操作。不带缓存的属于直接调用系统调用（system call）的方式，高效完成文件输入输出。它以文件标识符（整型）作为文件唯一性的判断依据。这种操作不是 ASCI 标准的，与系统有关，移植有一定的问题。而带缓存的是在不带缓存的基础之上封装了一层，维护了一个输入输出缓冲区，使之能跨 OS，成为 ASCI 标准，称为标准 IO库。不带缓存的方式频繁进行用户态 和内核态的切换，高效但是需要程序员自己维护；带缓冲的方式因为有了缓冲区，不是非常高效，但是易于维护。由此，</span><br><span class="line">不带缓冲区的通常用于文件设备的操作，而带缓冲区的通常用于普通文件的操作。</span><br></pre></td></tr></table></figure>
+<h5 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">IO操作分两类</span><br><span class="line">基于文件描述符的IO操作、基于数据流的IO操作</span><br><span class="line"></span><br><span class="line">1、文件描述符-------用户与内核之间</span><br><span class="line">打开磁盘文件一次，内核创建一个文件表项，文件表项包含文件状态信息、存储内容缓存、当前文件路径等。</span><br><span class="line">例如：table[0]=a、table[1]=b、table[3]=c</span><br><span class="line">a,b,c文件表项，描述符为0,1，2 。可以用des[3] = &#123;0,1,2&#125;保存访问磁盘文件。</span><br><span class="line">头文件<span class="comment">#include&lt;unistd.h&gt;。linux系统提供，open（）、close、read（）、write（）、lseek（）等</span></span><br><span class="line">eg:ssize_t <span class="built_in">read</span>(int fp,char *buf,size_t count)</span><br><span class="line">off_t lseek(int fildes,off_t,int <span class="built_in">whence</span>)</span><br><span class="line">参数<span class="built_in">whence</span>:</span><br><span class="line">SEEK_SET:文件开头</span><br><span class="line">SEEK_CUR:文件偏移量</span><br><span class="line">SEEK_END:文件结尾</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、数据流概述----fwrite应用层标准 IO 库自己维护的，然后再到write内核</span><br><span class="line">count 来选择好的时机来完成 write 到内核中的 buf</span><br><span class="line">标准I/O库函数，stdio.h头文件</span><br><span class="line">标准 IO 加了封装之后主要，是为了在应用层添加一个缓冲机制</span><br><span class="line">fopen()、fread()、fclose()、fgetc(0）、fscanf()等</span><br><span class="line">eg: FILE open （const char * path ,const char *mode）</span><br><span class="line">char *fgets(char *s ,int size,FILE *stream);</span><br><span class="line">int fputs(char *s FILE *stream);</span><br><span class="line"></span><br><span class="line">size_t fread(void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">size_t fwrite(const void *ptr,size_t size ,size nmemb,FILE *stream);</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 
 
+<h5 id="linux-系统如何管理文件"><a href="#linux-系统如何管理文件" class="headerlink" title="linux 系统如何管理文件"></a>linux 系统如何管理文件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、硬盘中的静态文件和 inode（i 节点）</span><br><span class="line"></span><br><span class="line">(1)文件平时都放在硬盘中，硬盘中以一种固定的形式存放，我们称为静态文件</span><br><span class="line">(2)一块硬盘中分为两大区域：一个是硬盘内容管理表，另一个是真正存储的内容区域。操作系统访问硬盘时先去读取硬盘内容管理表，从中找到我们访问的那个扇区级别的信息，然后用这个信息去查询真正的存储内容的区域，然后得到我们要的文件</span><br><span class="line">(3)管理表中以文件为单位，记录了各个文件的各种信息，每一个文件有一个文件列表（我们叫 inode，i节点，其实质是一个结构体，这个结构体有很多元素，每个元素记录了这个文件的一些信息，其中包括文件名，文件在硬盘上对应的扇区号，块号等。。</span><br><span class="line">(4)硬盘管理的时候以文件为单位，每个文件一个 inode，每个 inode 有一个数字编号，对应一个结构体，结构体记录了各种信息</span><br><span class="line"></span><br><span class="line">2、内存中被打开的文件和 vnode（v 节点）</span><br><span class="line">(1)快速格式化只是删除了 U 盘硬盘内容管理表（inode），真正存储的内容没有动，这种格式化可能被找回。</span><br><span class="line">(2)一个程序的运行就是一个进程，我们在程序中打开的文件就属于某个进程。每个进程都有一个数据结构来记录这个进程的所有信息（进程信息），表中有一个指针会指向一个文件管理表，文件管理表中记录了当前进程及其相关信息。</span><br><span class="line">(3)文件管理表中用来索引各个打开的文件的 index 就是文件描述符 f，我们最终找到的就是一个已经被打开的文件的管理结构体 vnode</span><br><span class="line">(4)一个 vnode 中记录了一个被打开的文件的各种信息，而且我们只要知道这个文件的 fd，就可以很容易找到这个文件的 vnode 进而对这个文件进行各操作。</span><br><span class="line"></span><br><span class="line">3、文件和流的概念</span><br><span class="line"></span><br><span class="line">（1）文件操作中，文件类似一个包裹，里面装了一堆字符，但是文件被读出&#x2F;写入时都只能一个字符一个字符的进行，而不能一个文件中 N 多个字符被挨个一次读出&#x2F;写入时，这些字符就构成了字符流</span><br><span class="line">（2）流是动态的，不是静态的</span><br><span class="line">（3）硬盘内容管理表 、文件管理表</span><br><span class="line">inode 用来表示一个静态文件 </span><br><span class="line">vnode 用来表示一个动态文件</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>参考：王维鋆的个人博客：<a href="https://blog.csdn.net/wangweijundeqq" target="_blank" rel="noopener">https://blog.csdn.net/wangweijundeqq</a></p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
