@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux编程小记之一</title>
+    <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E4%B9%8B%E4%B8%80/</url>
+    <content><![CDATA[<p>好记性不如烂笔头 QvQ</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line">O_RDONLY &#x2F;&#x2F;只读打开</span><br><span class="line">O_WRONLY &#x2F;&#x2F;只写打开</span><br><span class="line">O_RDWR &#x2F;&#x2F;读、写打开</span><br><span class="line">O_APPEND &#x2F;&#x2F;每次写时都追加到文件的尾端</span><br><span class="line">O_CREAT &#x2F;&#x2F;若此文件不存在，则创建它。使用时，需要第三个参数 mode</span><br><span class="line">O_EXCL &#x2F;&#x2F;如果同时指定了 O_CREAT,而文件已经存在，则会出错。用此可以测试一个文件是否存在，</span><br><span class="line">如果不存在，则创建此文件。</span><br><span class="line">O_TRUNC &#x2F;&#x2F;如果此文件存在，而且为只写或读写成功打开，则将其长度截短为 0。</span><br><span class="line">O_NONBLOCK &#x2F;&#x2F;如果 pathname 指的是一个 FIFO、一个块特殊文件或一个字符特殊文件，则此选项为文</span><br><span class="line">件的本次操作和后续的 I&#x2F;O 操作设置非阻塞模式。只用于设备文件，不能用于普通文件。</span><br><span class="line">O_SYNC &#x2F;&#x2F;使每次 write 都等到物理 I&#x2F;O 操作完成，包括由 write 操作引起的文件属性更新所需的</span><br><span class="line">I&#x2F;O。</span><br><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fd&#x3D;open(&quot;123.txt&quot;,O_RDWR|O_CREAT);&#x2F;&#x2F;写入一个新的 123.txt 文件</span><br></pre></td></tr></table></figure>
+
+<h5 id="lseek"><a href="#lseek" class="headerlink" title="lseek"></a>lseek</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lseek(fd, offset, whence(参照物))&#x2F;&#x2F;fd:哪个文件，从 whence 开始，往后偏移 offset 个 </span><br><span class="line">其中，whence 就三个参数 </span><br><span class="line">SEEK_SET 开头 </span><br><span class="line">SEEK_CUR 当前 </span><br><span class="line">SEEK_END 结尾 </span><br><span class="line">(1) 、 将读写位置移到文件开头时</span><br><span class="line">lseek（int fd,0,SEEK_SET）；&#x2F;&#x2F;返回 0</span><br><span class="line">(2) 、 将读写位置移到文件尾时</span><br><span class="line">lseek（int fd，0,SEEK_END）；&#x2F;&#x2F;返回文件长度</span><br><span class="line">(3) 、 想要取得目前文件位置时</span><br><span class="line">lseek（int fd，0,SEEK_CUR）；&#x2F;&#x2F;返回当前文件指针相对于文件开头的偏移量</span><br><span class="line">(4)、用 lseek 测定文件大小的程序</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux应用编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Solidworks composer</title>
+    <url>/Mechanic-Lover/Solidworks-composer/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">toolbox零件更改后装配体中，容易丢失问题</span><br><span class="line">选项&gt;&gt;异型导向&#x2F;toolbox&gt;&gt;TOOLBOX预选地址不要打钩</span><br><span class="line"></span><br><span class="line">***软件应用</span><br><span class="line">技术部门</span><br><span class="line">车间部门</span><br><span class="line">客户服务</span><br><span class="line">市场营销</span><br><span class="line"></span><br><span class="line">.smg     通用3D格式</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">svg 网页 -----需提前下载   svgview</span><br><span class="line">一、基本界面知识</span><br><span class="line">打开文件快捷键    Ctrl+O</span><br><span class="line">*  合并到新文档，统一操作空间</span><br><span class="line">*  首选项设置</span><br><span class="line"></span><br><span class="line">*鼠标中   按住平移     滑动放大缩小</span><br><span class="line">鼠标右键     选择（可更改）</span><br><span class="line"></span><br><span class="line">装配模式      视图效果选择</span><br><span class="line"></span><br><span class="line">视图对齐</span><br><span class="line"></span><br><span class="line">发布（保存格式）     </span><br><span class="line">解冻  协同树画板取消</span><br><span class="line"></span><br><span class="line"> 结构树，协同树——————都在窗口选项  显示隐藏</span><br><span class="line"></span><br><span class="line">混合折线     鼠标左键，右键确定</span><br><span class="line"></span><br><span class="line">光源必须开着</span><br><span class="line"></span><br><span class="line">纹理图应用----工作空间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">正视于-----正视照相机</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">二、动画操作</span><br><span class="line"></span><br><span class="line">***制作前枢轴坐标对齐</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOM 零件清单、表</span><br><span class="line"></span><br><span class="line">Diger   显示放大镜</span><br><span class="line"></span><br><span class="line">*****svg打不开问题   </span><br><span class="line">http:&#x2F;&#x2F;fans.solidworks.com.cn&#x2F;forum.php?mod&#x3D;viewthread&amp;tid&#x3D;63172</span><br><span class="line">问题解决方法：</span><br><span class="line">找到 “XXX:\Program Files\SOLIDWORKS Corp\SOLIDWORKS Composer\Html”目录下的“SOLIDWORKSSvg.html&quot;这个文件，使用记事本打开，</span><br><span class="line">查找到第7行：    “  &lt;img src&#x3D;&quot;tmp.svg&quot;     把这  &quot;tmp.svg&quot; 改为 &quot;tmp_seemage.svg&quot;，</span><br><span class="line">                    即终代码是      &lt;img src&#x3D;&quot;tmp_seemage.svg&quot;  type&#x3D;&quot;image&#x2F;svg+xml&quot;    ……………………………………</span><br><span class="line">然后保存文件并</span><br><span class="line">********不能另存为的问题</span><br><span class="line"></span><br><span class="line">观看视频造成的，把视频软件关了即可</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">伸缩-----世界坐标系的比例</span><br><span class="line"></span><br><span class="line">滚动-----花纹的运动</span><br><span class="line"></span><br><span class="line">重影问题--------首页透明度至0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">********一般装配</span><br><span class="line"></span><br><span class="line">拉出，淡出，视图，反转。配上步骤文字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">***z中性属性</span><br><span class="line">父子级失败的原因，就是没有对零件进行中性属性</span><br><span class="line">****运动机构连接</span><br><span class="line">线性-------活塞</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">****去水印</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">****炫酷的变色人机交互</span><br><span class="line"></span><br><span class="line">变色</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">视图更新，事件连接（1设置2直接ctrl  来出来  3 视图右键创建2D面板）</span><br><span class="line"></span><br><span class="line">取消设计模式</span><br><span class="line">如何让交互界面一直存在</span><br><span class="line">1协同打开面板</span><br><span class="line">2创建相机视图</span><br><span class="line">3选择更新所需视图</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------2019&#x2F;1&#x2F;10  结束   Ming</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Mechanic Lover</category>
+      </categories>
+      <tags>
+        <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>QT-内存泄漏小记</title>
     <url>/Linux-Lover/QT-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%B0%8F%E8%AE%B0/</url>
     <content><![CDATA[<p>QT 内存泄漏的问题要不断学习QAQ 2020/6/28</p>
@@ -3119,32 +3144,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3200,6 +3199,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
