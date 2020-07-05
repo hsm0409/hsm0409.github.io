@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>imx6ullUDP测试</title>
+    <url>/Linux-Lover/imx6ullUDP%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<h6 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h6><p>  UDP通信没有明确的服务器端和客户端之分<br>　TCP通信像是打电话（必须要接通才能通信），UDP通信像是写信（不管能不能收到都发送出去）<br>　首先需要QUdpSOcket套接字，然后绑定bind()端口号和ip<br>　如果对方发送过来数据，套接字自动触发readyRead()方法<br>　套接字QUdpSOcket通过readDatagram()和writeDatagram()方法读取和写入数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;widget.h&quot;</span><br><span class="line">#include&lt;QHostAddress&gt;</span><br><span class="line">#include &lt;QString&gt;</span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent)</span><br><span class="line">&#123;</span><br><span class="line">    setupUi(this);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;分配空间指定父对象</span><br><span class="line">    udpsocket&#x3D;new QUdpSocket (this);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F;组播D类地址</span><br><span class="line"> &#x2F;&#x2F;udpsocket-&gt;joinMulticastGroup(QHostAddress(&quot;224.0.0.2&quot;))</span><br><span class="line">&#x2F;&#x2F;广播255.255.255.255</span><br><span class="line">&#x2F;&#x2F;udpsocket-&gt;bind(QHostAddress::AnyIPv4,8888);</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line"></span><br><span class="line">    udpsocket-&gt;bind(QHostAddress::Any,8888);</span><br><span class="line">    this-&gt;setWindowTitle(&quot;服务端8888&quot;);</span><br><span class="line"></span><br><span class="line">    connect(udpsocket,&amp;QUdpSocket::readyRead,[&#x3D;]()&#123;</span><br><span class="line"></span><br><span class="line">        char buff[1024]&#x3D;&#123;0&#125;;</span><br><span class="line"></span><br><span class="line">        QHostAddress cliAddr;</span><br><span class="line">        quint16 port;</span><br><span class="line">        qint64 len&#x3D;udpsocket-&gt;readDatagram(buff,sizeof(buff),&amp;cliAddr,&amp;port);</span><br><span class="line">       &#x2F;&#x2F;接收不大于maxSize字节的数据报并将其存储在数据中。</span><br><span class="line">        &#x2F;&#x2F;发送方的主机地址和端口存储在address和“port”中(除非指针为0)。成功返回数据报的大小;</span><br><span class="line">        if (len&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            QString str&#x3D;QString (&quot;[%1 :%2] %3&quot;).arg(cliAddr.toString()).arg(port).arg(buff);</span><br><span class="line">             this-&gt;textEdit-&gt;setText(str);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">void Widget::on_pushButtontsend_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    QString ip&#x3D;this-&gt;lineEditIP-&gt;text();</span><br><span class="line">    quint16 port&#x3D;this-&gt;lineEditPort-&gt;text().toInt();</span><br><span class="line">    &#x2F;&#x2F;获取编辑区内容；</span><br><span class="line">    QString str&#x3D;this-&gt;textEdit-&gt;toPlainText();</span><br><span class="line">    udpsocket-&gt;writeDatagram(str.toUtf8().data(),QHostAddress(ip),port);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<iframe src="//player.bilibili.com/player.html?aid=796168421&bvid=BV1yC4y187z5&cid=208936840&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="600" width="100%" > </iframe>]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux编程小记之一</title>
     <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E4%B9%8B%E4%B8%80/</url>
     <content><![CDATA[<p>好记性不如烂笔头 QvQ</p>
@@ -23,6 +36,38 @@
       </categories>
       <tags>
         <tag>3D建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>imx6ullTCP测试</title>
+    <url>/Linux-Lover/imx6ullTCP%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<h6 id="client-客户端"><a href="#client-客户端" class="headerlink" title="client  客户端"></a>client  客户端</h6><p>连接服务器 connectToHost()、断开与服务器的连接disconnectFromHost()，等等。<br>提供各种信号（connected()、disconnected()、stateChanged()）与槽函数，方便应用开发者调用。</p>
+<h6 id="server-服务端"><a href="#server-服务端" class="headerlink" title="server  服务端"></a>server  服务端</h6><p>（1）调用 socket 套接字函数，创建套接字的文件描述符（这个套接字是用来监听客户端连接请求的）。<br>（2）调用 bind()绑定函数，将创建成功的套接字与需要监听的 IP 地址和 Port 绑定。<br>（3）绑定成功后，就可以调用 listen()函数进行监听，等待客户端的连接请求。（服务端需要成功调用 listen()函数，客户端才可以发起连接请求，否则，客户端的连接会出错）<br>（4）调用 listen()函数成功后，若此时有客户端申请建立连接，服务端则调用 accept()函数，接收客户端的连接，并自动产生用于网络 I/O 通信的套接字，作为 accept()函数的返回值。（accept()函数自动产生的套接字是用来进行网络 I/O 数据收发的，与 socket()套接字不同）<br>（5）当客户端连接成功后，服务端就可以基于 accept()函数返回的套接字，使用系统调用的<br>读写函数 read()/write()进行数据收发了。<br>    使用嵌入式 QT 进行 TCP/IP 的网络通信应用程序开发，对于 TCP 服务端，QT 的 network<br>类库提供的 QTcpServer 类，这个类继提供了一系列的服务端网络操作接口函数，如：监听<br>函数 listen()，阻塞等待客户端连接 waitForNewConnection()，虚函数 incomingConnection()用<br>来处理客户端的连接请求</p>
+<p>参考：微联智控</p>
+<p>代码具体参考我的写过的博客&lt;<QT-TCP>&gt; : [<a href="https://hsm0409.github.io/QT-Lover/QT-TCP/]" target="_blank" rel="noopener">https://hsm0409.github.io/QT-Lover/QT-TCP/]</a></p>
+<p>但是，以上是单用户，不适用于多用户，必须做下修改。</p>
+<p>服务端代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;serverwidget.h&quot;</span><br><span class="line">#include &quot;ui_serverwidget.h&quot;</span><br><span class="line"></span><br><span class="line">serverwidget::serverwidget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::serverwidget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line">    &#x2F;**********************背景设置***********************&#x2F;</span><br><span class="line"></span><br><span class="line">    this-&gt;setWindowTitle(&quot;TCP服务端 黄松明QQ：1260925116&quot;);</span><br><span class="line">    setAutoFillBackground(true);</span><br><span class="line">    QPalette pal &#x3D; this-&gt;palette();</span><br><span class="line">    pal.setBrush(backgroundRole(),QPixmap(&quot;:&#x2F;new&#x2F;prefix1&#x2F;resources&#x2F;MING.png&quot;));</span><br><span class="line">    setPalette(pal);</span><br><span class="line"></span><br><span class="line">     ui-&gt;pushButton_listen-&gt;setCheckable(false);</span><br><span class="line">    ui-&gt;pushButton_send-&gt;setEnabled(false);</span><br><span class="line">    &#x2F;******************本地地址****************************&#x2F;</span><br><span class="line"></span><br><span class="line">    ui-&gt;lineEdit_ip-&gt;setText(QNetworkInterface().allAddresses().at(2).toString());</span><br><span class="line"></span><br><span class="line">    &#x2F;******************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">    this-&gt;currentTcpSocket&#x3D;NULL;&#x2F;&#x2F;否则提示</span><br><span class="line">     this-&gt;tcpServer&#x3D;NULL;</span><br><span class="line">     tcpServer &#x3D; new QTcpServer(this);  &#x2F;&#x2F;放在主线</span><br><span class="line"></span><br><span class="line">     &#x2F;*********************多用户触发*************************&#x2F;</span><br><span class="line">      connect(tcpServer,&amp;QTcpServer::newConnection,this,&amp;serverwidget::NewConnectSlot);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">serverwidget::~serverwidget()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void serverwidget::NewConnectSlot()</span><br><span class="line">&#123;</span><br><span class="line">    currentTcpSocket  &#x3D; tcpServer-&gt;nextPendingConnection();</span><br><span class="line"></span><br><span class="line">    clientlist.append(currentTcpSocket);&#x2F;&#x2F;往vector数组中插入（结构体类型）数据</span><br><span class="line"></span><br><span class="line">    QString ip &#x3D; currentTcpSocket-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1];</span><br><span class="line">    quint16 port &#x3D; currentTcpSocket-&gt;peerPort();</span><br><span class="line">    QString systime &#x3D;  QDateTime::currentDateTime().toString(&quot;hh:mm:ss&quot;);</span><br><span class="line">    QString temp &#x3D; QString(&quot; %1 [用户端%2  %3]:连接成功！QAQ&quot;).arg(systime).arg(ip).arg(port);</span><br><span class="line"></span><br><span class="line">    ui-&gt;textEdit_rx-&gt;append(temp);</span><br><span class="line"></span><br><span class="line">    &#x2F;*********************comboBox_ip 下拉框*****************************&#x2F;</span><br><span class="line">   ui-&gt;comboBox_ip-&gt;addItem(tr(&quot;%1:%2&quot;).arg(currentTcpSocket-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1])\</span><br><span class="line">                                            .arg(currentTcpSocket-&gt;peerPort()));</span><br><span class="line">    qDebug()&lt;&lt; 2 ;</span><br><span class="line">    &#x2F;******************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">    connect(currentTcpSocket,&amp;QTcpSocket::readyRead,this,&amp;serverwidget::ReadData);</span><br><span class="line">    connect(currentTcpSocket,&amp;QTcpSocket::disconnected,this,&amp;serverwidget::disconnectedSlot);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void serverwidget::ReadData()</span><br><span class="line">&#123;</span><br><span class="line">    for(int i &#x3D; 0 ; i&lt; clientlist.length();i++)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;通信取出来</span><br><span class="line">        QByteArray array &#x3D;clientlist[i]-&gt;readAll();</span><br><span class="line"></span><br><span class="line">        if(array.isEmpty())    continue;</span><br><span class="line"></span><br><span class="line">        static QString IP_Port, IP_Port_Pre;</span><br><span class="line"></span><br><span class="line">        IP_Port &#x3D; tr(&quot;%1:%2&quot;).arg(currentTcpSocket-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1])\</span><br><span class="line">                                        .arg(currentTcpSocket-&gt;peerPort());</span><br><span class="line">     &#x2F;&#x2F; 若此次消息的地址与上次不同，则需显示此次消息的客户端地址</span><br><span class="line">    if(IP_Port !&#x3D; IP_Port_Pre)</span><br><span class="line">                    ui-&gt;textEdit_rx-&gt;append(IP_Port);</span><br><span class="line"></span><br><span class="line">        ui-&gt;textEdit_rx-&gt;append(array);</span><br><span class="line"></span><br><span class="line">                &#x2F;&#x2F;更新ip_port</span><br><span class="line">       IP_Port_Pre &#x3D; IP_Port;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void serverwidget::disconnectedSlot()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    for(int i &#x3D; 0 ; i&lt; clientlist.length();i++)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;由于disconnected信号并未提供SocketDescriptor，所以需要遍历寻找</span><br><span class="line"></span><br><span class="line">        if(clientlist[i]-&gt;state() &#x3D;&#x3D; QAbstractSocket::UnconnectedState)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 删除存储在combox中的客户端信息</span><br><span class="line">            ui-&gt;comboBox_ip-&gt;removeItem(ui-&gt;comboBox_ip-&gt;findText(tr(&quot;%1:%2&quot;)\</span><br><span class="line">                    .arg(clientlist[i]-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1])\</span><br><span class="line">                    .arg(clientlist[i]-&gt;peerPort())));</span><br><span class="line">            clientlist[i]-&gt;destroyed();</span><br><span class="line">            clientlist.removeAt(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void serverwidget::on_pushButton_listen_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    if(ui-&gt;pushButton_listen-&gt;isCheckable())</span><br><span class="line">    &#123;</span><br><span class="line">         for(int i &#x3D; 0; i &lt; clientlist.length();i++)</span><br><span class="line">         &#123;</span><br><span class="line">            QString str &#x3D; QString(&quot;服务端断开你的连接QAQ&quot;);</span><br><span class="line">            clientlist[i]-&gt;write(str.toUtf8().data());</span><br><span class="line"></span><br><span class="line">            clientlist[i]-&gt;disconnectFromHost();</span><br><span class="line"></span><br><span class="line">            QString str2 &#x3D; QString(&quot;用户端%1:%2 断开你的连接QAQ&quot;).arg(clientlist[i]-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1]).arg(clientlist[i]-&gt;peerPort());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            bool ok &#x3D; clientlist[i]-&gt;waitForDisconnected(1000);</span><br><span class="line">            if(!ok)</span><br><span class="line">            &#123;</span><br><span class="line">                &#x2F;&#x2F; 处理异常</span><br><span class="line">            &#125;</span><br><span class="line">            clientlist.removeAt(i);  &#x2F;&#x2F;从保存的客户端列表中取去除</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">            tcpServer-&gt;close();     &#x2F;&#x2F;不再监听端口</span><br><span class="line">            ui-&gt;pushButton_listen-&gt;setText(&quot;开始监控&quot;);</span><br><span class="line">            ui-&gt;pushButton_listen-&gt;setCheckable(false);</span><br><span class="line">            ui-&gt;pushButton_listen-&gt;setCheckable(false);</span><br><span class="line">            ui-&gt;pushButton_send-&gt;setEnabled(false);</span><br><span class="line">        &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        bool ok ;</span><br><span class="line">        int port &#x3D; ui-&gt;lineEdit_port-&gt;text().toInt(&amp;ok,10);</span><br><span class="line">        tcpServer-&gt;listen(QHostAddress::Any,port);&#x2F;&#x2F;只能在接收成功  server  newConnection是接收信息</span><br><span class="line">        qDebug() &lt;&lt; &quot;监听中\n&quot; ;</span><br><span class="line">        ui-&gt;pushButton_send-&gt;setEnabled(true);</span><br><span class="line">        ui-&gt;pushButton_listen-&gt;setText(&quot;停止监控&quot;);</span><br><span class="line">        ui-&gt;pushButton_listen-&gt;setCheckable(true);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void serverwidget::on_pushButton_send_clicked()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取编辑区内容</span><br><span class="line">    QString str &#x3D; ui-&gt;textEdit_tx-&gt;toPlainText();</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;不指定，全部发送</span><br><span class="line">    if(ui-&gt;comboBox_ip-&gt;currentIndex() &#x3D;&#x3D; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        for(int i &#x3D; 0; i&lt; clientlist.length();i++)</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F;发送</span><br><span class="line">            clientlist[i]-&gt;write(str.toUtf8().data());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    else&#x2F;&#x2F;指定ip</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        QString SelectIp &#x3D; ui-&gt;comboBox_ip-&gt;currentText().split(&quot;:&quot;)[0];</span><br><span class="line">        QString SelectPort &#x3D; ui-&gt;comboBox_ip-&gt;currentText().split(&quot;:&quot;)[1];</span><br><span class="line"></span><br><span class="line">        qDebug() &lt;&lt; SelectIp;</span><br><span class="line">        qDebug() &lt;&lt; SelectPort;</span><br><span class="line"></span><br><span class="line">        for(int i &#x3D; 0; i&lt; clientlist.length();i++)</span><br><span class="line">        &#123;</span><br><span class="line">         if(clientlist[i]-&gt;peerAddress().toString().split(&quot;::ffff:&quot;)[1] &#x3D;&#x3D; SelectIp &amp;&amp; clientlist[i]-&gt;peerPort() &#x3D;&#x3D; SelectPort.toInt())</span><br><span class="line">         &#123;</span><br><span class="line">             clientlist[i]-&gt;write(str.toLatin1());</span><br><span class="line">             return ;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void serverwidget::on_pushButton_clear_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;textEdit_rx-&gt;clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<iframe src="//player.bilibili.com/player.html?aid=328735904&bvid=BV1EA411e7nJ&cid=208936456&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"height="600" width="100%"> </iframe>
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux 项目开发</tag>
       </tags>
   </entry>
   <entry>
@@ -887,6 +932,10 @@ height="600" width="100%" > </iframe>]]></content>
 
 
 <p>#define TIMEMS      qPrintable(QTime::currentTime().toString(“HH:mm:ss zzz”))</p>
+<h5 id="事件遇到的函数"><a href="#事件遇到的函数" class="headerlink" title="事件遇到的函数"></a>事件遇到的函数</h5><p>事件的ignore函数表示忽略事件，将其传到父组件进行处理<br>事件的accept函数表示接受事件，组件自己进行处理，不会将事件传递给父组件<br>调用accept()意味着 Qt 会停止事件的传播，窗口关闭；<br>调用ignore()则意味着事件继续传播，即阻止窗口关闭。</p>
+<p>常用：不点x号快速退出程序</p>
+<h5 id="如何判断某个对象是否属于qt类"><a href="#如何判断某个对象是否属于qt类" class="headerlink" title="如何判断某个对象是否属于qt类"></a>如何判断某个对象是否属于qt类</h5><p>inherits(“QLineEdit”)</p>
+<h5 id="本机地址ipv4"><a href="#本机地址ipv4" class="headerlink" title="本机地址ipv4"></a>本机地址ipv4</h5><p> ui-&gt;lineEdit_ip-&gt;setText(QNetworkInterface().allAddresses().at(2).toString());</p>
 <p>开源控件链接：<a href="https://gitee.com/feiyangqingyun/QWidgetDemo" target="_blank" rel="noopener">https://gitee.com/feiyangqingyun/QWidgetDemo</a></p>
 ]]></content>
       <categories>
@@ -2709,27 +2758,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器算法小结</title>
     <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
@@ -2745,6 +2773,27 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">accumulate()；</span><br><span class="line"></span><br><span class="line">int iSum = accumulate(vecIntA.begin(), vecIntA.end(), 100);</span><br><span class="line"></span><br><span class="line">fill()；</span><br><span class="line"></span><br><span class="line"> fill(vecIntA.begin(), vecIntA.end(),8);</span><br></pre></td></tr></table></figure>
 <p>集合算法</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">set_union()  并集有序</span><br><span class="line"></span><br><span class="line">set_intersection()交集有序</span><br><span class="line"></span><br><span class="line">set_difference()第一个有第二个没有的差集</span><br><span class="line"></span><br><span class="line">set_difference(vecIntA.begin(), vecIntA.end(),vecIntB.begin(), vecIntB.end(), vecIntC.begin());</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器结构小结</title>
+    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>vector 单端，尾插</p>
+<p>deque 双端，首部尾部插</p>
+<p>stack  先进后出（deques首部闭合）  pop push</p>
+<p>quece 队列，先进先出          </p>
+<p>list   链表，随时插入</p>
+<p>set 唯一值，数值顺序排顺序</p>
+<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
+<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
+<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
+<p>map.insert(make_pair(-1,”小张-1”))；</p>
+]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
@@ -3120,32 +3169,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3201,6 +3224,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -3590,6 +3639,31 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>STM32单片机</title>
     <url>/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<p><strong>时钟系统</strong></p>
@@ -3612,31 +3686,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>入堆栈ISR<br>保存现场{PC,PSR,R0-R3,R12,ISR} ISR:当前中断服务寄存器<br>保存完后，ISR进入中断<br>晚来的中断可以ISR进入，不用重新保存现场。</p>
 <p>退出中断<br>出栈恢复现场<br>也可以被打断进入新的中断。</p>
 ]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>51单片机</title>
-    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
-
-
-
-
-<p>__晶体与晶振</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
-
-
-<p>常见问题 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
