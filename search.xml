@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT-自定义类</title>
+    <url>/Linux-Lover/QT-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/</url>
+    <content><![CDATA[<p>1、调用别人写好类，直接添加，提升为Qwidget即可。</p>
+<p>例如：做过的调用扇形统计和条形统计图。</p>
+<p>2、自己ui右键添加添加设计师界面，提升为Qwidget即可。</p>
+<p>3、自己写过的项目想加到主界面里，直接添加，提升为Qwidget即可，但是！！！一定要注意头文件的路径，例如多文件目录下，否则会提示no such file </p>
+<p>4、主界面ui调用另一个界面的ui?<br>一般用信号触发就行，不要去修改ui,以免增加代码复杂。QAQ</p>
+<p>一、子类ui变为公共+信号传递</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#x2F;&#x2F;子界面</span><br><span class="line">#ifndef FORM_H</span><br><span class="line">#define FORM_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line">#include &lt;QPushButton&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class Form;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Form : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit Form(QWidget *parent &#x3D; 0);</span><br><span class="line">    ~Form();</span><br><span class="line">    Ui::Form *ui;</span><br><span class="line">  void clickset();</span><br><span class="line">private slots:</span><br><span class="line">    void on_comboBox_activated(const QString &amp;arg1);</span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    void backclick(QString str);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; FORM_H</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</span><br><span class="line">#include &quot;form.h&quot;</span><br><span class="line">#include &quot;ui_form.h&quot;</span><br><span class="line"></span><br><span class="line">Form::Form(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::Form)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Form::~Form()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Form::on_comboBox_activated(const QString &amp;arg1)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;lineEdit-&gt;setText(&quot;子界面调用&quot;+arg1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Form::clickset()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    ui-&gt;lineEdit-&gt;setText(&quot;主界面调用&quot;);</span><br><span class="line">    emit backclick(&quot;子界面返回信息&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;主界面</span><br><span class="line">#ifndef ALLWIDGET_H</span><br><span class="line">#define ALLWIDGET_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line"></span><br><span class="line">#include &quot;form.h&quot;</span><br><span class="line"></span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class allWidget;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class allWidget : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit allWidget(QWidget *parent &#x3D; 0);</span><br><span class="line">    ~allWidget();</span><br><span class="line">Form *form ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    void clicktoform();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">private slots:</span><br><span class="line">    void on_pushButton_clicked();</span><br><span class="line">    void senddata(QString str);</span><br><span class="line">private:</span><br><span class="line">    Ui::allWidget *ui;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; ALLWIDGET_H</span><br><span class="line">#include &quot;allwidget.h&quot;</span><br><span class="line">#include &quot;ui_allwidget.h&quot;</span><br><span class="line">#include &quot;form.h&quot;</span><br><span class="line">#include &quot;ui_form.h&quot;</span><br><span class="line">allWidget::allWidget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::allWidget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line"></span><br><span class="line">    form &#x3D; new Form(this);</span><br><span class="line">    form-&gt;show();</span><br><span class="line">    connect(this,&amp;allWidget::clicktoform,this-&gt;form,&amp;Form::clickset);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    connect(form,SIGNAL(backclick(QString )),this,SLOT(senddata(QString)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allWidget::~allWidget()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line">void allWidget::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">     emit clicktoform();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void allWidget::senddata(QString str)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;textBrowser-&gt;append(str);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;main.c  main.c也要添加子界面头文件</span><br><span class="line">#include &quot;allwidget.h&quot;</span><br><span class="line">#include &lt;QApplication&gt;</span><br><span class="line">#include &quot;form.h&quot;</span><br></pre></td></tr></table></figure>
+
+<p>二、直接在ui界面widget容器 提升为QWidget+信号传递</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">虽然方便更多的用于不用操作主界面和子界面的信息传递，否则操作ui中的控件有点复杂。</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/QT-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB.gif" class="" title="左边子界面ui右边主界面ui">
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-启动画面QSplashScreen</title>
+    <url>/Linux-Lover/QT-%E5%90%AF%E5%8A%A8%E7%94%BB%E9%9D%A2QSplashScreen/</url>
+    <content><![CDATA[<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;welcomewidget.h&quot;</span><br><span class="line">#include &lt;QApplication&gt;</span><br><span class="line">#include &lt;QSplashScreen&gt;</span><br><span class="line">#include &lt;QRect&gt;</span><br><span class="line">#include &lt;QElapsedTimer&gt;</span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    QApplication a(argc, argv);</span><br><span class="line">    WelcomeWidget w;</span><br><span class="line"></span><br><span class="line">    QSplashScreen *splash &#x3D; new QSplashScreen;</span><br><span class="line"></span><br><span class="line">    QPixmap pix(&quot;:&#x2F;resources&#x2F;Welcome_MING.jpg&quot;);</span><br><span class="line"></span><br><span class="line">    splash-&gt;setPixmap(pix);</span><br><span class="line">    splash-&gt;show();</span><br><span class="line">    splash-&gt;setFont(QFont(&quot;microsoft yahei&quot;, 20, QFont::Bold));</span><br><span class="line">    splash-&gt;showMessage(&quot;Linux Lover \n QAQ&quot;, Qt::AlignBottom | Qt::AlignHCenter, Qt::white);</span><br><span class="line">  &#x2F;&#x2F;  splash-&gt;setGeometry(400,300,440,300);</span><br><span class="line">    int delay_time &#x3D; 10;</span><br><span class="line">    QElapsedTimer timer ;</span><br><span class="line">    timer.start();</span><br><span class="line">    while(timer.elapsed() &lt; (delay_time*1000))</span><br><span class="line">    &#123;</span><br><span class="line">        a.processEvents();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    w.show();</span><br><span class="line"></span><br><span class="line">    splash-&gt;finish(&amp;w);</span><br><span class="line"></span><br><span class="line">    delete splash;</span><br><span class="line">    return a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><img src="/Linux-Lover/QT-%E5%90%AF%E5%8A%A8%E7%94%BB%E9%9D%A2QSplashScreen/start.gif" class="">]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>QT HTTP协议</title>
     <url>/QT-Lover/QT%20HTTP%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h5 id="定义了解"><a href="#定义了解" class="headerlink" title="定义了解"></a>定义了解</h5><p>超文本=======超链接（基础）</p>
@@ -10,6 +50,7 @@
 
 <img src="/QT-Lover/QT%20HTTP%E5%8D%8F%E8%AE%AE/http_1.png" class="">
 
+<img src="/QT-Lover/QT%20HTTP%E5%8D%8F%E8%AE%AE/qt.png" class="">
 ]]></content>
       <categories>
         <category>QT Lover</category>
@@ -150,13 +191,11 @@
 
 
 
-
-
-
+<p>background-color: rgb(6, 6, 6); 控件背景<br>border-radius: 3px; color: rgb(255, 255, 255); 控件字体</p>
 <p><strong>函数背景</strong></p>
 <p>写法1：<br>setAutoFillBackground(true);<br>QPalette pal = this-&gt;palette();  pal.setBrush(backgroundRole(),QPixmap(“:/new/prefix1/MING.png”));<br>setPalette(pal);</p>
 <p>注：设置的项目基类为Widget的时候，不能用setstylesheet设置widget的背景图片。</p>
-<p>this-&gt;setStyleSheet( iconStyleSheet );<br>ui-&gt;pushButton-&gt;setStyleSheet(“#pushButton{background-image: url(:/new/prefix1/数字5.png);}”);</p>
+<p>this-&gt;setStyleSheet( iconStyleSheet );<br>ui-&gt;pushButton-&gt;setStyleSheet(“#pushButton{background-image: url(:/new/prefix1/数字5.png);}”);g);}”);</p>
 ]]></content>
       <categories>
         <category>QT Lover</category>
