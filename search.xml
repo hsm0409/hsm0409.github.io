@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>imx6ull+Debian文件系统</title>
+    <url>/Linux-Lover/imx6ull-Debian%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h6 id="Debian文件系统下载"><a href="#Debian文件系统下载" class="headerlink" title="Debian文件系统下载"></a>Debian文件系统下载</h6><p><a href="https://releases.linaro.org/debian/images/alip-armhf/" target="_blank" rel="noopener">https://releases.linaro.org/debian/images/alip-armhf/</a></p>
+<h6 id="脚本固化系统"><a href="#脚本固化系统" class="headerlink" title="脚本固化系统"></a>脚本固化系统</h6><p>先烧写出厂的系统到一张 SD 卡上<br>sudo ./imx6mksdboot.sh -device /dev/sdb -flash emmc -ddrsize 512</p>
+<p>SD卡中<br>/dev/sdb1         64511     6807    57704   11% /media/ming/boot<br>/dev/sdb2       3680336   487840  2985828   15% /media/ming/rootfs</p>
+<h5 id="文件系统解压"><a href="#文件系统解压" class="headerlink" title="文件系统解压"></a>文件系统解压</h5><p>sudo tar zxf linaro-jessie-alip-20161117-32.tar.gz</p>
+<h6 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h6><p>先删除出厂的根文件系统<br>sudo rm -rf /media/ming/rootfs/*</p>
+<p>把 binary 下面的所有内容移到<br>sudo mv * /media/ming/rootfs/<br>sync</p>
+<h5 id="启动-Debian文件系统"><a href="#启动-Debian文件系统" class="headerlink" title="启动 Debian文件系统"></a>启动 Debian文件系统</h5><p>SD卡启动方式，无网络提醒忽略即可。<br>启动可能有点慢QAQ</p>
+<h5 id="移植-Debian-之后"><a href="#移植-Debian-之后" class="headerlink" title="移植 Debian 之后"></a>移植 Debian 之后</h5><p>1、更新软件源<br>清华大学开源镜像站的 debian 镜像源<br>vi /etc/apt/sources.list<br>先删除原来的内容，再添加以下内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian jessie main contrib non-free</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian jessie main contrib non-free</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian jessie-updates main contrib non-free</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian jessie-updates main contrib non-free</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian-security jessie&#x2F;updates main contrib non-free</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian-security jessie&#x2F;updates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>插上网线，确保能上网！<br> apt-get update</p>
+<p>2、 安装常用的软件</p>
+<p>smplayer（视频播放器）<br>viewnior（图片浏览器）<br>audacious（音频播放器）</p>
+<p>apt-get install smplayer viewnior audacious</p>
+<p>3、配置音频<br>参考：正点原子<br>git clone <a href="https://github.com/dzm2018/audio-Settings.git">https://github.com/dzm2018/audio-Settings.git</a></p>
+<p> asound.conf 和 asound.state 这 两个 文 件<br>cp asound.conf /etc/<br>cp asound.state /var/lib/alsa/<br>sync<br>reboot 重启</p>
+<p>4、配置 mplayer</p>
+<p>声音与画面不同步<br>mkdir /home/linaro/.mplayer/<br>vi /home/linaro/.mplayer/config<br>在/home/linaro/.mplayer/config 添加以下内容<br>framedrop=yes<br>5、测试 视频播放<br>性能的原因： 800*480 的分辨率，建议您转化成 480p</p>
+<h5 id="ARM-远程FTP"><a href="#ARM-远程FTP" class="headerlink" title="ARM 远程FTP"></a>ARM 远程FTP</h5><p>ar -vxzf vsftpd-3.0.3.tar.gz  //解压缩<br>CC = arm-linux-gnueabihf-gcc  //CC 为交叉编译器<br>make  //编译 vsftpd</p>
+<p>会得到两个文件：vsftpd 和 vsftpd.conf，我们需要这两个文件。<br>将 vsftpd 拷贝到开发板根文件系统下的/usr/sbin/ 目录下<br>sudo cp vsftpd /media/ming/rootfs/usr/sbin/</p>
+<p>将 vsftpd.conf 拷贝到开发板根文件系统的/etc/ 目录下<br>sudo cp vsftpd.conf /media/ming/rootfs/etc/</p>
+<p>拷贝完成以后给予 vsftpd 可执行权限，并且修改 vsfptd.conf 所属用户为 root，命令如下：<br>chmod +x /usr/sbin/vsftpd<br>sudo chown root:root /etc/vsftpd.conf</p>
+<p>连接前启动<br>vsftpd &amp;</p>
+<h6 id="踩坑QAQ"><a href="#踩坑QAQ" class="headerlink" title="踩坑QAQ"></a>踩坑QAQ</h6><p>smplayer 有画面没声音？<br>一开始以为打开pulseAudio volume Control设置就行。。。<br>第一次使用声卡之前一定要先使用 amixer 设置声卡，打开耳机和喇叭，并且设置喇叭和耳机音量，串口输入如下命令：<br>amixer sset Headphone 100,100<br>amixer sset Speaker 120,120<br>amixer sset ‘Right Output Mixer PCM’ on<br>amixer sset ‘Left Output Mixer PCM’ on<br>然后就有声音了。。QAQ</p>
+<h5 id="测试视频"><a href="#测试视频" class="headerlink" title="测试视频"></a>测试视频</h5><iframe src="//player.bilibili.com/player.html?aid=243815826&bvid=BV1iv411i7HA&cid=210863550&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width ="100%" height = "600" </iframe>
+
+
+
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux项目开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>QT-自定义类</title>
     <url>/Linux-Lover/QT-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/</url>
     <content><![CDATA[<p>1、调用别人写好类，直接添加，提升为Qwidget即可。</p>
@@ -3226,32 +3264,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3307,6 +3319,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -3696,31 +3734,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>51单片机</title>
-    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
-
-
-
-
-<p>__晶体与晶振</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
-
-
-<p>常见问题 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STM32单片机</title>
     <url>/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<p><strong>时钟系统</strong></p>
@@ -3743,6 +3756,31 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>入堆栈ISR<br>保存现场{PC,PSR,R0-R3,R12,ISR} ISR:当前中断服务寄存器<br>保存完后，ISR进入中断<br>晚来的中断可以ISR进入，不用重新保存现场。</p>
 <p>退出中断<br>出栈恢复现场<br>也可以被打断进入新的中断。</p>
 ]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
@@ -4641,6 +4679,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>zip</p>
 <p>zip -rv xxx.zip xxx   压缩</p>
 <p>unzip -v xxx.zip   解压</p>
+<p>unzip误解压使用以下命令补救：</p>
+<p>zipinfo -1 ./(误解压文件) | xargs rm -rf<br>1<br>如果是tar误解则压使用以下命令补救：</p>
+<p>tar -tf 误解压文件 | xargs rm -rf</p>
 <p><strong>扩展硬盘</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br><span class="line">参考：https://blog.csdn.net/u010801439/article/details/77676668</span><br></pre></td></tr></table></figure>
 <p><strong>/dev/sda 磁盘不足</strong></p>
