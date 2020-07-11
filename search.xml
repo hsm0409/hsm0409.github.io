@@ -139,12 +139,30 @@ height = "600" width ="100%"
       </tags>
   </entry>
   <entry>
-    <title>Linux编程小记之一</title>
-    <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E4%B9%8B%E4%B8%80/</url>
+    <title>Linux编程小记——文件描述符</title>
+    <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/</url>
     <content><![CDATA[<p>好记性不如烂笔头 QvQ</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line">O_RDONLY &#x2F;&#x2F;只读打开</span><br><span class="line">O_WRONLY &#x2F;&#x2F;只写打开</span><br><span class="line">O_RDWR &#x2F;&#x2F;读、写打开</span><br><span class="line">O_APPEND &#x2F;&#x2F;每次写时都追加到文件的尾端</span><br><span class="line">O_CREAT &#x2F;&#x2F;若此文件不存在，则创建它。使用时，需要第三个参数 mode</span><br><span class="line">O_EXCL &#x2F;&#x2F;如果同时指定了 O_CREAT,而文件已经存在，则会出错。用此可以测试一个文件是否存在，</span><br><span class="line">如果不存在，则创建此文件。</span><br><span class="line">O_TRUNC &#x2F;&#x2F;如果此文件存在，而且为只写或读写成功打开，则将其长度截短为 0。</span><br><span class="line">O_NONBLOCK &#x2F;&#x2F;如果 pathname 指的是一个 FIFO、一个块特殊文件或一个字符特殊文件，则此选项为文</span><br><span class="line">件的本次操作和后续的 I&#x2F;O 操作设置非阻塞模式。只用于设备文件，不能用于普通文件。</span><br><span class="line">O_SYNC &#x2F;&#x2F;使每次 write 都等到物理 I&#x2F;O 操作完成，包括由 write 操作引起的文件属性更新所需的</span><br><span class="line">I&#x2F;O。</span><br><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fd&#x3D;open(&quot;123.txt&quot;,O_RDWR|O_CREAT);&#x2F;&#x2F;写入一个新的 123.txt 文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line">O_RDONLY &#x2F;&#x2F;只读打开</span><br><span class="line">O_WRONLY &#x2F;&#x2F;只写打开</span><br><span class="line">O_RDWR &#x2F;&#x2F;读、写打开</span><br><span class="line">O_APPEND &#x2F;&#x2F;每次写时都追加到文件的尾端</span><br><span class="line">O_CREAT &#x2F;&#x2F;若此文件不存在，则创建它。使用时，需要第三个参数 mode</span><br><span class="line">O_EXCL &#x2F;&#x2F;如果同时指定了 O_CREAT,而文件已经存在，则会出错。用此可以测试一个文件是否存在，如果不存在，则创建此文件。</span><br><span class="line">O_TRUNC &#x2F;&#x2F;如果此文件存在，而且为只写或读写成功打开，则将其长度截短为 0。</span><br><span class="line">O_NONBLOCK &#x2F;&#x2F;如果 pathname 指的是一个 FIFO、一个块特殊文件或一个字符特殊文件，则此选项为文</span><br><span class="line">件的本次操作和后续的 I&#x2F;O 操作设置非阻塞模式。只用于设备文件，不能用于普通文件。</span><br><span class="line">O_SYNC &#x2F;&#x2F;使每次 write 都等到物理 I&#x2F;O 操作完成，包括由 write 操作引起的文件属性更新所需的</span><br><span class="line">I&#x2F;O。</span><br><span class="line">&#x2F;*******************************************************************&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fd&#x3D;open(&quot;123.txt&quot;,O_RDWR|O_CREAT);&#x2F;&#x2F;写入一个新的 123.txt 文件</span><br><span class="line"></span><br><span class="line">使用四个数字指定创建文件的权限，与 linux 的权限设置相同，如 ，0755</span><br><span class="line">譬如一般创建一个可读可写不可执行的文件就用 ， 0666</span><br></pre></td></tr></table></figure>
+<h5 id="lseek"><a href="#lseek" class="headerlink" title="lseek"></a>lseek</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lseek(fd, offset, whence(参照物))&#x2F;&#x2F;fd:哪个文件，从 whence 开始，往后偏移 offset 个 </span><br><span class="line">其中，whence 就三个参数 </span><br><span class="line">SEEK_SET 开头 </span><br><span class="line">SEEK_CUR 当前 </span><br><span class="line">SEEK_END 结尾 </span><br><span class="line">(1) 、 将读写位置移到文件开头时</span><br><span class="line">lseek（int fd,0,SEEK_SET）；&#x2F;&#x2F;返回 0</span><br><span class="line">(2) 、 将读写位置移到文件尾时</span><br><span class="line">lseek（int fd，0,SEEK_END）；&#x2F;&#x2F;返回文件长度</span><br><span class="line">(3) 、 想要取得目前文件位置时</span><br><span class="line">lseek（int fd，0,SEEK_CUR）；&#x2F;&#x2F;返回当前文件指针相对于文件开头的偏移量</span><br><span class="line">(4)、用 lseek 测定文件大小的程序</span><br></pre></td></tr></table></figure>
 
-<h5 id="lseek"><a href="#lseek" class="headerlink" title="lseek"></a>lseek</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lseek(fd, offset, whence(参照物))&#x2F;&#x2F;fd:哪个文件，从 whence 开始，往后偏移 offset 个 </span><br><span class="line">其中，whence 就三个参数 </span><br><span class="line">SEEK_SET 开头 </span><br><span class="line">SEEK_CUR 当前 </span><br><span class="line">SEEK_END 结尾 </span><br><span class="line">(1) 、 将读写位置移到文件开头时</span><br><span class="line">lseek（int fd,0,SEEK_SET）；&#x2F;&#x2F;返回 0</span><br><span class="line">(2) 、 将读写位置移到文件尾时</span><br><span class="line">lseek（int fd，0,SEEK_END）；&#x2F;&#x2F;返回文件长度</span><br><span class="line">(3) 、 想要取得目前文件位置时</span><br><span class="line">lseek（int fd，0,SEEK_CUR）；&#x2F;&#x2F;返回当前文件指针相对于文件开头的偏移量</span><br><span class="line">(4)、用 lseek 测定文件大小的程序</span><br></pre></td></tr></table></figure>]]></content>
+<h5 id="打开文件问题"><a href="#打开文件问题" class="headerlink" title="打开文件问题"></a>打开文件问题</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个进程中 2 个打开同一个文件?</span><br><span class="line">文件会被第二个文件操作覆盖</span><br><span class="line"></span><br><span class="line">只想追加内容？</span><br><span class="line">加 O_APPEND 解决覆盖问题</span><br><span class="line"></span><br><span class="line">O_APPEND 的实现原理和其原子操作性说明</span><br><span class="line">关键的核心的东西是文件指针。分别写的内部原理就是 2 个 fd 拥有不同的文件指针，并且彼此只考虑自己的位移。但是 O_APPEND 标志可以让 write 和 read 函数内部多做一件事情，就是移动自己的文件指针的同时也去把别人的文件指针同时移动。（也就是说即使加了O_APPEND，fd1 和 fd2 还是各自拥有一个独立的文件指针，但是这两个文件指针关联起来了，一个动了会通知另一个跟着动）</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件共享的实现方式"><a href="#文件共享的实现方式" class="headerlink" title="文件共享的实现方式"></a>文件共享的实现方式</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">文件共享的核心：是多个文件描述符指向同一个文件</span><br><span class="line">进程表  文件表  V节点</span><br><span class="line"></span><br><span class="line">因为 fd1 和 fd2 分别指向了两个不同的文件表，所以都拥有自己的文件位移量。开始各自的文件位移量都为 0。但是为什么拥有相同的 v 节点呢，毕竟它们对应的都是同一个文件 file。</span><br><span class="line"></span><br><span class="line">一种情况：同一进程内，多次 open 共享同一文件后</span><br><span class="line"></span><br><span class="line">初始文件位移量也为 0，这就是导致覆盖的原因了。</span><br><span class="line"></span><br><span class="line">第二种情况：两个进程共享同一个文件</span><br><span class="line"></span><br><span class="line">每个描述符都指向了各自独立的文件表，但毕竟共享的是同一个文件，所以他们拥有相同的 V 结点</span><br><span class="line"></span><br><span class="line">第三种情况：使用 dup 实现共享同一文件（只能实现接续写）</span><br><span class="line">dup  函数（文件描述符重定位函数），dup 后的多个文件描述符，直接共享同一个文件表</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6.jpg" class="">
+
+
+<h5 id="总结文件描述符"><a href="#总结文件描述符" class="headerlink" title="总结文件描述符"></a>总结文件描述符</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(1)文件描述符的本质是一个数字，这个数字本质上是进程表中文件描述符表的一个表项，进程</span><br><span class="line">通过文件描述符作为 index 去索引查表得到文件表指针，再间接访问得到这个文件对应的文件</span><br><span class="line">表。</span><br><span class="line">(2)文件描述符 fd 是系统自动分配的，很少见 fd 为 0、1、2，是因为 0&#x2F;1&#x2F;2 已经默认被系统占用</span><br><span class="line">了。所以 open 的最小的就是 3.</span><br><span class="line">(3)linux 内核占用了 0、1、2 这三个 fd 是有用的，当我们运行一个程序得到一个进程时，内部</span><br><span class="line">就默认已经打开了 3 个文件，这三个文件对应的 fd 就是 0、1、2。这三个文件分别叫 stdin、</span><br><span class="line">stdout、stderr。</span><br><span class="line"></span><br><span class="line">stdin 标准输入，一般对应的是键盘。&#x2F;&#x2F;0 对应的是键盘的设备文件 </span><br><span class="line">stdout 标准输出，printf 的默认输出&#x2F;&#x2F;1 对应的是 LCD 显示器设备文件 </span><br><span class="line">fprintf：可以指定 fd 输出到其他文件中</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件描述符的复制"><a href="#文件描述符的复制" class="headerlink" title="文件描述符的复制"></a>文件描述符的复制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、函数原型和头文件</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">int dup(int oldfd);</span><br><span class="line">int dup2(int oldfd, int newfd);</span><br><span class="line">作用：用来复制一个现存的文件描述符，其实就是让多个文件描述符指向同一个文件（不用多次open 实现）</span><br><span class="line">调用成功，返回新复制的文件描述符，失败，返回-1，并且 errno被 设置</span><br><span class="line"></span><br><span class="line">dup2 和 dup 的作用是一样的，都是复制一个新的文件描述符。但是 dup2 允许用户指定新的</span><br><span class="line">文件描述符的数字。</span><br><span class="line"></span><br><span class="line">dup2 函数的第二个参数，用于指定新的描述符，如果这个描述符已经打开了，那就先关闭它，然后再复制，只是这个关闭和复制两个动作是一个原子操作，所以 dup2 就避免了 dup 存在的问题。</span><br></pre></td></tr></table></figure>
+<img src="/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/dup.jpg" class="">
+
+
+
+
+
+<p>参考：王维鋆的个人博客：<a href="https://blog.csdn.net/wangweijundeqqeqqqq" target="_blank" rel="noopener">https://blog.csdn.net/wangweijundeqqeqqqq</a></p>
+]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
@@ -3292,32 +3310,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3373,6 +3365,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -3831,7 +3849,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>硬连接 ln  source_path target_path<br>软连接 ln -s source_path target_path</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">	umask     文件      目录</span><br><span class="line">	0         6         7</span><br><span class="line">	1         5         6</span><br><span class="line">	2         4         5</span><br><span class="line">	3         3         4</span><br><span class="line">	4         2         3</span><br><span class="line">	5         1         2</span><br><span class="line">	6         0         1</span><br><span class="line">	7         0         0</span><br></pre></td></tr></table></figure>
 <p><strong>基本概念及变量</strong></p>
-<p>管道<br>把一个命令的输出作为另外一个命令的输入<br>ls -l| sort;  ls | sort<br>重定向  &lt; 输入   &gt;输出<br>与管道相关，可以改变程序运行的输入来源和输出地点<br>sort&lt; myfile.txt    //sort 行进行排序<br>sort&lt;myfile.txt &gt;myfile+sort.txt</p>
+<p>管道<br>把一个命令的输出作为另外一个命令的输入<br>ls -l| sort;  ls | sort<br>重定向  &lt; 输入   &gt;输出<br>///这个&gt;的实现原理，其实就是 open+close+dup<br>先使用 open 打开某个文件，然后利用 close 将文件描述符 1 关闭，就是把标准输出关闭，在利用 dup 将文件描述符 1 复制出来到某个文件即可)//<br>与管道相关，可以改变程序运行的输入来源和输出地点<br>sort&lt; myfile.txt    //sort 行进行排序<br>sort&lt;myfile.txt &gt;myfile+sort.txt</p>
 <p>unset 清除变量<br>unset testvar  ; 测试 echo $testvar;//空行输出<br>readonly的变量，不能被清除</p>
 
 
@@ -3844,22 +3862,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$[ ] 表示形式告诉shell对方括号中的表达式求值</span><br><span class="line">eg: echo $[3+9] </span><br><span class="line"></span><br><span class="line">适应不同进制</span><br><span class="line">[base#n]	n表示基数从2到36任意基数</span><br><span class="line">ming@ubuntu:~$ echo $[10#8+191] </span><br><span class="line">199</span><br><span class="line">ming@ubuntu:~$ echo $[16#a+191] </span><br><span class="line">201</span><br></pre></td></tr></table></figure>
 
 <p>shell输入与输出</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">read -p &#39;请输入需要创建的文件路径：&#39; filepath</span><br><span class="line">touch $filepath</span><br><span class="line">echo &#39;创建成功&#39;</span><br><span class="line">ls -l $filepath</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">一些运算</span><br><span class="line"></span><br><span class="line">-z    空串</span><br><span class="line">-n    非空串</span><br><span class="line">-eq         数值相等。</span><br><span class="line">-ne         数值不相等。</span><br><span class="line">-gt         第一个数大于第二个数。</span><br><span class="line">-lt          第一个数小于第二个数。</span><br><span class="line">-le         第一个数小于等于第二个数。</span><br><span class="line">-ge         第一个数大于等于第二个数。</span><br><span class="line">加法运算：expr 10 + 10</span><br><span class="line">减法运算：expr 20 - 10</span><br><span class="line">加法运算：expr 10 &#x2F; 5</span><br><span class="line">乘法运算：expr 10 \* 5</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">read -p &#39;请输入需要创建的文件路径：&#39; filepath</span><br><span class="line">touch $filepath</span><br><span class="line">echo &#39;创建成功&#39;</span><br><span class="line">ls -l $filepath</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">一些运算</span><br><span class="line"></span><br><span class="line">-z    空串</span><br><span class="line">-n    非空串</span><br><span class="line">-eq         数值相等。</span><br><span class="line">-ne         数值不相等。</span><br><span class="line">-gt         第一个数大于第二个数。</span><br><span class="line">-lt          第一个数小于第二个数。</span><br><span class="line">-le         第一个数小于等于第二个数。</span><br><span class="line">-ge         第一个数大于等于第二个数。</span><br><span class="line">加法运算：expr 10 + 10</span><br><span class="line">减法运算：expr 20 - 10</span><br><span class="line">加法运算：expr 10 &#x2F; 5</span><br><span class="line">乘法运算：expr 10 \* 5</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>shell Lover</category>
       </categories>

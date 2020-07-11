@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="我的博客">
 <meta property="og:description" content="bash大多数Linux系统默认使用的shell，bash shell 是shell 的一个免费版本，它是最早的 Unix shell，bash还有一个特点，可以通过help命令来查看帮助。包含的功能几乎可以涵盖shell所具有的功能，所以一般的shell脚本都会指定它为执行路径。 注意：windows 下 powershell QAQ 1234编写：test.sh#!&#x2F;bin&#x2F;bashecho">
 <meta property="article:published_time" content="2020-04-23T15:55:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T08:32:29.060Z">
+<meta property="article:modified_time" content="2020-07-11T14:38:35.514Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="shell基础">
 <meta name="twitter:card" content="summary">
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  752 字
+                  822 字
                 </span>
               
 
@@ -483,7 +483,7 @@
 <p>硬连接 ln  source_path target_path<br>软连接 ln -s source_path target_path</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	umask     文件      目录</span><br><span class="line">	0         6         7</span><br><span class="line">	1         5         6</span><br><span class="line">	2         4         5</span><br><span class="line">	3         3         4</span><br><span class="line">	4         2         3</span><br><span class="line">	5         1         2</span><br><span class="line">	6         0         1</span><br><span class="line">	7         0         0</span><br></pre></td></tr></table></figure>
 <p><strong>基本概念及变量</strong></p>
-<p>管道<br>把一个命令的输出作为另外一个命令的输入<br>ls -l| sort;  ls | sort<br>重定向  &lt; 输入   &gt;输出<br>与管道相关，可以改变程序运行的输入来源和输出地点<br>sort&lt; myfile.txt    //sort 行进行排序<br>sort&lt;myfile.txt &gt;myfile+sort.txt</p>
+<p>管道<br>把一个命令的输出作为另外一个命令的输入<br>ls -l| sort;  ls | sort<br>重定向  &lt; 输入   &gt;输出<br>///这个&gt;的实现原理，其实就是 open+close+dup<br>先使用 open 打开某个文件，然后利用 close 将文件描述符 1 关闭，就是把标准输出关闭，在利用 dup 将文件描述符 1 复制出来到某个文件即可)//<br>与管道相关，可以改变程序运行的输入来源和输出地点<br>sort&lt; myfile.txt    //sort 行进行排序<br>sort&lt;myfile.txt &gt;myfile+sort.txt</p>
 <p>unset 清除变量<br>unset testvar  ; 测试 echo $testvar;//空行输出<br>readonly的变量，不能被清除</p>
 
 
@@ -497,21 +497,6 @@
 
 <p>shell输入与输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">read -p &#39;请输入需要创建的文件路径：&#39; filepath</span><br><span class="line">touch $filepath</span><br><span class="line">echo &#39;创建成功&#39;</span><br><span class="line">ls -l $filepath</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">一些运算</span><br><span class="line"></span><br><span class="line">-z    空串</span><br><span class="line">-n    非空串</span><br><span class="line">-eq         数值相等。</span><br><span class="line">-ne         数值不相等。</span><br><span class="line">-gt         第一个数大于第二个数。</span><br><span class="line">-lt          第一个数小于第二个数。</span><br><span class="line">-le         第一个数小于等于第二个数。</span><br><span class="line">-ge         第一个数大于等于第二个数。</span><br><span class="line">加法运算：expr 10 + 10</span><br><span class="line">减法运算：expr 20 - 10</span><br><span class="line">加法运算：expr 10 &#x2F; 5</span><br><span class="line">乘法运算：expr 10 \* 5</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       
     </div>
     
@@ -758,7 +743,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">86k</span>
+    <span title="Site words total count">87.1k</span>
   
 </div>
 
