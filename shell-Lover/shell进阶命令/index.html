@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="find命令 常用1、查找当前用户主目录下的所有文件：$ find $HOME -print$ find ~ -print 2、查找系统中最后N分钟被改变文件数据的文件 $find -mmin n在系统根目录下查找更改时间在5日以内的文件，可以用：$ find &#x2F; -mtime -5 -print find和Xargsfind命令把匹配到的文件传递给xargs命令，而xargs命令每次只获取一部分">
 <meta property="article:published_time" content="2020-05-28T16:29:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T08:31:41.359Z">
+<meta property="article:modified_time" content="2020-07-19T08:50:16.157Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="shell基础">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">梦在广工</p>
+        <p class="site-subtitle">好记性不如烂笔头QAQ</p>
       
   </div>
 
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  404 字
+                  483 字
                 </span>
               
 
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -477,20 +477,27 @@
 <p>$find -mmin n<br>在系统根目录下查找更改时间在5日以内的文件，可以用：<br>$ find / -mtime -5 -print</p>
 <p>find和Xargs<br>find命令把匹配到的文件传递给xargs命令，而xargs命令每次只获取一部分文件而不是全部，不像-exec选项那样。这样它可以先处理最先获取的一部分文件，然后是下一批，并如此继续下去。</p>
 <p>awk命令</p>
-<p>awk ‘{print $NF}’ myfile.sh<br>print $NF可以打印出一行中的最后一个字段，使用$(NF-1)则是打印倒数第二个字段</p>
+<p>awk ‘{print $NF}’ file.txt<br>print $NF可以打印出一行中的最后一个字段，使用$(NF-1)则是打印倒数第二个字段</p>
+<p>awk ‘NR==10’ file.txt</p>
+<p>awk两种特殊模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">BEGIN (初始化)和 END(输出)</span><br><span class="line"># 转置</span><br><span class="line">awk &#39;</span><br><span class="line">  &#123;</span><br><span class="line"> for(i&#x3D;1;i&lt;&#x3D;NF;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                if( NR &#x3D;&#x3D; 1)</span><br><span class="line">                &#123;</span><br><span class="line">                    res[i] &#x3D; $i</span><br><span class="line">                &#125;   </span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    res[i]&#x3D;res[i]&quot; &quot;$i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">END &#123;</span><br><span class="line">    for(j &#x3D; 1; j&lt;&#x3D; NF  ; j++)</span><br><span class="line">    &#123;</span><br><span class="line">       print res[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#39;     file.txt</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
 <p>sed命令<br> 通过文件或管道读取文件内容。</p>
 <ul>
 <li>sed并不直接修改源文件，而是将读入的内容复制到缓冲区中，我们称之为模式空间（pattern space）。</li>
 <li>根据sed的指令对模式空间中的内容进行处理并输出结果，默认输出至标准输出即屏幕上。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 这里就简单介绍几个脚本指令操作作为sed程序的例子。</span><br><span class="line">    a,append        追加</span><br><span class="line">    i,insert        插入</span><br><span class="line">    d,delete        删除</span><br><span class="line">    s,substitution  替换</span><br><span class="line">    </span><br><span class="line">查找替换应用举例</span><br><span class="line">sed  &#39;2a TYPE&#x3D;Ethernet&#39;  test.txt    第二行后添加新行TYPE&#x3D;Ethernet</span><br><span class="line">sed  &#39;3i  TYPE&#x3D;Ethernet&#39;  test.txt   第三行前添加新行  TYPE&#x3D;Ethernet</span><br><span class="line">sed  &#39;s&#x2F;yes&#x2F;no&#x2F;g&#39;     test.txt       将样本文件中的所有yes替换为no</span><br><span class="line">sed  &#39;3,4d&#39;  test.txt                删除第3至4行的内容</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
       
     </div>
     
@@ -611,7 +618,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">198</span>
+                  <span class="site-state-item-count">205</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -700,7 +707,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -737,7 +744,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">87.4k</span>
+    <span title="Site words total count">92.7k</span>
   
 </div>
 

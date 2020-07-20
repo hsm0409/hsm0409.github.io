@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="进程基本概念1234567进程是操作系统分配的内存、CPU时间片等资源的基本单位,是资源分配的最小单位(线程是CPU执行单位)。进程是操作系统对资源的一种抽象，一个进程由三部分组成:1）进程控制块PCB：用于描述进程情况及控制进程运行所需的全部信息。2）代码段：是进程中能被进程调度程序在CPU上执行的程序代码段。3）数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行">
 <meta property="article:published_time" content="2020-04-21T10:02:00.000Z">
-<meta property="article:modified_time" content="2020-04-21T14:50:08.242Z">
+<meta property="article:modified_time" content="2020-07-17T07:20:00.080Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux应用编程">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">梦在广工</p>
+        <p class="site-subtitle">好记性不如烂笔头QAQ</p>
       
   </div>
 
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  724 字
+                  1k 字
                 </span>
               
 
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -481,6 +481,12 @@
 <h5 id="避免僵尸进程"><a href="#避免僵尸进程" class="headerlink" title="避免僵尸进程"></a>避免僵尸进程</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">避免僵尸进程</span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line">signal(SIGCHLD, SIG_IGN);//子进程信号，忽略</span><br></pre></td></tr></table></figure>
 
 <h5 id="1：n-的机制"><a href="#1：n-的机制" class="headerlink" title="1：n 的机制"></a>1：n 的机制</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、从子进程获得父进程id容易。</span><br><span class="line">2、把子进程id返回给父进程，以便控制</span><br></pre></td></tr></table></figure>
+<p>创建多个子进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"> #include &lt;stdio.h&gt;</span><br><span class="line"> #include &lt;stdlib.h&gt;</span><br><span class="line"> #include &lt;string.h&gt;</span><br><span class="line"> #include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line"> #include &lt;sys&#x2F;sem.h&gt;</span><br><span class="line"> #include &lt;sys&#x2F;types.h&gt;</span><br><span class="line"> #include &lt;sys&#x2F;shm.h&gt;</span><br><span class="line"> #include &lt;signal.h&gt;</span><br><span class="line"> #include &lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line"> int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid;    </span><br><span class="line">    int i; </span><br><span class="line">    int num &#x3D; 3 ; </span><br><span class="line">    for(i&#x3D;0;i&lt;num;i++)    </span><br><span class="line">    &#123;    </span><br><span class="line">        pid&#x3D;fork();    </span><br><span class="line">        if(pid&#x3D;&#x3D;0||pid&#x3D;&#x3D;-1)  &#x2F;&#x2F;子进程或创建进程失败均退出,这里是关键所在  </span><br><span class="line">        &#123;    </span><br><span class="line">            break;    </span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;    </span><br><span class="line">    if(pid&#x3D;&#x3D;-1)    </span><br><span class="line">    &#123;    </span><br><span class="line">        perror(&quot;fail to fork!\n&quot;);    </span><br><span class="line">        exit(1);    </span><br><span class="line">    &#125;    </span><br><span class="line">    else if(pid&#x3D;&#x3D;0 || i &#x3D;&#x3D; 0)    </span><br><span class="line">    &#123;    </span><br><span class="line">        printf(&quot;子进程id&#x3D;%d,其对应的父进程id&#x3D;%d\n&quot;,getpid(),getppid());    </span><br><span class="line">        exit(0);    </span><br><span class="line">    &#125;    </span><br><span class="line"> else if(pid&#x3D;&#x3D;0 || i &#x3D;&#x3D; 1)    </span><br><span class="line">    &#123;    </span><br><span class="line">        printf(&quot;子进程id&#x3D;%d,其对应的父进程id&#x3D;%d\n&quot;,getpid(),getppid());    </span><br><span class="line">        exit(0);    </span><br><span class="line">    &#125;  </span><br><span class="line">     else if(pid&#x3D;&#x3D;0 || i &#x3D;&#x3D; 2)    </span><br><span class="line"></span><br><span class="line">    &#123;    </span><br><span class="line">        printf(&quot;子进程id&#x3D;%d,其对应的父进程id&#x3D;%d\n&quot;,getpid(),getppid());    </span><br><span class="line"></span><br><span class="line">        exit(0);    </span><br><span class="line">    &#125;  </span><br><span class="line">    else  </span><br><span class="line">    &#123;    </span><br><span class="line">        printf(&quot;父进程id&#x3D;%d\n&quot;,getpid());    </span><br><span class="line">        exit(0);    </span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多个指定，建议用高级信号的写法<br>sigaction、signalqueue<br>把pidpid_Array[i] = pid = fork();</p>
+<p>rk();</p>
+<p> fork();</p>
+
       
     </div>
     
@@ -610,7 +616,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">198</span>
+                  <span class="site-state-item-count">205</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -716,7 +722,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -753,7 +759,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">87.4k</span>
+    <span title="Site words total count">92.7k</span>
   
 </div>
 
