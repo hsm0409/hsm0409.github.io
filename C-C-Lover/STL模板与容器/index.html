@@ -115,14 +115,14 @@
 
 
 
-<meta name="description" content="vector 单端，尾插 deque 双端，首部尾部插 stack  先进后出（deques首部闭合）  pop push quece 队列，先进先出           list   链表，随时插入 set 唯一值，数值顺序排顺序 map&#x2F;multimap    关联式map&lt;T1,T2&gt; map TT; map.insert(map&lt;int,string&gt;::value">
+<meta name="description" content="STL容器介绍    标准模板库是一个基于模板的容器类库,包括链表、列表、队列和堆栈。标准模板库还包含许多常用的算法,包括排序和查找。   标准模板库容器类有两种类型,分别为顺序和关联。顺序容器可以提供对其成员的顺序访问和随机访问。关联容器则经过优化关键值访问它们的元素。标准模板库在不同操作系统间是可移植的。所有标准模板库容器类都namespace std 定义。 二次析构 深拷贝与浅拷贝 构造函">
 <meta property="og:type" content="article">
-<meta property="og:title" content="容器结构小结">
-<meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:title" content="STL模板与容器">
+<meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/STL%E6%A8%A1%E6%9D%BF%E4%B8%8E%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="我的笔记">
-<meta property="og:description" content="vector 单端，尾插 deque 双端，首部尾部插 stack  先进后出（deques首部闭合）  pop push quece 队列，先进先出           list   链表，随时插入 set 唯一值，数值顺序排顺序 map&#x2F;multimap    关联式map&lt;T1,T2&gt; map TT; map.insert(map&lt;int,string&gt;::value">
-<meta property="article:published_time" content="2020-04-28T13:25:00.000Z">
-<meta property="article:modified_time" content="2020-04-28T13:31:58.542Z">
+<meta property="og:description" content="STL容器介绍    标准模板库是一个基于模板的容器类库,包括链表、列表、队列和堆栈。标准模板库还包含许多常用的算法,包括排序和查找。   标准模板库容器类有两种类型,分别为顺序和关联。顺序容器可以提供对其成员的顺序访问和随机访问。关联容器则经过优化关键值访问它们的元素。标准模板库在不同操作系统间是可移植的。所有标准模板库容器类都namespace std 定义。 二次析构 深拷贝与浅拷贝 构造函">
+<meta property="article:published_time" content="2020-07-24T07:16:00.000Z">
+<meta property="article:modified_time" content="2020-07-24T17:00:46.782Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary">
@@ -155,13 +155,13 @@
 
 
 
-  <link rel="canonical" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/容器结构/"/>
+  <link rel="canonical" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/STL模板与容器/"/>
 
 
 
 
 
-  <title>容器结构小结 | 我的笔记</title>
+  <title>STL模板与容器 | 我的笔记</title>
   
 
 
@@ -339,7 +339,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/STL%E6%A8%A1%E6%9D%BF%E4%B8%8E%E5%AE%B9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="梦在广工">
@@ -356,7 +356,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">容器结构小结</h1>
+          <h1 class="post-title" itemprop="name headline">STL模板与容器</h1>
         
 
         <div class="post-meta">
@@ -368,8 +368,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T21:25:00+08:00">
-                2020-04-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-24T15:16:00+08:00">
+                2020-07-24
               </time>
             
 
@@ -409,8 +409,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/" itemprop="commentCount"></span>
+                <a href="/C-C-Lover/STL%E6%A8%A1%E6%9D%BF%E4%B8%8E%E5%AE%B9%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/C-C-Lover/STL%E6%A8%A1%E6%9D%BF%E4%B8%8E%E5%AE%B9%E5%99%A8/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  90 字
+                  798 字
                 </span>
               
 
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -471,17 +471,20 @@
       
 
       
-        <p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
-<p>set 唯一值，数值顺序排顺序</p>
-<p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
-<p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
-<p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
-<p>map.insert(make_pair(-1,”小张-1”))；</p>
+        <p><strong>STL容器介绍</strong></p>
+<p>   标准模板库是一个基于模板的容器类库,包括链表、列表、队列和堆栈。标准模板库还包含许多常用的算法,包括排序和查找。<br>   标准模板库容器类有两种类型,分别为顺序和关联。顺序容器可以提供对其成员的顺序访问和随机访问。关联容器则经过优化关键值访问它们的元素。标准模板库在不同操作系统间是可移植的。所有标准模板库容器类都namespace std 定义。</p>
+<p><strong>二次析构 深拷贝与浅拷贝</strong></p>
+<p>构造函数的问题深复制<br>CDemo(const CDemo &amp;cd)<br>{<br>    this-&gt;str = new char[strlen(cd.str)+1];<br>    strcp(str,cd.str);<br>}</p>
+<p><strong>erase()</strong><br>错误:野指针<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); iter++)<br>{<br>      if( *iter == 3)<br>             veci.erase(iter);<br>}<br>错误：无法删除连续3<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); iter++)<br>{<br>      if( *iter == 3)<br>             iter = veci.erase(iter);<br>}<br>正确1：<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); )<br>{<br>     if( *iter == 3)<br>          iter = veci.erase(iter); //返回值指向删除元素的下一个元素<br>      else<br>            iter ++ ;<br>}</p>
+<p>正确2：<br>veci.earse(remove(veci.begin(),veci.end(),3),veic.end());<br>remove函数删除元素后并不会改变vector的大小，只是把后面的元素往前移，并返回一个指向vector末尾的新迭代器。</p>
+<p><strong>泛型编程</strong></p>
+<p>泛型编程是一种基于发现高效算法的最抽象表示的编程方法。也就是说,以算法为起点并寻找能使其工作且有效率工作的最一般的必要条件集。泛型编程假定有某些基本的法则在支配软件组件的行为,并且基于这些法则有可能设计可互操作的模块,甚至还有可以使用此法则去指导我们的软件设计。STL就是一个泛型编程的例子。</p>
+<p>普通函数转为泛型函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const int* find1(const int * array,int n ,int x)</span><br><span class="line">&#123;</span><br><span class="line">	const int * p &#x3D; array;</span><br><span class="line">	for (int i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (*p &#x3D;&#x3D; x)</span><br><span class="line">		&#123;</span><br><span class="line">			return p;</span><br><span class="line">		&#125;</span><br><span class="line">		++p;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">const T* find1(const T * array, T n, T x)</span><br><span class="line">&#123;</span><br><span class="line">	const T * p &#x3D; array;</span><br><span class="line">	for (int i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (*p &#x3D;&#x3D; x)</span><br><span class="line">		&#123;</span><br><span class="line">			return p;</span><br><span class="line">		&#125;</span><br><span class="line">		++p;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;求除</span><br><span class="line">int jug(int x ,int y)</span><br><span class="line">&#123;</span><br><span class="line">	if (x &gt;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(y &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		return x &#x2F; y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;求差</span><br><span class="line">int  mins(int x, int y)</span><br><span class="line">&#123;</span><br><span class="line">	return (x - y);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;求和</span><br><span class="line">int  sub(int x ,int y)</span><br><span class="line">&#123;</span><br><span class="line">	return (x + y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void  mytest(int (*p)(int ,int),int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	int ret;</span><br><span class="line">	ret &#x3D; (*p)(a, b);</span><br><span class="line">	cout &lt;&lt; ret &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	mytest(sub, 1, 4);</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">bool check[10] &#x3D; &#123;false&#125;;</span><br><span class="line">vector&lt;int&gt; v;</span><br><span class="line">void nineBitInteger(int k, long long a)</span><br><span class="line">&#123;  </span><br><span class="line">	if (k&amp;&amp;a%k !&#x3D; 0)return;</span><br><span class="line">	if (k &#x3D;&#x3D; 9)</span><br><span class="line">	&#123;</span><br><span class="line">		v.push_back(a);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i &#x3D; 1; i &lt;&#x3D; 9; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (!check[i])  &#x2F;&#x2F;互斥的感觉</span><br><span class="line">		&#123; </span><br><span class="line">			check[i] &#x3D; 1;</span><br><span class="line">			mysum(k + 1, a * 10 + i);</span><br><span class="line">			check[i] &#x3D; 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	mysum(0, 0);</span><br><span class="line">	for (int i &#x3D; 0; i &lt; v.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; v[i];</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -511,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" rel="next" title="容器算法小结">
-                <i class="fa fa-chevron-left"></i> 容器算法小结
+              <a href="/C-C-Lover/%E6%8C%87%E9%92%88%E5%A4%8D%E4%B9%A0/" rel="next" title="指针复习">
+                <i class="fa fa-chevron-left"></i> 指针复习
               </a>
             
           </div>
@@ -521,8 +524,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/C-C-Lover/nion%E7%9A%84%E7%94%A8%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="prev" title="union的用法及应用场景">
-                union的用法及应用场景 <i class="fa fa-chevron-right"></i>
+              <a href="/C-C-Lover/%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/" rel="prev" title="面向对象基础">
+                面向对象基础 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -602,7 +605,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">205</span>
+                  <span class="site-state-item-count">209</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -691,7 +694,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -728,7 +731,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">92.7k</span>
+    <span title="Site words total count">97k</span>
   
 </div>
 

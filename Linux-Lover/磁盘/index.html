@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="bzip2 bzip2 -z xxx bzip2 -d xxx.gz tar tar -vcjf xxx xxx   bz2 tar -vxjf xxxx tar -vczf xxx xxx  压缩gz tar -vxzf xxxx  解压 tar -vxzf xxxx（目录） -C xxx(路径) rar rar -a xxx.rar xxx   压缩 rar -x xxx.rar   解压 z">
 <meta property="article:published_time" content="2020-02-14T05:58:00.000Z">
-<meta property="article:modified_time" content="2020-07-08T04:22:40.871Z">
+<meta property="article:modified_time" content="2020-07-22T09:30:32.781Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux系统">
 <meta name="twitter:card" content="summary">
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  269 字
+                  270 字
                 </span>
               
 
@@ -489,10 +489,11 @@
 <p>unzip误解压使用以下命令补救：</p>
 <p>zipinfo -1 ./(误解压文件) | xargs rm -rf<br>1<br>如果是tar误解则压使用以下命令补救：</p>
 <p>tar -tf 误解压文件 | xargs rm -rf</p>
+<p>格式.Z,文件名字为rr.Z<br>compress：压缩.Z文件<br>uncompress：解压缩.Z文件</p>
 <p><strong>扩展硬盘</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br><span class="line">参考：https://blog.csdn.net/u010801439/article/details/77676668</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br></pre></td></tr></table></figure>
 <p><strong>/dev/sda 磁盘不足</strong></p>
-<p>#sudo apt-get autoclean<br> #sudo apt-get clean<br>#sudo apt-get autoremove<br>执行完后直接将/usr下释放了1G左右的空间。<br>整合碎片使用<br>参考：<a href="https://blog.csdn.net/itas109/article/details/83341149" target="_blank" rel="noopener">https://blog.csdn.net/itas109/article/details/83341149</a></p>
+<p>#sudo apt-get autoclean<br> #sudo apt-get clean<br>#sudo apt-get autoremove<br>执行完后直接将/usr下释放了1G左右的空间。<br>整合碎片使用</p>
 
       
     </div>
@@ -614,7 +615,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">205</span>
+                  <span class="site-state-item-count">209</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -703,7 +704,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -740,7 +741,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">92.7k</span>
+    <span title="Site words total count">97k</span>
   
 </div>
 

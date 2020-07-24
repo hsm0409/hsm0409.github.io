@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>面向对象基础</title>
+    <url>/C-C-Lover/%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p><strong>面向对象设计的三原则</strong></p>
+<p>封装,继承,多态。<br>封装关键字：private、protect之类，访问控制，信息隐藏。</p>
+<p><strong>对于一个空类,编译器默认产生4个成员函数</strong></p>
+<p>默认构造函数、析构函数、复制造函数和赋值函数</p>
+<p><strong>成员变量</strong></p>
+<p>静态成员数据类中共享。<br>程序错在设定了静态成员变量,却没有给静态成员变量赋初值。如果把静态成」员数据设为私有,可以通过公有静态成员函数访问。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">错误：</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">	const int size &#x3D; 0;</span><br><span class="line">&#125;;</span><br><span class="line">修改1：</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line"> A()</span><br><span class="line"> &#123;</span><br><span class="line"> const int size &#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">修改1：</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">static  const int size &#x3D; 0;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>构造函数与析构函数</strong></p>
+<p>无论析构函数是不是虚函数,派生类对象被撤销时,最后调其基类的析构函数。<br>为什么虚析构函数？<br>所有对象都存在于栈框中,当离开其所处的作用域时,该对象会被自动撤销,似乎看不出什么大问题。但是试想,如果CChild类的构造函数CChild()在堆中分配了内存,而其析构函数又不是virtual型的,那么撤销pBase时,将不会调用CChild::~CChildo().从而不会释放CChild:CChild()占据的内存,造成内存泄漏。</p>
+<p>析构函数可以为virtual型,构造函数则不能。那么为什么构造函数不能为虚呢?<br>虚函数采用一种虚调用的办法。虚调用是一种可以在只有部分信息的情况下工作的机制,特别允许我们调用一个只知道接口而不知道其准确对象类型的函数。但是如果要创建一个对象,你势必要知道对象的准确类型,因此构造函数不能为虚。</p>
+<p>如果虚函数是非常有效的,我们是否可以把每个函数都声名为虚函数?</p>
+<p>不行,这是因为虚函数是有代价的:由于每个虚函数的对象都必须维护一个v表,因此在使用虚函数的时候都会产生一个系统开销。</p>
+<p>析构函数可以内联？<br>可以。</p>
+<p><strong>多态的概念</strong></p>
+<p>多态性可以简单地概括为“一个接口,多种方法”,在程序运行的过程中才决定调用的。<br>静态，动态，多态？<br>分为静态多态（函数重载，泛型编程）和动态多态（虚函数）<br>宏,内联函数,模板都可以在编译时候解析,唯独虚函数不行,它必须在运行时才能确定。</p>
+<p>重载与覆盖？<br>重载：已有的函数同名，参数不一致。<br>覆盖：虚函数，派生重写基类虚函数。</p>
+<p><strong>友元friend</strong></p>
+<p>类具有封装和信息隐藏的特性。只有类的成员函数才能访问类的私有成员,程序中的其他函数是无法访问私有成员的。非成员函数可以访问类中的公有成员,但是如果将数据成员都定义为公有的,这又破坏了隐藏的特性。<br>使用友元的方案。友元是一种定义在类外部的普通函数.</p>
+<p><strong>异常</strong></p>
+<p>catch代码块必须出现在try后，并且在try块后可以出现多个catch代码块，以捕捉各种不同类型的抛掷。<br>异常机制是基于这样的原理：程序运行实质上是数据实体在做一些操作，因此发生异常现象的地方，一定是某个实体出了差错，该实体所对应的数据类型便作为抛掷和捕捉的依据。</p>
+<p>栈解旋;异常被抛出后，从进入try块起，到异常被抛掷前，这期间在栈上的构造的所有对象，都会被自动析构。析构的顺序与构造的顺序相反。这一过程称为栈的解旋(unwinding)。</p>
+<p>1）为了加强程序的可读性，可以在函数声明中列出可能抛出的所有异常类型，例如：<br>void func() throw (A, B, C , D); //这个函数func（）能够且只能抛出类型A B C D及其子类型的异常。<br>2）如果在函数声明中没有包含异常接口声明，则次函数可以抛掷任何类型的异常，例如：<br>void func();<br>3）一个不抛掷任何类型异常的函数可以声明为：<br>void func()  throw();</p>
+<p>构造函数有必要异常抛出。<br>例子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int divide(int x, int y )</span><br><span class="line">&#123;</span><br><span class="line">	if (y &#x3D;&#x3D;0)</span><br><span class="line">	&#123;</span><br><span class="line">		throw x;</span><br><span class="line">	&#125;</span><br><span class="line">	return x&#x2F;y;</span><br><span class="line"></span><br><span class="line">void main41()</span><br><span class="line">&#123;</span><br><span class="line">	try</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;8&#x2F;2 &#x3D; &quot; &lt;&lt; divide(8, 2) &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;10&#x2F;0 &#x3D;&quot; &lt;&lt; divide(10, 0) &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	catch (int e)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;e&quot; &lt;&lt; &quot; is divided by zero!&quot; &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	catch(...)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;未知异常&quot; &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; &quot;ok&quot; &lt;&lt; endl;</span><br><span class="line"> 	system(&quot;pause&quot;);</span><br><span class="line">	return ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STL模板与容器</title>
+    <url>/C-C-Lover/STL%E6%A8%A1%E6%9D%BF%E4%B8%8E%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<p><strong>STL容器介绍</strong></p>
+<p>   标准模板库是一个基于模板的容器类库,包括链表、列表、队列和堆栈。标准模板库还包含许多常用的算法,包括排序和查找。<br>   标准模板库容器类有两种类型,分别为顺序和关联。顺序容器可以提供对其成员的顺序访问和随机访问。关联容器则经过优化关键值访问它们的元素。标准模板库在不同操作系统间是可移植的。所有标准模板库容器类都namespace std 定义。</p>
+<p><strong>二次析构 深拷贝与浅拷贝</strong></p>
+<p>构造函数的问题深复制<br>CDemo(const CDemo &amp;cd)<br>{<br>    this-&gt;str = new char[strlen(cd.str)+1];<br>    strcp(str,cd.str);<br>}</p>
+<p><strong>erase()</strong><br>错误:野指针<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); iter++)<br>{<br>      if( *iter == 3)<br>             veci.erase(iter);<br>}<br>错误：无法删除连续3<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); iter++)<br>{<br>      if( *iter == 3)<br>             iter = veci.erase(iter);<br>}<br>正确1：<br>for(vector<int>::iterator iter=veci.begin(); iter!=veci.end(); )<br>{<br>     if( *iter == 3)<br>          iter = veci.erase(iter); //返回值指向删除元素的下一个元素<br>      else<br>            iter ++ ;<br>}</p>
+<p>正确2：<br>veci.earse(remove(veci.begin(),veci.end(),3),veic.end());<br>remove函数删除元素后并不会改变vector的大小，只是把后面的元素往前移，并返回一个指向vector末尾的新迭代器。</p>
+<p><strong>泛型编程</strong></p>
+<p>泛型编程是一种基于发现高效算法的最抽象表示的编程方法。也就是说,以算法为起点并寻找能使其工作且有效率工作的最一般的必要条件集。泛型编程假定有某些基本的法则在支配软件组件的行为,并且基于这些法则有可能设计可互操作的模块,甚至还有可以使用此法则去指导我们的软件设计。STL就是一个泛型编程的例子。</p>
+<p>普通函数转为泛型函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const int* find1(const int * array,int n ,int x)</span><br><span class="line">&#123;</span><br><span class="line">	const int * p &#x3D; array;</span><br><span class="line">	for (int i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (*p &#x3D;&#x3D; x)</span><br><span class="line">		&#123;</span><br><span class="line">			return p;</span><br><span class="line">		&#125;</span><br><span class="line">		++p;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">const T* find1(const T * array, T n, T x)</span><br><span class="line">&#123;</span><br><span class="line">	const T * p &#x3D; array;</span><br><span class="line">	for (int i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (*p &#x3D;&#x3D; x)</span><br><span class="line">		&#123;</span><br><span class="line">			return p;</span><br><span class="line">		&#125;</span><br><span class="line">		++p;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;求除</span><br><span class="line">int jug(int x ,int y)</span><br><span class="line">&#123;</span><br><span class="line">	if (x &gt;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(y &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		return x &#x2F; y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;求差</span><br><span class="line">int  mins(int x, int y)</span><br><span class="line">&#123;</span><br><span class="line">	return (x - y);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;求和</span><br><span class="line">int  sub(int x ,int y)</span><br><span class="line">&#123;</span><br><span class="line">	return (x + y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void  mytest(int (*p)(int ,int),int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	int ret;</span><br><span class="line">	ret &#x3D; (*p)(a, b);</span><br><span class="line">	cout &lt;&lt; ret &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	mytest(sub, 1, 4);</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">bool check[10] &#x3D; &#123;false&#125;;</span><br><span class="line">vector&lt;int&gt; v;</span><br><span class="line">void nineBitInteger(int k, long long a)</span><br><span class="line">&#123;  </span><br><span class="line">	if (k&amp;&amp;a%k !&#x3D; 0)return;</span><br><span class="line">	if (k &#x3D;&#x3D; 9)</span><br><span class="line">	&#123;</span><br><span class="line">		v.push_back(a);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i &#x3D; 1; i &lt;&#x3D; 9; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (!check[i])  &#x2F;&#x2F;互斥的感觉</span><br><span class="line">		&#123; </span><br><span class="line">			check[i] &#x3D; 1;</span><br><span class="line">			mysum(k + 1, a * 10 + i);</span><br><span class="line">			check[i] &#x3D; 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	mysum(0, 0);</span><br><span class="line">	for (int i &#x3D; 0; i &lt; v.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; v[i];</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>指针复习</title>
+    <url>/C-C-Lover/%E6%8C%87%E9%92%88%E5%A4%8D%E4%B9%A0/</url>
+    <content><![CDATA[<p><strong>指针和引用的差别</strong><br>(1)非空区别。在任何情况下都不能使用指向空值的引用。<br>(2)合法性区别。在使用引用之前不需要测试它的合法性。指针则应该总是被测试,防止其为空。<br>(3)可修改区别。指针可以被重新赋值以指向另一个不同的对象。引用则总是指向在初始化时被指定的对象不能改变,但其内容可以改变。<br>(4)应用区别。<br>·一是考虑到存在不指向任何对象的可能(在这种情况下,能够设置指针为空),二是需要能够在不同的时刻指向不同的对象。<br>·如果总是指向一个对象并且一旦指向一个对象后就不会改变指向,那么应该使用引用。</p>
+<p><strong>传递动态内存</strong></p>
+<p>//禁止写法：<br>int *tmp;<br>*tmp = *P;<br>//系统随即安排tmp的地址，函数结束不回收，造成内存泄漏<br>例如下列也是不予许的。<br> int *ptr;<br> ptr = (int *)0x8000;   //这里<br> *ptr = 0xaabb;<br> 因为如果0x8000的内存地址已被其它程序占用，则会崩溃</p>
+<p><strong>函数指针</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">	数组参数					等效的指针参数</span><br><span class="line">一维数组 char a[30]				指针 char*</span><br><span class="line">指针数组 char *a[30]				指针的指针 char **a</span><br><span class="line">二维数组 char a[10][30]			数组的指针 char(*a)[30]  &#x2F;&#x2F;行</span><br><span class="line"></span><br><span class="line"> int a[10]&#x3D;&#123;1,2,3,4,5,6,7,8,9,10&#125;;</span><br><span class="line">看出 &amp;a+1 实际上增长是40，就是整个数组的长度。</span><br></pre></td></tr></table></figure>
+<p><strong>迷途指针</strong></p>
+<p>delete 后,使用迷途指针并且重新赋值，造成系统崩溃。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef unsigned short int USHORT;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">USHORT *pInt &#x3D; new USHORT ;</span><br><span class="line">*pInt &#x3D; 10 ;</span><br><span class="line">std::cout &lt;&lt; &quot;pInt：&quot; &lt;&lt; *pInt &lt;&lt; std::endl ;</span><br><span class="line">delete pInt ;</span><br><span class="line">long *pLong &#x3D; new long ;</span><br><span class="line">*pLong &#x3D; 90000 ;</span><br><span class="line">std::cout &lt;&lt; &quot;*pLong：&quot; &lt;&lt; *pLong &lt;&lt; std::endl ;</span><br><span class="line">*pInt &#x3D; 20 ;</span><br><span class="line">std::cout &lt;&lt; &quot;pInt：&quot; &lt;&lt; *pInt &lt;&lt; std::endl ;</span><br><span class="line">*pInt &#x3D; 20 ;</span><br><span class="line">std::cout &lt;&lt; &quot;*pInt：&quot; &lt;&lt; *pInt &lt;&lt; std::endl ;</span><br><span class="line">std::cout &lt;&lt; &quot;*pLong：&quot; &lt;&lt; *pLong &lt;&lt; std::endl;</span><br><span class="line">delete pLong ;</span><br><span class="line">return 0 ;</span><br><span class="line">&#125;</span><br><span class="line">输出：</span><br><span class="line">*pInt：10</span><br><span class="line">*pLong：90000</span><br><span class="line">*pInt：20</span><br><span class="line">*pInt ：65556</span><br></pre></td></tr></table></figure>
+<p>90000存储到pLong指向的内存中。它指向的是pInt原来指向的内存块，带来麻烦的是 pInt = 20，它将20赋值到pInt原先指向的内存，将覆盖pLong指向的内存。这被称为重踏指针，它通常是使用迷途指针产生的不幸后果。<br>15F90H   被0014H  覆盖 == 10014 == 65556</p>
+<p><strong>迷途指针和空指针</strong></p>
+<p>当delete一个指针的时候,实际上仅是让编译器释放内存,但指针本身依然存在。,这时它就是一个迷途指针。<br>当使用以下语句时,可以把迷途指针改为空指针<br>ptr= 0；</p>
+<p><strong>野指针</strong></p>
+<p>如果程序定义了一个指针，就必须要立即让它指向一个我们设定的空间或者把它设为NULL，如果没有这么做，那么这个指针里的内容是不可预知的，即不知道 它指向内存中的哪个空间（即野指针）。</p>
+<p><strong>句柄和指针</strong></p>
+<p>如果简单地理解,似乎我们只要获知这个内存的首地址,那么就可以随时用这个地址访问对象？那么就大错特错了。</p>
+<p>内存来回移动。部分对换，内存空间。<br>句柄地址(稳定)一记载着对象在内存中的地址<br>对象在内存中的地址(不稳定)一实际对象。</p>
+<p>程序每次重新启动,系统不能保证分配给这个程序的句柄还是原来的那个句柄。句柄和指针其实是两个截然不同的概念。Windows系统用句柄标记系统资源,隐藏系统的信息。32bit的uint,指针则标记某个物理内存地址,两者是不同的概念。</p>
+<p><strong>this指针</strong></p>
+<p>(1)this指针本质一个函数参数，编译器隐藏<br>(2)this成员函数开始前构造，成员结束后清除<br>(3)this不占用对象空间<br>(4)this指针会因编译器不同而有不同的放置位置。可能是堆、栈,也可能是寄存器。<br>(5)this成员函数内使用使用</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嵌入式试题自测——20200723</title>
+    <url>/C-C-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%AF%95%E9%A2%98%E8%87%AA%E6%B5%8B%E2%80%94%E2%80%9420200723/</url>
+    <content><![CDATA[<p>1、强制转化</p>
+<p>其中单精度浮点数float遵从IEEE R32.24<br>32bits<br>1 符号S   8 阶数E  23 尾数M</p>
+<p>1.0f<br>二进制：1.0<br>E=e+127=127<br>0 01111111  00000000000000000000000</p>
+<p>125.5f<br>二进制：1111101.1<br>科学计数为：1.111101*2^6<br>E=e+127=133，而E的二进制码为10000101<br>0 10000101 11110100000000000000000</p>
+<p>2、宏定义<br>#define SECONDS_PRE_YEAR (365<em>24</em>60*60)UL<br>#define MIN(A,B)   ((A)&lt;=(B)？(A):(B))</p>
+<p>3、const与#define区别</p>
+<p>（1）const常量有数据类型，#define 没有数据类型<br>（2）const可集成化调试，不能对宏进行调试<br>（3）const常量必须同时初始化。<br>C中const外连接，C++const内连接。<br>在C++中调用extern const buff;</p>
+<p>4、sizeof与strlen<br>sizeof<br>strlen:含有’/0’</p>
+<p>5、inline 与宏定义<br>内联是代码嵌入，减少函数调用的资源消耗，函数体内无（for\while\switch）。<br>宏不是函数，预处理时的字符串替换。<br>void fun(int x,int y);<br>inline void fun(int x,int y);</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux编程小记——文件函数</title>
     <url>/Linux-Lover/Linux%E7%BC%96%E7%A8%8B%E5%B0%8F%E8%AE%B0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E5%87%BD%E6%95%B0-1/</url>
     <content><![CDATA[<h5 id="文件属性结构体stat"><a href="#文件属性结构体stat" class="headerlink" title="文件属性结构体stat"></a>文件属性结构体stat</h5><p>st_dev:文件所在磁盘的磁盘的 ID 号<br>st_ino：节点编号<br>st_mode:描述文件的类型和权限<br>st_nlink:硬链接的数量<br>st_uid:文件属于用户的 ID<br>st_gid:文件所属用户组 ID<br>st_rdev:如果是设备文件则是设备 ID 号<br>st_size:文件大小<br>st_blksize:文件内容对应的块的大小<br>st_blocks:文件内容对应得块数量<br>time_t st_atime; //文件最后被访问的时间<br>time_t st_mtime; //文件内容最后被修改的时间<br>time_t st_ctime; //文件状态改变时间</p>
@@ -201,6 +311,32 @@
       </tags>
   </entry>
   <entry>
+    <title>嵌入式试题自测——20200711</title>
+    <url>/C-C-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%AF%95%E9%A2%98%E8%87%AA%E6%B5%8B%E2%80%94%E2%80%9420200711-1/</url>
+    <content><![CDATA[<p>1、一棵二叉树有8个度为2的节点，5个度为1的节点，那么度为0的节点个数为?<br>结点总数=度数+1<br>k+1=2*n2+n1;<br>k=n2+n1+n0;<br>n0=n2+1</p>
+<p>2、echo hello 1&gt;&amp;2 |grep aaa<br>echo hello 2&gt;&amp;1 |grep aaa<br>管道命令右边只处理左边的标准正确输出，也就是通道1<br>第一个输出hello， 第二个无输出</p>
+<p>3、*p++ == *(p++)<br>!y–&amp;&amp;!x–  ==  先判断！，</p>
+<p>4、虚拟存储的主要技术是部分对换。允许作业装入的时候只装入一部分，另一部分放在磁盘 上，当需要的时候再装入到主存，这样以来，在一个小的主存空间就可以运行一个比它大的作业</p>
+<p>5、操作系统的功能： 进程与处理机管理、作业管理、存储管理、设备管理、文件管理。对应即可 编译器是在操作系统之上的，由编译器完成程序的编译</p>
+<p>6、最先适应算法：依次判定后找到第一个满足要求的<br>最佳适应算法：对空闲区按从小到大排序，第一个满足的就是<br>最差适应算法：对空闲区按从大到小排序，第一个满足的就是<br>固定式分区算法：是分区的</p>
+<p>7、<br>单链表：尾插入O(n),尾删O(n)<br>仅有头的单循环链表：尾插入O(n),尾删O(n)<br>双向链表：尾插入O(n),尾删O(n)<br>仅有尾指针的单循环链表：尾插入O(1),尾删O(n)</p>
+<p>8、字符串匹配，分主串和模式串<br>BF算法的缺点很明显，效率实在太低了，每一轮只能老老实实地把模式串右移一位。<br>BM算法解决了这一问题。它借助“坏字符规则”和“好后缀规则”，在每一轮比较时，让模式串尽可能多移动几位，减少无谓的比较。<br>KMP算法：next数组，前缀和后缀<br>左移，next[0]= -1 ,整体+1；</p>
+<p>9、由权值为9,2,7,5的四个叶子节点构造一棵哈夫曼树，该树的带权路径长度为：</p>
+<img src="/C-C-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%AF%95%E9%A2%98%E8%87%AA%E6%B5%8B%E2%80%94%E2%80%9420200711-1/%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91.png" class="">
+
+
+<p>10、已知如下代码，并在两个线程中同时执行f1和f2，待两个函数都返回后，a的所有可能值是哪些？<br>int a = 2, b = 0, c = 0<br>void f1()<br>{<br>    b = a * 2;<br>    a = b;<br>}<br>void f2()<br>{<br>    c = a + 11;<br>    a = c;<br>}</p>
+<p>解决：1122、2211、1212、2121.</p>
+<p>11、链表和数组说法正确的是（）<br>数组从栈中分配空间，链表从堆中分配空间<br>数组插入或删除元素的时间复杂度O(n)，链表的时间复杂度O(1)<br>数组利用下标定位，时间复杂度为O(1)，链表定位元素时间复杂度O(n）</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据结构概念小计</title>
     <url>/Data-Structure-and-Algorithms-Lover/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E5%BF%B5%E5%B0%8F%E8%AE%A1/</url>
     <content><![CDATA[<h4 id="小概念"><a href="#小概念" class="headerlink" title="小概念"></a>小概念</h4><p>数据结构= 数据对象+数据关系<br>数据类型= 数据结构+数据操作<br>​</p>
@@ -208,6 +344,11 @@
 <h4 id="时间度量和空间度量"><a href="#时间度量和空间度量" class="headerlink" title="时间度量和空间度量"></a>时间度量和空间度量</h4><p>时间度量：看步数，当式子n趋于无穷大的，大O表示法O(1)O(n)O(n)  评估效率<br>空间度量：看存储字节的大小</p>
 <p>（1）空间换时间：就是多占用内存，加但减少了遍历链表所用的时间，执行速度较快。<br>（2）时间换空间：反过来。<br>举例：来源网络<br>方法A：通常的办法<br>#define LEN 32<br>char string1 [LEN];<br>memset (string1,0,LEN);<br>strcpy (string1,”This is a example!!”);<br>方法B：<br>const char string2[LEN] =”This is a example!”;<br>char * cp;<br>cp = string2;</p>
 <h4 id="入栈顺序，出栈顺序的可能？"><a href="#入栈顺序，出栈顺序的可能？" class="headerlink" title="入栈顺序，出栈顺序的可能？"></a>入栈顺序，出栈顺序的可能？</h4><p>入栈顺序：ABCDE<br>例如D先出栈，则D**** ,后面A、B、C的出栈顺序一定为C、B、A</p>
+<h4 id="栈和队列的混合"><a href="#栈和队列的混合" class="headerlink" title="栈和队列的混合"></a>栈和队列的混合</h4><p>设栈S和队列Q的初始状态皆为空，字符序列A，B，C，D，E，F依次通过一个栈，元素出栈后立即进入队列Q，若6个元素出队列的顺序是C，E，D，F，B，A，则栈S应至少容纳（4）个元素</p>
+<img src="/Data-Structure-and-Algorithms-Lover/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E5%BF%B5%E5%B0%8F%E8%AE%A1/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97.png" class="">
+
+
+<h4 id="二叉链表"><a href="#二叉链表" class="headerlink" title="二叉链表"></a>二叉链表</h4><p>树对应的二叉树<br>前序—前序<br>后序—中序</p>
 ]]></content>
       <categories>
         <category>Data Structure and Algorithms Lover</category>
@@ -471,6 +612,7 @@ height = "600" width ="100%"
 <p>右键改变样式<br>写法1<br>#pushButton{<br>background:url(“:/new/prefix1/数字1.png”)<br>}<br>写法2<br>background:url(:/new/prefix1/cat.png);<br>background-image: url(:/new/prefix1/cat.png);</p>
 <p>注意：background是一个集合，它包括background-color,background-image,background-size</p>
 <p>border-image: url(:/new/prefix1/数字1.png);//文件<br>image: url(:/new/prefix1/cat.png);//文件原大小，多余为空白</p>
+<p>setStyleSheet(QWidget{“border-radius:6px;background-color:rgba(100,100,100,80%)}”);/<em>多用这个，类继承mainwidget</em>/<br>                                              pushButton-&gt;setStyleSheet(“QPushButton{border-image:url(:/icons/Resource/icons/close.png);”<br>“background-color:transparent}”<br>“QPushButton:hover{border-image:url(:/icons/Resource/icons/close_hover.png);}” );<br>/<em>hover 选中时候的状态 按钮悬停</em>/</p>
 
 
 
@@ -1284,6 +1426,7 @@ height="600" width="100%" > </iframe>]]></content>
 <p>常用：不点x号快速退出程序</p>
 <h5 id="如何判断某个对象是否属于qt类"><a href="#如何判断某个对象是否属于qt类" class="headerlink" title="如何判断某个对象是否属于qt类"></a>如何判断某个对象是否属于qt类</h5><p>inherits(“QLineEdit”)</p>
 <h5 id="本机地址ipv4"><a href="#本机地址ipv4" class="headerlink" title="本机地址ipv4"></a>本机地址ipv4</h5><p> ui-&gt;lineEdit_ip-&gt;setText(QNetworkInterface().allAddresses().at(2).toString());</p>
+<h5 id="QTimer-singleShot"><a href="#QTimer-singleShot" class="headerlink" title="QTimer::singleShot"></a>QTimer::singleShot</h5><p> QEventLoop eventloop;<br>QTimer::singleShot(3000, &amp;eventloop, SLOT(quit())); // 下拉返回框，延时3s后关闭<br> eventloop.exec();</p>
 <p>开源控件链接：<a href="https://gitee.com/feiyangqingyun/QWidgetDemo" target="_blank" rel="noopener">https://gitee.com/feiyangqingyun/QWidgetDemo</a></p>
 ]]></content>
       <categories>
@@ -1325,7 +1468,7 @@ height="600" width="100%" > </iframe>]]></content>
 <p>protected  virtual 类 子函数实现</p>
 <p>keyPressEvent()<br>keyReleaseEvent()<br>mouseDoubleClickEvent()<br>mouseMoveEvent()          —-setMouseTracking()<br>mousePressEvent()<br>mouseReleaseEvent() 等。</p>
 <p>event()函数主要用于事件的分发,分发给不同的事件处理器（event handler）。<br>e-&gt;type() == QEvent::KeyPress  事件类别<br>keyEvent-&gt;key() == Qt::Key_Tab  按键值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool CustomTextEdit::event(QEvent*e)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">   if (e-&gt;type() &#x3D;&#x3D; QEvent::KeyPress)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">        QKeyEvent *keyEvent &#x3D;static_cast(e);</span><br><span class="line"></span><br><span class="line">       if (keyEvent-&gt;key() &#x3D;&#x3D; Qt::Key_Tab)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">            qDebug() &lt;&lt; &quot;You presstab.&quot;;</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool CustomTextEdit::event(QEvent*e)</span><br><span class="line">&#123;</span><br><span class="line">   if (e-&gt;type() &#x3D;&#x3D; QEvent::KeyPress)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        QKeyEvent *keyEvent &#x3D;static_cast(e);</span><br><span class="line">       if (keyEvent-&gt;key() &#x3D;&#x3D; Qt::Key_Tab)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">            qDebug() &lt;&lt; &quot;You presstab.&quot;;</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>事件过滤器</strong><br>virtual bool QObject::eventFilter ( QObject *watched, QEvent * event );</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool MainWindow::eventFilter(QObject *obj, QEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">         if (obj &#x3D;&#x3D; textEdit) &#123;                                                    &#x2F;&#x2F;判断被监视的对象</span><br><span class="line">                 if (event-&gt;type() &#x3D;&#x3D; QEvent::KeyPress) &#123;                   &#x2F;&#x2F;判断事件类型</span><br><span class="line">                         QKeyEvent *keyEvent &#x3D; static_cast&lt;QKeyEvent*&gt;(event);</span><br><span class="line">                         qDebug() &lt;&lt; &quot;Ate key press&quot; &lt;&lt; keyEvent-&gt;key();</span><br><span class="line">                         return true;                                                    &#x2F;&#x2F;将键盘事件过滤</span><br><span class="line">                 &#125; else &#123;</span><br><span class="line">                         return false;                                                &#x2F;&#x2F;继续处理其他事件</span><br><span class="line">                 &#125;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">                 &#x2F;&#x2F; pass the event on to the parent class</span><br><span class="line">                 return QMainWindow::eventFilter(obj, event);           &#x2F;&#x2F;调用父类函数</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1336,7 +1479,12 @@ height="600" width="100%" > </iframe>]]></content>
 <p>1、在特定对象上面安装事件过滤器。该过滤器仅过滤该对象接收到的事件。</p>
 <p>1、在QCoreApplication::instance()上面安装事件过滤器。该过滤器将过滤所有对象的所有事件，因此和notify()函数一样强大，但是它更灵活，因为可以安装多个过滤器。全局的事件过滤器可以看到 disabled 组件上面发出的鼠标事件。全局过滤器有一个问题：只能用在主线程。</p>
 <p>1、重写QCoreApplication::notify()函数。这是最强大的，和全局事件过滤器一样提供完全控制，并且不受线程的限制。但是全局范围内只能有一个被使用（因为QCoreApplication是单例的）。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class MyApplication : public QApplication</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    MyApplication(int &amp; argc, char ** argv):QApplication(argc, argv)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    virtual bool notify(QObject * obj, QEvent * event)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        if(event-&gt;type() &#x3D;&#x3D; QMouseEvent::MouseButtonPress)</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return QApplication::notify(obj,event);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;来源网络</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class MyApplication : public QApplication</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MyApplication(int &amp; argc, char ** argv):QApplication(argc, argv)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    virtual bool notify(QObject * obj, QEvent * event)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        if(event-&gt;type() &#x3D;&#x3D; QMouseEvent::MouseButtonPress)</span><br><span class="line">        &#123;</span><br><span class="line">            qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line">        &#125;</span><br><span class="line">        return QApplication::notify(obj,event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>QT-焦点事件</strong></p>
+<p>设置焦点作用:不需要先用鼠标点击编辑框就可以直接输入文字等信息到其中<br>setFocusPolicy ( Qt::NoFocus )</p>
+<p>1、何判断一个才窗口有没有焦点事件,焦点事件或失去焦点事件<br>void QWidget::focusInEvent ( QFocusEvent * event )<br>void QWidget::focusOutEvent ( QFocusEvent * event )</p>
+<p>判断当前窗口有没有焦点事件的，返回布尔值。<br>void QWidget::setFocus ( Qt::FocusReason reason )<br>void QWidget::clearFocus ()</p>
+]]></content>
       <categories>
         <category>QT Lover</category>
       </categories>
@@ -3085,30 +3233,15 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>容器结构小结</title>
-    <url>/C-C-Lover/%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>vector 单端，尾插</p>
-<p>deque 双端，首部尾部插</p>
-<p>stack  先进后出（deques首部闭合）  pop push</p>
-<p>quece 队列，先进先出          </p>
-<p>list   链表，随时插入</p>
+    <title>容器算法小结</title>
+    <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<p>vector 单端，尾插<br>deque 双端，首部尾部插<br>stack  先进后出（deques首部闭合）  pop push<br>quece 队列，先进先出<br>list   链表，随时插入</p>
 <p>set 唯一值，数值顺序排顺序</p>
 <p>map/multimap    关联式map&lt;T1,T2&gt; map TT;</p>
 <p>map.insert(map&lt;int,string&gt;::value_type(1,”小李”)）</p>
 <p>map.insert(pair &lt;int , string &gt;(3,”小张”))；</p>
 <p>map.insert(make_pair(-1,”小张-1”))；</p>
-]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>容器算法小结</title>
-    <url>/C-C-Lover/%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
+<p><strong>头文件</strong><br>#include <algorithm> //算法<br>#include <numeric> //数学<br>#include <functional>//模板<br>#include <memory>//智能指针 auto_ptr</p>
 <p><strong>概念</strong><br>一元函数对象：函数参数1个；<br>二元函数对象：函数参数2个；<br>一元谓词对象：函数参数1个,返回bool；<br>二元谓词对象：函数参数2个,返回bool；</p>
 <p>遍历算法 ：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">for_each(v1.begin(),v1.end(), show)   //容器为int</span><br><span class="line"></span><br><span class="line">void show(const int &amp;iItem)  </span><br><span class="line"></span><br><span class="line">&#123;         cout&lt;&lt; iItem;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">transform() //转移容器，用于合并，函数返回值</span><br><span class="line">transform(vecIntA.begin(),vecIntA.end(),vecIntA.begin(),increase);      </span><br><span class="line">int increase (int i) </span><br><span class="line"></span><br><span class="line">&#123;     <span class="built_in">return</span> i+1;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3496,32 +3629,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>怎么说你了解过SPI</title>
-    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
-    <content><![CDATA[<p><strong>四线SPI</strong></p>
-<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
-
-<p><em>_SPI 有四种工作模式</em></p>
-<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
-
-
-<p> <strong>时序图</strong></p>
-<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
-
-<p> <strong>spi基本框架</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
-]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么说你了解过IIC</title>
     <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87IIC/</url>
     <content><![CDATA[<p>8位IIC 最多连接127个器件。我们可以 2^8-最高位的广播(128)-1<br>IIC 速度能到达400K,接4.7k电阻</p>
@@ -3577,6 +3684,32 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 <p><em>_I2C读时序</em></p>
+]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>怎么说你了解过SPI</title>
+    <url>/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/</url>
+    <content><![CDATA[<p><strong>四线SPI</strong></p>
+<p>①、CS/SS，Slave Select/Chip Select，这个是片选信号线，用于选择需要进行通信的从设备。I2C 主机是通过发送从机设备地址来选择需要进行通信的从机设备的，SPI 主机不需要发送从机设备，直接将相应的从机设备片选信号拉低即可。<br>②、SCK，Serial Clock，串行时钟，和 I2C 的 SCL 一样，为 SPI 通信提供时钟。<br>③、MOSI/SDO，Master Out Slave In/Serial Data Output，简称主出从入信号线，这根数据线<br>只能用于主机向从机发送数据，也就是主机输出，从机输入。<br>④、MISO/SDI，Master In Slave Out/Serial Data Input，简称主入从出信号线，这根数据线只能用户从机向主机发送数据，也就是主机输入，从机输出。<br>SPI 通信都是由主机发起的，主机需要提供通信的时钟信号。</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/spi.JPG" class="">
+
+<p><em>_SPI 有四种工作模式</em></p>
+<p>通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：<br>①、CPOL=0，串行时钟空闲状态为低电平。<br>②、CPOL=1，串行时钟空闲状态为高电平，此时可以通过配置时钟相位(CPHA)来选择具<br>体的传输协议。<br>③、CPHA=0，串行时钟的第一个跳变沿(上升沿或下降沿)采集数据。<br>④、CPHA=1，串行时钟的第二个跳变沿(上升沿或下降沿)采集数据。<br>    SPI 的时序图很简单，不像 I2C 那样还要分为读时序和写时序，因为 SPI 是全双工的，所以读写时序可以一起完成.</p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.JPG" class="">
+
+
+<p> <strong>时序图</strong></p>
+<img src="/MCU-Lover/%E6%80%8E%E4%B9%88%E8%AF%B4%E4%BD%A0%E4%BA%86%E8%A7%A3%E8%BF%87SPI/%E6%97%B6%E5%BA%8F.JPG" class="">
+
+<p> <strong>spi基本框架</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #ifndef _BSP_SPI_H</span><br><span class="line">#define _BSP_SPI_H</span><br><span class="line">#include &quot;imx6ul.h&quot;</span><br><span class="line">&#x2F;* 函数声明 *&#x2F;</span><br><span class="line">void spi_init(ECSPI_Type *base);</span><br><span class="line">unsigned char spich0_readwrite_byte(ECSPI_Type *base, unsigned char txdata);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p> mpu9250传感器包括 3 轴加速度和 3 轴陀螺仪</p>
 ]]></content>
       <categories>
         <category>MCU Lover</category>
@@ -4905,10 +5038,11 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>unzip误解压使用以下命令补救：</p>
 <p>zipinfo -1 ./(误解压文件) | xargs rm -rf<br>1<br>如果是tar误解则压使用以下命令补救：</p>
 <p>tar -tf 误解压文件 | xargs rm -rf</p>
+<p>格式.Z,文件名字为rr.Z<br>compress：压缩.Z文件<br>uncompress：解压缩.Z文件</p>
 <p><strong>扩展硬盘</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br><span class="line">参考：https://blog.csdn.net/u010801439/article/details/77676668</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">df -h</span><br><span class="line">sudo fdisk - l</span><br><span class="line">sudo fdisk /dev/sda</span><br><span class="line">删除 分区：d</span><br><span class="line">新增 分区：n</span><br><span class="line">保存操作：w</span><br><span class="line">重启：reboot</span><br><span class="line">挂载磁盘</span><br><span class="line">在 home 下新建work作为这块磁盘挂载点</span><br><span class="line"><span class="comment"># mkdir  sda2</span></span><br><span class="line"><span class="comment"># sudo mount   /dev/sda2    /home/sda2</span></span><br><span class="line">设置开机磁盘自动挂载</span><br><span class="line"><span class="comment"># vi /etc/fstab</span></span><br><span class="line">添加行  /dev/sda2     /home/work   ext4   defaults, 0 1</span><br><span class="line">此时，磁盘已经挂好，查看挂好的磁盘</span><br></pre></td></tr></table></figure>
 <p><strong>/dev/sda 磁盘不足</strong></p>
-<p>#sudo apt-get autoclean<br> #sudo apt-get clean<br>#sudo apt-get autoremove<br>执行完后直接将/usr下释放了1G左右的空间。<br>整合碎片使用<br>参考：<a href="https://blog.csdn.net/itas109/article/details/83341149" target="_blank" rel="noopener">https://blog.csdn.net/itas109/article/details/83341149</a></p>
+<p>#sudo apt-get autoclean<br> #sudo apt-get clean<br>#sudo apt-get autoremove<br>执行完后直接将/usr下释放了1G左右的空间。<br>整合碎片使用</p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
