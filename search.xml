@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>数据库试题</title>
+    <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%95%E9%A2%98-1/</url>
+    <content><![CDATA[<p>数据库面试题主要包括范式、事物、存储过程、SQL语言,以及索引等语方面。</p>
+<p><strong>范式</strong></p>
+<p>1NF:第一范式。符合1NF的关系中的每个属性都不可再分。<br>2NF:第二范式。2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。模式分解。<br>3NF:第三范式。3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖<br>BCNF:存在着主属性对于码的部分函数依赖与传递函数依赖。<br>4NF:第四范式。不存在非平凡依赖函数。多值依赖的缺点是:数据冗余太大。</p>
+<p><strong>存储过程和函数的区别</strong></p>
+<p>存储过程是用户定义的一系列SQL语句的集合,涉及特定表或其他对象的任务,用户可以调用存储过程。而函数通常是数据库已定义的方法,它接收参数并返回某种类型的值,并且不涉及特定用户表。</p>
+<p><strong>什么是数据库事务</strong></p>
+<p>数据库事务是指作为单个逻辑工作单元执行的一系列操作,这些操作要么全做要么全不做,是一个不可分割的工作单位。<br>事务具有原子性、一致性、独立性及持久性等特点</p>
+<p><strong>SQL语言</strong></p>
+<p> select top 1 num from ppp order by num</p>
+<p>–复制表(复制数据,源表名: A,新表名: B):<br>select * into B from A</p>
+<p>–临时表<br>create table #Temp（）</p>
+<p>primary unique  唯一索引<br>连接字符串符号 “+”</p>
+<p>已知tm_employee表中具有默认约束df_adress，删除该约束的语句<br>alter talbe tm_employee drop constraint df_adress</p>
+]]></content>
+      <categories>
+        <category>MySql Lover</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统试题</title>
+    <url>/Linux-Lover/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<h5 id="临界区和互斥对象"><a href="#临界区和互斥对象" class="headerlink" title="临界区和互斥对象"></a>临界区和互斥对象</h5><p>线程互斥：临界区只能在同一个进程中使用。CRITICAL_SECTION<br>进程互斥：比如共享内存，使用互斥对象。MUTEX OBJECT</p>
+<h5 id="请描述进程和线程的差别"><a href="#请描述进程和线程的差别" class="headerlink" title="请描述进程和线程的差别"></a>请描述进程和线程的差别</h5><p>进程是程序的一次执行。线程可以理解为进程中执行的一段程序片段。在一个多任务环境中下面的概念可以帮助我们理解两者间的差别。</p>
+<p>进程间是独立的,这表现在内存空间、上下文环境上;线程运行在进程空间内。一般来讲(不使用特殊技术),进程无法突破进程边界存取其他进程内的存储空间;而线程由于处于进程空间内,所以同一进程所产生的线程共享同一内存空间。</p>
+<p>同一进程中的两段代码不能够同时执行,除非引入线程。<br>线程是属于进程的,当进程退出时该进程所产生的线程都会被强制退出并清除。</p>
+<p>线程占用的资源要少于进程所占用的资源。进程和线程都可以有优先级。进程间可以通过IPC通信,但线程不可以。</p>
+<h5 id="当程序不指定DLL的绝对位置时-将使用默认搜索顺序"><a href="#当程序不指定DLL的绝对位置时-将使用默认搜索顺序" class="headerlink" title="当程序不指定DLL的绝对位置时,将使用默认搜索顺序"></a>当程序不指定DLL的绝对位置时,将使用默认搜索顺序</h5><p>搜索顺序为:(1)内存; (2) KnownDLLs; (3)清单与local; (4)应用程序目录; (5)当前工作目录; (6)系统目录; (7)path路径变量。</p>
+<h5 id="某虚拟内存系统采用页式内存管理-使用LRU页面管理算法。"><a href="#某虚拟内存系统采用页式内存管理-使用LRU页面管理算法。" class="headerlink" title="某虚拟内存系统采用页式内存管理,使用LRU页面管理算法。"></a>某虚拟内存系统采用页式内存管理,使用LRU页面管理算法。</h5><p>假设内存为4，考虑下面的页面访问地址流(每次访问在一个时间单位内完成)中一共有几次页面失败:<br>1, 8, 1, 7, 8, 2, 7, 2, 1, 8, 3, 8, 2, 1, 3, 1, 7, 1, 3, 7</p>
+<p>解析: LRU算法的提出,是基于这样一个事实:在前面几条指令中使用频繁的页面,很可能在后面的几条指令中频繁使用。反过来说,已经很久没有使用的页面,很可能在未来软长的一段时间内不会被用到。6次失败</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+      <tags>
+        <tag>Linux系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>位运算与嵌入式编程</title>
+    <url>/C-C-Lover/%E4%BD%8D%E8%BF%90%E7%AE%97%E4%B8%8E%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>位制转化</strong></p>
+<p>#include <iostream><br>using namespace std;<br>int main()<br>{<br>    printf(“%f\n”,5);//0.000000<br>    printf(“%d”,5.01);//大整数<br>    system(“pause “);<br>    return 0;<br>}</p>
+<p> <strong>进制</strong></p>
+<p> 13<em>16=244 可以用几进制表示？<br> （X+3）</em>（X+6）=2X^2+4X+4<br> X=7</p>
+<p> <strong>转换</strong></p>
+<p> // 基本类型能转换 但是不能转换指针类型<br>p2 = static_cast&lt;int *&gt; (p1);</p>
+<p>//法从char*转换为int *可以使用<br>reinterpret_cast 进行重新解释<br>p2 = reinterpret_cast&lt;int *&gt; (p1);</p>
+<p>//reinterpret_cast 可以强制类型转换<br>Book *book2= reinterpret_cast&lt;Book *&gt; (base);</p>
+<p>而(dynamic cast &lt;B*&gt;(pa))-&gt;foo0);将导致程序崩溃,因为调用了虚函数,编译器需要根据对象的虚函数指针查找虚函数表,但此时是空,为非法访问。B对象实例化才有虚</p>
+<p>如果将A a;改为B b;就可正常运行了。</p>
+<p><strong>嵌入式编程</strong></p>
+<p>ISR 中断子程序<br>(1) ISR不能返回一个值。<br>(2) ISR不能传递参数。<br>(3)在许多处理器/编译器中,浮点一般都是不可重入的。<br>(4) printf经常有重入和性能上的问题,所以一般不使用printf</p>
+<p>volatile<br>volatile修饰符的主要目的是提示编译器该对象的值可能在编译器未监测到的情况下被改变,因此编译器不能武断地对引用这些对象的代码做优化处理。</p>
+<p><strong>补码</strong></p>
+<p>正数的补码等于他的原码<br>负数的补码等于反码+1。<br>常用：-10<br>-（128-（10））= -118</p>
+<p><strong>static</strong></p>
+<p>(1)函数体内static变量的作用范围为该函数体,因此其值在下次调用时仍维持上次的值。<br>(2)在模块内的static全局变量可以被模块内所有函数访问,但不能被模块外其他函数访问。<br>(3)在模块内的static函数只可被这一模块内的其他函数调用,这个函数的使用范围被限制在声明它的模块内。<br>(4)在类中的static成员变量属于整个类所拥有,对类的所有对象只有一份复制。<br>(1)在类中的static成员函数属于整个类所拥有,这个函数不接收this指针,因而只能访问类的static成员变量。</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继承与接口</title>
+    <url>/C-C-Lover/%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8E%A5%E5%8F%A3/</url>
+    <content><![CDATA[<p>虚函数继承和虚继承是完全不同的两个概念。</p>
+<p><strong>为什么虚函数效率低?</strong></p>
+<p>因为虚函数需要一次间接的寻址,而一般的函数可以在编译时定位到函数的地址,虚函数(动态类型调用)是要根据某个指针定位到函数的地址。多增加了一个过程,效率肯定会低一些,但带来了运行时的多态。<br><strong>多重继承的优缺点</strong></p>
+<p>优点：简单清晰，更有利于复用。不会因为基类一个小小的改变而大张旗鼓去改代码。<br>缺点：二义性。两个基类中有同名方法的时候，你不得不在子类的调用中指明此方法出自那个基类。用虚继承会带来性能损失。</p>
+<p><strong>构造函数中需要初始化列表初始化</strong></p>
+<p>1）对象初始化列表出现原因<br>1.如果我们有一个类成员，它本身是一个类或者是一个结构，而且这个成员它只有一个带参数的构造函数，没有默认构造函数。这时要对这个类成员进行初始化，就必须调用这个类成员的带参数的构造函数。</p>
+<p>2、类成员中若有const修饰，必须在对象初始化的时候，给const int m 赋值当类成员中含有一个const对象时，或者是一个引用时，他们也必须要通过成员初始化列表进行初始化，因为这两种对象要在声明后马上初始化，而在构造函数中，做的是对他们的赋值，这样是不被允许的。</p>
+<p><strong>纯虚函数</strong></p>
+<p>virtual fun()=0;<br>一个纯虚函数,不能实例化一个对象的。是把函数修改成一般的虚函数。<br>virtual fun(){};</p>
+<p>虚指针或虚函数指针是一个虚函数的实现细节。带有虚函数的类中的每一个对象,都有一个虚指针指向该类的虚函数表。</p>
+<p>虚函数的入口地址和普通函数有什么不同?<br>当一个包含虚函数的对象(注意,不是对象的指针)被创建的时候,它在头部附加一个指针,指向vtable中相应的位置。调用虚函数的时候,不管你是用什么指针调用的,它先根据vtable找到入口地址再执行,从而实现了“动态联编”。而不像普通函数那样简单地跳转到一个固定地址。</p>
+<p>C++如何阻止一个类被实例化？<br>(1)定义一个无用的抽象函数，使得类成为抽象类<br>(2)将构造函数定义为private.<br>一些工具类,没有被实例化的必要.</p>
+<p>��的必要.</p>
+]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>面向对象基础</title>
     <url>/C-C-Lover/%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<p><strong>面向对象设计的三原则</strong></p>
@@ -231,7 +326,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux随机命令（2）</title>
+    <title>Linux随记命令（2）</title>
     <url>/Linux-Lover/Linux%E9%9A%8F%E6%9C%BA%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<p>常用 proc 中的文件介绍<br>proc 文件系统可以被用于收集有用的关于系统和运行中的内核的信息。常<br>/proc/cpuinfo - CPU 的信息 (型号, 家族, 缓存大小等)<br>/proc/meminfo - 物理内存、交换空间等的信息<br>/proc/mounts - 已加载的文件系统的列表<br>/proc/devices - 可用设备的列表<br>/proc/filesystems - 被支持的文件系统<br>/proc/modules - 已加载的模块<br>/proc/version - 内核版本<br>/proc/cmdline - 系统启动时输入的内核命令行参数<br>/proc/interrupts- 每个 IRQ 相关的中断号列表</p>
 <p>sys 文件系统本质上和 proc 文件系统是一样的，都是虚拟文件系统，都在根目录下有个目录（一个是/proc 目录，另一个是/sys 目录），因此都不是硬盘中的文件，都是内核中的数据结构的可视化接口。<br>不同的是/proc 中的文件只能读，但是/sys 中的文件可以读写。读/sys 中的文件就是获取内核中数据结构的值</p>
@@ -245,6 +340,7 @@
 <p>B：<br>PROP:设备属性<br>EV:设备支持的事件类型<br>KEY:此设备具有的键/按钮<br>MSC:设备支持的其他事件<br>LED:设备上的指示灯</p>
 <p>设备上报<br>核心层<br>事件上报</p>
 <p>注意：要在管理员权限下调用！</p>
+<p>shutdown -h now 立刻关机<br>-h  halt<br>shutdown -r now 系统立刻重启<br>-r  reboot<br>shutdown调用sync，内存写入硬盘</p>
 ]]></content>
       <categories>
         <category>Linux Lover</category>
@@ -4099,6 +4195,31 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>STM32单片机</title>
     <url>/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<p><strong>时钟系统</strong></p>
@@ -4121,31 +4242,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>入堆栈ISR<br>保存现场{PC,PSR,R0-R3,R12,ISR} ISR:当前中断服务寄存器<br>保存完后，ISR进入中断<br>晚来的中断可以ISR进入，不用重新保存现场。</p>
 <p>退出中断<br>出栈恢复现场<br>也可以被打断进入新的中断。</p>
 ]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>51单片机</title>
-    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
-
-
-
-
-<p>__晶体与晶振</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
-
-
-<p>常见问题 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
@@ -4553,7 +4649,8 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
   <entry>
     <title>进程创建、等待、结束</title>
     <url>/Linux-Lover/%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<h5 id="fork-系统调用"><a href="#fork-系统调用" class="headerlink" title="fork 系统调用"></a>fork 系统调用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一次调用，二次返回？</span><br><span class="line">答：如果成功创建一个子进程，对于父进程来说返回子进程ID</span><br><span class="line">如果成功创建一个子进程，对于子进程来说返回值为0</span><br><span class="line">问题的本质是：两次返回，是在各自的进程空间中返回的。</span><br><span class="line">子进程和父进程各有自己的内存空间 （fork：代码段、数据段、堆栈段、PCB进程控制块的copy）。</span><br><span class="line">fork返回值大于零的是父进程，为什么这样设计:？</span><br><span class="line">答：因为父进程求子进程的pid比较困难，子进程求父进程的id比较容易</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>作业：用户在依次解题或者一次事物处理过程中要求计算机系统所做工作的集合。<br>进程：一个程序在一个数据集合上的一次运行过程。<br>进程是资源竞争的基本单位<br>线程：进程中的一个实体。<br>线程是程序执行的最小单位<br>管程：只有一个进程在管程内活动,即管程内定义的操作在同一时刻只被一个进程调用(由编译器实现). </p>
+<h5 id="fork-系统调用"><a href="#fork-系统调用" class="headerlink" title="fork 系统调用"></a>fork 系统调用</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一次调用，二次返回？</span><br><span class="line">答：如果成功创建一个子进程，对于父进程来说返回子进程ID</span><br><span class="line">如果成功创建一个子进程，对于子进程来说返回值为0</span><br><span class="line">问题的本质是：两次返回，是在各自的进程空间中返回的。</span><br><span class="line">子进程和父进程各有自己的内存空间 （fork：代码段、数据段、堆栈段、PCB进程控制块的copy）。</span><br><span class="line">fork返回值大于零的是父进程，为什么这样设计:？</span><br><span class="line">答：因为父进程求子进程的pid比较困难，子进程求父进程的id比较容易</span><br></pre></td></tr></table></figure>
 <h5 id="fork-c"><a href="#fork-c" class="headerlink" title="fork.c"></a>fork.c</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	<span class="keyword">if</span>((pid=fork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"fork error!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">    //子进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the child process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">    //父进程</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"in the parent process!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="vfork-与fork区别"><a href="#vfork-与fork区别" class="headerlink" title="vfork 与fork区别"></a>vfork 与fork区别</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vfork函数vfork函数与fork函数相同,都是系统调用函数,两者的区别是在创建子进程时, fork函数会复制所有的父送源,包括进程环境、内荐资源等。而vfork函数在创建子进程时,不会复制父进程的所有资源,父子进程共享空间，可以修改父进程内存空间中的值。</span><br><span class="line">注意：在使用vfork函数时,父进程会被阻塞,需要学进程调用_exit函数退出子进程,不能使用<span class="built_in">exit</span>退出.</span><br></pre></td></tr></table></figure>
 <h5 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sys/types.h&gt;</span></span><br><span class="line">int gvar=2;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid;</span><br><span class="line">	int var=5;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"process id:%ld\n"</span>,(long)getpid());//getpid 获取当前进程id</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"gvar=%d var=%d\n"</span>,gvar,var);</span><br><span class="line">	<span class="keyword">if</span>((pid=vfork())&lt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"error!"</span>);</span><br><span class="line">		<span class="built_in">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid==0)</span><br><span class="line">	&#123;</span><br><span class="line">		gvar--;</span><br><span class="line">		var++;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the child process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		_exit(0);//退出子程序</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"the parent process id:%ld\ngvar=%d var=%d\n"</span>,(long)getpid(),gvar,var);</span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">运行简要结果 ： //当前</span><br><span class="line">	process id:2825</span><br><span class="line">	gvar=2 var=5</span><br><span class="line">	the child process id:2826</span><br><span class="line">	gvar=1 var=6//子进程  共享变量的修改</span><br><span class="line">	the parent process id:2825//父进程</span><br><span class="line">	gvar=1 var=6</span><br></pre></td></tr></table></figure>
@@ -4563,7 +4660,7 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <h5 id="进程结束"><a href="#进程结束" class="headerlink" title="进程结束"></a>进程结束</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span> 与_exit()</span><br><span class="line">相同：无论调用成功与否，无返回信息。</span><br><span class="line"></span><br><span class="line">不同点：</span><br><span class="line">1）_exit是一个系统调用，<span class="built_in">exit</span>是一个c库函数</span><br><span class="line">2）<span class="built_in">exit</span>会执行清除I/O缓存，可能会丢失临时文件，建议不用。（前面例子，不做说明）</span><br><span class="line">3）<span class="built_in">exit</span>会执行调用终止处理程序</span><br><span class="line"></span><br><span class="line">扩展：atexit（）</span><br><span class="line">代码:</span><br><span class="line">void func1()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello1...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">void func2()</span><br><span class="line">&#123;</span><br><span class="line">puts(<span class="string">"hello2...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">atexit(func1);//输出func1</span><br><span class="line">atexit(func2);//输出func2</span><br><span class="line">puts(<span class="string">"hello...\n"</span>);</span><br><span class="line"><span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line">运行：</span><br><span class="line">hello...</span><br><span class="line">hello2...</span><br><span class="line">hello1...</span><br></pre></td></tr></table></figure>
 
 
-<h5 id="确保父进程退出的同时，子进程也退出？"><a href="#确保父进程退出的同时，子进程也退出？" class="headerlink" title="确保父进程退出的同时，子进程也退出？"></a>确保父进程退出的同时，子进程也退出？</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/prctl.h&gt;</span></span><br><span class="line">prctl(PR_SET_PDEATHSIG,SIGKILL);</span><br><span class="line">//最后不会看到它成为孤儿进程，被其他进程所收养。注意该函数并非所有系统都支持。</span><br></pre></td></tr></table></figure>]]></content>
+<h5 id="确保父进程退出的同时，子进程也退出？"><a href="#确保父进程退出的同时，子进程也退出？" class="headerlink" title="确保父进程退出的同时，子进程也退出？"></a>确保父进程退出的同时，子进程也退出？</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/prctl.h&gt;</span></span><br><span class="line">prctl(PR_SET_PDEATHSIG,SIGKILL);</span><br><span class="line">//最后不会看到它成为孤儿进程，被其他进程所收养。注意该函数并非所有系统都支持。</span><br><span class="line"></span><br><span class="line">``</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Linux Lover</category>
       </categories>
