@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机网络</title>
+    <url>/Linux-Lover/%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h5 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h5><p>在OSI参考模型中,物理层的作用是<code>透明的传输比特流</code>。对等实体在一次交互作用中传送的信息单位称为<code>协议数据单元</code> ,它包括<code>控制信息和用户信息</code>两部分。上下层实体之间的接口称为服务访问点(SAP) ,网络层的服务访问点也称为<code>网络地址</code> ,通常分为<code>网络号和主机地址</code>两部分。</p>
+<h5 id="网络协议问题"><a href="#网络协议问题" class="headerlink" title="网络协议问题"></a>网络协议问题</h5><p>大量发出IP请求,肯定很多不可达,返回不可达错误。<br>网络问题,包未达到终点不可能重组,但可以分散成碎片。<br>网络阻塞问题。拥塞导致丢包。<br>SYN攻击。</p>
+<p>如果把一个网络40.15.0.0分为两个子网,第一个子网40.15.0.0/17,那么第二个子网将会是 。 40.15.128.0/17。<br> 解析:/17表示前高17为网络地址，让主网分成两个网段</p>
+<h5 id="网络安全问题"><a href="#网络安全问题" class="headerlink" title="网络安全问题"></a>网络安全问题</h5><p>入侵检测与防火墙有何不同,各有什么优缺点?</p>
+<p>防火墙的优点:它能增强机构内部网络的安全性,用于加强网络间的访问控制,防止外,部用户非法使用内部网的资源,保护内部网络的设备不被破坏,防止内部网络的敏感数据被窃取。<br>缺点:对于发生在内网的攻击无能为力;</p>
+<p>入侵检测的优点:入侵监测系统扫描当前网络的活动,监视和记录网络的流量,根据定义好的规则来过滤从主机网卡到网线上的流量,提供实时报警。大多数的入侵监测系统可以<br>缺点:目前入侵检测技术的方法主要停留在异常检测统计方法和误用检测方法上,入侵的行为表现出不确定性、多样性等特点。</p>
+<p>防火墙就相当于一栋大楼外的,门卫系统,而入侵检测就相当于大楼内的监控系统,两者缺一不可。<br>应该将入侵检测系统与防火墙联动起来,当入侵检测系统发现到有入侵行为时,应及时报告防火墙,以阻断入侵。</p>
+<p>常见的包括FTP服务的21端口, Telnet服务的23端口,SMTP服务的25端口,以及HTTP服务的80端口,等等。</p>
+]]></content>
+      <categories>
+        <category>Linux Lover</category>
+      </categories>
+  </entry>
+  <entry>
     <title>数据库试题</title>
     <url>/MySql-Lover/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%95%E9%A2%98-1/</url>
     <content><![CDATA[<p>数据库面试题主要包括范式、事物、存储过程、SQL语言,以及索引等语方面。</p>
@@ -203,6 +219,25 @@
       </categories>
       <tags>
         <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-动画</title>
+    <url>/QT-Lover/QT-%E5%8A%A8%E7%94%BB/</url>
+    <content><![CDATA[<p><strong>QPropertyAnimation 属性动画</strong></p>
+<p> /*  声明动画类，并将控制对象<br>  QPropertyAnimation* animation = new QPropertyAnimation(this, “geometry”);<br>/*  设置动画持续时长为 2 秒钟 <em>/<br>animation-&gt;setDuration(2000);<br>/</em>  设置动画的起始状态<br> animation-&gt;setStartValue(QRect(1, 2, 3, 4));<br>/*  设置动画的结束状态 结束点 (100,200)  结束大小 (300,400)*/<br>animation-&gt;setEndValue(QRect(100, 200, 300, 400));<br>animation-&gt;start();  </p>
+<p><strong>QGraphicsEffect 修改图形效果</strong></p>
+<p>–QGraphicsBlurEffect在给定的半径内模糊项目<br>QGraphicsBlurEffect *e0 = new QGraphicsBlurEffect(this);<br>e0-&gt;setBlurRadius(0.2);</p>
+<p>QGraphicsColorizeEffect—以任何给定颜色<br>QGraphicsColorizeEffect *e1 = new QGraphicsColorizeEffect(this);<br>e1-&gt;setColor(QColor(0,0,192));</p>
+<p>–qgraphicsdropshadowEffect用于设定阴影的颜色<br>QGraphicsDropShadowEffect *e2 = new QGraphicsDropShadowEffect(this);<br>e2-&gt;setOffset(8,8);</p>
+<p>–QGraphicsOpacityEffect以不透明度呈现项目<br>QGraphicsOpacityEffect *e3 = new QGraphicsOpacityEffect(this);<br>e3-&gt;setOpacity(0.7);</p>
+<p>例子：左边5下边10的阴影</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> for(int i&#x3D;0; i&lt;4; i++)&#123;</span><br><span class="line">&#x2F;* 绑定动画对象 *&#x2F;</span><br><span class="line">propertyAnimation[i] &#x3D; new QPropertyAnimation(loopWidgetArr[i], &quot;geometry&quot;);</span><br><span class="line">propertyAnimation[i]-&gt;setDuration(500);&#x2F;&#x2F;动画长度是0.5s</span><br><span class="line"> &#x2F;* 设置阴影效果，让循环面板不显生硬 *&#x2F;</span><br><span class="line"> loopGraphicsDropShadowEffect[i] &#x3D; new QGraphicsDropShadowEffect(this);</span><br><span class="line">loopGraphicsDropShadowEffect[i]-&gt;setOffset(-5,10);</span><br><span class="line">if (i &lt; 2)</span><br><span class="line">loopGraphicsDropShadowEffect[i]-&gt;setColor(QColor(&quot;#444444&quot;));</span><br><span class="line">        else</span><br><span class="line">loopGraphicsDropShadowEffect[i]-&gt;setColor(QColor(&quot;#eeeeee&quot;));</span><br><span class="line">loopGraphicsDropShadowEffect[i]-&gt;setBlurRadius(30);</span><br><span class="line">loopWidgetArr[i]&gt;setGraphicsEffect(loopGraphicsDropShadowEffect[i]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
       </tags>
   </entry>
   <entry>
@@ -685,7 +720,9 @@ height = "600" width ="100%"
     <title>imx6ull滑动界面</title>
     <url>/uncategorized/imx6ull%E6%BB%91%E5%8A%A8%E7%95%8C%E9%9D%A2/</url>
     <content><![CDATA[<p>界面效果：</p>
-<iframe src="//player.bilibili.com/player.html?aid=753737773&bvid=BV1Xk4y1q7tb&cid=206590500&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height ="600" width="100%"> </iframe>]]></content>
+<iframe src="//player.bilibili.com/player.html?aid=753737773&bvid=BV1Xk4y1q7tb&cid=206590500&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height ="600" width="100%"> </iframe>
+
+]]></content>
   </entry>
   <entry>
     <title>QT-画面滑动切换</title>
@@ -693,7 +730,11 @@ height = "600" width ="100%"
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*widget.h*&#x2F;</span><br><span class="line">#ifndef WIDGET_H</span><br><span class="line">#define WIDGET_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line">#include &lt;QMouseEvent&gt;</span><br><span class="line">#include &lt;QEvent&gt;</span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class Widget;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Widget : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">public:</span><br><span class="line">    explicit Widget(QWidget *parent &#x3D; 0);</span><br><span class="line">    ~Widget();</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">     bool eventFilter(QObject *watched, QEvent *event);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    Ui::Widget *ui;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif &#x2F;&#x2F; WIDGET_H</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*widget.c*&#x2F;</span><br><span class="line">#include &quot;widget.h&quot;</span><br><span class="line">#include &quot;ui_widget.h&quot;</span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line">    this-&gt;installEventFilter(this);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::~Widget()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line">bool Widget::eventFilter(QObject *watched, QEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">       static int press_x;</span><br><span class="line">       static int press_y;</span><br><span class="line">       static int release_x;</span><br><span class="line">       static int release_y;</span><br><span class="line">       </span><br><span class="line">QMouseEvent*  event_1 &#x3D; static_cast&lt;QMouseEvent *&gt; (event);</span><br><span class="line"></span><br><span class="line">    if(event_1-&gt;type() &#x3D;&#x3D; QEvent::MouseButtonPress )</span><br><span class="line">    &#123;</span><br><span class="line">            press_x &#x3D; event_1-&gt;globalX();</span><br><span class="line">            press_y &#x3D; event_1-&gt;globalY();</span><br><span class="line">    &#125;</span><br><span class="line">    if(event_1-&gt;type() &#x3D;&#x3D; QEvent::MouseButtonRelease)</span><br><span class="line">    &#123;</span><br><span class="line">            release_x &#x3D; event_1-&gt;globalX();</span><br><span class="line">            release_y &#x3D; event_1-&gt;globalY();</span><br><span class="line">    &#125;</span><br><span class="line">  &#x2F;*******判断左滑动*******&#x2F;</span><br><span class="line">	if(  ((release_x -press_x) &lt; 0)  &amp;&amp; ((release_y - press_y) &gt; 0)   &amp;&amp; (event_1-&gt;type()&#x3D;&#x3D; QEvent::MouseButtonRelease))</span><br><span class="line">    &#123;</span><br><span class="line">	int current_page &#x3D; ui-&gt;stackedWidget-&gt;currentIndex();</span><br><span class="line"></span><br><span class="line">        if(current_page &gt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">	ui-&gt;stackedWidget-&gt;setCurrentIndex(current_page - 1);</span><br><span class="line">        &#125;</span><br><span class="line">        if(current_page &#x3D;&#x3D; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            ui-&gt;stackedWidget-&gt;setCurrentIndex(4);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;********判断右滑动********&#x2F;</span><br><span class="line">    if(  ((release_x -press_x) &gt; 0)  &amp;&amp; ((release_y - press_y) &lt; 0)   &amp;&amp; (event_1-&gt;type()&#x3D;&#x3D; QEvent::MouseButtonRelease))</span><br><span class="line">    &#123;</span><br><span class="line">	int current_page &#x3D; ui-&gt;stackedWidget-&gt;currentIndex();</span><br><span class="line">        if(current_page &lt; 4)</span><br><span class="line">        &#123;</span><br><span class="line">  ui-&gt;stackedWidget-&gt;setCurrentIndex(current_page + 1);</span><br><span class="line">        &#125;</span><br><span class="line">        if(current_page &#x3D;&#x3D; 4)</span><br><span class="line">        &#123;</span><br><span class="line">            ui-&gt;stackedWidget-&gt;setCurrentIndex(0);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return QWidget::eventFilter(watched,event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
-<img src="/QT-Lover/QT-%E7%94%BB%E9%9D%A2%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2/cat.gif" class="">]]></content>
+<img src="/QT-Lover/QT-%E7%94%BB%E9%9D%A2%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2/cat.gif" class="">
+
+
+<p>四点缩放的思路</p>
+<img src="/QT-Lover/QT-%E7%94%BB%E9%9D%A2%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2/%E5%9B%9B%E7%82%B9%E6%BB%91%E5%8A%A8.jpg" class="">]]></content>
       <categories>
         <category>QT Lover</category>
       </categories>
@@ -1358,6 +1399,40 @@ height="600" width="100%" > </iframe>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>QT-事件</title>
+    <url>/QT-Lover/-%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<p><strong>事件</strong></p>
+<p>事件（event）是由系统或者 Qt 本身在不同的时刻发出的。<br>一些事件在对用户操作做出响应时发出，如键盘事件等；另一些事件则是由系统自动发出，如计时器事件。</p>
+<p>Qt 程序需要在main()函数创建一个QApplication对象，然后调用它的exec()函数。这个函数就是开始 Qt 的事件循环。在执行exec()函数之后，程序将进入事件循环来监听应用程序的事件。当事件发生时，Qt 将创建一个事件对象。Qt 中所有事件类都继承于<code>QEvent</code>。在事件对象创建完毕后，Qt 将这个事件对象传递给QObject的event()函数。event()函数并不直接处理事件，而是按照事件对象的类型分派给特定的事件处理函数<code>（event handler）</code>。</p>
+<p>protected  virtual 类 子函数实现</p>
+<p>keyPressEvent()<br>keyReleaseEvent()<br>mouseDoubleClickEvent()<br>mouseMoveEvent()          —-setMouseTracking()<br>mousePressEvent()<br>mouseReleaseEvent() 等。</p>
+<p>event()函数主要用于事件的分发,分发给不同的事件处理器（event handler）。<br>e-&gt;type() == QEvent::KeyPress  事件类别<br>keyEvent-&gt;key() == Qt::Key_Tab  按键值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool CustomTextEdit::event(QEvent*e)</span><br><span class="line">&#123;</span><br><span class="line">   if (e-&gt;type() &#x3D;&#x3D; QEvent::KeyPress)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        QKeyEvent *keyEvent &#x3D;static_cast(e);</span><br><span class="line">       if (keyEvent-&gt;key() &#x3D;&#x3D; Qt::Key_Tab)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">            qDebug() &lt;&lt; &quot;You presstab.&quot;;</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>事件过滤器</strong><br>virtual bool QObject::eventFilter ( QObject *watched, QEvent * event );</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool MainWindow::eventFilter(QObject *obj, QEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">         if (obj &#x3D;&#x3D; textEdit) &#123;                                                    &#x2F;&#x2F;判断被监视的对象</span><br><span class="line">                 if (event-&gt;type() &#x3D;&#x3D; QEvent::KeyPress) &#123;                   &#x2F;&#x2F;判断事件类型</span><br><span class="line">                         QKeyEvent *keyEvent &#x3D; static_cast&lt;QKeyEvent*&gt;(event);</span><br><span class="line">                         qDebug() &lt;&lt; &quot;Ate key press&quot; &lt;&lt; keyEvent-&gt;key();</span><br><span class="line">                         return true;                                                    &#x2F;&#x2F;将键盘事件过滤</span><br><span class="line">                 &#125; else &#123;</span><br><span class="line">                         return false;                                                &#x2F;&#x2F;继续处理其他事件</span><br><span class="line">                 &#125;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">                 &#x2F;&#x2F; pass the event on to the parent class</span><br><span class="line">                 return QMainWindow::eventFilter(obj, event);           &#x2F;&#x2F;调用父类函数</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以总结一下 Qt 的事件处理，实际上是有五个层次：</p>
+<p>1、重写paintEvent()、mousePressEvent()等事件处理函数。这是最普通、最简单的形式，同时功能也最简单。</p>
+<p>1、重写event()函数。event()函数是所有对象的事件入口，QObject和QWidget中的实现，默认是把事件传递给特定的事件处理函数。</p>
+<p>1、在特定对象上面安装事件过滤器。该过滤器仅过滤该对象接收到的事件。</p>
+<p>1、在QCoreApplication::instance()上面安装事件过滤器。该过滤器将过滤所有对象的所有事件，因此和notify()函数一样强大，但是它更灵活，因为可以安装多个过滤器。全局的事件过滤器可以看到 disabled 组件上面发出的鼠标事件。全局过滤器有一个问题：只能用在主线程。</p>
+<p>1、重写QCoreApplication::notify()函数。这是最强大的，和全局事件过滤器一样提供完全控制，并且不受线程的限制。但是全局范围内只能有一个被使用（因为QCoreApplication是单例的）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class MyApplication : public QApplication</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MyApplication(int &amp; argc, char ** argv):QApplication(argc, argv)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    virtual bool notify(QObject * obj, QEvent * event)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        if(event-&gt;type() &#x3D;&#x3D; QMouseEvent::MouseButtonPress)</span><br><span class="line">        &#123;</span><br><span class="line">            qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line">        &#125;</span><br><span class="line">        return QApplication::notify(obj,event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>QT-焦点事件</strong></p>
+<p>设置焦点作用:不需要先用鼠标点击编辑框就可以直接输入文字等信息到其中<br>setFocusPolicy ( Qt::NoFocus )</p>
+<p>1、何判断一个才窗口有没有焦点事件,焦点事件或失去焦点事件<br>void QWidget::focusInEvent ( QFocusEvent * event )<br>void QWidget::focusOutEvent ( QFocusEvent * event )</p>
+<p>判断当前窗口有没有焦点事件的，返回布尔值。<br>void QWidget::setFocus ( Qt::FocusReason reason )<br>void QWidget::clearFocus ()</p>
+<p>–20200726 qt鼠标事件等于触摸屏事件吗？<br>一个滑动事件的问题，触摸事件QTouchEvent将被解释为鼠标左键单击。<br> 1、先校准ts_calibrate<br> 2、强制转换<br> QMouseEvent*  event1 = static_cast&lt;QMouseEvent *&gt; (event);<br>3、脚本校准<br><code><br>  if [! -f "etc/piontercal"];then<br>  ts_calibrate<br>  fi<br></code></p>
+<img src="/QT-Lover/-%E4%BA%8B%E4%BB%B6/%E8%A7%A6%E6%91%B8%E6%BB%91%E5%8A%A8.gif" class="">]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>QT-中英配置</title>
     <url>/QT-Lover/QT-%E4%B8%AD%E8%8B%B1%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<p><a href="https://blog.csdn.net/kidults/article/details/87969380" target="_blank" rel="noopener">https://blog.csdn.net/kidults/article/details/87969380</a></p>
@@ -1547,39 +1622,6 @@ height="600" width="100%" > </iframe>]]></content>
 
 
 <p>另外，QBuffer也支持常用的信号。比如，当有数据可读时，它会发出readyRead（）信号；每一次向QBuffer中写入新数据时都会发出bytesWritten()信号。</p>
-]]></content>
-      <categories>
-        <category>QT Lover</category>
-      </categories>
-      <tags>
-        <tag>Qt应用开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>QT-事件</title>
-    <url>/QT-Lover/QT-%E4%BA%8B%E4%BB%B6/</url>
-    <content><![CDATA[<p><strong>事件</strong></p>
-<p>事件（event）是由系统或者 Qt 本身在不同的时刻发出的。<br>一些事件在对用户操作做出响应时发出，如键盘事件等；另一些事件则是由系统自动发出，如计时器事件。</p>
-<p>Qt 程序需要在main()函数创建一个QApplication对象，然后调用它的exec()函数。这个函数就是开始 Qt 的事件循环。在执行exec()函数之后，程序将进入事件循环来监听应用程序的事件。当事件发生时，Qt 将创建一个事件对象。Qt 中所有事件类都继承于<code>QEvent</code>。在事件对象创建完毕后，Qt 将这个事件对象传递给QObject的event()函数。event()函数并不直接处理事件，而是按照事件对象的类型分派给特定的事件处理函数<code>（event handler）</code>。</p>
-<p>protected  virtual 类 子函数实现</p>
-<p>keyPressEvent()<br>keyReleaseEvent()<br>mouseDoubleClickEvent()<br>mouseMoveEvent()          —-setMouseTracking()<br>mousePressEvent()<br>mouseReleaseEvent() 等。</p>
-<p>event()函数主要用于事件的分发,分发给不同的事件处理器（event handler）。<br>e-&gt;type() == QEvent::KeyPress  事件类别<br>keyEvent-&gt;key() == Qt::Key_Tab  按键值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool CustomTextEdit::event(QEvent*e)</span><br><span class="line">&#123;</span><br><span class="line">   if (e-&gt;type() &#x3D;&#x3D; QEvent::KeyPress)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        QKeyEvent *keyEvent &#x3D;static_cast(e);</span><br><span class="line">       if (keyEvent-&gt;key() &#x3D;&#x3D; Qt::Key_Tab)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">            qDebug() &lt;&lt; &quot;You presstab.&quot;;</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>事件过滤器</strong><br>virtual bool QObject::eventFilter ( QObject *watched, QEvent * event );</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bool MainWindow::eventFilter(QObject *obj, QEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">         if (obj &#x3D;&#x3D; textEdit) &#123;                                                    &#x2F;&#x2F;判断被监视的对象</span><br><span class="line">                 if (event-&gt;type() &#x3D;&#x3D; QEvent::KeyPress) &#123;                   &#x2F;&#x2F;判断事件类型</span><br><span class="line">                         QKeyEvent *keyEvent &#x3D; static_cast&lt;QKeyEvent*&gt;(event);</span><br><span class="line">                         qDebug() &lt;&lt; &quot;Ate key press&quot; &lt;&lt; keyEvent-&gt;key();</span><br><span class="line">                         return true;                                                    &#x2F;&#x2F;将键盘事件过滤</span><br><span class="line">                 &#125; else &#123;</span><br><span class="line">                         return false;                                                &#x2F;&#x2F;继续处理其他事件</span><br><span class="line">                 &#125;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">                 &#x2F;&#x2F; pass the event on to the parent class</span><br><span class="line">                 return QMainWindow::eventFilter(obj, event);           &#x2F;&#x2F;调用父类函数</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>现在我们可以总结一下 Qt 的事件处理，实际上是有五个层次：</p>
-<p>1、重写paintEvent()、mousePressEvent()等事件处理函数。这是最普通、最简单的形式，同时功能也最简单。</p>
-<p>1、重写event()函数。event()函数是所有对象的事件入口，QObject和QWidget中的实现，默认是把事件传递给特定的事件处理函数。</p>
-<p>1、在特定对象上面安装事件过滤器。该过滤器仅过滤该对象接收到的事件。</p>
-<p>1、在QCoreApplication::instance()上面安装事件过滤器。该过滤器将过滤所有对象的所有事件，因此和notify()函数一样强大，但是它更灵活，因为可以安装多个过滤器。全局的事件过滤器可以看到 disabled 组件上面发出的鼠标事件。全局过滤器有一个问题：只能用在主线程。</p>
-<p>1、重写QCoreApplication::notify()函数。这是最强大的，和全局事件过滤器一样提供完全控制，并且不受线程的限制。但是全局范围内只能有一个被使用（因为QCoreApplication是单例的）。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class MyApplication : public QApplication</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MyApplication(int &amp; argc, char ** argv):QApplication(argc, argv)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    virtual bool notify(QObject * obj, QEvent * event)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line"></span><br><span class="line">        if(event-&gt;type() &#x3D;&#x3D; QMouseEvent::MouseButtonPress)</span><br><span class="line">        &#123;</span><br><span class="line">            qDebug()&lt;&lt;__PRETTY_FUNCTION__&lt;&lt;obj&lt;&lt;event;</span><br><span class="line">        &#125;</span><br><span class="line">        return QApplication::notify(obj,event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>QT-焦点事件</strong></p>
-<p>设置焦点作用:不需要先用鼠标点击编辑框就可以直接输入文字等信息到其中<br>setFocusPolicy ( Qt::NoFocus )</p>
-<p>1、何判断一个才窗口有没有焦点事件,焦点事件或失去焦点事件<br>void QWidget::focusInEvent ( QFocusEvent * event )<br>void QWidget::focusOutEvent ( QFocusEvent * event )</p>
-<p>判断当前窗口有没有焦点事件的，返回布尔值。<br>void QWidget::setFocus ( Qt::FocusReason reason )<br>void QWidget::clearFocus ()</p>
 ]]></content>
       <categories>
         <category>QT Lover</category>
@@ -4063,99 +4105,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </categories>
       <tags>
         <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络</title>
-    <url>/Linux-Lover/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<p>1.计算机网络定义<br>所谓的计算机网络，就是一些互相连接的、自治的计算机的集合。计算机网络有很多种类别。<br>（1）根据不同的作用范围可以将计算机网络理解为广域网（WAN）、城域网（MAN）、局域网（LAN）、个人区域网（PAN）。<br>（2）根据不同的使用者，可以将计算机网络分为公用网和专用网。</p>
-<p>2.计算机网络的通信模式<br>计算机网络的通信模式有两种，一种是线路交换，另一种是包交换。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>线路交换</td>
-<td>就是我们家家最开始用的电话的网络连接技术，是通过在发送端和接受端之间建立一条特定的线路，进行数据的传输。</td>
-</tr>
-<tr>
-<td>包交换</td>
-<td>就是我们现在常用到的计算机的网络通信模式，是通过将所有的计算机放到一个共同的网络连接中，数据的发送端将要传输的数据分割成几份，然后将每一份数据封装成一个包，包中含有接收端的属性信息等，且每个包都是单独传输的。</td>
-</tr>
-</tbody></table>
-<p>OSI 7层协议模型 和各个层次的 关系 </p>
-
-
-<table>
-<thead>
-<tr>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>物理层</td>
-</tr>
-<tr>
-<td>数据链路层</td>
-</tr>
-<tr>
-<td>网络层</td>
-</tr>
-<tr>
-<td>传输层</td>
-</tr>
-<tr>
-<td>应用层</td>
-</tr>
-</tbody></table>
-<p>TCP/IP通信协议采用了4层的层级结构，这4层分别为：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>应用层</td>
-<td>应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>在此层中提供了节点间的数据传送服务，如传输控制协议（TCP）、用户数据包协议（UDP）等，TCP和UDP给数据包加入传输数据并把它传输到下一层中。这一层负责传送数据，并且确定数据已被送达并接收。</td>
-</tr>
-<tr>
-<td>互联网络层</td>
-<td>负责提供基本的数据封包传送功能，让每一块数据包都能够到达目的主机（但不检查是否被正确接收），如网际协（IP）。</td>
-</tr>
-<tr>
-<td>网络接口层</td>
-<td>对实际的网络媒体的管理，定义如何使用实际网络（如Ethernet、Serial Line等）来传送数据。</td>
-</tr>
-</tbody></table>
-<p><strong>拥塞控制、流量控制</strong></p>
-<p>拥塞控制：拥塞控制是作用于网络的，它是防止过多的数据注入到网络中，避免出现网络负载过大的情况；常用的方法就是：（ 1 ）慢开始、拥塞避免（ 2 ）快重传、快恢复。<br>流量控制：流量控制是作用于接收者的，它是控制发送者的发送速度从而使接收者来得及接收，防止分组丢失的。窗口控制机制</p>
-<p>TCP和UDP协议的区别，谈谈增强UDP传输安全性的策略<br>共同点：都是传输层的协议<br>不同点：TCP面向连接（通信前要建立通信的通路），可靠性高<br>      UDP无连接，不可靠（可增加校验机制增加可靠性）</p>
-<p>（*）组播的优点： </p>
-<ol>
-<li>需要相同数据流的客户端加入相同的组共享一条数据流，节省了服务器的负载。具备广播所具备的优点。 </li>
-<li>由于组播协议是根据接受者的需要，对数据流进行复制转发，所以服务端的服务总带宽不受客户接入端带宽的限制。IP协议允许有2亿6千多万个（268435456）组播，所以其提供的服务可以非常丰富。 </li>
-<li>此协议和单播协议一样允许在Internet宽带网上传输。</li>
-</ol>
-<p>对于一个没有设置任何套接口选项的阻塞套接口，调用recv接收对方的数据，对方发送数据前突然断电，recv永远不会返回。</p>
-<p><strong>TCP/IP层IP协议的服务是无连接数据报</strong></p>
-<p>一台主机从一个网络移到另一个网络.IP地址需要改变，MAC地址不需要改变</p>
-<p>经典题目：某公司申请到一个C类的IP地址，但要连接6个子公司，最大的一个子公司有26台计算机，每个子公司在一个网段中，则子网掩码应该为多少？<br>因为有六个子公司，所以必须有三位1，有26台，必须有五个0，所以二进制位11100000，转换为十进制是224</p>
-<p>DNS是域名服务器，用来解析域名的（域名与IP之间的解析），如果没有这东西，你必须输入网站的IP地址，有了DNS，你就可以直接输入网址。</p>
-]]></content>
-      <categories>
-        <category>Linux Lover</category>
-      </categories>
-      <tags>
-        <tag>Linux应用编程</tag>
       </tags>
   </entry>
   <entry>
