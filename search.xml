@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT-日历显示</title>
+    <url>/QT-Lover/QT-%E6%97%A5%E5%8E%86%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<p>#include <QCalendarWidget><br>#include <QTextCharFormat></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">QDate date&#x3D;QDate::currentDate();</span><br><span class="line">QTextCharFormat t;</span><br><span class="line">t.setBackground(Qt::yellow);</span><br><span class="line"></span><br><span class="line">calendarWidget &#x3D; new QCalendarWidget(this);</span><br><span class="line">calendarWidget-&gt;setGeometry(0,0,600,400);</span><br><span class="line">calendarWidget-&gt;setGridVisible(true);</span><br><span class="line">calendarWidget-&gt;setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);</span><br><span class="line">calendarWidget-&gt;setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);</span><br><span class="line">calendarWidget-&gt;setDateTextFormat(date,t);</span><br><span class="line"></span><br><span class="line">connect(prev_month, SIGNAL(clicked()), calendar_widget, SLOT(showPreviousMonth()));</span><br><span class="line"> connect(next_month, SIGNAL(clicked()), calendar_widget, SLOT(showNextMonth()));</span><br></pre></td></tr></table></figure>
+
+<img src="/QT-Lover/QT-%E6%97%A5%E5%8E%86%E6%98%BE%E7%A4%BA/calendar.gif" class="">]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-绘图事件学习闹钟</title>
+    <url>/QT-Lover/QT-%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6%E5%AD%A6%E4%B9%A0%E9%97%B9%E9%92%9F/</url>
+    <content><![CDATA[<p><strong>用到的参数或函数</strong><br>QRectF 矩形坐标<br>qreal 类似于float<br>绝对值qAbs<br>最大qMax<br>最小qMin<br>开根号Sqr<br>N次方是pow</p>
+<p>save() 用于保存 QPainter 的状态<br>restore() 用于恢复 QPainter 的状态<br>translate ( )设置一个逻辑原点<br>roate()  就绕”逻辑原点”旋转<br>painter.setRenderHint(QPainter::Antialiasing);//抗锯齿</p>
+<p> /* 信号、槽连接 */<br>connect(timer, SIGNAL(timeout()), this, SLOT(update()));</p>
+<p>主要绘图事件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oid MainWindow::paintEvent(QPaintEvent *event) &#123;</span><br><span class="line">    Q_UNUSED(event); &#x2F;&#x2F;防止编译报错</span><br><span class="line"></span><br><span class="line">    QPainter painter(this);</span><br><span class="line">    &#x2F;*逻辑原点*&#x2F;</span><br><span class="line">    painter.translate(painPara.translateX, painPara.translateY);</span><br><span class="line"></span><br><span class="line">    painter.setRenderHint(QPainter::Antialiasing);</span><br><span class="line">    painter.scale(painPara.scale, painPara.scale);</span><br><span class="line">    painter.setPen(painPara.painterColor);</span><br><span class="line">    painter.setBrush(painPara.painterColor);</span><br><span class="line"></span><br><span class="line">    &#x2F;* 获取系统时间 *&#x2F;</span><br><span class="line">    QTime time &#x3D; QTime::currentTime();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;* 描画时针刻度线 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    &#x2F;* 描画时钟数字文本   调用文本函数 *&#x2F;</span><br><span class="line">    int nHour &#x3D; 0;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; 12; ++i) &#123;</span><br><span class="line">        nHour &#x3D; i + 3;</span><br><span class="line">        if (nHour &gt; 12)</span><br><span class="line">            nHour -&#x3D; 12;</span><br><span class="line">        &#x2F;*确定文本位置函数*&#x2F;</span><br><span class="line">        painter.drawText(textRectF(75, 14, i * 30), Qt::AlignCenter, QString::number(nHour));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;*时刻度线*&#x2F;</span><br><span class="line">    for(int i &#x3D; 0; i &lt; 12; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        painter.rotate(30.0);&#x2F;&#x2F;原来的基础上选旋转30度</span><br><span class="line">        painter.drawLine(82,0,90,0);&#x2F;&#x2F;  100,120</span><br><span class="line">    &#125;</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 描画分针刻度线 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    for(int i &#x3D; 0; i&lt;60;i++) &#123;</span><br><span class="line">        if(i % 5)</span><br><span class="line">            painter.drawLine(82,0,87,0);</span><br><span class="line">        painter.rotate(6.0);</span><br><span class="line">    &#125;</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 时针   一个小时30度*&#x2F;</span><br><span class="line">    painter.save();&#x2F;&#x2F;保存</span><br><span class="line">    painter.rotate(30.0 * (time.hour() + time.minute() &#x2F; 60.0)); &#x2F;&#x2F;角度转换30度</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateHourHand, 3);   &#x2F;&#x2F;描画的形状</span><br><span class="line">    painter.restore();&#x2F;&#x2F;恢复</span><br><span class="line"></span><br><span class="line">    &#x2F;* 分针 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    painter.rotate(6.0 * (time.minute() + time.second() &#x2F; 60.0));</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateMinuteHand, 3);</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 秒针 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    painter.rotate(6.0 * time.second());</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateSecondHand, 3);</span><br><span class="line">    painter.restore();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 参考一去二三里的方法 *&#x2F;</span><br><span class="line">QRectF MainWindow::textRectF(double radius, int pointSize, double angle)</span><br><span class="line">&#123;</span><br><span class="line">    QRectF rectF;</span><br><span class="line">    rectF.setX(radius*qCos(angle*M_PI&#x2F;180.0) - pointSize*2);</span><br><span class="line">    rectF.setY(radius*qSin(angle*M_PI&#x2F;180.0) - pointSize&#x2F;2.0);</span><br><span class="line">    rectF.setWidth(pointSize*4);</span><br><span class="line">    rectF.setHeight(pointSize);</span><br><span class="line">    return rectF;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图</p>
+
+
+
+]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机网络</title>
     <url>/Linux-Lover/%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h5 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h5><p>在OSI参考模型中,物理层的作用是<code>透明的传输比特流</code>。对等实体在一次交互作用中传送的信息单位称为<code>协议数据单元</code> ,它包括<code>控制信息和用户信息</code>两部分。上下层实体之间的接口称为服务访问点(SAP) ,网络层的服务访问点也称为<code>网络地址</code> ,通常分为<code>网络号和主机地址</code>两部分。</p>
@@ -4144,31 +4178,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>51单片机</title>
-    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
-
-
-
-
-<p>__晶体与晶振</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
-
-<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
-
-
-<p>常见问题 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>MCU Lover</category>
-      </categories>
-      <tags>
-        <tag>单片机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STM32单片机</title>
     <url>/MCU-Lover/STM32%E5%8D%95%E7%89%87%E6%9C%BA/</url>
     <content><![CDATA[<p><strong>时钟系统</strong></p>
@@ -4191,6 +4200,31 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>入堆栈ISR<br>保存现场{PC,PSR,R0-R3,R12,ISR} ISR:当前中断服务寄存器<br>保存完后，ISR进入中断<br>晚来的中断可以ISR进入，不用重新保存现场。</p>
 <p>退出中断<br>出栈恢复现场<br>也可以被打断进入新的中断。</p>
 ]]></content>
+      <categories>
+        <category>MCU Lover</category>
+      </categories>
+      <tags>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51单片机</title>
+    <url>/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">单片机构造:</span><br><span class="line">40引脚双列直插DIP封装, PO, P1, P2, P3,其中P0不仅作为普通的1/0口使用,还可以作为地址/数据线使用【双向口】总共32个输入输出引脚, 2个电源接地, 2个管教接晶振,复位和控制4个: EA 【内外存储选择引脚,EA 为低电平,只访问外部程序存储器】</span><br><span class="line"></span><br><span class="line">工作方式:复位位方式【RST引脚输入高电平有效】,单步执行方式【通过外来脉冲控制,来一个脉冲执行一条指令,借助外部中断功能】,程序执行方式【主要方式,复位后PC指向地址0000H,从此执行复制导址方式:立即寻址,直接寻址,寄存器寻址,寄存器间接寻址,变址寻址,相对寻址,位寻址</span><br><span class="line"></span><br><span class="line">512字节RAM 8字节ROM（EEPROM）</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/51.jpg" class="" width="51">
+
+
+
+
+<p>__晶体与晶振</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">晶体（crystal）也叫做无缘晶体。它是石英晶片，镀上电极，装在支架上，放在外壳里，就是石英晶体振荡器，简称晶体。常见的有两只脚。</span><br><span class="line">晶振（crystal oscillator）也叫做有源晶振。在晶体的基础上，再加上振荡、放大或者整形电路，然后封装到壳子里，就是晶振。常见的有四只脚。</span><br></pre></td></tr></table></figure>
+
+<img src="/MCU-Lover/51%E5%8D%95%E7%89%87%E6%9C%BA/%E6%99%B6%E4%BD%93%E4%B8%8E%E6%99%B6%E6%8C%AF.jpg" class="" title="晶体与晶振">
+
+
+<p>常见问题 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、单片机中的程序计数器PC是16位的寻址范围是64KB怎么来的呀</span><br><span class="line">2 ^ 16，保存指示下一个指令地址</span><br><span class="line"></span><br><span class="line">2、三个周期</span><br><span class="line">时钟周期是单片机的基本时间单位。</span><br><span class="line">机器周期，它是CPU完成一个基本操作所需的时间。</span><br><span class="line">指令周期，是指CPU执行一条指令需要花费的时间。</span><br><span class="line">外接11.0592MHZ晶体，</span><br><span class="line">时钟周期=1/11.0592M</span><br><span class="line">机器周期=12/11.0592M ≈1.085us</span><br><span class="line">指令周期=1个，2个或4个机器周期</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>MCU Lover</category>
       </categories>
