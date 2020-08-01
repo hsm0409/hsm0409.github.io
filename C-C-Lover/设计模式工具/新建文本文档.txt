@@ -1,0 +1,74 @@
+##### UML建模工具
+程序员的画图设计工具
+1、startUML
+2、astah （付费）
+3、process on 网站 [https://www.processon.com/]
+
+##### 类的关系
+
+(1)关联关系(association)
+一个类作为另一个类的成员变量。
+
+{% asset_img 关联关系.jpg%}
+
+关联的加强，缺一不可---组合关系（有生命中的整体和部分概念）composition
+
+{% asset_img 组合关系.jpg%}
+
+
+(2)依赖关系(dependency)
+一个类用到另外一个类作为参数传入，ming用到了别人的车，虚线
+
+{% asset_img 依赖关系.jpg%}
+
+
+(3)泛化关系(generalization)
+父类实现子类例子，如支付宝（功能1，功能2，。。。）
+
+{% asset_img 泛化关系.jpg%}
+
+
+(4)包含关系
+一个用例可以包含其他用例具有的行为, 并把它包含的用例行为作为自身行为的一部分
+
+{% asset_img 包含关系.jpg%}
+
+##### UML10种图
+静态模型图: 描述系统的静态结构
+
+?	类图
+?	对象图
+?	包图
+?	组件图Component 
+
+{% asset_img 组件图.jpg%}
+
+?	部署图deploy
+
+{% asset_img 部署图.jpg%}
+
+动态模型图: 描述系统行为的各个方面
+
+?	用例图
+
+{% asset_img 用例图.jpg%}
+
+?	时序图（sequence）
+
+{% asset_img 时序图.jpg%}
+
+
+?	协作图 Collaboration
+
+{% asset_img 协作图.jpg%}
+
+?	状态图statechart
+
+{% asset_img 状态图.jpg%}
+
+?	活动图(流程图)activity
+
+{% asset_img 活动图.jpg%}
+
+
+
