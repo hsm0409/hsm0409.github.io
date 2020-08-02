@@ -132,7 +132,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="文件系统分类:1顺序访问设备:2随机访问设备: 123456789101112131415161718192021222324基本文本#include &lt;QFile&gt;#include&lt;QFileInfo&gt;#include &lt;QDebug&gt;#include &lt;QDir&gt;    QFile file(&quot;D:&#x2F;in.txt&quot;)">
 <meta property="article:published_time" content="2020-05-25T13:08:00.000Z">
-<meta property="article:modified_time" content="2020-06-17T08:25:00.172Z">
+<meta property="article:modified_time" content="2020-08-02T12:32:08.668Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Qt应用开发">
 <meta name="twitter:card" content="summary">
@@ -444,7 +444,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  470 字
+                  635 字
                 </span>
               
 
@@ -460,7 +460,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -493,6 +493,14 @@
 
 
 <p>另外，QBuffer也支持常用的信号。比如，当有数据可读时，它会发出readyRead（）信号；每一次向QBuffer中写入新数据时都会发出bytesWritten()信号。</p>
+<p>文件保存创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;打开操作</span><br><span class="line">&#x2F;&#x2F; QString filename  &#x3D; QFileDialog::getOpenFileName(this,tr(&quot;选择图像&quot;),&quot;&quot;,tr(&quot;Images (*.png *.bmp *.jpg)&quot;));</span><br><span class="line">&#x2F;&#x2F;    if(filename.isEmpty())</span><br><span class="line">&#x2F;&#x2F;        return;</span><br><span class="line">&#x2F;&#x2F;    else</span><br><span class="line">&#x2F;&#x2F;    &#123;</span><br><span class="line">&#x2F;&#x2F;        QImage img;</span><br><span class="line">&#x2F;&#x2F;        if(!(img.load(filename))) &#x2F;&#x2F;加载图像</span><br><span class="line">&#x2F;&#x2F;        &#123;</span><br><span class="line">&#x2F;&#x2F;            QMessageBox::information(this, tr(&quot;打开图像失败&quot;),tr(&quot;打开图像失败!&quot;));</span><br><span class="line">&#x2F;&#x2F;            return;</span><br><span class="line">&#x2F;&#x2F;        &#125;</span><br><span class="line">&#x2F;&#x2F;        ui-&gt;label-&gt;setPixmap(QPixmap::fromImage(img.scaled(ui-&gt;label-&gt;size())));</span><br><span class="line">&#x2F;&#x2F;    &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;保存操作</span><br><span class="line">    QString filename1 &#x3D; QFileDialog::getSaveFileName(this,tr(&quot;Save Image&quot;),&quot;&quot;,tr(&quot;Images (*.png *.bmp *.jpg)&quot;)); &#x2F;&#x2F;选择路径</span><br><span class="line">     QScreen *screen &#x3D; QGuiApplication::primaryScreen();</span><br><span class="line">     screen-&gt;grabWindow(ui-&gt;label-&gt;winId()).save(filename1);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 
       
     </div>
@@ -614,7 +622,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">219</span>
+                  <span class="site-state-item-count">222</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -703,7 +711,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">33</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -740,7 +748,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">103.2k</span>
+    <span title="Site words total count">107.8k</span>
   
 </div>
 

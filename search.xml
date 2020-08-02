@@ -1,6 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>QT-本地usb摄像头的调用</title>
+    <url>/QT-Lover/QT-%E6%9C%AC%E5%9C%B0usb%E6%91%84%E5%83%8F%E5%A4%B4%E7%9A%84%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<h5 id="心得小记"><a href="#心得小记" class="headerlink" title="心得小记"></a>心得小记</h5><p>1、QvideoWidgat类的提升<br>2、QCamera的了解<br>3、图片的简单处理</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;mainwindow.h&quot;</span><br><span class="line">#include &quot;ui_mainwindow.h&quot;</span><br><span class="line"></span><br><span class="line">MainWindow::MainWindow(QWidget *parent) :</span><br><span class="line">    QMainWindow(parent),</span><br><span class="line">    ui(new Ui::MainWindow)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line">    this-&gt;setWindowTitle(&quot;QT 调用本地 USB 摄像头&quot;);</span><br><span class="line"></span><br><span class="line">    QList &lt;QCameraInfo&gt; cameras &#x3D; QCameraInfo::availableCameras();</span><br><span class="line"></span><br><span class="line">     foreach (const QCameraInfo &amp;cameraInfo, cameras)</span><br><span class="line"></span><br><span class="line">      &#123;</span><br><span class="line">          if (cameraInfo.deviceName() &#x3D;&#x3D; &quot;@device:pnp:\\\\?\\usb#vid_0bda&amp;pid_57de&amp;mi_00#6&amp;2a01fa54&amp;0&amp;0000#&#123;65e8773d-8f56-11d0-a3b9-00a0c9223196&#125;\\global&quot;)</span><br><span class="line">          &#123;</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line">             if (cameraInfo.deviceName() &#x3D;&#x3D; &quot;@device:pnp:\\\\?\\usb#vid_0c45&amp;pid_6366&amp;mi_00#6&amp;183af011&amp;0&amp;0000#&#123;65e8773d-8f56-11d0-a3b9-00a0c9223196&#125;\\global&quot;)</span><br><span class="line">          &#123;</span><br><span class="line">               m_camera &#x3D; new QCamera(cameraInfo);</span><br><span class="line">               qDebug()&lt;&lt;cameraInfo.deviceName();</span><br><span class="line"></span><br><span class="line">               QString str &#x3D;   QString(cameraInfo.deviceName());</span><br><span class="line"></span><br><span class="line">               qDebug() &lt;&lt; str ;</span><br><span class="line">               ui-&gt;comboBox-&gt;addItem(str);</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;   m_camera &#x3D; new QCamera(this);&#x2F;&#x2F;初始化摄像头设备</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       m_camera-&gt;setCaptureMode(QCamera::CaptureVideo);&#x2F;&#x2F;设置捕捉模式为视频</span><br><span class="line"></span><br><span class="line">       m_camera-&gt;setViewfinder(ui-&gt;widget);&#x2F;&#x2F;设置 摄像头画面的显示位置</span><br><span class="line">     &#x2F;&#x2F;  m_camera-&gt;start();&#x2F;&#x2F;开启摄像头</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MainWindow::~MainWindow()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool MainWindow::checkCameraAvailability()</span><br><span class="line"> &#123;</span><br><span class="line">     if (QCameraInfo::availableCameras().count() &gt; 0)</span><br><span class="line">         return true;</span><br><span class="line">     else</span><br><span class="line">         return false;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void MainWindow::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line">        if( m_camera-&gt;state() !&#x3D;  QCamera::ActiveState)</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        m_camera-&gt;start();&#x2F;&#x2F;开启摄像头</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MainWindow::on_pushButton_2_clicked()</span><br><span class="line">&#123;</span><br><span class="line">      m_camera-&gt;stop();&#x2F;&#x2F;关闭摄像头</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MainWindow::on_pushButton_4_clicked()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;        if( m_camera-&gt;state() &#x3D;&#x3D;  QCamera::ActiveState)&#x2F;&#x2F;摄像头开启状态下才抓拍</span><br><span class="line">&#x2F;&#x2F;        &#123;</span><br><span class="line">&#x2F;&#x2F;            QPixmap pixmap &#x3D; ui-&gt;widget-&gt;grab();&#x2F;&#x2F;将widget内容保存为pixmap图像信息</span><br><span class="line">&#x2F;&#x2F;            pixmap.save(&quot;Snap.bmp&quot;);&#x2F;&#x2F;保存为Snap.bmp</span><br><span class="line">&#x2F;&#x2F;        &#125;</span><br><span class="line"></span><br><span class="line">    QString filename1 &#x3D; QFileDialog::getSaveFileName(this,tr(&quot;Save Image&quot;),&quot;&quot;,tr(&quot;Images (*.png *.bmp *.jpg)&quot;)); &#x2F;&#x2F;选择路径</span><br><span class="line">     QScreen *screen &#x3D; QGuiApplication::primaryScreen();</span><br><span class="line">     screen-&gt;grabWindow(ui-&gt;label_picture-&gt;winId()).save(filename1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void MainWindow::on_pushButton_3_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;label_picture-&gt;clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MainWindow::on_pushButton_5_clicked()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    QPixmap pixmap &#x3D; QPixmap::grabWidget(ui-&gt;widget);</span><br><span class="line"></span><br><span class="line">    ui-&gt;label_picture-&gt;setPixmap(pixmap);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><img src="/QT-Lover/QT-%E6%9C%AC%E5%9C%B0usb%E6%91%84%E5%83%8F%E5%A4%B4%E7%9A%84%E8%B0%83%E7%94%A8/picture.gif" class="">]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嵌入式考试三级备考（2）</title>
+    <url>/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<h5 id="选择填空"><a href="#选择填空" class="headerlink" title="选择填空"></a>选择填空</h5><p>嵌入式系统的软件配置有多种情况,有些简单,有些比较复杂<br>而嵌入式系统的CPU有ARM, DSP和FPGA等。</p>
+<p>数字信号处理器英文缩写为DSP,它是一种适用于数字信号处理的微处理器,。<br>它支持单指令多数据(SIMD )并行处理的指令；<br>能显著提高音频、视频等数字信号的数据处理效率。</p>
+<p>随着电子设计自动化水平的提高和VLS1制造技术的飞速发展,半导体加工已经从微米、亚微米进入到深亚微米的时代,单个芯片上可以集成几亿个甚至几十亿个晶体管,因而能够把计算机或其他一些电子系统的全部电路都集成在单个芯片上,这种芯片就是所谓的片上系统。</p>
+<p>嵌入式系统的分类有多种。<br>按系统的软硬件技术复杂度,嵌入式系统分为低端系统、中端系统和高端系统。</p>
+<p>集成电路根据其集成度的高低可以分为小规模(SSI )、中规模(MSI )、大规模(LSI )、超大规模(VLSI )和极大规模(ULSI )等几种。嵌入式处理芯片大多属于VLSI和ULSl,集成电路的制造</p>
+<p>以太网数据帧<br>前导码(7字节)、帧起始定界符(1字节)、目的MAC地址(6字节)、源MAC地址(6字节)、类型/长度(2字节)、数据(46-1500字节)、帧校验序列(4字节),A项IP地址不属于以太网数据帧内容。</p>
+<p>一个A类IP地址由1字节(每个字节是8位)的网络地址和3个字节主机地址组成,网络地址的最高位必须是”0” ,即第一段数字范围为1~127,每个A类地址可连接16387064台主机, Internet有126个A类地址。</p>
+<p>ARM的总线结构称为AMBA (先进微控器制总线结构) ,是ARM推出的开放式总线结构是目前流行的一种工业标准片上结构; </p>
+<p>在ARM的体系结构中,处理器可以工作在3种不同的状态, QARM状态2Thumb/Thumb-2状态③调试状态。</p>
+<p>GPIO的引脚一般是多功能复用的,一般具有0态和1态和高阻状态;作为输入接口时具有缓冲功能,作为输出接口时具有锁存功能</p>
+<p>ARM芯片中的UART收发信息时,可以采用FIFO模式,也可以采用普通模式;<br>UART传送信息的格式以起始位开始,以停止位结束;<br>UART传送信息时一次传送的数据位可为5、6、7、8位,由编程决定;<br>基于UART可组成RS-232接口。</p>
+<p>利用嵌入式芯片的GPIO构成线性键盘时,一个按键需要占用一个GPIO引脚;采用矩阵键盘结构时,8个GPIO引脚最多能构成64个按键的键盘;</p>
+<p>任务处于休眠态,相当于该任务驻留在内存中,但还没有交给内核管理<br>任务处于就绪态,意味着该任务已经准备好,可以运行了,但由于该任务的优先级比正在运行的任务的优先级低,还暂时不能运行<br>任务处于运行态,指任务得到了CPU的控制权正在运行之中<br>任务处于被中断态,是指发生中断时执行相应的中断服务,原来正在运行的任务暂时停止运行,进入了被中断状态</p>
+<p>uC/OS-11许中断嵌套,嵌套层数可达255层。节拍率应在每秒10次到100次之间,即10-100Hz。 uC/OS-11的事件控制块有4种类型,需要使用4个不同的函数来创建。4个不同的函数分别是: OSSemCreate ()、OSMutexCreate ()、OSMboxCreate ( )、 osQCreate ()。</p>
+<p>进程调度模块负责控制进程对CPU资源的使用,所采取的调度策略是使得各个进程能够公平合理地访问CPU ,同时保证内核能及时地执行硬件操作。</p>
+<p>属于微内核结构的典型嵌入式操作系统有Symbian, VxWorks（小型）， QNX,uC/OS-11, ios等。而Symbian系统属于普通实时系统。</p>
+<p>arm-linux-gcc-g-o test test.c<br>要对源程序进行调试,通常需要在GCC命令中加入参数-g。</p>
+<p>目前32位嵌入式处理器主要采用的是ARM内核处理器,是由英国一家专门从事RISC处理器内核设计公司设计的。</p>
+<p>汉字编码  GB2312  GB18030   2个字节表示 </p>
+<p>TCP/IP协议簇中的IP协议,在Internet中负责选择合适的路由,使发送的数据分组( packet )能够正确无误地按照地址找到目的计算机。</p>
+<p>ARM 七种异常：<br>复位、<br>未定义指令、<br>软件中断、<br>指令预取中止<br>、数据访问中止、<br>外部中断请求、<br>快速中断请求。</p>
+<p>。在ARM处理器中, RO~R15是通用寄存器,其中有两个较特殊,作为堆栈指针SP使用的寄存器是R13,作为程序链接寄存器LR使用的是R14</p>
+<p>已知ARM处理器进位标志C= 1, R1 = 1000, R2-99,<br>执行指令ADDC RO , R1 , R2之后, RO=1100；R1=1000<br>ADDC是带进位加法,指令执行完后, RO中是R1和R2带进位相加之后的值;而R1中的值不变。</p>
+<p>ADDCEQ R3,R1,R2</p>
+<p>SUBHIS R3,R1,R2</p>
+<p>AMBA 总线规范，总线体系结构</p>
+<p>模拟组件包括ADC与DAC</p>
+<p>。目前有两种主要的闪存技术,一种是NOR Flash ,其特点是以字节为单位随机存取,另一种是NAND Flash ,以页(行)为单位随机存取。</p>
+<p>带宽＝数据线宽度＊传输线时钟频率＊每个时钟脉冲传输数据次数／8　;</p>
+<p>SPI的信号线MISO称为主机输入从机输出数据线, MOSI称为主机输出从机输入数据线。<br>内核只提供任务调度、任务间通信与同步、任务管理、时间管理和存储管理等基本功能,资源消耗非常小。<br>响应时间( Response Time )是计算机从识别一个外部事件到做出响应的时间,其具体指标包括:中断延迟时间和任务切换时间。</p>
+<p>引导加载程序Bootloader的执行过程。系统中引导加载程序主要完成加电自检、外设存在自检、内存地址映射、初始化外围设备、内存寻址定位、加载并启动操作系统.</p>
+<p>以太网控制电路和驱动电路</p>
+<h5 id="综合题"><a href="#综合题" class="headerlink" title="综合题"></a>综合题</h5><p>（1）rGPECON=(rGPECON | x00005555)&amp; oxFFFF5555</p>
+<pre><code>: rGPEDAT  =  r GPEDAT | 0x0020</code></pre><p>(2) 0x000000AA</p>
+<img src="/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%882%EF%BC%89/1.jpg" class="">
+
+ <img src="/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%882%EF%BC%89/2.jpg" class="">
+
+<p>//串口控制器   8位 奇 1 停止<br>0010 0011</p>
+<img src="/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%882%EF%BC%89/3.jpg" class="">
+
+ <img src="/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%882%EF%BC%89/4.jpg" class="">
+
+<p>波特率设置？？<br>(9600× 16)+0.5 </p>
+<p>（3）9600/（8+3） = 872  4k 4.7s<br>奇偶校验包括停止位 3 个</p>
+<p>（4）41250<br>计数常数的计算</p>
+<p>0x00000003<br>0x00000003</p>
+<p>（5）0xA122    ==== 41250</p>
+<p>（6）</p>
+<p>（7）0x00000018   IRQ<br> 4 个字节<br>OxCo<br>BL_main</p>
+]]></content>
+      <categories>
+        <category>ARM Lover</category>
+      </categories>
+      <tags>
+        <tag>ARM汇编基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嵌入式考试三级备考（1）</title>
+    <url>/ARM-Lover/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%80%83%E8%AF%95%E4%B8%89%E7%BA%A7%E5%A4%87%E8%80%83%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>1、嵌入式系统以应用为中心,以计算机技术为基础,软硬件可裁剪、适应应用系统对功能、可靠性、成本、体积、功耗严格要求的专用计算机系统。巨型计算机实际上是一个巨大的计算机系统。</p>
+<p>2、在uC/OS-11中有多种方法可以保护任务之间的共享数据和提供任务之间的通信。其中主要有以下三种:利用宏OS ENTER CRITICALO和OS EXIT CRITICAL)来关闭中断和打开中断;利用函数OSSchedLock0和OsschedUnlock0对任务调度函数上锁和开锁;利用信号量、互斥信号量、邮箱和消息队列进行任务间通信。利用内存文件进行任务间的大规模数据共享是达不到保护任务之间的共享数据的作用。</p>
+<p>3、 HAL系统库提供以下服务:结合Newlib ANSIC标准库,向用户提供熟知的标准库函数;提供设备驱动,使用户可以访问系统中的所有设备;为用户提供了与HAL服务柜统一的标准接口( HAL API ) ,例如数据访问、中断处理和报警设施;系统初始化,在main ()函数之前完成软核处理器Nios和运行库环境的初始化任务;设备初始化,在main ()函数之前完成每个设备的实例化和初始化。</p>
+<p>不提供的TCP/IP协议栈服务。</p>
+<p>3、iOS的前身是UNIX-BSD.</p>
+<p>4、MPEG-2,在3-10Mbits/sec间.</p>
+<p>5、IP地址分为A类、B类、C类三个基本类,另有两类分别作为组播地址和备用地址(D类和E类)。C类IP地址范围: 192.0.0.1到223.255.255.254,第1字节、第2字节和第3个字节为网络地址,第4个字节为主机地址。C类网络地址数量较多,适用于小规模的局域网络,每个网络最多只能包含254台计算机。</p>
+<p>6、嵌入式处理器的体系结构按指令集可分为两大类:CISC和RISC ;<br>按存储机制分为冯诺依曼结构及哈佛结构;<br>按字长分为8位、16位、32位和64位。</p>
+<p>7、 ARM公司，经典家族ARM7\ARM9\ARM11.<br>在经典处理器ARM11以后的产品改用Cortex命名,并分成A,R和M三类,旨在为各种不同的市场提供服务。Cortex系列属于ARMv7架构,这是到2010年为止ARM公司最新的指令集架构。(2011年, ARMv8架构在TechCon上推出) ARMv7架构定义了三大分工明确的系列: “A”系列面向尖端的基于虚拟内存的操作系统和用户应用: “R”系列针对实时系统; “M”系列对微控制器。</p>
+<p>8、在ARM的体系结构中,处理器可以工作在3种不同的状态<br>①ARM状态<br>②是Thumb状态及Thumb-2状态<br>③调试状态。<br>除支持Thumb-2的ARM处理器外,其他所有ARM处理器都可以工作在ARM状态。ARM状态是ARM处理器工作于32位指令的状态,所有指令均为32位宽度。复位后处于ARM状态。</p>
+<p>9、大多数嵌入式处理器内置了时钟信号发生器,因此时钟电路只需要外接一个石英晶体振荡器和两只电容就可以工作了,但有些场合(如为了减少功耗、需要严格同步等)需要使用外部振荡源提供时钟信号。</p>
+<p>10、前向通道通常指的是輸入接口,由模拟量輸入接口和数字量输入接口组成,模拟输入接口包括传感器,信号调节电路(滤波,放大器等) , A/D转换器等构成。后向通道是输出接口,由模拟量和数字量接口组成,包括D/A转换器,功率放大器,执行器等。<br>11、DMA ( Direct Memory Access )控制器是一种在系统内部转移数据的独特外设,可以将其视为种能够通过一组专用总线将内部和外部存储器与每个具有DMA能力的外设连接起来的控制器。</p>
+<p>填空题<br>考查IP核的分类。按照C设计文件的类型, IP核通常分为三种:软核、固核和硬核</p>
+<p>（1）什么是软核?<br>         IP软核通常是用HDL文本形式提交给用户，它经过RTL级设计优化和功能验证，但其中不含有任何具体的物理信息。<br>据此，用户可以综合出正确的门电路级设计网表，并可以进行后续的结构设计，具有很大的灵活性，借助于EDA综合工具<br>可以很容易地与其他外部逻辑电路合成一体，根据各种不同半导体工艺，设计成具有不同性能的器件。软IP内核也称为虚<br>拟组件（VC-Virtual Component）。<br>    （2）什么是固核?<br>         IP固核的设计程度则是介于软核和硬核之间，除了完成软核所有的设计外，还完成了门级电路综合和时序仿真等设<br>计环节。一般以门级电路网表的形式提供给用户。<br>    （3）什么是硬核?<br>         IP硬核是基于半导体工艺的物理设计，已有固定的拓扑布局和具体工艺，并已经过工艺验证，具有可保证的性能。<br>其提供给用户的形式是电路物理结构掩模版图和全套工艺文件，是可以拿来就用的全套技术。 </p>
+<p>65536色 像素16位<br>Flash寄存器，1024x1024x16/8 = 2M<br>80x2/4 = 40M</p>
+<p>考查WLAN的通信协议以及数据传输速率。WLAN所采用的主要通信协议是802.11 ;数据传输速率可达到11 Mbps, 54Mbps, 108Mbps甚至更高。</p>
+<p>考查ARM处理器的7种异常及相应优先级。<br>经典ARM处理器有7种异常:主要包括复位RESET,未定义指令UND,软件中断SWI、指令预取中止PABT、数据访问中止DABT、外部中断请求IRQ以及快速中断,其中优先級最高的是复位。</p>
+<p>本题考查对Thumb-2指令集的掌握,开关中断指令属于程序状态类指令用于更改处理器状态。<br>关外部中断使用的指令为: CPSID I<br>开外部中断的指令为: CPSIE I</p>
+<p>调用子程序<br>BL<br>返回<br>MOV PC LR;</p>
+<p>AMBA总线规范,基于ARM内核的嵌入式处理器芯片采用系统总线与外围总线两层结构的方式构建片上系统。其中的系统总线主要用于连接高带宽快速组件。<br>FRAM<br>铁性随机存储器<br>MRAM<br>磁性存随机储器</p>
+<p>存储器的容量取决于存储单元的个数和存储器各单元的位数,而单元个数与存储器的地址总线有密切关系因此存储器芯片的容量完全取决于存储器芯片的地址线条数和数据线的位数。</p>
+<p>12C总线被启动后,多个主机在每发送一个,数据位时都要对SDA信号线电平进行检测,只要检测的电平与自己发出的电平相同就会继续占用总线。总线的控制遵循”低电平优先”的原则。</p>
+<p>UART的构成发送器、接收器、控制单元、波特率发送器。</p>
+<p>嵌入式系统与通用计算机系统软件的相同之处,指的是嵌入式系统通常也具备引导加载程序,外设驱动程序,操作系统,文件系统,网络协议栈,图形用户界面,数据库,以及各种各样的应用程序等。</p>
+<p>基于操作系统的外围工具软件运行在嵌入式系统上,往往具有内部结构精简,代码轻量化,占用存储资源少的特点。</p>
+<p>实时系统的任务时限有两种:<br>截止时间也就是任务开始执行时间到任务必须完成的时间间隔。<br>任务执行预设时间,或者叫做任务最快完成时间,这是无中断响应情况下的任务最快执行时间。<br>实时系统的任务时限有两种:截止时间也就是任务开始执行时间到任务必须完成的时间间隔。任务执行预设时间,或者叫做任务最快完成时间,这是无中断响应情况下的任务最快执行时间。</p>
+<p>实时系统对时间约束要求的严格性,使可预测性成为实时系统的一项重要性能要求,它是指RTOS能够对外部事件的响应时间和实时任务的执行时间进行判断,以确定被事件触发的实时任务能否在规定的时间内完成。</p>
+<p>实时系统按响应时间一般分成三类:强实时系统,其响应时间一般在毫秒级或微秒级;普通实时系统,其响应时间一般在秒级;弱实时系统,其响应时间一般在数十秒级。</p>
+<p>一般嵌入式系统的开发过程,通常分为需求分析与规格说明、系统设计、构件设计、系统集成与测试等4个阶段。</p>
+<p>综合题。（）</p>
+]]></content>
+      <categories>
+        <category>ARM Lover</category>
+      </categories>
+      <tags>
+        <tag>ARM汇编基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>位运算</title>
     <url>/Data-Structure-and-Algorithms-Lover/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p>位运算细节入手QVQ</p>
@@ -1773,6 +1889,14 @@ height="600" width="100%" > </iframe>]]></content>
 
 
 <p>另外，QBuffer也支持常用的信号。比如，当有数据可读时，它会发出readyRead（）信号；每一次向QBuffer中写入新数据时都会发出bytesWritten()信号。</p>
+<p>文件保存创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;打开操作</span><br><span class="line">&#x2F;&#x2F; QString filename  &#x3D; QFileDialog::getOpenFileName(this,tr(&quot;选择图像&quot;),&quot;&quot;,tr(&quot;Images (*.png *.bmp *.jpg)&quot;));</span><br><span class="line">&#x2F;&#x2F;    if(filename.isEmpty())</span><br><span class="line">&#x2F;&#x2F;        return;</span><br><span class="line">&#x2F;&#x2F;    else</span><br><span class="line">&#x2F;&#x2F;    &#123;</span><br><span class="line">&#x2F;&#x2F;        QImage img;</span><br><span class="line">&#x2F;&#x2F;        if(!(img.load(filename))) &#x2F;&#x2F;加载图像</span><br><span class="line">&#x2F;&#x2F;        &#123;</span><br><span class="line">&#x2F;&#x2F;            QMessageBox::information(this, tr(&quot;打开图像失败&quot;),tr(&quot;打开图像失败!&quot;));</span><br><span class="line">&#x2F;&#x2F;            return;</span><br><span class="line">&#x2F;&#x2F;        &#125;</span><br><span class="line">&#x2F;&#x2F;        ui-&gt;label-&gt;setPixmap(QPixmap::fromImage(img.scaled(ui-&gt;label-&gt;size())));</span><br><span class="line">&#x2F;&#x2F;    &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;保存操作</span><br><span class="line">    QString filename1 &#x3D; QFileDialog::getSaveFileName(this,tr(&quot;Save Image&quot;),&quot;&quot;,tr(&quot;Images (*.png *.bmp *.jpg)&quot;)); &#x2F;&#x2F;选择路径</span><br><span class="line">     QScreen *screen &#x3D; QGuiApplication::primaryScreen();</span><br><span class="line">     screen-&gt;grabWindow(ui-&gt;label-&gt;winId()).save(filename1);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 ]]></content>
       <categories>
         <category>QT Lover</category>
