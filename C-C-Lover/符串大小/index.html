@@ -125,14 +125,14 @@
 
 
 
-<meta name="description" content="字符串”\\”A100\”\”的长度是多少？8个长度  \ 要用 \ 表示 ‘’ 要用 &quot; 表示">
+<meta name="description" content="字符串长度题字符串”\\”A100\”\”的长度是多少？  \ 要用 \ 表示,” 要用 &quot; 表示,共8个长度 字符转化之’0’的妙用整数转化为字符思路 例如整数 12345 1、存储到char 数组+‘0’2、倒序3、输出 函数：itoa(); 字符串转化整数char temp[7] &#x3D; {‘1’,’2’,’3’,’4’,’5’,’6’,’\0’}; while(temp[i]){">
 <meta property="og:type" content="article">
-<meta property="og:title" content="字符串大小">
+<meta property="og:title" content="字符串">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/index.html">
 <meta property="og:site_name" content="我的笔记">
-<meta property="og:description" content="字符串”\\”A100\”\”的长度是多少？8个长度  \ 要用 \ 表示 ‘’ 要用 &quot; 表示">
+<meta property="og:description" content="字符串长度题字符串”\\”A100\”\”的长度是多少？  \ 要用 \ 表示,” 要用 &quot; 表示,共8个长度 字符转化之’0’的妙用整数转化为字符思路 例如整数 12345 1、存储到char 数组+‘0’2、倒序3、输出 函数：itoa(); 字符串转化整数char temp[7] &#x3D; {‘1’,’2’,’3’,’4’,’5’,’6’,’\0’}; while(temp[i]){">
 <meta property="article:published_time" content="2020-05-12T07:03:00.000Z">
-<meta property="article:modified_time" content="2020-05-15T07:04:42.380Z">
+<meta property="article:modified_time" content="2020-08-04T16:35:06.892Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,7 @@
 
 
 
-  <title>字符串大小 | 我的笔记</title>
+  <title>字符串 | 我的笔记</title>
   
 
 
@@ -366,7 +366,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">字符串大小</h1>
+          <h1 class="post-title" itemprop="name headline">字符串</h1>
         
 
         <div class="post-meta">
@@ -444,7 +444,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  23 字
+                  252 字
                 </span>
               
 
@@ -481,10 +481,19 @@
       
 
       
-        <p>字符串”\\”A100\”\”的长度是多少？8个长度</p>
-<p> \ 要用 \ 表示</p>
-<p>‘’ 要用 &quot; 表示</p>
-
+        <h5 id="字符串长度题"><a href="#字符串长度题" class="headerlink" title="字符串长度题"></a>字符串长度题</h5><p>字符串”\\”A100\”\”的长度是多少？</p>
+<p> \ 要用 \ 表示,” 要用 &quot; 表示,共8个长度</p>
+<h5 id="字符转化之’0’的妙用"><a href="#字符转化之’0’的妙用" class="headerlink" title="字符转化之’0’的妙用"></a>字符转化之’0’的妙用</h5><p>整数转化为字符思路</p>
+<p>例如整数 12345</p>
+<p>1、存储到char 数组+‘0’<br>2、倒序<br>3、输出</p>
+<p>函数：itoa();</p>
+<p>字符串转化整数<br>char temp[7] = {‘1’,’2’,’3’,’4’,’5’,’6’,’\0’};</p>
+<p>while(temp[i])<br>{<br>    sum = sum*10+(sum[i]-‘0’);<br>    i++;<br>}<br>因为减去‘0’，就隐式转化成int整数</p>
+<h5 id="字符函数自写"><a href="#字符函数自写" class="headerlink" title="字符函数自写"></a>字符函数自写</h5><p>char * strcpy1(char <em>strdest,const char *strSrc)<br>{<br>assert(strdest!=NULL &amp;&amp; strSrc!=NULL);<br>char * addr = strdest;<br>while(  (</em>strdest ++ =*strSrc)!= ‘\0’ )<br>{<br>        NULL;<br>}<br>return addr;<br>}</p>
+<p>int length = strlen(strcpy(strdest,”hello word”));</p>
+<h5 id="字符之库函数应用"><a href="#字符之库函数应用" class="headerlink" title="字符之库函数应用"></a>字符之库函数应用</h5><p>strcpy和memcpy都是标准C库函数<br>即strcpy只用于字符串复制，并且它不仅复制字符串内容之外，还会复制字符串的结束符。<br>char* strcpy(char* dest, const char* src);</p>
+<p>memcpy提供了一般内存的复制。即memcpy对于需要复制的内容没有限制，因此用途更广。<br>void *memcpy( void *dest, const void *src, size_t count );</p>
+<h5 id="字符串问题�"><a href="#字符串问题�" class="headerlink" title="字符串问题�"></a>字符串问题�</h5>
       
     </div>
     
@@ -585,8 +594,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -605,7 +623,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">225</span>
+                  <span class="site-state-item-count">226</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -683,6 +701,23 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串长度题"><span class="nav-number">1.</span> <span class="nav-text">字符串长度题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符转化之’0’的妙用"><span class="nav-number">2.</span> <span class="nav-text">字符转化之’0’的妙用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符函数自写"><span class="nav-number">3.</span> <span class="nav-text">字符函数自写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符之库函数应用"><span class="nav-number">4.</span> <span class="nav-text">字符之库函数应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串问题�"><span class="nav-number">5.</span> <span class="nav-text">字符串问题�</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+		
+      <!--/noindex-->
+      
 
       
 	  
@@ -694,7 +729,7 @@
 			<h3 class="widget-title">Tag Cloud</h3>
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="250" height="250" id="resCanvas" style="width=100%">
-					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">33</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%BB%BA%E6%A8%A1/" rel="tag">3D建模</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARM%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="tag">ARM汇编基础</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B/" rel="tag">Linux应用编程</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E7%B3%BB%E7%BB%9F/" rel="tag">Linux系统</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" rel="tag">Linux项目开发</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag">Linux驱动开发</a><span class="tag-list-count">38</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile%E5%9F%BA%E7%A1%80/" rel="tag">Makefile基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qt%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/" rel="tag">Qt应用开发</a><span class="tag-list-count">33</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell%E5%9F%BA%E7%A1%80/" rel="tag">shell基础</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="tag">传感器</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">4</span></li></ul>
 				</canvas>
 			</div>
 		</div>
@@ -731,7 +766,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">109.4k</span>
+    <span title="Site words total count">110.9k</span>
   
 </div>
 
