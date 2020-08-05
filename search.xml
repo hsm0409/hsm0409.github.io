@@ -2708,6 +2708,44 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
+    <title>字符串</title>
+    <url>/C-C-Lover/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/</url>
+    <content><![CDATA[<h5 id="字符串长度题"><a href="#字符串长度题" class="headerlink" title="字符串长度题"></a>字符串长度题</h5><p>字符串”\\”A100\”\”的长度是多少？</p>
+<p> \ 要用 \ 表示,” 要用 &quot; 表示,共8个长度</p>
+<h5 id="字符转化之’0’的妙用"><a href="#字符转化之’0’的妙用" class="headerlink" title="字符转化之’0’的妙用"></a>字符转化之’0’的妙用</h5><p>整数转化为字符思路</p>
+<p>例如整数 12345</p>
+<p>1、存储到char 数组+‘0’<br>2、倒序<br>3、输出</p>
+<p>函数：itoa();</p>
+<p>字符串转化整数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">char temp[7] &#x3D; &#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;,&#39;5&#39;,&#39;6&#39;,&#39;\0&#39;&#125;;</span><br><span class="line"></span><br><span class="line">while(temp[i])</span><br><span class="line">&#123;</span><br><span class="line">	sum &#x3D; sum*10+(sum[i]-&#39;0&#39;);</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line">因为减去‘0’，就隐式转化成int整数</span><br></pre></td></tr></table></figure>
+<h5 id="字符函数自写"><a href="#字符函数自写" class="headerlink" title="字符函数自写"></a>字符函数自写</h5><p>char * strcpy1(char <em>strdest,const char *strSrc)<br>{<br>assert(strdest!=NULL &amp;&amp; strSrc!=NULL);<br>char * addr = strdest;<br>while(  (</em>strdest ++ =*strSrc)!= ‘\0’ )<br>{<br>        NULL;<br>}<br>return addr;<br>}</p>
+<p>int length = strlen(strcpy(strdest,”hello word”));</p>
+<h5 id="字符之库函数应用"><a href="#字符之库函数应用" class="headerlink" title="字符之库函数应用"></a>字符之库函数应用</h5><p>strcpy和memcpy都是标准C库函数<br>即strcpy只用于字符串复制，并且它不仅复制字符串内容之外，还会复制字符串的结束符。<br>char* strcpy(char* dest, const char* src);</p>
+<p>memcpy提供了一般内存的复制。即memcpy对于需要复制的内容没有限制，因此用途更广。<br>void *memcpy( void *dest, const void *src, size_t count );</p>
+<p>题目：字符移位</p>
+<img src="/C-C-Lover/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%A7%BB%E4%BD%8D.jpg" class="">
+
+
+
+<p>题目：查找字符串中，最长的重复串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int main(void) &#123; </span><br><span class="line">    </span><br><span class="line">    string str,tep;</span><br><span class="line">    cout&lt;&lt;&quot; 输入 ：&quot; &lt;&lt; endl;</span><br><span class="line">    cin &gt;&gt;str;</span><br><span class="line">    for(int i &#x3D; str.length() - 1 ; i &gt; 1 ; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        for(int j &#x3D; 0 ; j &lt;str.length();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            if(i+j &lt;&#x3D; str.length())</span><br><span class="line">            &#123;</span><br><span class="line">                int t ,num ;</span><br><span class="line">                </span><br><span class="line">               tep &#x3D; str.substr(j,i);</span><br><span class="line">               t &#x3D; str.find(tep);</span><br><span class="line">               num &#x3D; str.rfind(tep);</span><br><span class="line">               if(t !&#x3D;num)</span><br><span class="line">               &#123;</span><br><span class="line">                   cout&lt;&lt;tep &lt;&lt;&quot; &quot;&lt;&lt; t+1&lt;&lt;endl;</span><br><span class="line">                   return 0;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>题目：字符串翻转<br>1、整体反转<br>2、部分反转</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">核心代码</span><br><span class="line">while(j &gt; i)</span><br><span class="line">&#123;</span><br><span class="line">temp &#x3D; str[i];</span><br><span class="line">str[i] &#x3D; str[j];</span><br><span class="line">str[j] &#x3D; temp;</span><br><span class="line">j--;</span><br><span class="line">i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：sprintf的妙用–连接</p>
+<p>sprintf(reschar+strlen(reschar), %c%d ,str[k],count );</p>
+<p>题目：移动字符串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void fun(char *w,int m)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 0,len &#x3D; strlen(w);</span><br><span class="line">	if(m &gt; len)       &#x2F;&#x2F; 此处对于输入的移动字符数超过字符串长度做了处理</span><br><span class="line">		m &#x3D; len;      </span><br><span class="line">	while(len-m &gt; 0 || (m &#x3D; 0) !&#x3D; 0) &#x2F;&#x2F;(m&#x3D;0)!&#x3D;0的目的是给m赋值为0，并且不进入循环，还满足要求</span><br><span class="line">		for(i &#x3D; 0,w[len] &#x3D; w[0],++m;i &lt; len;i++) w[i] &#x3D; w[i+1];</span><br><span class="line">	w[len-m] &#x3D; &#39;\0&#39;;  &#x2F;&#x2F;不要被表象迷惑，刚开始就以为是在中间加了&#39;\0&#39;,然后蒙了~</span><br><span class="line">&#125;</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C/C++ Lover</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>#pragma pack</title>
     <url>/C-C-Lover/ragma-pack/</url>
     <content><![CDATA[<p>#pragma pack(push)保存对齐状态</p>
@@ -2876,29 +2914,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 
 
 ]]></content>
-      <categories>
-        <category>C/C++ Lover</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串</title>
-    <url>/C-C-Lover/%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F/</url>
-    <content><![CDATA[<h5 id="字符串长度题"><a href="#字符串长度题" class="headerlink" title="字符串长度题"></a>字符串长度题</h5><p>字符串”\\”A100\”\”的长度是多少？</p>
-<p> \ 要用 \ 表示,” 要用 &quot; 表示,共8个长度</p>
-<h5 id="字符转化之’0’的妙用"><a href="#字符转化之’0’的妙用" class="headerlink" title="字符转化之’0’的妙用"></a>字符转化之’0’的妙用</h5><p>整数转化为字符思路</p>
-<p>例如整数 12345</p>
-<p>1、存储到char 数组+‘0’<br>2、倒序<br>3、输出</p>
-<p>函数：itoa();</p>
-<p>字符串转化整数<br>char temp[7] = {‘1’,’2’,’3’,’4’,’5’,’6’,’\0’};</p>
-<p>while(temp[i])<br>{<br>    sum = sum*10+(sum[i]-‘0’);<br>    i++;<br>}<br>因为减去‘0’，就隐式转化成int整数</p>
-<h5 id="字符函数自写"><a href="#字符函数自写" class="headerlink" title="字符函数自写"></a>字符函数自写</h5><p>char * strcpy1(char <em>strdest,const char *strSrc)<br>{<br>assert(strdest!=NULL &amp;&amp; strSrc!=NULL);<br>char * addr = strdest;<br>while(  (</em>strdest ++ =*strSrc)!= ‘\0’ )<br>{<br>        NULL;<br>}<br>return addr;<br>}</p>
-<p>int length = strlen(strcpy(strdest,”hello word”));</p>
-<h5 id="字符之库函数应用"><a href="#字符之库函数应用" class="headerlink" title="字符之库函数应用"></a>字符之库函数应用</h5><p>strcpy和memcpy都是标准C库函数<br>即strcpy只用于字符串复制，并且它不仅复制字符串内容之外，还会复制字符串的结束符。<br>char* strcpy(char* dest, const char* src);</p>
-<p>memcpy提供了一般内存的复制。即memcpy对于需要复制的内容没有限制，因此用途更广。<br>void *memcpy( void *dest, const void *src, size_t count );</p>
-<h5 id="字符串问题�"><a href="#字符串问题�" class="headerlink" title="字符串问题�"></a>字符串问题�</h5>]]></content>
       <categories>
         <category>C/C++ Lover</category>
       </categories>
