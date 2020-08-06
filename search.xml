@@ -182,6 +182,10 @@
 
 <h6 id="判断位是否为1或置0"><a href="#判断位是否为1或置0" class="headerlink" title="判断位是否为1或置0"></a>判断位是否为1或置0</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">如一个数a的bit3~5位为1，并且置为0</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int a &#x3D; 19 ;</span><br><span class="line">   printf(&quot;%d %d\n&quot;,a&lt;&lt;1,a&gt;&gt;1);</span><br><span class="line">   printf(&quot;%d %d\n&quot;,a&gt;&gt;1,a&lt;&lt;1);</span><br></pre></td></tr></table></figure>
+
+<p>`</p>
+<p>`</p>
 ]]></content>
       <categories>
         <category>Data Structure and Algorithms Lover</category>
@@ -5187,15 +5191,12 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <td>局部变量</td>
 <td>在定义它的函数内有效，但是函数返回后失效。“在函数内定义的变量”，即在一个函数内部定义的变量，只在本函数范围内有效。</td>
 </tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">static int a &#x3D; 1;</span><br><span class="line">void fun1(void)</span><br><span class="line">&#123;</span><br><span class="line">    a &#x3D; 2;</span><br><span class="line">&#125;</span><br><span class="line">void fun2(void)</span><br><span class="line">&#123;</span><br><span class="line">    static int a &#x3D;4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int  main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    printf(&quot;%d\n&quot;,a);</span><br><span class="line">    fun1();</span><br><span class="line">    printf(&quot;%d\n&quot;,a);</span><br><span class="line">    fun2();</span><br><span class="line">    printf(&quot;%d\n&quot;,a);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">输出:1 2 2</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
 </tbody></table>
-<p>__注意</p>
-<p>全局变量和静态变量如果没有手工初始化，则由编译器初始化为0。局部变量的值不可知。静态局部变量与全局变量最明显的区别就在于：全局变量在其定义后所有函数都能用，但是静态局部变量只能在一个函数里面用。<br>滥用全局变量会造成不必要的常量频繁使用，特别当这个常量没有用宏定义“正名”时，代码阅读起来将万分吃力。</p>
-<p>__有什么对策？</p>
-<ol>
-<li>能不用全局变量尽量不用。</li>
-<li>如果不可避免需要用到，那能藏多深就藏多深。<br>1)如果只有某.c文件用，就static到该文件中，顺便把结构体定义也收进来；<br>2)如果只有一个函数用，那就static到函数里面去；<br>3)如果非要开放出去让人读取，那就用函数return出去，这样就是只读属性了；<br>4)如果非要遭人蹂躏赋值，好吧，我开放函数接口让你传参赋值<br>5)实在非要extern我，我还可以严格控制包含我.h档的对象，而不是放到公共的includes.h中被人围观，丢人现眼。<br>6）当一个模块里面的全局变量超过3个(含)时，就用结构体包起来吧。要归0便一起归0，省得丢三落四的。</li>
-</ol>
-<p>公众号：C/C++技术文章<br>参考资料：<br>【1】佚名. 全局变量、局部变量、静态全局变量、静态局部变量的区别<br>【2】佚名. 嵌入式C编程经验之全局变量猛于虎<br>【3】《C11标准文档》</p>
+<p>1)如果只有一个函数用，那就static到函数里面去<br>2)如果开放出去让人读取，那就用函数return<br>3）当一个模块里面的全局变量超过3个(含)时，就用结构体包起来</p>
 ]]></content>
       <categories>
         <category>C/C++ Lover</category>
