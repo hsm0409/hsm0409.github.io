@@ -569,9 +569,7 @@
 <p>主要绘图事件</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oid MainWindow::paintEvent(QPaintEvent *event) &#123;</span><br><span class="line">    Q_UNUSED(event); &#x2F;&#x2F;防止编译报错</span><br><span class="line"></span><br><span class="line">    QPainter painter(this);</span><br><span class="line">    &#x2F;*逻辑原点*&#x2F;</span><br><span class="line">    painter.translate(painPara.translateX, painPara.translateY);</span><br><span class="line"></span><br><span class="line">    painter.setRenderHint(QPainter::Antialiasing);</span><br><span class="line">    painter.scale(painPara.scale, painPara.scale);</span><br><span class="line">    painter.setPen(painPara.painterColor);</span><br><span class="line">    painter.setBrush(painPara.painterColor);</span><br><span class="line"></span><br><span class="line">    &#x2F;* 获取系统时间 *&#x2F;</span><br><span class="line">    QTime time &#x3D; QTime::currentTime();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;* 描画时针刻度线 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    &#x2F;* 描画时钟数字文本   调用文本函数 *&#x2F;</span><br><span class="line">    int nHour &#x3D; 0;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; 12; ++i) &#123;</span><br><span class="line">        nHour &#x3D; i + 3;</span><br><span class="line">        if (nHour &gt; 12)</span><br><span class="line">            nHour -&#x3D; 12;</span><br><span class="line">        &#x2F;*确定文本位置函数*&#x2F;</span><br><span class="line">        painter.drawText(textRectF(75, 14, i * 30), Qt::AlignCenter, QString::number(nHour));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;*时刻度线*&#x2F;</span><br><span class="line">    for(int i &#x3D; 0; i &lt; 12; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        painter.rotate(30.0);&#x2F;&#x2F;原来的基础上选旋转30度</span><br><span class="line">        painter.drawLine(82,0,90,0);&#x2F;&#x2F;  100,120</span><br><span class="line">    &#125;</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 描画分针刻度线 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    for(int i &#x3D; 0; i&lt;60;i++) &#123;</span><br><span class="line">        if(i % 5)</span><br><span class="line">            painter.drawLine(82,0,87,0);</span><br><span class="line">        painter.rotate(6.0);</span><br><span class="line">    &#125;</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 时针   一个小时30度*&#x2F;</span><br><span class="line">    painter.save();&#x2F;&#x2F;保存</span><br><span class="line">    painter.rotate(30.0 * (time.hour() + time.minute() &#x2F; 60.0)); &#x2F;&#x2F;角度转换30度</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateHourHand, 3);   &#x2F;&#x2F;描画的形状</span><br><span class="line">    painter.restore();&#x2F;&#x2F;恢复</span><br><span class="line"></span><br><span class="line">    &#x2F;* 分针 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    painter.rotate(6.0 * (time.minute() + time.second() &#x2F; 60.0));</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateMinuteHand, 3);</span><br><span class="line">    painter.restore();</span><br><span class="line"></span><br><span class="line">    &#x2F;* 秒针 *&#x2F;</span><br><span class="line">    painter.save();</span><br><span class="line">    painter.rotate(6.0 * time.second());</span><br><span class="line">    painter.drawConvexPolygon(painPara.coordinateSecondHand, 3);</span><br><span class="line">    painter.restore();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 参考一去二三里的方法 *&#x2F;</span><br><span class="line">QRectF MainWindow::textRectF(double radius, int pointSize, double angle)</span><br><span class="line">&#123;</span><br><span class="line">    QRectF rectF;</span><br><span class="line">    rectF.setX(radius*qCos(angle*M_PI&#x2F;180.0) - pointSize*2);</span><br><span class="line">    rectF.setY(radius*qSin(angle*M_PI&#x2F;180.0) - pointSize&#x2F;2.0);</span><br><span class="line">    rectF.setWidth(pointSize*4);</span><br><span class="line">    rectF.setHeight(pointSize);</span><br><span class="line">    return rectF;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>效果图</p>
-
-
-
+<img src="/QT-Lover/QT-%E7%BB%98%E5%9B%BE%E4%BA%8B%E4%BB%B6%E5%AD%A6%E4%B9%A0%E9%97%B9%E9%92%9F/clock.gif" class="">
 ]]></content>
       <categories>
         <category>QT Lover</category>
@@ -1393,11 +1391,6 @@ height = "600" width ="100%"
       </tags>
   </entry>
   <entry>
-    <title>QT-ui快捷背景小记</title>
-    <url>/uncategorized/QT-ui%E5%BF%AB%E6%8D%B7%E8%83%8C%E6%99%AF%E5%B0%8F%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>QT-休眠函数</title>
     <url>/QT-Lover/QT-%E4%BC%91%E7%9C%A0%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p><strong>方式一</strong></p>
@@ -1850,6 +1843,34 @@ height="600" width="100%" > </iframe>]]></content>
       </categories>
       <tags>
         <tag>Linux驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT-ui快捷背景小记</title>
+    <url>/QT-Lover/QT-ui%E5%BF%AB%E6%8D%B7%E8%83%8C%E6%99%AF%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>控件背景</strong></p>
+<p>右键改变样式<br>写法1<br>#pushButton{<br>background:url(“:/new/prefix1/数字1.png”)<br>}<br>写法2<br>background:url(:/new/prefix1/cat.png);<br>background-image: url(:/new/prefix1/cat.png);</p>
+<p>注意：background是一个集合，它包括background-color,background-image,background-size</p>
+<p>border-image: url(:/new/prefix1/数字1.png);//文件<br>image: url(:/new/prefix1/cat.png);//文件原大小，多余为空白</p>
+<p>setStyleSheet(QWidget{“border-radius:6px;background-color:rgba(100,100,100,80%)}”);/<em>多用这个，类继承mainwidget</em>/<br>                                              pushButton-&gt;setStyleSheet(“QPushButton{border-image:url(:/icons/Resource/icons/close.png);”<br>“background-color:transparent}”<br>“QPushButton:hover{border-image:url(:/icons/Resource/icons/close_hover.png);}” );<br>/<em>hover 选中时候的状态 按钮悬停</em>/</p>
+
+
+
+
+<p>background-color: rgb(6, 6, 6); 控件背景<br>border-radius: 3px; color: rgb(255, 255, 255); 控件字体</p>
+<p><strong>QLineEdit美化</strong></p>
+<p>border:1px solid rgb(180, 180, 180);<br>border-radius: 10px;</p>
+<p><strong>函数背景</strong></p>
+<p>写法1：<br>setAutoFillBackground(true);<br>QPalette pal = this-&gt;palette();  pal.setBrush(backgroundRole(),QPixmap(“:/new/prefix1/MING.png”));<br>setPalette(pal);</p>
+<p>注：设置的项目基类为Widget的时候，不能用setstylesheet设置widget的背景图片。</p>
+<p>this-&gt;setStyleSheet( iconStyleSheet );<br>ui-&gt;pushButton-&gt;setStyleSheet(“#pushButton{background-image: url(:/new/prefix1/数字5.png);}”);g);}”);</p>
+<p><strong>字体设置</strong><br>第一个参数是字体（微软雅黑）<br>第二个是字体大小(单位为pt)<br>第三个是加粗（50代表正常）<br>第四个是斜体（true代表斜体）<br>QFont font(“Microsoft YaHei”, 8, 50, true);</p>
+]]></content>
+      <categories>
+        <category>QT Lover</category>
+      </categories>
+      <tags>
+        <tag>Qt应用开发</tag>
       </tags>
   </entry>
   <entry>
@@ -5827,17 +5848,6 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
       </tags>
   </entry>
   <entry>
-    <title>工程师的修图工具——在线PS</title>
-    <url>/Other-Lover/%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E4%BF%AE%E5%9B%BE%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94%E5%9C%A8%E7%BA%BFPS/</url>
-    <content><![CDATA[<p><a href="https://www.photopea.com/" target="_blank" rel="noopener">https://www.photopea.com/</a></p>
-<p>推荐<a href="https://ps.gaoding.com/#/" target="_blank" rel="noopener">https://ps.gaoding.com/#/</a></p>
-<p>F键放大观看</p>
-]]></content>
-      <categories>
-        <category>Other Lover</category>
-      </categories>
-  </entry>
-  <entry>
     <title>基于MYSQL数据库的汽车销售管理应用——QT开发</title>
     <url>/MySql-Lover/%E5%9F%BA%E4%BA%8EMYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E7%AE%A1%E7%90%86%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94QT%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<hr>
@@ -5892,6 +5902,9 @@ cat /proc/sys/kernel/msgmni 消息条目数</code></pre><p>IPC Inter-Process Com
 <p>音频下载：<a href="https://taira-komori.jpn.org/freesoundcn.html" target="_blank" rel="noopener">https://taira-komori.jpn.org/freesoundcn.html</a></p>
 <p>壁纸：<a href="https://wallhaven.cc/w/mdzdok" target="_blank" rel="noopener">https://wallhaven.cc/w/mdzdok</a></p>
 <p>在线PS:<a href="https://www.photopea.com/" target="_blank" rel="noopener">https://www.photopea.com/</a></p>
+<p><a href="https://www.photopea.com/" target="_blank" rel="noopener">https://www.photopea.com/</a></p>
+<p>推荐<a href="https://ps.gaoding.com/#/" target="_blank" rel="noopener">https://ps.gaoding.com/#/</a></p>
+<p>F键放大观看</p>
 ]]></content>
       <categories>
         <category>Mechanic Lover</category>
