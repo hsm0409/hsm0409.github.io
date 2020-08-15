@@ -132,7 +132,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="spi_master 结构transfer 函数，和 i2c_algorithm 中的 master_xfer 函数一样，控制器数据传输函数。transfer_one_message 函数，也用于 SPI 数据发送，用于发送一个 spi_message，SPI 的数据会打包成 spi_message，然后以队列方式发送出去。 123456789101112131415161718192021222">
 <meta property="article:published_time" content="2020-05-23T15:15:00.000Z">
-<meta property="article:modified_time" content="2020-05-24T15:33:54.360Z">
+<meta property="article:modified_time" content="2020-08-15T15:48:44.237Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux驱动开发">
 <meta name="twitter:card" content="summary">
@@ -449,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  228 字
+                  299 字
                 </span>
               
 
@@ -489,6 +489,8 @@
         <p>spi_master 结构<br>transfer 函数，和 i2c_algorithm 中的 master_xfer 函数一样，控制器数据传输函<br>数。<br>transfer_one_message 函数，也用于 SPI 数据发送，用于发送一个 spi_message，<br>SPI 的数据会打包成 spi_message，然后以队列方式发送出去。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">spi_master  申请与释放</span><br><span class="line">spi_alloc_master 函数用于申请 spi_master，函数原型如下：</span><br><span class="line">struct spi_master *spi_alloc_master(struct device *dev,</span><br><span class="line">unsigned size)</span><br><span class="line"></span><br><span class="line">spi_master 的释放通过 spi_master_put 函数来完成，当我们删除一个 SPI 主机驱动的时候就</span><br><span class="line">需要释放掉前面申请的 spi_master，spi_master_put 函数原型如下：</span><br><span class="line">void spi_master_put(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spi_master  的注册</span><br><span class="line">int spi_register_master(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"> spi_master 的注销</span><br><span class="line">void spi_unregister_master(struct spi_master *master)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spi_message初始化</span><br><span class="line">void spi_message_init(struct spi_message *m)</span><br><span class="line"></span><br><span class="line">spi_transfer 添加到 spi_message 队列中</span><br><span class="line">void spi_message_add_tail(struct spi_transfer *t, struct spi_message *m)</span><br><span class="line"></span><br><span class="line">同步传输函数为 spi_sync，函数原型如下：</span><br><span class="line">int spi_sync(struct spi_device *spi, struct spi_message *message)</span><br><span class="line"></span><br><span class="line">SPI 异步传</span><br><span class="line">输函数为 spi_async，函数原型如下：</span><br><span class="line">int spi_async(struct spi_device *spi, struct spi_message *message)</span><br></pre></td></tr></table></figure>
 
+<h5 id="设备与驱动"><a href="#设备与驱动" class="headerlink" title="设备与驱动"></a>设备与驱动</h5><p>I.MX6U 的 ECSPI 主机驱动文件为 drivers/spi/spi-imx.c<br>设备结点-&gt;子节点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> imx6ull-ming-emmc.dts，在 iomuxc 节点添加</span><br><span class="line">pinctrl_ecspi3: icm20608 &#123;</span><br><span class="line"> fsl,pins &#x3D; &lt;</span><br><span class="line">MX6UL_PAD_UART2_TX_DATA__GPIO1_IO20 0x10b0 &#x2F;* CS *&#x2F;</span><br><span class="line"> MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK 0x10b1 &#x2F;* SCLK *&#x2F;</span><br><span class="line"> MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO 0x10b1 &#x2F;* MISO *&#x2F;</span><br><span class="line">MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI 0x10b1 &#x2F;* MOSI *&#x2F;</span><br><span class="line">&gt;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -596,8 +598,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -616,7 +627,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-count">238</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -694,6 +705,23 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#设备与驱动"><span class="nav-number">1.</span> <span class="nav-text">设备与驱动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+		
+      <!--/noindex-->
+      
 
       
 	  
@@ -742,7 +770,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">121.4k</span>
+    <span title="Site words total count">122.1k</span>
   
 </div>
 

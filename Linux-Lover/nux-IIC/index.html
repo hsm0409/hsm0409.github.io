@@ -125,14 +125,14 @@
 
 
 
-<meta name="description" content="IIC 总线 内核也将 I2C 驱动分为两部分：①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。 12345678910i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;  -&gt;i2c_algorithm&#x2F;*  总线访">
+<meta name="description" content="Linux-IIC内核也将 I2C 驱动分为两部分：①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。 IIC 总线12345678910i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;  -&gt;i2c_algorithm&amp;#x2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux-IIC">
 <meta property="og:url" content="https://github.com/hsm0409/hsm0409.github.io.git/Linux-Lover/nux-IIC/index.html">
 <meta property="og:site_name" content="我的笔记">
-<meta property="og:description" content="IIC 总线 内核也将 I2C 驱动分为两部分：①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。 12345678910i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;  -&gt;i2c_algorithm&#x2F;*  总线访">
+<meta property="og:description" content="Linux-IIC内核也将 I2C 驱动分为两部分：①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。 IIC 总线12345678910i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;  -&gt;i2c_algorithm&amp;#x2">
 <meta property="article:published_time" content="2020-05-17T11:06:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T09:34:18.095Z">
+<meta property="article:modified_time" content="2020-08-15T15:23:28.673Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="Linux驱动开发">
 <meta name="twitter:card" content="summary">
@@ -449,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  275 字
+                  540 字
                 </span>
               
 
@@ -465,7 +465,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -486,19 +486,21 @@
       
 
       
-        <p><strong>IIC 总线</strong></p>
-<p>内核也将 I2C 驱动分为两部分：<br>①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。<br>②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;</span><br><span class="line">  -&gt;i2c_algorithm&#x2F;*  总线访问算法 *&#x2F;</span><br><span class="line">		-&gt;master_xfer&#x2F;* I2C 适配器的传输函数*&#x2F;</span><br><span class="line"></span><br><span class="line">两个函数向系统注册设置好</span><br><span class="line">int i2c_add_adapter(struct i2c_adapter *adapter)</span><br><span class="line">int i2c_add_numbered_adapter(struct i2c_adapter *adap)</span><br><span class="line"></span><br><span class="line">删除 I2C 适配器的话使用 i2c_del_adapter 函数即可，函数原型如下：</span><br><span class="line">void i2c_del_adapter(struct i2c_adapter * adap)</span><br></pre></td></tr></table></figure>
+        <h5 id="Linux-IIC"><a href="#Linux-IIC" class="headerlink" title="Linux-IIC"></a>Linux-IIC</h5><p>内核也将 I2C 驱动分为两部分：<br>①、I2C 总线驱动，I2C 总线驱动就是 SOC 的 I2C 控制器驱动，也叫做 I2C 适配器驱动。<br>②、I2C 设备驱动，I2C 设备驱动就是针对具体的 I2C 设备而编写的驱动。</p>
+<h5 id="IIC-总线"><a href="#IIC-总线" class="headerlink" title="IIC 总线"></a>IIC 总线</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">i2c_adapter&#x2F;* I2C 适配器(控制器)抽象*&#x2F;</span><br><span class="line">  -&gt;i2c_algorithm&#x2F;*  总线访问算法 *&#x2F;</span><br><span class="line">		-&gt;master_xfer&#x2F;* I2C 适配器的传输函数*&#x2F;</span><br><span class="line"></span><br><span class="line">两个函数向系统注册设置好</span><br><span class="line">int i2c_add_adapter(struct i2c_adapter *adapter)</span><br><span class="line">int i2c_add_numbered_adapter(struct i2c_adapter *adap)</span><br><span class="line"></span><br><span class="line">删除 I2C 适配器的话使用 i2c_del_adapter 函数即可，函数原型如下：</span><br><span class="line">void i2c_del_adapter(struct i2c_adapter * adap)</span><br></pre></td></tr></table></figure>
+<h5 id="设备与驱动"><a href="#设备与驱动" class="headerlink" title="设备与驱动"></a>设备与驱动</h5><p>i2c_client 和 i2c_driver，根据总线、设备和驱动模型，<br>剩下设备和驱动<br>i2c_client 就是描述设备信息的，<br>i2c_driver 描述驱动内容，类似于 platform_driver。</p>
+<h5 id="I2C-设备和驱动匹配过程"><a href="#I2C-设备和驱动匹配过程" class="headerlink" title="I2C  设备和驱动匹配过程"></a>I2C  设备和驱动匹配过程</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1 、i2c_adapter  注册&#x2F; 注销函数</span><br><span class="line">int i2c_add_adapter(struct i2c_adapter *adapter)</span><br><span class="line">int i2c_add_numbered_adapter(struct i2c_adapter *adap)</span><br><span class="line">void i2c_del_adapter(struct i2c_adapter * adap)</span><br><span class="line">2 、i2c_driver  注册&#x2F; 注销函数</span><br><span class="line">int i2c_register_driver(struct module *owner, struct i2c_driver *driver)</span><br><span class="line">int i2c_add_driver (struct i2c_driver *driver)</span><br><span class="line">void i2c_del_driver(struct i2c_driver *driver)</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">调用 i2c_imx_start 函数开启 I2C 通信。</span><br><span class="line">如果是从 I2C 设备读数据的话就调用 i2c_imx_read 函数。</span><br><span class="line">向 I2C 设备写数据，如果要用 DMA 的话就使用 i2c_imx_dma_write 函数来</span><br><span class="line">完成写数据。</span><br><span class="line">如果不使用 DMA 的话就使用 i2c_imx_write 函数完成写数据。</span><br><span class="line">I2C 通信完成以后调用 i2c_imx_stop 函数停止 I2C 通信&#96;</span><br></pre></td></tr></table></figure>
+<h5 id="内核源码"><a href="#内核源码" class="headerlink" title="内核源码"></a>内核源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">查看相应的设备树信息，根据compatible，查看文件</span><br><span class="line">i2c1: i2c@021a0000 &#123;</span><br><span class="line">				#address-cells &#x3D; &lt;1&gt;;</span><br><span class="line">				#size-cells &#x3D; &lt;0&gt;;</span><br><span class="line">				compatible &#x3D; &quot;fsl,imx6ul-i2c&quot;, &quot;fsl,imx21-i2c&quot;;</span><br><span class="line">				reg &#x3D; &lt;0x021a0000 0x4000&gt;;</span><br><span class="line">				interrupts &#x3D; &lt;GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH&gt;;</span><br><span class="line">				clocks &#x3D; &lt;&amp;clks IMX6UL_CLK_I2C1&gt;;</span><br><span class="line">				status &#x3D; &quot;disabled&quot;;</span><br><span class="line">			&#125;;</span><br><span class="line"> 在drivers&#x2F;i2c&#x2F;busses&#x2F;i2c-imx.c</span><br><span class="line"> IIC实际上任然是一个platform驱动,虚拟总线</span><br><span class="line"> </span><br><span class="line"> i2c_imx_start</span><br><span class="line"> i2c_imx_read</span><br><span class="line"> i2c_imx_write</span><br><span class="line"> i2c_imx_stop</span><br></pre></td></tr></table></figure>
+<h5 id="驱动代码"><a href="#驱动代码" class="headerlink" title="驱动代码"></a>驱动代码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">I2C 适配器驱动 SOC 厂商已经替我们编写好了，我们需要做的就是编写具体的设备驱动.</span><br><span class="line"> ir、als 和 ps 这三个数据值，然后将其输出到终端上</span><br><span class="line"> 环境光强度(ALS)、接近距离(PS)和红外线强度(IR)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">1、ap216C 用到了 I2C1 接口</span><br><span class="line">pinctrl_i2c1: i2c1grp &#123;</span><br><span class="line"> fsl,pins &#x3D; &lt;</span><br><span class="line"> MX6UL_PAD_UART4_TX_DATA__I2C1_SCL 0x4001b8b0</span><br><span class="line"> MX6UL_PAD_UART4_RX_DATA__I2C1_SDA 0x4001b8b0</span><br><span class="line"> &gt;;</span><br><span class="line"> &#125;;</span><br><span class="line"> </span><br><span class="line"> &amp;i2c1 &#123;</span><br><span class="line">	clock-frequency &#x3D; &lt;100000&gt;;</span><br><span class="line">	pinctrl-names &#x3D; &quot;default&quot;;</span><br><span class="line">	pinctrl-0 &#x3D; &lt;&amp;pinctrl_i2c1&gt;;</span><br><span class="line">	status &#x3D; &quot;okay&quot;;</span><br><span class="line">	</span><br><span class="line">	ap3216c@1e &#123;</span><br><span class="line">		compatible &#x3D; &quot;alientek,ap3216c&quot;;</span><br><span class="line">		reg &#x3D; &lt;0x1e&gt;;</span><br><span class="line">		&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int i2c_transfer(struct i2c_adapter *adap,</span><br><span class="line">struct i2c_msg *msgs,</span><br><span class="line">int num</span><br></pre></td></tr></table></figure>
 
 
 <p>ls /sys/bus/i2c/devices</p>
 <p>cd /sys/bus/i2c/devices</p>
 <p>cat 0-001e/name //查看设备名字</p>
+<p>[root@buildroot-ming]:/sys/bus/i2c/devices$:cat 0-001e/name<br>fxls8471</p>
 
       
     </div>
@@ -600,8 +602,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -620,7 +631,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-count">238</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -698,6 +709,23 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux-IIC"><span class="nav-number">1.</span> <span class="nav-text">Linux-IIC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IIC-总线"><span class="nav-number">2.</span> <span class="nav-text">IIC 总线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设备与驱动"><span class="nav-number">3.</span> <span class="nav-text">设备与驱动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#I2C-设备和驱动匹配过程"><span class="nav-number">4.</span> <span class="nav-text">I2C  设备和驱动匹配过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内核源码"><span class="nav-number">5.</span> <span class="nav-text">内核源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#驱动代码"><span class="nav-number">6.</span> <span class="nav-text">驱动代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+		
+      <!--/noindex-->
+      
 
       
 	  
@@ -746,7 +774,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">121.4k</span>
+    <span title="Site words total count">122.1k</span>
   
 </div>
 

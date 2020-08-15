@@ -132,7 +132,7 @@
 <meta property="og:site_name" content="我的笔记">
 <meta property="og:description" content="if then else语句 1234567891011第一种格式：if 条件then 命令fi例子：if [ &quot;13&quot; -lt &quot;12&quot; ]  # &quot;13&quot; 前一个空格，“13”后也有一个空格。then        echo &quot;yes 13 is less then 12&quot;else        echo &amp;quo">
 <meta property="article:published_time" content="2020-05-28T16:05:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T08:32:09.075Z">
+<meta property="article:modified_time" content="2020-08-15T13:57:40.612Z">
 <meta property="article:author" content="梦在广工">
 <meta property="article:tag" content="shell基础">
 <meta name="twitter:card" content="summary">
@@ -449,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  202 字
+                  336 字
                 </span>
               
 
@@ -490,7 +490,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">第一种格式：</span><br><span class="line">if 条件</span><br><span class="line">then 命令</span><br><span class="line">fi</span><br><span class="line">例子：</span><br><span class="line">if [ &quot;13&quot; -lt &quot;12&quot; ]  # &quot;13&quot; 前一个空格，“13”后也有一个空格。</span><br><span class="line">then</span><br><span class="line">        echo &quot;yes 13 is less then 12&quot;</span><br><span class="line">else</span><br><span class="line">        echo &quot;NO&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">第二种格式：</span><br><span class="line"></span><br><span class="line">if 条件1</span><br><span class="line">then </span><br><span class="line">     命令1</span><br><span class="line">elif 条件2</span><br><span class="line">then </span><br><span class="line">     命令2</span><br><span class="line">else</span><br><span class="line">     命令3</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <p>case多选择语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case 值 in</span><br><span class="line">模式值)</span><br><span class="line">	命令1</span><br><span class="line">	;;</span><br><span class="line">模式值)</span><br><span class="line">	命令2</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">case 值 in</span><br><span class="line">模式值)</span><br><span class="line">	命令1</span><br><span class="line">	;;</span><br><span class="line">模式值)</span><br><span class="line">	命令2</span><br><span class="line">	;;</span><br><span class="line">esac</span><br><span class="line">#例子</span><br><span class="line">screen_size&#x3D;$(echo $(fbset |grep -E &quot;timings&quot; |awk &#39;&#123;print $3&#125;&#39;))</span><br><span class="line">case $screen_size in</span><br><span class="line">    80)  cp  &#x2F;opt&#x2F;qt5.5.1&#x2F;apps&#x2F;pointercals&#x2F;pointercal-10.1-1280x800 &#x2F;etc&#x2F;pointercal</span><br><span class="line">    ;;</span><br><span class="line">    140) cp  &#x2F;opt&#x2F;qt5.5.1&#x2F;apps&#x2F;pointercals&#x2F;pointercal-7-1024x600 &#x2F;etc&#x2F;pointercal</span><br><span class="line">    ;;</span><br><span class="line">    46)  cp  &#x2F;opt&#x2F;qt5.5.1&#x2F;apps&#x2F;pointercals&#x2F;pointercal-7-800x480 &#x2F;etc&#x2F;pointercal</span><br><span class="line">    ;;</span><br><span class="line">    88)  cp  &#x2F;opt&#x2F;qt5.5.1&#x2F;apps&#x2F;pointercals&#x2F;pointercal-4.3-800x480 &#x2F;etc&#x2F;pointercal</span><br><span class="line">    ;;</span><br><span class="line">    40)  cp  &#x2F;opt&#x2F;qt5.5.1&#x2F;apps&#x2F;pointercals&#x2F;pointercal-4.3-480x272 &#x2F;etc&#x2F;pointercal </span><br><span class="line">    ;;</span><br><span class="line">    *)  echo &#39;this screen size is not default&#39;</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
 
 
 
@@ -501,7 +501,7 @@
 <p>until循环</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">until 条件</span><br><span class="line">do	</span><br><span class="line">	命令1</span><br><span class="line">	命令2</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <p>while循环</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash </span><br><span class="line">#while01</span><br><span class="line">echo &quot;ctrl+d quit&quot; </span><br><span class="line">while echo -n &quot;please enter you name:&quot;; read Name  </span><br><span class="line">do</span><br><span class="line">        echo &quot;Yeah, you name: $Name&quot;;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash </span><br><span class="line">#while</span><br><span class="line">echo &quot;ctrl+d quit&quot; </span><br><span class="line">while echo -n &quot;please enter you name:&quot;; read Name  </span><br><span class="line">do</span><br><span class="line">        echo &quot;Yeah, you name: $Name&quot;;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>break<br>退出循环,如果是在一个嵌入循环里，可以指定n来跳出循环个数<br>continue<br>跳出循环步</p>
 
@@ -625,7 +625,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-count">238</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -751,7 +751,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">121.4k</span>
+    <span title="Site words total count">122.1k</span>
   
 </div>
 
